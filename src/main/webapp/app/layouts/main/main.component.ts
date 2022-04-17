@@ -1,70 +1,88 @@
-import { Component, OnInit, RendererFactory2, Renderer2 } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router, ActivatedRouteSnapshot, NavigationEnd } from '@angular/router';
-import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
-import dayjs from 'dayjs/esm';
+import { Router, NavigationError } from '@angular/router';
 
 import { AccountService } from 'app/core/auth/account.service';
-import { FindLanguageFromKeyPipe } from 'app/shared/language/find-language-from-key.pipe';
+
+import { MatSidenav } from '@angular/material/sidenav';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { LoginService } from '../../login/login.service';
+import { SessionStorageService } from 'ngx-webstorage';
+import { TranslateService } from '@ngx-translate/core';
+import { LANGUAGES } from '../../config/language.constants';
 
 @Component({
   selector: 'jhi-main',
   templateUrl: './main.component.html',
+  styleUrls: ['./main.scss'],
 })
-export class MainComponent implements OnInit {
-  private renderer: Renderer2;
+export class MainComponent implements OnInit, AfterViewInit, AfterViewChecked {
+  @ViewChild(MatSidenav, { static: true })
+  sidenav!: MatSidenav;
+  languages = LANGUAGES;
 
   constructor(
     private accountService: AccountService,
     private titleService: Title,
     private router: Router,
-    private findLanguageFromKeyPipe: FindLanguageFromKeyPipe,
+    private loginService: LoginService,
+    private observer: BreakpointObserver,
     private translateService: TranslateService,
-    rootRenderer: RendererFactory2
-  ) {
-    this.renderer = rootRenderer.createRenderer(document.querySelector('html'), null);
-  }
+    private sessionStorageService: SessionStorageService
+  ) {}
 
   ngOnInit(): void {
     // try to log in automatically
     this.accountService.identity().subscribe();
 
     this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.updateTitle();
+      if (event instanceof NavigationError && event.error.status === 404) {
+        this.router.navigate(['/404']);
+      }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.observer.observe(['(max-width: 800px)']).subscribe(res => {
+      if (res.matches) {
+        this.sidenav.mode = 'over';
+        this.sidenav.close();
+      } else {
+        this.sidenav.mode = 'side';
+        this.sidenav.open();
       }
     });
 
-    this.translateService.onLangChange.subscribe((langChangeEvent: LangChangeEvent) => {
-      this.updateTitle();
-      dayjs.locale(langChangeEvent.lang);
-      this.renderer.setAttribute(document.querySelector('html'), 'lang', langChangeEvent.lang);
-
-      this.updatePageDirection();
-    });
-  }
-
-  private getPageTitle(routeSnapshot: ActivatedRouteSnapshot): string {
-    const title: string = routeSnapshot.data['pageTitle'] ?? '';
-    if (routeSnapshot.firstChild) {
-      return this.getPageTitle(routeSnapshot.firstChild) || title;
+    if (!this.accountService.isAuthenticated()) {
+      this.sidenav.close();
     }
-    return title;
   }
 
-  private updateTitle(): void {
-    let pageTitle = this.getPageTitle(this.router.routerState.snapshot.root);
-    if (!pageTitle) {
-      pageTitle = 'global.title';
+  ngAfterViewChecked(): void {
+    if (!this.accountService.isAuthenticated()) {
+      this.sidenav.close();
     }
-    this.translateService.get(pageTitle).subscribe(title => this.titleService.setTitle(title));
   }
 
-  private updatePageDirection(): void {
-    this.renderer.setAttribute(
-      document.querySelector('html'),
-      'dir',
-      this.findLanguageFromKeyPipe.isRTL(this.translateService.currentLang) ? 'rtl' : 'ltr'
-    );
+  isAuthenticated(): boolean {
+    return this.accountService.isAuthenticated();
+  }
+
+  getFirstName(): any {
+    return this.isAuthenticated() ? this.accountService.getFirstName() : '';
+  }
+
+  login(): void {
+    this.router.navigate(['/login']);
+  }
+
+  logout(): void {
+    this.loginService.logout();
+    this.router.navigate(['']);
+  }
+
+  changeLanguage(languageKey: string): void {
+    this.sessionStorageService.store('locale', languageKey);
+    this.translateService.use(languageKey);
   }
 }

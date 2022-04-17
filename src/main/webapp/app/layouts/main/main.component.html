@@ -1,13 +1,137 @@
-<jhi-page-ribbon></jhi-page-ribbon>
-
-<div>
-  <router-outlet name="navbar"></router-outlet>
-</div>
-
-<div class="container-fluid">
-  <div class="card jh-card">
-    <router-outlet></router-outlet>
+<mat-toolbar class="mat-elevation-z align-items-center" color="primary">
+  <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+    <mat-icon class="white" *ngIf="!sidenav.opened"> menu</mat-icon>
+    <mat-icon class="white" *ngIf="sidenav.opened"> close</mat-icon>
+  </button>
+  <div class="d-flex flex-row p-3 align-items-center" dir="rtl">
+    <div class="main-menu-wrapper__logo">
+      <a href="/" routerLink="/">
+        <img alt="logo" class="img-logo-toolbar" src="../../../content/images/logo.png" />
+      </a>
+    </div>
+    <span class="mr-3" jhiTranslate="home.title">Alfaizouz Lab</span>
+    <span class="fill"></span>
   </div>
+  <div class="mr-auto">
+    <button *ngIf="languages && languages.length > 1" mat-button [matMenuTriggerFor]="menu">
+      <mat-icon class="white">translate</mat-icon>
+      <span class="white" jhiTranslate="global.menu.language">Language</span>
+    </button>
+    <mat-menu #menu="matMenu" class="mt-3" overlapTrigger="false">
+      <button *ngFor="let language of languages" (click)="changeLanguage(language)" mat-menu-item>
+        {{ language | findLanguageFromKey }}
+      </button>
+    </mat-menu>
 
-  <jhi-footer></jhi-footer>
-</div>
+    <mat-menu #appMenu="matMenu" class="mt-3" overlapTrigger="false">
+      <button mat-menu-item routerLink="/account/password">
+        <mat-icon>vpn_key</mat-icon>
+        <span jhiTranslate="home.changePassword">Change Password</span>
+      </button>
+
+      <button mat-menu-item routerLink="/account/settings">
+        <mat-icon>person</mat-icon>
+        تعديل الملف الشخصي
+      </button>
+      <button (click)="logout()" mat-menu-item>
+        <mat-icon>arrow_back</mat-icon>
+        خروج
+      </button>
+    </mat-menu>
+    <button *ngIf="!isAuthenticated()" (click)="login()" mat-stroked-button>
+      <mat-icon class="white">account_circle</mat-icon>
+      دخول
+    </button>
+    <button *ngIf="isAuthenticated()" [matMenuTriggerFor]="appMenu" class="ml-2" mat-button>
+      <span class="white"> مرحباً! {{ getFirstName() }}</span>
+      <mat-icon class="white">account_circle</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav
+    [fixedInViewport]="false"
+    [opened]="isAuthenticated()"
+    class="mat-elevation-z0"
+    dir="ltr"
+    mode="side"
+    style="background-color: white"
+  >
+    <mat-nav-list dir="rtl" style="width: 260px">
+      <mat-list-item routerLink="dashboard">
+        <mat-icon mat-list-icon>dashboard</mat-icon>
+        <span>الرئيسية</span>
+      </mat-list-item>
+
+      <div *jhiHasAnyAuthority="['ROLE_ADMIN']">
+        <mat-list-item routerLink="investor">
+          <mat-icon mat-list-icon>receipt_long</mat-icon>
+          <span>المستثمرين</span>
+        </mat-list-item>
+        <mat-list-item routerLink="project">
+          <mat-icon mat-list-icon>receipt_long</mat-icon>
+          <span>المشاريع</span>
+        </mat-list-item>
+
+        <mat-divider class="mx-2 light-gray"></mat-divider>
+
+
+        <mat-expansion-panel class="mat-elevation-z0">
+          <mat-expansion-panel-header class="light-gray">
+            <mat-panel-title>
+              <mat-icon class="ml-2">receipt_long</mat-icon>
+              التقارير
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list-item routerLink="admin/user-management">
+            <span>تقرير عن </span>
+          </mat-list-item>
+        </mat-expansion-panel>
+      </div>
+
+      <mat-expansion-panel *jhiHasAnyAuthority="'ROLE_ADMIN'" class="mat-elevation-z0">
+        <mat-expansion-panel-header class="light-gray">
+          <mat-panel-title>
+            <mat-icon class="ml-2">developer_board</mat-icon>
+            مدير النظام
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-list-item routerLink="admin/user-management">
+          <span>إدارة المستخدمين</span>
+        </mat-list-item>
+
+        <mat-list-item routerLink="admin/audits">
+          <span>سجلات الدخول</span>
+        </mat-list-item>
+
+        <mat-list-item routerLink="admin/health">
+          <span>صحة النظام</span>
+        </mat-list-item>
+
+        <mat-list-item routerLink="admin/metrics">
+          <span>مؤشرات</span>
+        </mat-list-item>
+
+        <mat-list-item routerLink="admin/configuration">
+          <span>الاعدادات</span>
+        </mat-list-item>
+
+        <mat-list-item routerLink="admin/logs">
+          <span>سجل الاخطاء</span>
+        </mat-list-item>
+
+        <mat-list-item routerLink="admin/docs">
+          <span>API</span>
+        </mat-list-item>
+      </mat-expansion-panel>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div>
+      <router-outlet></router-outlet>
+
+      <jhi-footer></jhi-footer>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

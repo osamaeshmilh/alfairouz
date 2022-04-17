@@ -1,7 +1,6 @@
 import { Component, ViewChild, OnInit, AfterViewInit, ElementRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { LoginService } from 'app/login/login.service';
 import { AccountService } from 'app/core/auth/account.service';
 
@@ -20,6 +19,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     password: [null, [Validators.required]],
     rememberMe: [false],
   });
+  isAuthenticating!: boolean;
 
   constructor(
     private accountService: AccountService,
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     // if already authenticated then navigate to home page
     this.accountService.identity().subscribe(() => {
       if (this.accountService.isAuthenticated()) {
-        this.router.navigate(['']);
+        this.router.navigate(['/dashboard']);
       }
     });
   }
@@ -42,21 +42,26 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   login(): void {
+    this.isAuthenticating = true;
     this.loginService
       .login({
         username: this.loginForm.get('username')!.value,
         password: this.loginForm.get('password')!.value,
         rememberMe: this.loginForm.get('rememberMe')!.value,
       })
-      .subscribe({
-        next: () => {
+      .subscribe(
+        () => {
           this.authenticationError = false;
+          this.isAuthenticating = false;
           if (!this.router.getCurrentNavigation()) {
             // There were no routing during login (eg from navigationToStoredUrl)
-            this.router.navigate(['']);
+            this.router.navigate(['/dashboard']);
           }
         },
-        error: () => (this.authenticationError = true),
-      });
+        () => {
+          this.authenticationError = true;
+          this.isAuthenticating = false;
+        }
+      );
   }
 }

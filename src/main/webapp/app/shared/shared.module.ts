@@ -12,9 +12,12 @@ import { FormatMediumDatePipe } from './date/format-medium-date.pipe';
 import { SortByDirective } from './sort/sort-by.directive';
 import { SortDirective } from './sort/sort.directive';
 import { ItemCountComponent } from './pagination/item-count.component';
+import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
+import {GetColorPipe, TranslateMePipe} from "./util/mapper.pip";
 
 @NgModule({
-  imports: [SharedLibsModule],
+  imports: [SharedLibsModule,
+    SweetAlert2Module.forRoot(),],
   declarations: [
     FindLanguageFromKeyPipe,
     TranslateDirective,
@@ -27,6 +30,8 @@ import { ItemCountComponent } from './pagination/item-count.component';
     SortByDirective,
     SortDirective,
     ItemCountComponent,
+    TranslateMePipe,
+    GetColorPipe,
   ],
   exports: [
     SharedLibsModule,
@@ -41,6 +46,8 @@ import { ItemCountComponent } from './pagination/item-count.component';
     SortByDirective,
     SortDirective,
     ItemCountComponent,
+    TranslateMePipe,
+    GetColorPipe,
   ],
 })
 export class SharedModule {}

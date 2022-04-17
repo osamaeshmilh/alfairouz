@@ -76,6 +76,10 @@ export class AccountService {
     return this.authenticationState.asObservable();
   }
 
+  getFirstName(): string {
+    return this.userIdentity?.firstName ?? '';
+  }
+
   private fetch(): Observable<Account> {
     return this.http.get<Account>(this.applicationConfigService.getEndpointFor('api/account'));
   }

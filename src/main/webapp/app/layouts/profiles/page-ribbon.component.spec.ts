@@ -12,14 +12,16 @@ describe('Page Ribbon Component', () => {
   let fixture: ComponentFixture<PageRibbonComponent>;
   let profileService: ProfileService;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      declarations: [PageRibbonComponent],
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [HttpClientTestingModule],
+        declarations: [PageRibbonComponent],
+      })
+        .overrideTemplate(PageRibbonComponent, '')
+        .compileComponents();
     })
-      .overrideTemplate(PageRibbonComponent, '')
-      .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PageRibbonComponent);
