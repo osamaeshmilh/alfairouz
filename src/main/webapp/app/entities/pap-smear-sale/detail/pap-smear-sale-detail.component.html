@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="papSmearSale">
+      <h2 data-cy="papSmearSaleDetailsHeading"><span jhiTranslate="alfairouzApp.papSmearSale.detail.title">Pap Smear Sale</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ papSmearSale.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.papSmearSale.dateAt">Date At</span></dt>
+        <dd>
+          <span>{{ papSmearSale.dateAt | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.papSmearSale.details">Details</span></dt>
+        <dd>
+          <span>{{ papSmearSale.details }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.papSmearSale.paymentType">Payment Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'alfairouzApp.PaymentType.' + papSmearSale.paymentType }}">{{ papSmearSale.paymentType }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.papSmearSale.quantity">Quantity</span></dt>
+        <dd>
+          <span>{{ papSmearSale.quantity }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.papSmearSale.total">Total</span></dt>
+        <dd>
+          <span>{{ papSmearSale.total }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.papSmearSale.referringCenter">Referring Center</span></dt>
+        <dd>
+          <div *ngIf="papSmearSale.referringCenter">
+            <a [routerLink]="['/referring-center', papSmearSale.referringCenter?.id, 'view']">{{ papSmearSale.referringCenter?.name }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/pap-smear-sale', papSmearSale.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

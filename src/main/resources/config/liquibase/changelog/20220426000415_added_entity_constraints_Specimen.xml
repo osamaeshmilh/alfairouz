@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <!--
+        Added the constraints for entity Specimen.
+    -->
+    <changeSet id="20220426000415-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="patient_id"
+                                 baseTableName="specimen"
+                                 constraintName="fk_specimen__patient_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="patient"/>
+
+        <addForeignKeyConstraint baseColumnNames="biopsy_id"
+                                 baseTableName="specimen"
+                                 constraintName="fk_specimen__biopsy_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="biopsy"/>
+
+        <addForeignKeyConstraint baseColumnNames="cytology_id"
+                                 baseTableName="specimen"
+                                 constraintName="fk_specimen__cytology_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="cytology"/>
+
+        <addForeignKeyConstraint baseColumnNames="organ_id"
+                                 baseTableName="specimen"
+                                 constraintName="fk_specimen__organ_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="organ"/>
+
+        <addForeignKeyConstraint baseColumnNames="specimen_type_id"
+                                 baseTableName="specimen"
+                                 constraintName="fk_specimen__specimen_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="specimen_type"/>
+
+        <addForeignKeyConstraint baseColumnNames="size_id"
+                                 baseTableName="specimen"
+                                 constraintName="fk_specimen__size_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="size"/>
+
+        <addForeignKeyConstraint baseColumnNames="referring_center_id"
+                                 baseTableName="specimen"
+                                 constraintName="fk_specimen__referring_center_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="referring_center"/>
+
+        <addForeignKeyConstraint baseColumnNames="grossing_doctor_id"
+                                 baseTableName="specimen"
+                                 constraintName="fk_specimen__grossing_doctor_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="doctor"/>
+
+        <addForeignKeyConstraint baseColumnNames="referring_doctor_id"
+                                 baseTableName="specimen"
+                                 constraintName="fk_specimen__referring_doctor_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="doctor"/>
+
+        <addForeignKeyConstraint baseColumnNames="pathologist_doctor_id"
+                                 baseTableName="specimen"
+                                 constraintName="fk_specimen__pathologist_doctor_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="doctor"/>
+
+        <addForeignKeyConstraint baseColumnNames="operator_employee_id"
+                                 baseTableName="specimen"
+                                 constraintName="fk_specimen__operator_employee_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
+        <addForeignKeyConstraint baseColumnNames="corrector_employee_id"
+                                 baseTableName="specimen"
+                                 constraintName="fk_specimen__corrector_employee_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+    </changeSet>
+</databaseChangeLog>

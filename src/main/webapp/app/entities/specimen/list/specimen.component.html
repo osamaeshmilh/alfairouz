@@ -1,0 +1,317 @@
+<div>
+  <h2 id="page-heading" data-cy="SpecimenHeading">
+    <span jhiTranslate="alfairouzApp.specimen.home.title">Specimen</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="alfairouzApp.specimen.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-specimen"
+        [routerLink]="['/specimen/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="alfairouzApp.specimen.home.createLabel"> Create a new Specimen </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="specimen?.length === 0">
+    <span jhiTranslate="alfairouzApp.specimen.home.notFound">No specimen found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="specimen && specimen.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="labRefNo">
+            <span jhiTranslate="alfairouzApp.specimen.labRefNo">Lab Ref No</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="labQr">
+            <span jhiTranslate="alfairouzApp.specimen.labQr">Lab Qr</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="labRef">
+            <span jhiTranslate="alfairouzApp.specimen.labRef">Lab Ref</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="pdfFile">
+            <span jhiTranslate="alfairouzApp.specimen.pdfFile">Pdf File</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="pdfFileUrl">
+            <span jhiTranslate="alfairouzApp.specimen.pdfFileUrl">Pdf File Url</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="samples">
+            <span jhiTranslate="alfairouzApp.specimen.samples">Samples</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="blocks">
+            <span jhiTranslate="alfairouzApp.specimen.blocks">Blocks</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="slides">
+            <span jhiTranslate="alfairouzApp.specimen.slides">Slides</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="samplingDate">
+            <span jhiTranslate="alfairouzApp.specimen.samplingDate">Sampling Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="receivingDate">
+            <span jhiTranslate="alfairouzApp.specimen.receivingDate">Receiving Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="contractType">
+            <span jhiTranslate="alfairouzApp.specimen.contractType">Contract Type</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="isWithdrawn">
+            <span jhiTranslate="alfairouzApp.specimen.isWithdrawn">Is Withdrawn</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="withdrawDate">
+            <span jhiTranslate="alfairouzApp.specimen.withdrawDate">Withdraw Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="fileNo">
+            <span jhiTranslate="alfairouzApp.specimen.fileNo">File No</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="paymentType">
+            <span jhiTranslate="alfairouzApp.specimen.paymentType">Payment Type</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="price">
+            <span jhiTranslate="alfairouzApp.specimen.price">Price</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="paid"><span jhiTranslate="alfairouzApp.specimen.paid">Paid</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="notPaid">
+            <span jhiTranslate="alfairouzApp.specimen.notPaid">Not Paid</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="urgentSample">
+            <span jhiTranslate="alfairouzApp.specimen.urgentSample">Urgent Sample</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="revisionDate">
+            <span jhiTranslate="alfairouzApp.specimen.revisionDate">Revision Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="reportDate">
+            <span jhiTranslate="alfairouzApp.specimen.reportDate">Report Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="clinicalData">
+            <span jhiTranslate="alfairouzApp.specimen.clinicalData">Clinical Data</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="clinicalDate">
+            <span jhiTranslate="alfairouzApp.specimen.clinicalDate">Clinical Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="grossExamination">
+            <span jhiTranslate="alfairouzApp.specimen.grossExamination">Gross Examination</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="grossDate">
+            <span jhiTranslate="alfairouzApp.specimen.grossDate">Gross Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="microscopicData">
+            <span jhiTranslate="alfairouzApp.specimen.microscopicData">Microscopic Data</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="microscopicDate">
+            <span jhiTranslate="alfairouzApp.specimen.microscopicDate">Microscopic Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="results">
+            <span jhiTranslate="alfairouzApp.specimen.results">Results</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="conclusion">
+            <span jhiTranslate="alfairouzApp.specimen.conclusion">Conclusion</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="conclusionDate">
+            <span jhiTranslate="alfairouzApp.specimen.conclusionDate">Conclusion Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="notes">
+            <span jhiTranslate="alfairouzApp.specimen.notes">Notes</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="patient.name">
+            <span jhiTranslate="alfairouzApp.specimen.patient">Patient</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="biopsy.name">
+            <span jhiTranslate="alfairouzApp.specimen.biopsy">Biopsy</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="cytology.name">
+            <span jhiTranslate="alfairouzApp.specimen.cytology">Cytology</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="organ.name">
+            <span jhiTranslate="alfairouzApp.specimen.organ">Organ</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="specimenType.name">
+            <span jhiTranslate="alfairouzApp.specimen.specimenType">Specimen Type</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="size.name">
+            <span jhiTranslate="alfairouzApp.specimen.size">Size</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="referringCenter.name">
+            <span jhiTranslate="alfairouzApp.specimen.referringCenter">Referring Center</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="grossingDoctor.name">
+            <span jhiTranslate="alfairouzApp.specimen.grossingDoctor">Grossing Doctor</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="referringDoctor.name">
+            <span jhiTranslate="alfairouzApp.specimen.referringDoctor">Referring Doctor</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="pathologistDoctor.name">
+            <span jhiTranslate="alfairouzApp.specimen.pathologistDoctor">Pathologist Doctor</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="operatorEmployee.name">
+            <span jhiTranslate="alfairouzApp.specimen.operatorEmployee">Operator Employee</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="correctorEmployee.name">
+            <span jhiTranslate="alfairouzApp.specimen.correctorEmployee">Corrector Employee</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let specimen of specimen; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/specimen', specimen.id, 'view']">{{ specimen.id }}</a>
+          </td>
+          <td>{{ specimen.labRefNo }}</td>
+          <td>{{ specimen.labQr }}</td>
+          <td jhiTranslate="{{ 'alfairouzApp.LabRef.' + specimen.labRef }}">{{ specimen.labRef }}</td>
+          <td>
+            <a *ngIf="specimen.pdfFile" (click)="openFile(specimen.pdfFile, specimen.pdfFileContentType)" jhiTranslate="entity.action.open"
+              >open</a
+            >
+            <span *ngIf="specimen.pdfFile">{{ specimen.pdfFileContentType }}, {{ byteSize(specimen.pdfFile) }}</span>
+          </td>
+          <td>{{ specimen.pdfFileUrl }}</td>
+          <td>{{ specimen.samples }}</td>
+          <td>{{ specimen.blocks }}</td>
+          <td>{{ specimen.slides }}</td>
+          <td>{{ specimen.samplingDate | formatMediumDate }}</td>
+          <td>{{ specimen.receivingDate | formatMediumDate }}</td>
+          <td jhiTranslate="{{ 'alfairouzApp.ContractType.' + specimen.contractType }}">{{ specimen.contractType }}</td>
+          <td>{{ specimen.isWithdrawn }}</td>
+          <td>{{ specimen.withdrawDate | formatMediumDate }}</td>
+          <td>{{ specimen.fileNo }}</td>
+          <td jhiTranslate="{{ 'alfairouzApp.PaymentType.' + specimen.paymentType }}">{{ specimen.paymentType }}</td>
+          <td>{{ specimen.price }}</td>
+          <td>{{ specimen.paid }}</td>
+          <td>{{ specimen.notPaid }}</td>
+          <td>{{ specimen.urgentSample }}</td>
+          <td>{{ specimen.revisionDate | formatMediumDate }}</td>
+          <td>{{ specimen.reportDate | formatMediumDate }}</td>
+          <td>{{ specimen.clinicalData }}</td>
+          <td>{{ specimen.clinicalDate | formatMediumDate }}</td>
+          <td>{{ specimen.grossExamination }}</td>
+          <td>{{ specimen.grossDate | formatMediumDate }}</td>
+          <td>{{ specimen.microscopicData }}</td>
+          <td>{{ specimen.microscopicDate | formatMediumDate }}</td>
+          <td jhiTranslate="{{ 'alfairouzApp.Results.' + specimen.results }}">{{ specimen.results }}</td>
+          <td>{{ specimen.conclusion }}</td>
+          <td>{{ specimen.conclusionDate | formatMediumDate }}</td>
+          <td>{{ specimen.notes }}</td>
+          <td>
+            <div *ngIf="specimen.patient">
+              <a [routerLink]="['/patient', specimen.patient?.id, 'view']">{{ specimen.patient?.name }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="specimen.biopsy">
+              <a [routerLink]="['/biopsy', specimen.biopsy?.id, 'view']">{{ specimen.biopsy?.name }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="specimen.cytology">
+              <a [routerLink]="['/cytology', specimen.cytology?.id, 'view']">{{ specimen.cytology?.name }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="specimen.organ">
+              <a [routerLink]="['/organ', specimen.organ?.id, 'view']">{{ specimen.organ?.name }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="specimen.specimenType">
+              <a [routerLink]="['/specimen-type', specimen.specimenType?.id, 'view']">{{ specimen.specimenType?.name }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="specimen.size">
+              <a [routerLink]="['/size', specimen.size?.id, 'view']">{{ specimen.size?.name }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="specimen.referringCenter">
+              <a [routerLink]="['/referring-center', specimen.referringCenter?.id, 'view']">{{ specimen.referringCenter?.name }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="specimen.grossingDoctor">
+              <a [routerLink]="['/doctor', specimen.grossingDoctor?.id, 'view']">{{ specimen.grossingDoctor?.name }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="specimen.referringDoctor">
+              <a [routerLink]="['/doctor', specimen.referringDoctor?.id, 'view']">{{ specimen.referringDoctor?.name }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="specimen.pathologistDoctor">
+              <a [routerLink]="['/doctor', specimen.pathologistDoctor?.id, 'view']">{{ specimen.pathologistDoctor?.name }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="specimen.operatorEmployee">
+              <a [routerLink]="['/employee', specimen.operatorEmployee?.id, 'view']">{{ specimen.operatorEmployee?.name }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="specimen.correctorEmployee">
+              <a [routerLink]="['/employee', specimen.correctorEmployee?.id, 'view']">{{ specimen.correctorEmployee?.name }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/specimen', specimen.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/specimen', specimen.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(specimen)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="specimen && specimen.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

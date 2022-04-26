@@ -1,0 +1,55 @@
+{
+  "applications": "*",
+  "changelogDate": "20220426000427",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "receipt",
+  "fields": [
+    {
+      "fieldName": "dateAt",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "details",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "paymentMethod",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "price",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "paid",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "notPaid",
+      "fieldType": "Float"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Receipt",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "labRefNo",
+      "otherEntityName": "specimen",
+      "otherEntityRelationshipName": "receipt",
+      "relationshipName": "specimen",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "patient",
+      "otherEntityRelationshipName": "receipt",
+      "relationshipName": "patient",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

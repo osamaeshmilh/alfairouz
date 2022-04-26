@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="representativeDelivery">
+      <h2 data-cy="representativeDeliveryDetailsHeading">
+        <span jhiTranslate="alfairouzApp.representativeDelivery.detail.title">Representative Delivery</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ representativeDelivery.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.representativeDelivery.dateAt">Date At</span></dt>
+        <dd>
+          <span>{{ representativeDelivery.dateAt | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.representativeDelivery.details">Details</span></dt>
+        <dd>
+          <span>{{ representativeDelivery.details }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.representativeDelivery.total">Total</span></dt>
+        <dd>
+          <span>{{ representativeDelivery.total }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/representative-delivery', representativeDelivery.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

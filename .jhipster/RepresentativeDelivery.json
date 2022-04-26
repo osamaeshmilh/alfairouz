@@ -1,0 +1,28 @@
+{
+  "applications": "*",
+  "changelogDate": "20220426000423",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "representative_delivery",
+  "fields": [
+    {
+      "fieldName": "dateAt",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "details",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "total",
+      "fieldType": "Float"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "RepresentativeDelivery",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceClass"
+}

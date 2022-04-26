@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="expense">
+      <h2 data-cy="expenseDetailsHeading"><span jhiTranslate="alfairouzApp.expense.detail.title">Expense</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ expense.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.expense.dateAt">Date At</span></dt>
+        <dd>
+          <span>{{ expense.dateAt | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.expense.details">Details</span></dt>
+        <dd>
+          <span>{{ expense.details }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.expense.amount">Amount</span></dt>
+        <dd>
+          <span>{{ expense.amount }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.expense.expenseType">Expense Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'alfairouzApp.ExpenseType.' + expense.expenseType }}">{{ expense.expenseType }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.expense.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="expense.employee">
+            <a [routerLink]="['/employee', expense.employee?.id, 'view']">{{ expense.employee?.name }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/expense', expense.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

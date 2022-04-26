@@ -1,0 +1,24 @@
+{
+  "applications": "*",
+  "changelogDate": "20220426000420",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "size",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "price",
+      "fieldType": "Float"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Size",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceClass"
+}

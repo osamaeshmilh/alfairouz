@@ -1,0 +1,20 @@
+{
+  "applications": "*",
+  "changelogDate": "20220426000412",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "biopsy",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Biopsy",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceClass"
+}

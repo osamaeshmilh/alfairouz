@@ -1,0 +1,65 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="blockWithdraw">
+      <h2 data-cy="blockWithdrawDetailsHeading"><span jhiTranslate="alfairouzApp.blockWithdraw.detail.title">Block Withdraw</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ blockWithdraw.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.blockWithdraw.personName">Person Name</span></dt>
+        <dd>
+          <span>{{ blockWithdraw.personName }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.blockWithdraw.personId">Person Id</span></dt>
+        <dd>
+          <span>{{ blockWithdraw.personId }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.blockWithdraw.quantity">Quantity</span></dt>
+        <dd>
+          <span>{{ blockWithdraw.quantity }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.blockWithdraw.withdrawDate">Withdraw Date</span></dt>
+        <dd>
+          <span>{{ blockWithdraw.withdrawDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.blockWithdraw.withdrawType">Withdraw Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'alfairouzApp.WithdrawType.' + blockWithdraw.withdrawType }}">{{ blockWithdraw.withdrawType }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.blockWithdraw.pdfFile">Pdf File</span></dt>
+        <dd>
+          <div *ngIf="blockWithdraw.pdfFile">
+            <a (click)="openFile(blockWithdraw.pdfFile, blockWithdraw.pdfFileContentType)" jhiTranslate="entity.action.open">open</a>
+            {{ blockWithdraw.pdfFileContentType }}, {{ byteSize(blockWithdraw.pdfFile) }}
+          </div>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.blockWithdraw.pdfFileUrl">Pdf File Url</span></dt>
+        <dd>
+          <span>{{ blockWithdraw.pdfFileUrl }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.blockWithdraw.specimen">Specimen</span></dt>
+        <dd>
+          <div *ngIf="blockWithdraw.specimen">
+            <a [routerLink]="['/specimen', blockWithdraw.specimen?.id, 'view']">{{ blockWithdraw.specimen?.labRefNo }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/block-withdraw', blockWithdraw.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

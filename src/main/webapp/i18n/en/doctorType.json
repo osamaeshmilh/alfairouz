@@ -1,0 +1,10 @@
+{
+  "alfairouzApp": {
+    "DoctorType": {
+      "null": "",
+      "GROSSING": "GROSSING",
+      "REFERRING": "REFERRING",
+      "PATHOLOGIST": "PATHOLOGIST"
+    }
+  }
+}

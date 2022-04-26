@@ -1,0 +1,54 @@
+{
+  "applications": "*",
+  "changelogDate": "20220426000416",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "block_withdraw",
+  "fields": [
+    {
+      "fieldName": "personName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "personId",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "quantity",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "withdrawDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "withdrawType",
+      "fieldType": "WithdrawType",
+      "fieldValues": "BLOCK,SLIDE"
+    },
+    {
+      "fieldName": "pdfFile",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    },
+    {
+      "fieldName": "pdfFileUrl",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "BlockWithdraw",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "labRefNo",
+      "otherEntityName": "specimen",
+      "otherEntityRelationshipName": "blockWithdraw",
+      "relationshipName": "specimen",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

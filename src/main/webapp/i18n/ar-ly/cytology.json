@@ -1,0 +1,24 @@
+{
+  "alfairouzApp": {
+    "cytology": {
+      "home": {
+        "title": "Cytologies",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Cytology",
+        "createOrEditLabel": "Create or edit a Cytology",
+        "notFound": "No Cytologies found"
+      },
+      "created": "A new Cytology is created with identifier {{ param }}",
+      "updated": "A Cytology is updated with identifier {{ param }}",
+      "deleted": "A Cytology is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Cytology {{ id }}?"
+      },
+      "detail": {
+        "title": "Cytology"
+      },
+      "id": "ID",
+      "name": "Name"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "alfairouzApp": {
+    "papSmearSale": {
+      "home": {
+        "title": "Pap Smear Sales",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Pap Smear Sale",
+        "createOrEditLabel": "Create or edit a Pap Smear Sale",
+        "notFound": "No Pap Smear Sales found"
+      },
+      "created": "A new Pap Smear Sale is created with identifier {{ param }}",
+      "updated": "A Pap Smear Sale is updated with identifier {{ param }}",
+      "deleted": "A Pap Smear Sale is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Pap Smear Sale {{ id }}?"
+      },
+      "detail": {
+        "title": "Pap Smear Sale"
+      },
+      "id": "ID",
+      "dateAt": "Date At",
+      "details": "Details",
+      "paymentType": "Payment Type",
+      "quantity": "Quantity",
+      "total": "Total",
+      "referringCenter": "Referring Center"
+    }
+  }
+}

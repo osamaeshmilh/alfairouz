@@ -1,0 +1,53 @@
+{
+  "applications": "*",
+  "changelogDate": "20220426000424",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "referring_center",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nameAr",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "mobileNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "onlineReport",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "contractType",
+      "fieldType": "ContractType",
+      "fieldValues": "SIZE,SPECIMEN"
+    },
+    {
+      "fieldName": "discount",
+      "fieldType": "Float"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "ReferringCenter",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "referringCenter",
+      "ownerSide": true,
+      "relationshipName": "internalUser",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

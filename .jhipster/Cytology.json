@@ -1,0 +1,20 @@
+{
+  "applications": "*",
+  "changelogDate": "20220426000413",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "cytology",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Cytology",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceClass"
+}

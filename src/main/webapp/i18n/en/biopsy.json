@@ -1,0 +1,24 @@
+{
+  "alfairouzApp": {
+    "biopsy": {
+      "home": {
+        "title": "Biopsies",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Biopsy",
+        "createOrEditLabel": "Create or edit a Biopsy",
+        "notFound": "No Biopsies found"
+      },
+      "created": "A new Biopsy is created with identifier {{ param }}",
+      "updated": "A Biopsy is updated with identifier {{ param }}",
+      "deleted": "A Biopsy is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Biopsy {{ id }}?"
+      },
+      "detail": {
+        "title": "Biopsy"
+      },
+      "id": "ID",
+      "name": "Name"
+    }
+  }
+}

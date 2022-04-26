@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="referringCenter">
+      <h2 data-cy="referringCenterDetailsHeading">
+        <span jhiTranslate="alfairouzApp.referringCenter.detail.title">Referring Center</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ referringCenter.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.referringCenter.name">Name</span></dt>
+        <dd>
+          <span>{{ referringCenter.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.referringCenter.nameAr">Name Ar</span></dt>
+        <dd>
+          <span>{{ referringCenter.nameAr }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.referringCenter.mobileNumber">Mobile Number</span></dt>
+        <dd>
+          <span>{{ referringCenter.mobileNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.referringCenter.email">Email</span></dt>
+        <dd>
+          <span>{{ referringCenter.email }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.referringCenter.onlineReport">Online Report</span></dt>
+        <dd>
+          <span>{{ referringCenter.onlineReport }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.referringCenter.contractType">Contract Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'alfairouzApp.ContractType.' + referringCenter.contractType }}">{{ referringCenter.contractType }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.referringCenter.discount">Discount</span></dt>
+        <dd>
+          <span>{{ referringCenter.discount }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.referringCenter.internalUser">Internal User</span></dt>
+        <dd>
+          <span>{{ referringCenter.internalUser?.id }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/referring-center', referringCenter.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

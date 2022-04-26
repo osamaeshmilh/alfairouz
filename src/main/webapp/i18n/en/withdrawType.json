@@ -1,0 +1,9 @@
+{
+  "alfairouzApp": {
+    "WithdrawType": {
+      "null": "",
+      "BLOCK": "BLOCK",
+      "SLIDE": "SLIDE"
+    }
+  }
+}

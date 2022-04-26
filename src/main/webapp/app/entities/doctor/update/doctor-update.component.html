@@ -1,0 +1,125 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-doctor-heading" data-cy="DoctorCreateUpdateHeading" jhiTranslate="alfairouzApp.doctor.home.createOrEditLabel">
+        Create or edit a Doctor
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.doctor.name" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.doctor.nameAr" for="field_nameAr">Name Ar</label>
+          <input type="text" class="form-control" name="nameAr" id="field_nameAr" data-cy="nameAr" formControlName="nameAr" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.doctor.description" for="field_description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.doctor.mobileNo" for="field_mobileNo">Mobile No</label>
+          <input type="text" class="form-control" name="mobileNo" id="field_mobileNo" data-cy="mobileNo" formControlName="mobileNo" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.doctor.email" for="field_email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.doctor.onlineReport" for="field_onlineReport">Online Report</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="onlineReport"
+            id="field_onlineReport"
+            data-cy="onlineReport"
+            formControlName="onlineReport"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.doctor.emailReport" for="field_emailReport">Email Report</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="emailReport"
+            id="field_emailReport"
+            data-cy="emailReport"
+            formControlName="emailReport"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.doctor.percentage" for="field_percentage">Percentage</label>
+          <input
+            type="number"
+            class="form-control"
+            name="percentage"
+            id="field_percentage"
+            data-cy="percentage"
+            formControlName="percentage"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.doctor.doctorType" for="field_doctorType">Doctor Type</label>
+          <select class="form-control" name="doctorType" formControlName="doctorType" id="field_doctorType" data-cy="doctorType">
+            <option [ngValue]="null">{{ 'alfairouzApp.DoctorType.null' | translate }}</option>
+            <option *ngFor="let doctorType of doctorTypeValues" [value]="doctorType">
+              {{ 'alfairouzApp.DoctorType.' + doctorType | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.doctor.internalUser" for="field_internalUser">Internal User</label>
+          <select class="form-control" id="field_internalUser" data-cy="internalUser" name="internalUser" formControlName="internalUser">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="userOption.id === editForm.get('internalUser')!.value?.id ? editForm.get('internalUser')!.value : userOption"
+              *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById"
+            >
+              {{ userOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

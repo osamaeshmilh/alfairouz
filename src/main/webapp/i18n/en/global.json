@@ -7,6 +7,22 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
+        "biopsy": "Biopsy",
+        "cytology": "Cytology",
+        "organ": "Organ",
+        "specimen": "Specimen",
+        "blockWithdraw": "Block Withdraw",
+        "patient": "Patient",
+        "doctor": "Doctor",
+        "specimenType": "Specimen Type",
+        "size": "Size",
+        "employee": "Employee",
+        "papSmearSale": "Pap Smear Sale",
+        "representativeDelivery": "Representative Delivery",
+        "referringCenter": "Referring Center",
+        "extra": "Extra",
+        "expense": "Expense",
+        "receipt": "Receipt",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

@@ -1,0 +1,109 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-receipt-heading" data-cy="ReceiptCreateUpdateHeading" jhiTranslate="alfairouzApp.receipt.home.createOrEditLabel">
+        Create or edit a Receipt
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.receipt.dateAt" for="field_dateAt">Date At</label>
+          <div class="input-group">
+            <input
+              id="field_dateAt"
+              data-cy="dateAt"
+              type="text"
+              class="form-control"
+              name="dateAt"
+              ngbDatepicker
+              #dateAtDp="ngbDatepicker"
+              formControlName="dateAt"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateAtDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.receipt.details" for="field_details">Details</label>
+          <input type="text" class="form-control" name="details" id="field_details" data-cy="details" formControlName="details" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.receipt.paymentMethod" for="field_paymentMethod">Payment Method</label>
+          <input
+            type="text"
+            class="form-control"
+            name="paymentMethod"
+            id="field_paymentMethod"
+            data-cy="paymentMethod"
+            formControlName="paymentMethod"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.receipt.price" for="field_price">Price</label>
+          <input type="number" class="form-control" name="price" id="field_price" data-cy="price" formControlName="price" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.receipt.paid" for="field_paid">Paid</label>
+          <input type="number" class="form-control" name="paid" id="field_paid" data-cy="paid" formControlName="paid" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.receipt.notPaid" for="field_notPaid">Not Paid</label>
+          <input type="number" class="form-control" name="notPaid" id="field_notPaid" data-cy="notPaid" formControlName="notPaid" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.receipt.specimen" for="field_specimen">Specimen</label>
+          <select class="form-control" id="field_specimen" data-cy="specimen" name="specimen" formControlName="specimen">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="specimenOption.id === editForm.get('specimen')!.value?.id ? editForm.get('specimen')!.value : specimenOption"
+              *ngFor="let specimenOption of specimenSharedCollection; trackBy: trackSpecimenById"
+            >
+              {{ specimenOption.labRefNo }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.receipt.patient" for="field_patient">Patient</label>
+          <select class="form-control" id="field_patient" data-cy="patient" name="patient" formControlName="patient">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="patientOption.id === editForm.get('patient')!.value?.id ? editForm.get('patient')!.value : patientOption"
+              *ngFor="let patientOption of patientsSharedCollection; trackBy: trackPatientById"
+            >
+              {{ patientOption.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

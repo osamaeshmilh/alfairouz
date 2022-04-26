@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="receipt">
+      <h2 data-cy="receiptDetailsHeading"><span jhiTranslate="alfairouzApp.receipt.detail.title">Receipt</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ receipt.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.receipt.dateAt">Date At</span></dt>
+        <dd>
+          <span>{{ receipt.dateAt | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.receipt.details">Details</span></dt>
+        <dd>
+          <span>{{ receipt.details }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.receipt.paymentMethod">Payment Method</span></dt>
+        <dd>
+          <span>{{ receipt.paymentMethod }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.receipt.price">Price</span></dt>
+        <dd>
+          <span>{{ receipt.price }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.receipt.paid">Paid</span></dt>
+        <dd>
+          <span>{{ receipt.paid }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.receipt.notPaid">Not Paid</span></dt>
+        <dd>
+          <span>{{ receipt.notPaid }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.receipt.specimen">Specimen</span></dt>
+        <dd>
+          <div *ngIf="receipt.specimen">
+            <a [routerLink]="['/specimen', receipt.specimen?.id, 'view']">{{ receipt.specimen?.labRefNo }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.receipt.patient">Patient</span></dt>
+        <dd>
+          <div *ngIf="receipt.patient">
+            <a [routerLink]="['/patient', receipt.patient?.id, 'view']">{{ receipt.patient?.name }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/receipt', receipt.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

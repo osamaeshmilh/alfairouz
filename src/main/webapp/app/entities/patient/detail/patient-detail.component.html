@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="patient">
+      <h2 data-cy="patientDetailsHeading"><span jhiTranslate="alfairouzApp.patient.detail.title">Patient</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ patient.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.patient.name">Name</span></dt>
+        <dd>
+          <span>{{ patient.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.patient.nameAr">Name Ar</span></dt>
+        <dd>
+          <span>{{ patient.nameAr }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.patient.birthDate">Birth Date</span></dt>
+        <dd>
+          <span>{{ patient.birthDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.patient.gender">Gender</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'alfairouzApp.Gender.' + patient.gender }}">{{ patient.gender }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.patient.mobileNumber">Mobile Number</span></dt>
+        <dd>
+          <span>{{ patient.mobileNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.patient.nationality">Nationality</span></dt>
+        <dd>
+          <span>{{ patient.nationality }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.patient.motherName">Mother Name</span></dt>
+        <dd>
+          <span>{{ patient.motherName }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.patient.address">Address</span></dt>
+        <dd>
+          <span>{{ patient.address }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.patient.notes">Notes</span></dt>
+        <dd>
+          <span>{{ patient.notes }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/patient', patient.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+export enum JobTitle {
+  RECIPTION = 'RECIPTION',
+
+  TYPING = 'TYPING',
+
+  EMBEDDING = 'EMBEDDING',
+
+  MICROTOME = 'MICROTOME',
+
+  STAINING = 'STAINING',
+
+  REVISION = 'REVISION',
+
+  OTHERS = 'OTHERS',
+}

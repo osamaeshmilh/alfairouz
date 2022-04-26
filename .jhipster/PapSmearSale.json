@@ -1,0 +1,45 @@
+{
+  "applications": "*",
+  "changelogDate": "20220426000422",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "pap_smear_sale",
+  "fields": [
+    {
+      "fieldName": "dateAt",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "details",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "paymentType",
+      "fieldType": "PaymentType",
+      "fieldValues": "CASH,MONTHLY"
+    },
+    {
+      "fieldName": "quantity",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "total",
+      "fieldType": "Float"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "PapSmearSale",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "referringCenter",
+      "otherEntityRelationshipName": "papSmearSale",
+      "relationshipName": "referringCenter",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

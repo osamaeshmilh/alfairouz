@@ -1,0 +1,66 @@
+{
+  "alfairouzApp": {
+    "specimen": {
+      "home": {
+        "title": "Specimen",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Specimen",
+        "createOrEditLabel": "Create or edit a Specimen",
+        "notFound": "No Specimen found"
+      },
+      "created": "A new Specimen is created with identifier {{ param }}",
+      "updated": "A Specimen is updated with identifier {{ param }}",
+      "deleted": "A Specimen is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Specimen {{ id }}?"
+      },
+      "detail": {
+        "title": "Specimen"
+      },
+      "id": "ID",
+      "labRefNo": "Lab Ref No",
+      "labQr": "Lab Qr",
+      "labRef": "Lab Ref",
+      "pdfFile": "Pdf File",
+      "pdfFileUrl": "Pdf File Url",
+      "samples": "Samples",
+      "blocks": "Blocks",
+      "slides": "Slides",
+      "samplingDate": "Sampling Date",
+      "receivingDate": "Receiving Date",
+      "contractType": "Contract Type",
+      "isWithdrawn": "Is Withdrawn",
+      "withdrawDate": "Withdraw Date",
+      "fileNo": "File No",
+      "paymentType": "Payment Type",
+      "price": "Price",
+      "paid": "Paid",
+      "notPaid": "Not Paid",
+      "urgentSample": "Urgent Sample",
+      "revisionDate": "Revision Date",
+      "reportDate": "Report Date",
+      "clinicalData": "Clinical Data",
+      "clinicalDate": "Clinical Date",
+      "grossExamination": "Gross Examination",
+      "grossDate": "Gross Date",
+      "microscopicData": "Microscopic Data",
+      "microscopicDate": "Microscopic Date",
+      "results": "Results",
+      "conclusion": "Conclusion",
+      "conclusionDate": "Conclusion Date",
+      "notes": "Notes",
+      "patient": "Patient",
+      "biopsy": "Biopsy",
+      "cytology": "Cytology",
+      "organ": "Organ",
+      "specimenType": "Specimen Type",
+      "size": "Size",
+      "referringCenter": "Referring Center",
+      "grossingDoctor": "Grossing Doctor",
+      "referringDoctor": "Referring Doctor",
+      "pathologistDoctor": "Pathologist Doctor",
+      "operatorEmployee": "Operator Employee",
+      "correctorEmployee": "Corrector Employee"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "alfairouzApp": {
+    "specimenType": {
+      "home": {
+        "title": "Specimen Types",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Specimen Type",
+        "createOrEditLabel": "Create or edit a Specimen Type",
+        "notFound": "No Specimen Types found"
+      },
+      "created": "A new Specimen Type is created with identifier {{ param }}",
+      "updated": "A Specimen Type is updated with identifier {{ param }}",
+      "deleted": "A Specimen Type is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Specimen Type {{ id }}?"
+      },
+      "detail": {
+        "title": "Specimen Type"
+      },
+      "id": "ID",
+      "name": "Name",
+      "category": "Category",
+      "price": "Price"
+    }
+  }
+}

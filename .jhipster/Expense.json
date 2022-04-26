@@ -1,0 +1,41 @@
+{
+  "applications": "*",
+  "changelogDate": "20220426000426",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "expense",
+  "fields": [
+    {
+      "fieldName": "dateAt",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "details",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "amount",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "expenseType",
+      "fieldType": "ExpenseType",
+      "fieldValues": "MANAGMENT,OTHER"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Expense",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "expense",
+      "relationshipName": "employee",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

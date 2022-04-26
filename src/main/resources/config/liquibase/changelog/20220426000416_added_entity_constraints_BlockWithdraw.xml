@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <!--
+        Added the constraints for entity BlockWithdraw.
+    -->
+    <changeSet id="20220426000416-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="specimen_id"
+                                 baseTableName="block_withdraw"
+                                 constraintName="fk_block_withdraw__specimen_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="specimen"/>
+    </changeSet>
+</databaseChangeLog>

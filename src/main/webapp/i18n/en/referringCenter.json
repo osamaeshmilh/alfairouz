@@ -1,0 +1,31 @@
+{
+  "alfairouzApp": {
+    "referringCenter": {
+      "home": {
+        "title": "Referring Centers",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Referring Center",
+        "createOrEditLabel": "Create or edit a Referring Center",
+        "notFound": "No Referring Centers found"
+      },
+      "created": "A new Referring Center is created with identifier {{ param }}",
+      "updated": "A Referring Center is updated with identifier {{ param }}",
+      "deleted": "A Referring Center is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Referring Center {{ id }}?"
+      },
+      "detail": {
+        "title": "Referring Center"
+      },
+      "id": "ID",
+      "name": "Name",
+      "nameAr": "Name Ar",
+      "mobileNumber": "Mobile Number",
+      "email": "Email",
+      "onlineReport": "Online Report",
+      "contractType": "Contract Type",
+      "discount": "Discount",
+      "internalUser": "Internal User"
+    }
+  }
+}

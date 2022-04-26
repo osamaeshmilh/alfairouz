@@ -1,0 +1,61 @@
+{
+  "applications": "*",
+  "changelogDate": "20220426000418",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "doctor",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nameAr",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "mobileNo",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "onlineReport",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "emailReport",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "percentage",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "doctorType",
+      "fieldType": "DoctorType",
+      "fieldValues": "GROSSING,REFERRING,PATHOLOGIST"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Doctor",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "doctor",
+      "ownerSide": true,
+      "relationshipName": "internalUser",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

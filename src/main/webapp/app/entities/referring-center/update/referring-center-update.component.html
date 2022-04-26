@@ -1,0 +1,105 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-referring-center-heading"
+        data-cy="ReferringCenterCreateUpdateHeading"
+        jhiTranslate="alfairouzApp.referringCenter.home.createOrEditLabel"
+      >
+        Create or edit a Referring Center
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.referringCenter.name" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.referringCenter.nameAr" for="field_nameAr">Name Ar</label>
+          <input type="text" class="form-control" name="nameAr" id="field_nameAr" data-cy="nameAr" formControlName="nameAr" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.referringCenter.mobileNumber" for="field_mobileNumber">Mobile Number</label>
+          <input
+            type="text"
+            class="form-control"
+            name="mobileNumber"
+            id="field_mobileNumber"
+            data-cy="mobileNumber"
+            formControlName="mobileNumber"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.referringCenter.email" for="field_email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.referringCenter.onlineReport" for="field_onlineReport">Online Report</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="onlineReport"
+            id="field_onlineReport"
+            data-cy="onlineReport"
+            formControlName="onlineReport"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.referringCenter.contractType" for="field_contractType">Contract Type</label>
+          <select class="form-control" name="contractType" formControlName="contractType" id="field_contractType" data-cy="contractType">
+            <option [ngValue]="null">{{ 'alfairouzApp.ContractType.null' | translate }}</option>
+            <option *ngFor="let contractType of contractTypeValues" [value]="contractType">
+              {{ 'alfairouzApp.ContractType.' + contractType | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.referringCenter.discount" for="field_discount">Discount</label>
+          <input type="number" class="form-control" name="discount" id="field_discount" data-cy="discount" formControlName="discount" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.referringCenter.internalUser" for="field_internalUser">Internal User</label>
+          <select class="form-control" id="field_internalUser" data-cy="internalUser" name="internalUser" formControlName="internalUser">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="userOption.id === editForm.get('internalUser')!.value?.id ? editForm.get('internalUser')!.value : userOption"
+              *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById"
+            >
+              {{ userOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

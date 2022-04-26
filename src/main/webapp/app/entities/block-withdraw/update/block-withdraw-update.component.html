@@ -1,0 +1,153 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-block-withdraw-heading"
+        data-cy="BlockWithdrawCreateUpdateHeading"
+        jhiTranslate="alfairouzApp.blockWithdraw.home.createOrEditLabel"
+      >
+        Create or edit a Block Withdraw
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.blockWithdraw.personName" for="field_personName">Person Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="personName"
+            id="field_personName"
+            data-cy="personName"
+            formControlName="personName"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.blockWithdraw.personId" for="field_personId">Person Id</label>
+          <input type="text" class="form-control" name="personId" id="field_personId" data-cy="personId" formControlName="personId" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.blockWithdraw.quantity" for="field_quantity">Quantity</label>
+          <input type="number" class="form-control" name="quantity" id="field_quantity" data-cy="quantity" formControlName="quantity" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.blockWithdraw.withdrawDate" for="field_withdrawDate">Withdraw Date</label>
+          <div class="input-group">
+            <input
+              id="field_withdrawDate"
+              data-cy="withdrawDate"
+              type="text"
+              class="form-control"
+              name="withdrawDate"
+              ngbDatepicker
+              #withdrawDateDp="ngbDatepicker"
+              formControlName="withdrawDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="withdrawDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.blockWithdraw.withdrawType" for="field_withdrawType">Withdraw Type</label>
+          <select class="form-control" name="withdrawType" formControlName="withdrawType" id="field_withdrawType" data-cy="withdrawType">
+            <option [ngValue]="null">{{ 'alfairouzApp.WithdrawType.null' | translate }}</option>
+            <option *ngFor="let withdrawType of withdrawTypeValues" [value]="withdrawType">
+              {{ 'alfairouzApp.WithdrawType.' + withdrawType | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.blockWithdraw.pdfFile" for="field_pdfFile">Pdf File</label>
+          <div>
+            <div *ngIf="editForm.get('pdfFile')!.value" class="form-text text-danger clearfix">
+              <a
+                class="pull-start"
+                (click)="openFile(editForm.get('pdfFile')!.value, editForm.get('pdfFileContentType')!.value)"
+                jhiTranslate="entity.action.open"
+                >open</a
+              ><br />
+              <span class="pull-start"
+                >{{ editForm.get('pdfFileContentType')!.value }}, {{ byteSize(editForm.get('pdfFile')!.value) }}</span
+              >
+              <button
+                type="button"
+                (click)="editForm.patchValue({ pdfFile: null }); editForm.patchValue({ pdfFileContentType: null })"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_pdfFile"
+              data-cy="pdfFile"
+              (change)="setFileData($event, 'pdfFile', false)"
+              jhiTranslate="entity.action.addblob"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="pdfFile" id="field_pdfFile" data-cy="pdfFile" formControlName="pdfFile" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="pdfFileContentType"
+            id="field_pdfFileContentType"
+            formControlName="pdfFileContentType"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.blockWithdraw.pdfFileUrl" for="field_pdfFileUrl">Pdf File Url</label>
+          <input
+            type="text"
+            class="form-control"
+            name="pdfFileUrl"
+            id="field_pdfFileUrl"
+            data-cy="pdfFileUrl"
+            formControlName="pdfFileUrl"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.blockWithdraw.specimen" for="field_specimen">Specimen</label>
+          <select class="form-control" id="field_specimen" data-cy="specimen" name="specimen" formControlName="specimen">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="specimenOption.id === editForm.get('specimen')!.value?.id ? editForm.get('specimen')!.value : specimenOption"
+              *ngFor="let specimenOption of specimenSharedCollection; trackBy: trackSpecimenById"
+            >
+              {{ specimenOption.labRefNo }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+{
+  "alfairouzApp": {
+    "Results": {
+      "null": "",
+      "BENIGN": "BENIGN",
+      "MALIGNANT": "MALIGNANT",
+      "INFLAMMATION": "INFLAMMATION",
+      "NORMAL": "NORMAL",
+      "OTHER": "OTHER"
+    }
+  }
+}

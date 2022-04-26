@@ -1,0 +1,9 @@
+{
+  "alfairouzApp": {
+    "ExpenseType": {
+      "null": "",
+      "MANAGMENT": "MANAGMENT",
+      "OTHER": "OTHER"
+    }
+  }
+}

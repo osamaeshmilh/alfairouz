@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="extra">
+      <h2 data-cy="extraDetailsHeading"><span jhiTranslate="alfairouzApp.extra.detail.title">Extra</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ extra.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.extra.dateAt">Date At</span></dt>
+        <dd>
+          <span>{{ extra.dateAt | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.extra.extraAction">Extra Action</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'alfairouzApp.ExtraAction.' + extra.extraAction }}">{{ extra.extraAction }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.extra.details">Details</span></dt>
+        <dd>
+          <span>{{ extra.details }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.extra.amount">Amount</span></dt>
+        <dd>
+          <span>{{ extra.amount }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.extra.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="extra.employee">
+            <a [routerLink]="['/employee', extra.employee?.id, 'view']">{{ extra.employee?.name }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/extra', extra.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

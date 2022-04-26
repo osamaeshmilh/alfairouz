@@ -1,0 +1,9 @@
+{
+  "alfairouzApp": {
+    "PaymentType": {
+      "null": "",
+      "CASH": "CASH",
+      "MONTHLY": "MONTHLY"
+    }
+  }
+}

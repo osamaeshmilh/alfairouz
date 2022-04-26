@@ -1,0 +1,31 @@
+{
+  "alfairouzApp": {
+    "blockWithdraw": {
+      "home": {
+        "title": "Block Withdraws",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Block Withdraw",
+        "createOrEditLabel": "Create or edit a Block Withdraw",
+        "notFound": "No Block Withdraws found"
+      },
+      "created": "A new Block Withdraw is created with identifier {{ param }}",
+      "updated": "A Block Withdraw is updated with identifier {{ param }}",
+      "deleted": "A Block Withdraw is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Block Withdraw {{ id }}?"
+      },
+      "detail": {
+        "title": "Block Withdraw"
+      },
+      "id": "ID",
+      "personName": "Person Name",
+      "personId": "Person Id",
+      "quantity": "Quantity",
+      "withdrawDate": "Withdraw Date",
+      "withdrawType": "Withdraw Type",
+      "pdfFile": "Pdf File",
+      "pdfFileUrl": "Pdf File Url",
+      "specimen": "Specimen"
+    }
+  }
+}

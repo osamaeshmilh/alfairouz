@@ -1,0 +1,230 @@
+{
+  "applications": "*",
+  "changelogDate": "20220426000415",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "specimen",
+  "fields": [
+    {
+      "fieldName": "labRefNo",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "labQr",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "labRef",
+      "fieldType": "LabRef",
+      "fieldValues": "H,C,HSO,IH,IHSO"
+    },
+    {
+      "fieldName": "pdfFile",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    },
+    {
+      "fieldName": "pdfFileUrl",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "samples",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "blocks",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "slides",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "samplingDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "receivingDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "contractType",
+      "fieldType": "ContractType",
+      "fieldValues": "SIZE,SPECIMEN"
+    },
+    {
+      "fieldName": "isWithdrawn",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "withdrawDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "fileNo",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "paymentType",
+      "fieldType": "PaymentType",
+      "fieldValues": "CASH,MONTHLY"
+    },
+    {
+      "fieldName": "price",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "paid",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "notPaid",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "urgentSample",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "revisionDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "reportDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "clinicalData",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "clinicalDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "grossExamination",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "grossDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "microscopicData",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "microscopicDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "results",
+      "fieldType": "Results",
+      "fieldValues": "BENIGN,MALIGNANT,INFLAMMATION,NORMAL,OTHER"
+    },
+    {
+      "fieldName": "conclusion",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "conclusionDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "notes",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Specimen",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "patient",
+      "otherEntityRelationshipName": "specimen",
+      "relationshipName": "patient",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "biopsy",
+      "otherEntityRelationshipName": "specimen",
+      "relationshipName": "biopsy",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "cytology",
+      "otherEntityRelationshipName": "specimen",
+      "relationshipName": "cytology",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "organ",
+      "otherEntityRelationshipName": "specimen",
+      "relationshipName": "organ",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "specimenType",
+      "otherEntityRelationshipName": "specimen",
+      "relationshipName": "specimenType",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "size",
+      "otherEntityRelationshipName": "specimen",
+      "relationshipName": "size",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "referringCenter",
+      "otherEntityRelationshipName": "specimen",
+      "relationshipName": "referringCenter",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "doctor",
+      "otherEntityRelationshipName": "specimen",
+      "relationshipName": "grossingDoctor",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "doctor",
+      "otherEntityRelationshipName": "specimen",
+      "relationshipName": "referringDoctor",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "doctor",
+      "otherEntityRelationshipName": "specimen",
+      "relationshipName": "pathologistDoctor",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "specimen",
+      "relationshipName": "operatorEmployee",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "specimen",
+      "relationshipName": "correctorEmployee",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

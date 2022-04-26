@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity Specimen.
+    -->
+    <changeSet id="20220426000415-1" author="jhipster">
+        <createTable tableName="specimen">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="lab_ref_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="lab_qr" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="lab_ref" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="pdf_file" type="longblob">
+                <constraints nullable="true" />
+            </column>
+            <column name="pdf_file_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="pdf_file_url" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="samples" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="blocks" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="slides" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="sampling_date" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="receiving_date" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="contract_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_withdrawn" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="withdraw_date" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="file_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="payment_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="price" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="paid" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="not_paid" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="urgent_sample" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="revision_date" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="report_date" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="clinical_data" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="clinical_date" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="gross_examination" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="gross_date" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="microscopic_data" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="microscopic_date" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="results" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="conclusion" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="conclusion_date" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="notes" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="patient_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="biopsy_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="cytology_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="organ_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="specimen_type_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="size_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="referring_center_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="grossing_doctor_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="referring_doctor_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="pathologist_doctor_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="operator_employee_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="corrector_employee_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+
+    <!--
+        Load sample data generated with Faker.js
+        - This data can be easily edited using a CSV editor (or even MS Excel) and
+          is located in the 'src/main/resources/config/liquibase/fake-data' directory
+        - By default this data is applied when running with the JHipster 'dev' profile.
+          This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
+          Spring Boot configuration key.
+    -->
+    <changeSet id="20220426000415-1-data" author="jhipster" context="faker">
+        <loadData
+                  file="config/liquibase/fake-data/specimen.csv"
+                  separator=";"
+                  tableName="specimen"
+                  usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="lab_ref_no" type="string"/>
+            <column name="lab_qr" type="string"/>
+            <column name="lab_ref" type="string"/>
+            <column name="pdf_file" type="blob"/>
+            <column name="pdf_file_content_type" type="string"/>
+            <column name="pdf_file_url" type="string"/>
+            <column name="samples" type="numeric"/>
+            <column name="blocks" type="numeric"/>
+            <column name="slides" type="numeric"/>
+            <column name="sampling_date" type="date"/>
+            <column name="receiving_date" type="date"/>
+            <column name="contract_type" type="string"/>
+            <column name="is_withdrawn" type="boolean"/>
+            <column name="withdraw_date" type="date"/>
+            <column name="file_no" type="string"/>
+            <column name="payment_type" type="string"/>
+            <column name="price" type="numeric"/>
+            <column name="paid" type="numeric"/>
+            <column name="not_paid" type="numeric"/>
+            <column name="urgent_sample" type="boolean"/>
+            <column name="revision_date" type="date"/>
+            <column name="report_date" type="date"/>
+            <column name="clinical_data" type="string"/>
+            <column name="clinical_date" type="date"/>
+            <column name="gross_examination" type="string"/>
+            <column name="gross_date" type="date"/>
+            <column name="microscopic_data" type="string"/>
+            <column name="microscopic_date" type="date"/>
+            <column name="results" type="string"/>
+            <column name="conclusion" type="string"/>
+            <column name="conclusion_date" type="date"/>
+            <column name="notes" type="string"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

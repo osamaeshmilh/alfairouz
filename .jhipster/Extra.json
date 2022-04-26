@@ -1,0 +1,41 @@
+{
+  "applications": "*",
+  "changelogDate": "20220426000425",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "extra",
+  "fields": [
+    {
+      "fieldName": "dateAt",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "extraAction",
+      "fieldType": "ExtraAction",
+      "fieldValues": "EXTRA,DEDUCT"
+    },
+    {
+      "fieldName": "details",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "amount",
+      "fieldType": "Float"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Extra",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "extra",
+      "relationshipName": "employee",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}
