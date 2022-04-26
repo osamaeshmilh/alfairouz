@@ -1,4 +1,4 @@
-<div>
+<div class="entity-container">
   <h2 id="page-heading" data-cy="ExtraHeading">
     <span jhiTranslate="alfairouzApp.extra.home.title">Extras</span>
 
@@ -28,18 +28,22 @@
     <span jhiTranslate="alfairouzApp.extra.home.notFound">No extras found</span>
   </div>
 
-  <div class="table-responsive" id="entities" *ngIf="extras && extras.length > 0">
-    <table class="table table-striped" aria-describedby="page-heading">
+  <div *ngIf="extras && extras.length > 0; else emptyContent" class="col-12 p-0 mat-elevation-z1 mt-3" id="entities">
+    <table class="col mat-table">
       <thead>
-        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
-          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="dateAt">
-            <span jhiTranslate="alfairouzApp.extra.dateAt">Date At</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="extraAction">
-            <span jhiTranslate="alfairouzApp.extra.extraAction">Extra Action</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="details">
+      <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+        <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
+        <th scope="col" jhiSortBy="dateAt">
+          <span jhiTranslate="alfairouzApp.extra.dateAt">Date At</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
+        <th scope="col" jhiSortBy="extraAction">
+          <span jhiTranslate="alfairouzApp.extra.extraAction">Extra Action</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
+        <th scope="col" jhiSortBy="details">
             <span jhiTranslate="alfairouzApp.extra.details">Details</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="amount">
@@ -86,23 +90,18 @@
         </tr>
       </tbody>
     </table>
-  </div>
-
-  <div *ngIf="extras && extras.length > 0">
-    <div class="d-flex justify-content-center">
-      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
-    </div>
-
-    <div class="d-flex justify-content-center">
-      <ngb-pagination
-        [collectionSize]="totalItems"
-        [(page)]="ngbPaginationPage"
+    <div class="col white-b">
+      <mat-divider></mat-divider>
+      <mat-paginator
+        (page)="loadPage($event.pageIndex)"
+        [length]="totalItems"
+        [pageIndex]="page"
         [pageSize]="itemsPerPage"
-        [maxSize]="5"
-        [rotate]="true"
-        [boundaryLinks]="true"
-        (pageChange)="loadPage($event)"
-      ></ngb-pagination>
+        showFirstLastButtons
+      ></mat-paginator>
     </div>
   </div>
+  <ng-template #emptyContent>
+    <jhi-empty-content [isLoading]="isLoading"></jhi-empty-content>
+  </ng-template>
 </div>

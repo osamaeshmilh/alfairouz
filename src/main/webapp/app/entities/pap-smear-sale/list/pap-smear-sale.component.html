@@ -1,4 +1,4 @@
-<div>
+<div class="entity-container">
   <h2 id="page-heading" data-cy="PapSmearSaleHeading">
     <span jhiTranslate="alfairouzApp.papSmearSale.home.title">Pap Smear Sales</span>
 
@@ -28,18 +28,23 @@
     <span jhiTranslate="alfairouzApp.papSmearSale.home.notFound">No papSmearSales found</span>
   </div>
 
-  <div class="table-responsive" id="entities" *ngIf="papSmearSales && papSmearSales.length > 0">
-    <table class="table table-striped" aria-describedby="page-heading">
+  <div *ngIf="papSmearSales && papSmearSales.length > 0; else emptyContent" class="col-12 p-0 mat-elevation-z1 mt-3"
+       id="entities">
+    <table class="col mat-table">
       <thead>
-        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
-          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="dateAt">
-            <span jhiTranslate="alfairouzApp.papSmearSale.dateAt">Date At</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="details">
-            <span jhiTranslate="alfairouzApp.papSmearSale.details">Details</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="paymentType">
+      <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+        <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
+        <th scope="col" jhiSortBy="dateAt">
+          <span jhiTranslate="alfairouzApp.papSmearSale.dateAt">Date At</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
+        <th scope="col" jhiSortBy="details">
+          <span jhiTranslate="alfairouzApp.papSmearSale.details">Details</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
+        <th scope="col" jhiSortBy="paymentType">
             <span jhiTranslate="alfairouzApp.papSmearSale.paymentType">Payment Type</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="quantity">
@@ -91,7 +96,8 @@
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
 
-              <button type="submit" (click)="delete(papSmearSale)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button type="submit" (click)="delete(papSmearSale)" class="btn btn-danger btn-sm"
+                      data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>
@@ -100,23 +106,19 @@
         </tr>
       </tbody>
     </table>
-  </div>
-
-  <div *ngIf="papSmearSales && papSmearSales.length > 0">
-    <div class="d-flex justify-content-center">
-      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
-    </div>
-
-    <div class="d-flex justify-content-center">
-      <ngb-pagination
-        [collectionSize]="totalItems"
-        [(page)]="ngbPaginationPage"
+    <div class="col white-b">
+      <mat-divider></mat-divider>
+      <mat-paginator
+        (page)="loadPage($event.pageIndex)"
+        [length]="totalItems"
+        [pageIndex]="page"
         [pageSize]="itemsPerPage"
-        [maxSize]="5"
-        [rotate]="true"
-        [boundaryLinks]="true"
-        (pageChange)="loadPage($event)"
-      ></ngb-pagination>
+        showFirstLastButtons
+      ></mat-paginator>
     </div>
   </div>
+  <ng-template #emptyContent>
+    <jhi-empty-content [isLoading]="isLoading"></jhi-empty-content>
+  </ng-template>
 </div>
+
