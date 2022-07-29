@@ -85,4 +85,6 @@ export class MainComponent implements OnInit, AfterViewInit, AfterViewChecked {
     this.sessionStorageService.store('locale', languageKey);
     this.translateService.use(languageKey);
   }
+
+
 }

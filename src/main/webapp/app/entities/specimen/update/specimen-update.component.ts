@@ -101,6 +101,7 @@ export class SpecimenUpdateComponent implements OnInit {
     operatorEmployee: [],
     correctorEmployee: [],
   });
+  paymentType: any;
 
   constructor(
     protected dataUtils: DataUtils,
@@ -120,7 +121,11 @@ export class SpecimenUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+
     this.activatedRoute.data.subscribe(({ specimen }) => {
+      this.paymentType = this.activatedRoute.snapshot.queryParams['paymentType'] ? this.activatedRoute.snapshot.queryParams['paymentType'] : '';
+      specimen.paymentType = this.paymentType;
       this.updateForm(specimen);
 
       this.loadRelationshipsOptions();
@@ -190,6 +195,13 @@ export class SpecimenUpdateComponent implements OnInit {
 
   trackEmployeeById(_index: number, item: IEmployee): number {
     return item.id!;
+  }
+
+  getPrice($event: any): void {
+
+    /* eslint-disable no-console */
+    console.log($event)
+    this.editForm.get(['price'])?.setValue($event.target.value.price);
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ISpecimen>>): void {
@@ -426,4 +438,6 @@ export class SpecimenUpdateComponent implements OnInit {
       correctorEmployee: this.editForm.get(['correctorEmployee'])!.value,
     };
   }
+
+
 }

@@ -5,6 +5,8 @@
         "title": "Specimen",
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Specimen",
+        "createMonthLabel": "Create a new Specimen (Monthly)",
+        "createCashLabel": "Create a new Specimen (Cash)",
         "createOrEditLabel": "Create or edit a Specimen",
         "notFound": "No Specimen found"
       },

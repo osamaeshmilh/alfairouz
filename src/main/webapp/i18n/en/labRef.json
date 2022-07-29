@@ -2,11 +2,11 @@
   "alfairouzApp": {
     "LabRef": {
       "null": "",
-      "H": "H",
-      "C": "C",
-      "HSO": "HSO",
-      "IH": "IH",
-      "IHSO": "IHSO"
+      "H": "H - Histology/Pathology",
+      "C": "C - Cytology",
+      "HSO": "HSO - 2nd Opinion/Block",
+      "IH": "IH - Immune Stain",
+      "IHSO": "IHSO - 2nd opinion Immune Stain (2)"
     }
   }
 }

@@ -2,8 +2,8 @@
   <div class="mat-elevation-z1 round-card white-bg p-4 mt-5">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2 id="jhi-specimen-heading" data-cy="SpecimenCreateUpdateHeading"
-          jhiTranslate="alfairouzApp.specimen.home.createOrEditLabel">
-        Create or edit a Specimen
+      >
+        Create or edit a Specimen {{paymentType}}
       </h2>
 
       <div>
@@ -11,68 +11,17 @@
 
         <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
           <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id"
+                 [readonly]="true"/>
         </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.labRefNo" for="field_labRefNo">Lab Ref No</label>
-          <input type="text" class="form-control" name="labRefNo" id="field_labRefNo" data-cy="labRefNo" formControlName="labRefNo" />
-        </div>
-
-        <div class="row mb-3">
+        <div class="row mb-3" hidden>
           <label class="form-label" jhiTranslate="alfairouzApp.specimen.labQr" for="field_labQr">Lab Qr</label>
-          <input type="text" class="form-control" name="labQr" id="field_labQr" data-cy="labQr" formControlName="labQr" />
+          <input type="text" class="form-control" name="labQr" id="field_labQr" data-cy="labQr"
+                 formControlName="labQr"/>
         </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.labRef" for="field_labRef">Lab Ref</label>
-          <select class="form-control" name="labRef" formControlName="labRef" id="field_labRef" data-cy="labRef">
-            <option [ngValue]="null">{{ 'alfairouzApp.LabRef.null' | translate }}</option>
-            <option *ngFor="let labRef of labRefValues" [value]="labRef">{{ 'alfairouzApp.LabRef.' + labRef | translate }}</option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.pdfFile" for="field_pdfFile">Pdf File</label>
-          <div>
-            <div *ngIf="editForm.get('pdfFile')!.value" class="form-text text-danger clearfix">
-              <a
-                class="pull-start"
-                (click)="openFile(editForm.get('pdfFile')!.value, editForm.get('pdfFileContentType')!.value)"
-                jhiTranslate="entity.action.open"
-                >open</a
-              ><br />
-              <span class="pull-start"
-                >{{ editForm.get('pdfFileContentType')!.value }}, {{ byteSize(editForm.get('pdfFile')!.value) }}</span
-              >
-              <button
-                type="button"
-                (click)="editForm.patchValue({ pdfFile: null }); editForm.patchValue({ pdfFileContentType: null })"
-                class="btn btn-secondary btn-xs pull-end"
-              >
-                <fa-icon icon="times"></fa-icon>
-              </button>
-            </div>
-            <input
-              type="file"
-              id="file_pdfFile"
-              data-cy="pdfFile"
-              (change)="setFileData($event, 'pdfFile', false)"
-              jhiTranslate="entity.action.addblob"
-            />
-          </div>
-          <input type="hidden" class="form-control" name="pdfFile" id="field_pdfFile" data-cy="pdfFile" formControlName="pdfFile" />
-          <input
-            type="hidden"
-            class="form-control"
-            name="pdfFileContentType"
-            id="field_pdfFileContentType"
-            formControlName="pdfFileContentType"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.pdfFileUrl" for="field_pdfFileUrl">Pdf File Url</label>
+        <div class="row mb-3" hidden>
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.pdfFileUrl" for="field_pdfFileUrl">Pdf File
+            Url</label>
           <input
             type="text"
             class="form-control"
@@ -82,109 +31,11 @@
             formControlName="pdfFileUrl"
           />
         </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.samples" for="field_samples">Samples</label>
-          <input type="number" class="form-control" name="samples" id="field_samples" data-cy="samples" formControlName="samples" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.blocks" for="field_blocks">Blocks</label>
-          <input type="number" class="form-control" name="blocks" id="field_blocks" data-cy="blocks" formControlName="blocks" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.slides" for="field_slides">Slides</label>
-          <input type="number" class="form-control" name="slides" id="field_slides" data-cy="slides" formControlName="slides" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.samplingDate" for="field_samplingDate">Sampling Date</label>
-          <div class="input-group">
-            <input
-              id="field_samplingDate"
-              data-cy="samplingDate"
-              type="text"
-              class="form-control"
-              name="samplingDate"
-              ngbDatepicker
-              #samplingDateDp="ngbDatepicker"
-              formControlName="samplingDate"
-            />
-            <button type="button" class="btn btn-secondary" (click)="samplingDateDp.toggle()">
-              <fa-icon icon="calendar-alt"></fa-icon>
-            </button>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.receivingDate" for="field_receivingDate">Receiving Date</label>
-          <div class="input-group">
-            <input
-              id="field_receivingDate"
-              data-cy="receivingDate"
-              type="text"
-              class="form-control"
-              name="receivingDate"
-              ngbDatepicker
-              #receivingDateDp="ngbDatepicker"
-              formControlName="receivingDate"
-            />
-            <button type="button" class="btn btn-secondary" (click)="receivingDateDp.toggle()">
-              <fa-icon icon="calendar-alt"></fa-icon>
-            </button>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.contractType" for="field_contractType">Contract Type</label>
-          <select class="form-control" name="contractType" formControlName="contractType" id="field_contractType" data-cy="contractType">
-            <option [ngValue]="null">{{ 'alfairouzApp.ContractType.null' | translate }}</option>
-            <option *ngFor="let contractType of contractTypeValues" [value]="contractType">
-              {{ 'alfairouzApp.ContractType.' + contractType | translate }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.isWithdrawn" for="field_isWithdrawn">Is Withdrawn</label>
-          <input
-            type="checkbox"
-            class="form-check"
-            name="isWithdrawn"
-            id="field_isWithdrawn"
-            data-cy="isWithdrawn"
-            formControlName="isWithdrawn"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.withdrawDate" for="field_withdrawDate">Withdraw Date</label>
-          <div class="input-group">
-            <input
-              id="field_withdrawDate"
-              data-cy="withdrawDate"
-              type="text"
-              class="form-control"
-              name="withdrawDate"
-              ngbDatepicker
-              #withdrawDateDp="ngbDatepicker"
-              formControlName="withdrawDate"
-            />
-            <button type="button" class="btn btn-secondary" (click)="withdrawDateDp.toggle()">
-              <fa-icon icon="calendar-alt"></fa-icon>
-            </button>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.fileNo" for="field_fileNo">File No</label>
-          <input type="text" class="form-control" name="fileNo" id="field_fileNo" data-cy="fileNo" formControlName="fileNo" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.paymentType" for="field_paymentType">Payment Type</label>
-          <select class="form-control" name="paymentType" formControlName="paymentType" id="field_paymentType" data-cy="paymentType">
+        <div class="row mb-3" hidden>
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.paymentType" for="field_paymentType">Payment
+            Type</label>
+          <select class="form-control" name="paymentType" formControlName="paymentType" id="field_paymentType"
+                  data-cy="paymentType">
             <option [ngValue]="null">{{ 'alfairouzApp.PaymentType.null' | translate }}</option>
             <option *ngFor="let paymentType of paymentTypeValues" [value]="paymentType">
               {{ 'alfairouzApp.PaymentType.' + paymentType | translate }}
@@ -192,429 +43,593 @@
           </select>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.price" for="field_price">Price</label>
-          <input type="number" class="form-control" name="price" id="field_price" data-cy="price" formControlName="price" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.paid" for="field_paid">Paid</label>
-          <input type="number" class="form-control" name="paid" id="field_paid" data-cy="paid" formControlName="paid" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.notPaid" for="field_notPaid">Not Paid</label>
-          <input type="number" class="form-control" name="notPaid" id="field_notPaid" data-cy="notPaid" formControlName="notPaid" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.urgentSample" for="field_urgentSample">Urgent Sample</label>
-          <input
-            type="checkbox"
-            class="form-check"
-            name="urgentSample"
-            id="field_urgentSample"
-            data-cy="urgentSample"
-            formControlName="urgentSample"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.revisionDate" for="field_revisionDate">Revision Date</label>
-          <div class="input-group">
-            <input
-              id="field_revisionDate"
-              data-cy="revisionDate"
-              type="text"
-              class="form-control"
-              name="revisionDate"
-              ngbDatepicker
-              #revisionDateDp="ngbDatepicker"
-              formControlName="revisionDate"
-            />
-            <button type="button" class="btn btn-secondary" (click)="revisionDateDp.toggle()">
-              <fa-icon icon="calendar-alt"></fa-icon>
-            </button>
+        <div *jhiHasAnyAuthority="'ROLE_RECEPTION'">
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.labRefNo" for="field_labRefNo">Lab Ref
+              No</label>
+            <input type="text" class="form-control" name="labRefNo" id="field_labRefNo" data-cy="labRefNo"
+                   formControlName="labRefNo"/>
           </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.reportDate" for="field_reportDate">Report Date</label>
-          <div class="input-group">
-            <input
-              id="field_reportDate"
-              data-cy="reportDate"
-              type="text"
-              class="form-control"
-              name="reportDate"
-              ngbDatepicker
-              #reportDateDp="ngbDatepicker"
-              formControlName="reportDate"
-            />
-            <button type="button" class="btn btn-secondary" (click)="reportDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.labRef" for="field_labRef">Lab Ref</label>
+            <select class="form-control" name="labRef" formControlName="labRef" id="field_labRef" data-cy="labRef">
+              <option [ngValue]="null">{{ 'alfairouzApp.LabRef.null' | translate }}</option>
+              <option *ngFor="let labRef of labRefValues"
+                      [value]="labRef">{{ 'alfairouzApp.LabRef.' + labRef | translate }}</option>
+            </select>
           </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.clinicalData" for="field_clinicalData">Clinical Data</label>
-          <input
-            type="text"
-            class="form-control"
-            name="clinicalData"
-            id="field_clinicalData"
-            data-cy="clinicalData"
-            formControlName="clinicalData"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.clinicalDate" for="field_clinicalDate">Clinical Date</label>
-          <div class="input-group">
-            <input
-              id="field_clinicalDate"
-              data-cy="clinicalDate"
-              type="text"
-              class="form-control"
-              name="clinicalDate"
-              ngbDatepicker
-              #clinicalDateDp="ngbDatepicker"
-              formControlName="clinicalDate"
-            />
-            <button type="button" class="btn btn-secondary" (click)="clinicalDateDp.toggle()">
-              <fa-icon icon="calendar-alt"></fa-icon>
-            </button>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.patient" for="field_patient">Patient</label>
+            <select class="form-control" id="field_patient" data-cy="patient" name="patient" formControlName="patient">
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="patientOption.id === editForm.get('patient')!.value?.id ? editForm.get('patient')!.value : patientOption"
+                *ngFor="let patientOption of patientsSharedCollection; trackBy: trackPatientById"
+              >
+                {{ patientOption.name }}
+              </option>
+            </select>
           </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.grossExamination" for="field_grossExamination"
-            >Gross Examination</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="grossExamination"
-            id="field_grossExamination"
-            data-cy="grossExamination"
-            formControlName="grossExamination"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.grossDate" for="field_grossDate">Gross Date</label>
-          <div class="input-group">
-            <input
-              id="field_grossDate"
-              data-cy="grossDate"
-              type="text"
-              class="form-control"
-              name="grossDate"
-              ngbDatepicker
-              #grossDateDp="ngbDatepicker"
-              formControlName="grossDate"
-            />
-            <button type="button" class="btn btn-secondary" (click)="grossDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.contractType" for="field_contractType">Contract
+              Type</label>
+            <select class="form-control" name="contractType" formControlName="contractType" id="field_contractType"
+                    data-cy="contractType">
+              <option [ngValue]="null">{{ 'alfairouzApp.ContractType.null' | translate }}</option>
+              <option *ngFor="let contractType of contractTypeValues" [value]="contractType">
+                {{ 'alfairouzApp.ContractType.' + contractType | translate }}
+              </option>
+            </select>
           </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.microscopicData" for="field_microscopicData"
-            >Microscopic Data</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="microscopicData"
-            id="field_microscopicData"
-            data-cy="microscopicData"
-            formControlName="microscopicData"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.microscopicDate" for="field_microscopicDate"
-            >Microscopic Date</label
-          >
-          <div class="input-group">
-            <input
-              id="field_microscopicDate"
-              data-cy="microscopicDate"
-              type="text"
-              class="form-control"
-              name="microscopicDate"
-              ngbDatepicker
-              #microscopicDateDp="ngbDatepicker"
-              formControlName="microscopicDate"
-            />
-            <button type="button" class="btn btn-secondary" (click)="microscopicDateDp.toggle()">
-              <fa-icon icon="calendar-alt"></fa-icon>
-            </button>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.fileNo" for="field_fileNo">File No</label>
+            <input type="text" class="form-control" name="fileNo" id="field_fileNo" data-cy="fileNo"
+                   formControlName="fileNo"/>
           </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.results" for="field_results">Results</label>
-          <select class="form-control" name="results" formControlName="results" id="field_results" data-cy="results">
-            <option [ngValue]="null">{{ 'alfairouzApp.Results.null' | translate }}</option>
-            <option *ngFor="let results of resultsValues" [value]="results">{{ 'alfairouzApp.Results.' + results | translate }}</option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.conclusion" for="field_conclusion">Conclusion</label>
-          <input
-            type="text"
-            class="form-control"
-            name="conclusion"
-            id="field_conclusion"
-            data-cy="conclusion"
-            formControlName="conclusion"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.conclusionDate" for="field_conclusionDate">Conclusion Date</label>
-          <div class="input-group">
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.urgentSample" for="field_urgentSample">Urgent
+              Sample</label>
             <input
-              id="field_conclusionDate"
-              data-cy="conclusionDate"
-              type="text"
-              class="form-control"
-              name="conclusionDate"
-              ngbDatepicker
-              #conclusionDateDp="ngbDatepicker"
-              formControlName="conclusionDate"
+              type="checkbox"
+              class="form-check"
+              name="urgentSample"
+              id="field_urgentSample"
+              data-cy="urgentSample"
+              formControlName="urgentSample"
             />
-            <button type="button" class="btn btn-secondary" (click)="conclusionDateDp.toggle()">
-              <fa-icon icon="calendar-alt"></fa-icon>
-            </button>
           </div>
-        </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.samples" for="field_samples">Samples</label>
+            <input type="number" class="form-control" name="samples" id="field_samples" data-cy="samples"
+                   formControlName="samples"/>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.samplingDate" for="field_samplingDate">Sampling
+              Date</label>
+            <div class="input-group">
+              <input
+                id="field_samplingDate"
+                data-cy="samplingDate"
+                type="text"
+                class="form-control"
+                name="samplingDate"
+                ngbDatepicker
+                #samplingDateDp="ngbDatepicker"
+                formControlName="samplingDate"
+              />
+              <button type="button" class="btn btn-secondary" (click)="samplingDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.receivingDate" for="field_receivingDate">Receiving
+              Date</label>
+            <div class="input-group">
+              <input
+                id="field_receivingDate"
+                data-cy="receivingDate"
+                type="text"
+                class="form-control"
+                name="receivingDate"
+                ngbDatepicker
+                #receivingDateDp="ngbDatepicker"
+                formControlName="receivingDate"
+              />
+              <button type="button" class="btn btn-secondary" (click)="receivingDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.pdfFile" for="field_pdfFile">Pdf File</label>
+            <div>
+              <div *ngIf="editForm.get('pdfFile')!.value" class="form-text text-danger clearfix">
+                <a
+                  class="pull-start"
+                  (click)="openFile(editForm.get('pdfFile')!.value, editForm.get('pdfFileContentType')!.value)"
+                  jhiTranslate="entity.action.open"
+                >open</a
+                ><br/>
+                <span class="pull-start"
+                >{{ editForm.get('pdfFileContentType')!.value }}, {{ byteSize(editForm.get('pdfFile')!.value) }}</span
+                >
+                <button
+                  type="button"
+                  (click)="editForm.patchValue({ pdfFile: null }); editForm.patchValue({ pdfFileContentType: null })"
+                  class="btn btn-secondary btn-xs pull-end"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+              <input
+                type="file"
+                id="file_pdfFile"
+                data-cy="pdfFile"
+                (change)="setFileData($event, 'pdfFile', false)"
+                jhiTranslate="entity.action.addblob"
+              />
+            </div>
+            <input type="hidden" class="form-control" name="pdfFile" id="field_pdfFile" data-cy="pdfFile"
+                   formControlName="pdfFile"/>
+            <input
+              type="hidden"
+              class="form-control"
+              name="pdfFileContentType"
+              id="field_pdfFileContentType"
+              formControlName="pdfFileContentType"
+            />
+          </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.notes" for="field_notes">Notes</label>
-          <input type="text" class="form-control" name="notes" id="field_notes" data-cy="notes" formControlName="notes" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.patient" for="field_patient">Patient</label>
-          <select class="form-control" id="field_patient" data-cy="patient" name="patient" formControlName="patient">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="patientOption.id === editForm.get('patient')!.value?.id ? editForm.get('patient')!.value : patientOption"
-              *ngFor="let patientOption of patientsSharedCollection; trackBy: trackPatientById"
-            >
-              {{ patientOption.name }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.biopsy" for="field_biopsy">Biopsy</label>
-          <select class="form-control" id="field_biopsy" data-cy="biopsy" name="biopsy" formControlName="biopsy">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="biopsyOption.id === editForm.get('biopsy')!.value?.id ? editForm.get('biopsy')!.value : biopsyOption"
-              *ngFor="let biopsyOption of biopsiesSharedCollection; trackBy: trackBiopsyById"
-            >
-              {{ biopsyOption.name }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.cytology" for="field_cytology">Cytology</label>
-          <select class="form-control" id="field_cytology" data-cy="cytology" name="cytology" formControlName="cytology">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="cytologyOption.id === editForm.get('cytology')!.value?.id ? editForm.get('cytology')!.value : cytologyOption"
-              *ngFor="let cytologyOption of cytologiesSharedCollection; trackBy: trackCytologyById"
-            >
-              {{ cytologyOption.name }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.organ" for="field_organ">Organ</label>
-          <select class="form-control" id="field_organ" data-cy="organ" name="organ" formControlName="organ">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="organOption.id === editForm.get('organ')!.value?.id ? editForm.get('organ')!.value : organOption"
-              *ngFor="let organOption of organsSharedCollection; trackBy: trackOrganById"
-            >
-              {{ organOption.name }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.specimenType" for="field_specimenType">Specimen Type</label>
-          <select class="form-control" id="field_specimenType" data-cy="specimenType" name="specimenType" formControlName="specimenType">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.specimenType" for="field_specimenType">Specimen
+              Type</label>
+            <select class="form-control" id="field_specimenType" data-cy="specimenType" name="specimenType"
+                    formControlName="specimenType" (select)="getPrice($event)">
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="
                 specimenTypeOption.id === editForm.get('specimenType')!.value?.id ? editForm.get('specimenType')!.value : specimenTypeOption
               "
-              *ngFor="let specimenTypeOption of specimenTypesSharedCollection; trackBy: trackSpecimenTypeById"
-            >
-              {{ specimenTypeOption.name }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.size" for="field_size">Size</label>
-          <select class="form-control" id="field_size" data-cy="size" name="size" formControlName="size">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="sizeOption.id === editForm.get('size')!.value?.id ? editForm.get('size')!.value : sizeOption"
-              *ngFor="let sizeOption of sizesSharedCollection; trackBy: trackSizeById"
-            >
-              {{ sizeOption.name }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.referringCenter" for="field_referringCenter"
+                *ngFor="let specimenTypeOption of specimenTypesSharedCollection; trackBy: trackSpecimenTypeById"
+              >
+                {{ specimenTypeOption.name }}
+              </option>
+            </select>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.size" for="field_size">Size</label>
+            <select class="form-control" id="field_size" data-cy="size" name="size" formControlName="size">
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="sizeOption.id === editForm.get('size')!.value?.id ? editForm.get('size')!.value : sizeOption"
+                *ngFor="let sizeOption of sizesSharedCollection; trackBy: trackSizeById"
+              >
+                {{ sizeOption.name }}
+              </option>
+            </select>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.referringCenter" for="field_referringCenter"
             >Referring Center</label
-          >
-          <select
-            class="form-control"
-            id="field_referringCenter"
-            data-cy="referringCenter"
-            name="referringCenter"
-            formControlName="referringCenter"
-          >
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
+            >
+            <select
+              class="form-control"
+              id="field_referringCenter"
+              data-cy="referringCenter"
+              name="referringCenter"
+              formControlName="referringCenter"
+            >
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="
                 referringCenterOption.id === editForm.get('referringCenter')!.value?.id
                   ? editForm.get('referringCenter')!.value
                   : referringCenterOption
               "
-              *ngFor="let referringCenterOption of referringCentersSharedCollection; trackBy: trackReferringCenterById"
-            >
-              {{ referringCenterOption.name }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.grossingDoctor" for="field_grossingDoctor">Grossing Doctor</label>
-          <select
-            class="form-control"
-            id="field_grossingDoctor"
-            data-cy="grossingDoctor"
-            name="grossingDoctor"
-            formControlName="grossingDoctor"
-          >
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
-                doctorOption.id === editForm.get('grossingDoctor')!.value?.id ? editForm.get('grossingDoctor')!.value : doctorOption
-              "
-              *ngFor="let doctorOption of doctorsSharedCollection; trackBy: trackDoctorById"
-            >
-              {{ doctorOption.name }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.referringDoctor" for="field_referringDoctor"
+                *ngFor="let referringCenterOption of referringCentersSharedCollection; trackBy: trackReferringCenterById"
+              >
+                {{ referringCenterOption.name }}
+              </option>
+            </select>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.referringDoctor" for="field_referringDoctor"
             >Referring Doctor</label
-          >
-          <select
-            class="form-control"
-            id="field_referringDoctor"
-            data-cy="referringDoctor"
-            name="referringDoctor"
-            formControlName="referringDoctor"
-          >
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
+            >
+            <select
+              class="form-control"
+              id="field_referringDoctor"
+              data-cy="referringDoctor"
+              name="referringDoctor"
+              formControlName="referringDoctor"
+            >
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="
                 doctorOption.id === editForm.get('referringDoctor')!.value?.id ? editForm.get('referringDoctor')!.value : doctorOption
               "
-              *ngFor="let doctorOption of doctorsSharedCollection; trackBy: trackDoctorById"
-            >
-              {{ doctorOption.name }}
-            </option>
-          </select>
-        </div>
+                *ngFor="let doctorOption of doctorsSharedCollection; trackBy: trackDoctorById"
+              >
+                {{ doctorOption.name }}
+              </option>
+            </select>
+          </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.pathologistDoctor" for="field_pathologistDoctor"
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.price" for="field_price">Price</label>
+            <input type="number" class="form-control" name="price" id="field_price" data-cy="price"
+                   formControlName="price" [readonly]="true"/>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.paid" for="field_paid">Paid</label>
+            <input type="number" class="form-control" name="paid" id="field_paid" data-cy="paid"
+                   formControlName="paid"/>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.notPaid" for="field_notPaid">Not Paid</label>
+            <input type="number" class="form-control" name="notPaid" id="field_notPaid" data-cy="notPaid"
+                   formControlName="notPaid"/>
+          </div>
+
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.notes" for="field_notes">Notes</label>
+            <input type="text" class="form-control" name="notes" id="field_notes" data-cy="notes"
+                   formControlName="notes"/>
+          </div>
+
+        </div>
+        <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.blocks" for="field_blocks">Blocks</label>
+            <input type="number" class="form-control" name="blocks" id="field_blocks" data-cy="blocks"
+                   formControlName="blocks"/>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.slides" for="field_slides">Slides</label>
+            <input type="number" class="form-control" name="slides" id="field_slides" data-cy="slides"
+                   formControlName="slides"/>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.isWithdrawn" for="field_isWithdrawn">Is
+              Withdrawn</label>
+            <input
+              type="checkbox"
+              class="form-check"
+              name="isWithdrawn"
+              id="field_isWithdrawn"
+              data-cy="isWithdrawn"
+              formControlName="isWithdrawn"
+            />
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.withdrawDate" for="field_withdrawDate">Withdraw
+              Date</label>
+            <div class="input-group">
+              <input
+                id="field_withdrawDate"
+                data-cy="withdrawDate"
+                type="text"
+                class="form-control"
+                name="withdrawDate"
+                ngbDatepicker
+                #withdrawDateDp="ngbDatepicker"
+                formControlName="withdrawDate"
+              />
+              <button type="button" class="btn btn-secondary" (click)="withdrawDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.revisionDate" for="field_revisionDate">Revision
+              Date</label>
+            <div class="input-group">
+              <input
+                id="field_revisionDate"
+                data-cy="revisionDate"
+                type="text"
+                class="form-control"
+                name="revisionDate"
+                ngbDatepicker
+                #revisionDateDp="ngbDatepicker"
+                formControlName="revisionDate"
+              />
+              <button type="button" class="btn btn-secondary" (click)="revisionDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.reportDate" for="field_reportDate">Report
+              Date</label>
+            <div class="input-group">
+              <input
+                id="field_reportDate"
+                data-cy="reportDate"
+                type="text"
+                class="form-control"
+                name="reportDate"
+                ngbDatepicker
+                #reportDateDp="ngbDatepicker"
+                formControlName="reportDate"
+              />
+              <button type="button" class="btn btn-secondary" (click)="reportDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.clinicalData" for="field_clinicalData">Clinical
+              Data</label>
+            <input
+              type="text"
+              class="form-control"
+              name="clinicalData"
+              id="field_clinicalData"
+              data-cy="clinicalData"
+              formControlName="clinicalData"
+            />
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.clinicalDate" for="field_clinicalDate">Clinical
+              Date</label>
+            <div class="input-group">
+              <input
+                id="field_clinicalDate"
+                data-cy="clinicalDate"
+                type="text"
+                class="form-control"
+                name="clinicalDate"
+                ngbDatepicker
+                #clinicalDateDp="ngbDatepicker"
+                formControlName="clinicalDate"
+              />
+              <button type="button" class="btn btn-secondary" (click)="clinicalDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.grossExamination" for="field_grossExamination"
+            >Gross Examination</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="grossExamination"
+              id="field_grossExamination"
+              data-cy="grossExamination"
+              formControlName="grossExamination"
+            />
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.grossDate" for="field_grossDate">Gross
+              Date</label>
+            <div class="input-group">
+              <input
+                id="field_grossDate"
+                data-cy="grossDate"
+                type="text"
+                class="form-control"
+                name="grossDate"
+                ngbDatepicker
+                #grossDateDp="ngbDatepicker"
+                formControlName="grossDate"
+              />
+              <button type="button" class="btn btn-secondary" (click)="grossDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.microscopicData" for="field_microscopicData"
+            >Microscopic Data</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="microscopicData"
+              id="field_microscopicData"
+              data-cy="microscopicData"
+              formControlName="microscopicData"
+            />
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.microscopicDate" for="field_microscopicDate"
+            >Microscopic Date</label
+            >
+            <div class="input-group">
+              <input
+                id="field_microscopicDate"
+                data-cy="microscopicDate"
+                type="text"
+                class="form-control"
+                name="microscopicDate"
+                ngbDatepicker
+                #microscopicDateDp="ngbDatepicker"
+                formControlName="microscopicDate"
+              />
+              <button type="button" class="btn btn-secondary" (click)="microscopicDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.results" for="field_results">Results</label>
+            <select class="form-control" name="results" formControlName="results" id="field_results" data-cy="results">
+              <option [ngValue]="null">{{ 'alfairouzApp.Results.null' | translate }}</option>
+              <option *ngFor="let results of resultsValues"
+                      [value]="results">{{ 'alfairouzApp.Results.' + results | translate }}</option>
+            </select>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.conclusion"
+                   for="field_conclusion">Conclusion</label>
+            <input
+              type="text"
+              class="form-control"
+              name="conclusion"
+              id="field_conclusion"
+              data-cy="conclusion"
+              formControlName="conclusion"
+            />
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.conclusionDate" for="field_conclusionDate">Conclusion
+              Date</label>
+            <div class="input-group">
+              <input
+                id="field_conclusionDate"
+                data-cy="conclusionDate"
+                type="text"
+                class="form-control"
+                name="conclusionDate"
+                ngbDatepicker
+                #conclusionDateDp="ngbDatepicker"
+                formControlName="conclusionDate"
+              />
+              <button type="button" class="btn btn-secondary" (click)="conclusionDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.notes" for="field_notes">Notes</label>
+            <input type="text" class="form-control" name="notes" id="field_notes" data-cy="notes"
+                   formControlName="notes"/>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.biopsy" for="field_biopsy">Biopsy</label>
+            <select class="form-control" id="field_biopsy" data-cy="biopsy" name="biopsy" formControlName="biopsy">
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="biopsyOption.id === editForm.get('biopsy')!.value?.id ? editForm.get('biopsy')!.value : biopsyOption"
+                *ngFor="let biopsyOption of biopsiesSharedCollection; trackBy: trackBiopsyById"
+              >
+                {{ biopsyOption.name }}
+              </option>
+            </select>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.cytology"
+                   for="field_cytology">Cytology</label>
+            <select class="form-control" id="field_cytology" data-cy="cytology" name="cytology"
+                    formControlName="cytology">
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="cytologyOption.id === editForm.get('cytology')!.value?.id ? editForm.get('cytology')!.value : cytologyOption"
+                *ngFor="let cytologyOption of cytologiesSharedCollection; trackBy: trackCytologyById"
+              >
+                {{ cytologyOption.name }}
+              </option>
+            </select>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.organ" for="field_organ">Organ</label>
+            <select class="form-control" id="field_organ" data-cy="organ" name="organ" formControlName="organ">
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="organOption.id === editForm.get('organ')!.value?.id ? editForm.get('organ')!.value : organOption"
+                *ngFor="let organOption of organsSharedCollection; trackBy: trackOrganById"
+              >
+                {{ organOption.name }}
+              </option>
+            </select>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.grossingDoctor" for="field_grossingDoctor">Grossing
+              Doctor</label>
+            <select
+              class="form-control"
+              id="field_grossingDoctor"
+              data-cy="grossingDoctor"
+              name="grossingDoctor"
+              formControlName="grossingDoctor"
+            >
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="
+                doctorOption.id === editForm.get('grossingDoctor')!.value?.id ? editForm.get('grossingDoctor')!.value : doctorOption
+              "
+                *ngFor="let doctorOption of doctorsSharedCollection; trackBy: trackDoctorById"
+              >
+                {{ doctorOption.name }}
+              </option>
+            </select>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.pathologistDoctor"
+                   for="field_pathologistDoctor"
             >Pathologist Doctor</label
-          >
-          <select
-            class="form-control"
-            id="field_pathologistDoctor"
-            data-cy="pathologistDoctor"
-            name="pathologistDoctor"
-            formControlName="pathologistDoctor"
-          >
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
+            >
+            <select
+              class="form-control"
+              id="field_pathologistDoctor"
+              data-cy="pathologistDoctor"
+              name="pathologistDoctor"
+              formControlName="pathologistDoctor"
+            >
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="
                 doctorOption.id === editForm.get('pathologistDoctor')!.value?.id ? editForm.get('pathologistDoctor')!.value : doctorOption
               "
-              *ngFor="let doctorOption of doctorsSharedCollection; trackBy: trackDoctorById"
-            >
-              {{ doctorOption.name }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.operatorEmployee" for="field_operatorEmployee"
+                *ngFor="let doctorOption of doctorsSharedCollection; trackBy: trackDoctorById"
+              >
+                {{ doctorOption.name }}
+              </option>
+            </select>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.operatorEmployee" for="field_operatorEmployee"
             >Operator Employee</label
-          >
-          <select
-            class="form-control"
-            id="field_operatorEmployee"
-            data-cy="operatorEmployee"
-            name="operatorEmployee"
-            formControlName="operatorEmployee"
-          >
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
+            >
+            <select
+              class="form-control"
+              id="field_operatorEmployee"
+              data-cy="operatorEmployee"
+              name="operatorEmployee"
+              formControlName="operatorEmployee"
+            >
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="
                 employeeOption.id === editForm.get('operatorEmployee')!.value?.id ? editForm.get('operatorEmployee')!.value : employeeOption
               "
-              *ngFor="let employeeOption of employeesSharedCollection; trackBy: trackEmployeeById"
-            >
-              {{ employeeOption.name }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.correctorEmployee" for="field_correctorEmployee"
+                *ngFor="let employeeOption of employeesSharedCollection; trackBy: trackEmployeeById"
+              >
+                {{ employeeOption.name }}
+              </option>
+            </select>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.correctorEmployee"
+                   for="field_correctorEmployee"
             >Corrector Employee</label
-          >
-          <select
-            class="form-control"
-            id="field_correctorEmployee"
-            data-cy="correctorEmployee"
-            name="correctorEmployee"
-            formControlName="correctorEmployee"
-          >
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="
+            >
+            <select
+              class="form-control"
+              id="field_correctorEmployee"
+              data-cy="correctorEmployee"
+              name="correctorEmployee"
+              formControlName="correctorEmployee"
+            >
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="
                 employeeOption.id === editForm.get('correctorEmployee')!.value?.id
                   ? editForm.get('correctorEmployee')!.value
                   : employeeOption
               "
-              *ngFor="let employeeOption of employeesSharedCollection; trackBy: trackEmployeeById"
-            >
-              {{ employeeOption.name }}
-            </option>
-          </select>
+                *ngFor="let employeeOption of employeesSharedCollection; trackBy: trackEmployeeById"
+              >
+                {{ employeeOption.name }}
+              </option>
+            </select>
+          </div>
         </div>
+
       </div>
 
       <div>

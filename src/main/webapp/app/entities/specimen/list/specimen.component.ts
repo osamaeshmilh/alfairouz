@@ -23,7 +23,8 @@ export class SpecimenComponent implements OnInit {
   page?: number;
   predicate!: string;
   ascending!: boolean;
-  ngbPaginationPage = 1;
+  ngbPaginationPage = 0;
+  currentSearch: any = '';
 
   constructor(
     protected specimenService: SpecimenService,
@@ -31,15 +32,17 @@ export class SpecimenComponent implements OnInit {
     protected dataUtils: DataUtils,
     protected router: Router,
     protected modalService: NgbModal
-  ) {}
+  ) {
+  }
 
   loadPage(page?: number, dontNavigate?: boolean): void {
     this.isLoading = true;
-    const pageToLoad: number = page ?? this.page ?? 1;
+    const pageToLoad: number = page ?? this.page ?? 0;
 
     this.specimenService
       .query({
-        page: pageToLoad - 1,
+        'labRefNo.contains': this.currentSearch,
+        page: pageToLoad,
         size: this.itemsPerPage,
         sort: this.sort(),
       })
@@ -72,7 +75,7 @@ export class SpecimenComponent implements OnInit {
   }
 
   delete(specimen: ISpecimen): void {
-    const modalRef = this.modalService.open(SpecimenDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    const modalRef = this.modalService.open(SpecimenDeleteDialogComponent, {size: 'lg', backdrop: 'static'});
     modalRef.componentInstance.specimen = specimen;
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed.subscribe(reason => {
@@ -80,6 +83,27 @@ export class SpecimenComponent implements OnInit {
         this.loadPage();
       }
     });
+  }
+
+  search(currentSearch: any): void {
+    this.currentSearch = currentSearch;
+    this.specimenService
+      .query({
+        'labRefNo.contains': this.currentSearch,
+        page: 0,
+        size: this.itemsPerPage,
+        sort: this.sort(),
+      })
+      .subscribe({
+        next: (res: HttpResponse<ISpecimen[]>) => {
+          this.isLoading = false;
+          this.onSuccess(res.body, res.headers, 0, true);
+        },
+        error: () => {
+          this.isLoading = false;
+          this.onError();
+        },
+      });
   }
 
   protected sort(): string[] {
@@ -93,7 +117,7 @@ export class SpecimenComponent implements OnInit {
   protected handleNavigation(): void {
     combineLatest([this.activatedRoute.data, this.activatedRoute.queryParamMap]).subscribe(([data, params]) => {
       const page = params.get('page');
-      const pageNumber = +(page ?? 1);
+      const pageNumber = +(page ?? 0);
       const sort = (params.get(SORT) ?? data['defaultSort']).split(',');
       const predicate = sort[0];
       const ascending = sort[1] === ASC;
@@ -111,6 +135,7 @@ export class SpecimenComponent implements OnInit {
     if (navigate) {
       this.router.navigate(['/specimen'], {
         queryParams: {
+          'labRefNo.contains': this.currentSearch,
           page: this.page,
           size: this.itemsPerPage,
           sort: this.predicate + ',' + (this.ascending ? ASC : DESC),
@@ -122,6 +147,8 @@ export class SpecimenComponent implements OnInit {
   }
 
   protected onError(): void {
-    this.ngbPaginationPage = this.page ?? 1;
+    this.ngbPaginationPage = this.page ?? 0;
   }
+
+
 }

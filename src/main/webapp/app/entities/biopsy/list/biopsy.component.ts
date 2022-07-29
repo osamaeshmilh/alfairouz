@@ -22,7 +22,7 @@ export class BiopsyComponent implements OnInit {
   page?: number;
   predicate!: string;
   ascending!: boolean;
-  ngbPaginationPage = 1;
+  ngbPaginationPage = 0;
 
   constructor(
     protected biopsyService: BiopsyService,
@@ -33,11 +33,11 @@ export class BiopsyComponent implements OnInit {
 
   loadPage(page?: number, dontNavigate?: boolean): void {
     this.isLoading = true;
-    const pageToLoad: number = page ?? this.page ?? 1;
+    const pageToLoad: number = page ?? this.page ?? 0;
 
     this.biopsyService
       .query({
-        page: pageToLoad - 1,
+        page: pageToLoad,
         size: this.itemsPerPage,
         sort: this.sort(),
       })
@@ -83,7 +83,7 @@ export class BiopsyComponent implements OnInit {
   protected handleNavigation(): void {
     combineLatest([this.activatedRoute.data, this.activatedRoute.queryParamMap]).subscribe(([data, params]) => {
       const page = params.get('page');
-      const pageNumber = +(page ?? 1);
+      const pageNumber = +(page ?? 0);
       const sort = (params.get(SORT) ?? data['defaultSort']).split(',');
       const predicate = sort[0];
       const ascending = sort[1] === ASC;
@@ -112,6 +112,6 @@ export class BiopsyComponent implements OnInit {
   }
 
   protected onError(): void {
-    this.ngbPaginationPage = this.page ?? 1;
+    this.ngbPaginationPage = this.page ?? 0;
   }
 }
