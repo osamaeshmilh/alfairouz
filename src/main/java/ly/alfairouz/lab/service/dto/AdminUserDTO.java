@@ -30,6 +30,8 @@ public class AdminUserDTO {
     @Size(min = 5, max = 254)
     private String email;
 
+    private String phone;
+
     @Size(max = 256)
     private String imageUrl;
 
@@ -189,5 +191,13 @@ public class AdminUserDTO {
             ", lastModifiedDate=" + lastModifiedDate +
             ", authorities=" + authorities +
             "}";
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

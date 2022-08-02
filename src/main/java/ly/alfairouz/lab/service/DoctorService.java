@@ -1,10 +1,16 @@
 package ly.alfairouz.lab.service;
 
 import java.util.Optional;
+
 import ly.alfairouz.lab.domain.Doctor;
+import ly.alfairouz.lab.domain.User;
+import ly.alfairouz.lab.domain.enumeration.DoctorType;
 import ly.alfairouz.lab.repository.DoctorRepository;
+import ly.alfairouz.lab.security.AuthoritiesConstants;
 import ly.alfairouz.lab.service.dto.DoctorDTO;
 import ly.alfairouz.lab.service.mapper.DoctorMapper;
+import ly.alfairouz.lab.web.rest.errors.BadRequestAlertException;
+import ly.alfairouz.lab.web.rest.vm.ManagedUserVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -25,9 +31,12 @@ public class DoctorService {
 
     private final DoctorMapper doctorMapper;
 
-    public DoctorService(DoctorRepository doctorRepository, DoctorMapper doctorMapper) {
+    private final UserService userService;
+
+    public DoctorService(DoctorRepository doctorRepository, DoctorMapper doctorMapper, UserService userService) {
         this.doctorRepository = doctorRepository;
         this.doctorMapper = doctorMapper;
+        this.userService = userService;
     }
 
     /**
@@ -109,4 +118,31 @@ public class DoctorService {
         log.debug("Request to delete Doctor : {}", id);
         doctorRepository.deleteById(id);
     }
+
+    public DoctorDTO create(DoctorDTO doctorDTO) {
+        String role = "";
+
+        if (doctorDTO.getDoctorType() == DoctorType.GROSSING) {
+            role = AuthoritiesConstants.GROSSING_DOCTOR;
+        } else if (doctorDTO.getDoctorType() == DoctorType.PATHOLOGIST) {
+            role = AuthoritiesConstants.PATHOLOGIST_DOCTOR;
+        } else if (doctorDTO.getDoctorType() == DoctorType.REFERRING) {
+            role = AuthoritiesConstants.REFERRING_DOCTOR;
+        } else {
+            throw new BadRequestAlertException("Role User Not Found !", "", "ROLE_NOT_FOUND");
+        }
+
+        ManagedUserVM managedUserVM = new ManagedUserVM();
+        managedUserVM.setFirstName(doctorDTO.getName());
+        managedUserVM.setEmail(doctorDTO.getEmail());
+        managedUserVM.setLogin(doctorDTO.getEmail());
+        managedUserVM.setPhone(doctorDTO.getMobileNo());
+        User user = userService.createAndAssignUser(managedUserVM, role);
+
+        Doctor doctor = doctorMapper.toEntity(doctorDTO);
+        doctor.setInternalUser(user);
+        doctor = doctorRepository.save(doctor);
+        return doctorMapper.toDto(doctor);
+    }
+
 }

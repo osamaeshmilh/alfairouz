@@ -7,9 +7,9 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
-        "biopsy": "Biopsy",
-        "cytology": "Cytology",
-        "organ": "Organ",
+        "biopsy": "Biopsy Type List",
+        "cytology": "Cytology Type List",
+        "organ": "Organ List",
         "specimen": "Specimen",
         "blockWithdraw": "Block Withdraw",
         "patient": "Patient",

@@ -63,7 +63,7 @@ public class DoctorResource {
         if (doctorDTO.getId() != null) {
             throw new BadRequestAlertException("A new doctor cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        DoctorDTO result = doctorService.save(doctorDTO);
+        DoctorDTO result = doctorService.create(doctorDTO);
         return ResponseEntity
             .created(new URI("/api/doctors/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
