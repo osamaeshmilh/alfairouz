@@ -58,7 +58,15 @@
                       [value]="labRef">{{ 'alfairouzApp.LabRef.' + labRef | translate }}</option>
             </select>
           </div>
+
           <div class="row mb-3">
+            <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedOption">
+              <mat-radio-button [value]="1">مريض مسجل مسبقا</mat-radio-button>
+              <mat-radio-button [value]="2">مريض جديد</mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div class="row mb-3" *ngIf="selectedOption == 1">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.patient" for="field_patient">Patient</label>
             <select class="form-control" id="field_patient" data-cy="patient" name="patient" formControlName="patient">
               <option [ngValue]="null"></option>
@@ -171,6 +179,31 @@
             />
           </div>
 
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.referringCenter" for="field_referringCenter"
+            >Referring Center</label
+            >
+            <select
+              class="form-control"
+              id="field_referringCenter"
+              data-cy="referringCenter"
+              name="referringCenter"
+              formControlName="referringCenter"
+            >
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="
+                referringCenterOption.id === editForm.get('referringCenter')!.value?.id
+                  ? editForm.get('referringCenter')!.value
+                  : referringCenterOption
+              "
+                *ngFor="let referringCenterOption of referringCentersSharedCollection; trackBy: trackReferringCenterById"
+              >
+                {{ referringCenterOption.name }}
+              </option>
+            </select>
+          </div>
+
           <div class="row mb-3" *ngIf="editForm.get('paymentType')!.value == 'MONTHLY'">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.contractType" for="field_contractType">Contract
               Type</label>
@@ -213,30 +246,7 @@
               </option>
             </select>
           </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.referringCenter" for="field_referringCenter"
-            >Referring Center</label
-            >
-            <select
-              class="form-control"
-              id="field_referringCenter"
-              data-cy="referringCenter"
-              name="referringCenter"
-              formControlName="referringCenter"
-            >
-              <option [ngValue]="null"></option>
-              <option
-                [ngValue]="
-                referringCenterOption.id === editForm.get('referringCenter')!.value?.id
-                  ? editForm.get('referringCenter')!.value
-                  : referringCenterOption
-              "
-                *ngFor="let referringCenterOption of referringCentersSharedCollection; trackBy: trackReferringCenterById"
-              >
-                {{ referringCenterOption.name }}
-              </option>
-            </select>
-          </div>
+
           <div class="row mb-3">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.referringDoctor" for="field_referringDoctor"
             >Referring Doctor</label

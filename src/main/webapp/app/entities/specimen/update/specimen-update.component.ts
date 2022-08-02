@@ -102,6 +102,7 @@ export class SpecimenUpdateComponent implements OnInit {
     correctorEmployee: [],
   });
   paymentType: any;
+  selectedOption = 1;
 
   constructor(
     protected dataUtils: DataUtils,
