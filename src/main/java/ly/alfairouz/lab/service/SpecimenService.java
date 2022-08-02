@@ -1,6 +1,10 @@
 package ly.alfairouz.lab.service;
 
+import java.nio.ByteBuffer;
+import java.security.SecureRandom;
 import java.util.Optional;
+import java.util.zip.CRC32;
+
 import ly.alfairouz.lab.domain.Specimen;
 import ly.alfairouz.lab.repository.SpecimenRepository;
 import ly.alfairouz.lab.service.dto.SpecimenDTO;
@@ -117,5 +121,27 @@ public class SpecimenService {
     public void delete(Long id) {
         log.debug("Request to delete Specimen : {}", id);
         specimenRepository.deleteById(id);
+    }
+
+    public SpecimenDTO create(SpecimenDTO specimenDTO) {
+        String a = specimenDTO.getLabRefNo() + specimenDTO.getLabRef().toString() + specimenDTO.getReceivingDate().getYear();
+        int mySaltSizeInBytes = 32;
+        SecureRandom random = new SecureRandom();
+
+        byte salt[] = new byte[mySaltSizeInBytes];
+
+        random.nextBytes(salt);
+
+        ByteBuffer bbuffer = ByteBuffer.allocate(mySaltSizeInBytes + a.length());
+        bbuffer.put(salt);
+        bbuffer.put(a.getBytes());
+
+        CRC32 crc = new CRC32();
+        crc.update(bbuffer.array());
+        String enc = Long.toHexString(crc.getValue());
+        specimenDTO.setLabQr(enc);
+        specimenDTO.setLabRefNo(a);
+
+        return save(specimenDTO);
     }
 }

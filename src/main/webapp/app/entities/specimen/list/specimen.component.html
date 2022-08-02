@@ -52,29 +52,32 @@
           <span jhiTranslate="alfairouzApp.specimen.labQr">Lab Qr</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
-        <th scope="col" jhiSortBy="labRef">
-            <span jhiTranslate="alfairouzApp.specimen.labRef">Lab Ref</span> <fa-icon icon="sort"></fa-icon>
-          </th>
+
           <th scope="col" jhiSortBy="receivingDate">
             <span jhiTranslate="alfairouzApp.specimen.receivingDate">Receiving Date</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="isWithdrawn">
-            <span jhiTranslate="alfairouzApp.specimen.isWithdrawn">Is Withdrawn</span> <fa-icon icon="sort"></fa-icon>
-          </th>
+
           <th scope="col" jhiSortBy="paymentType">
             <span jhiTranslate="alfairouzApp.specimen.paymentType">Payment Type</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="patient.name">
-            <span jhiTranslate="alfairouzApp.specimen.patient">Patient</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="specimenType.name">
-            <span jhiTranslate="alfairouzApp.specimen.specimenType">Specimen Type</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="referringCenter.name">
-            <span jhiTranslate="alfairouzApp.specimen.referringCenter">Referring Center</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col"></th>
-        </tr>
+        <th scope="col" jhiSortBy="patient.name">
+          <span jhiTranslate="alfairouzApp.specimen.patient">Patient</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
+        <th scope="col" jhiSortBy="specimenType.name">
+          <span jhiTranslate="alfairouzApp.specimen.specimenType">Specimen Type</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
+        <th scope="col" jhiSortBy="referringCenter.name">
+          <span jhiTranslate="alfairouzApp.specimen.referringCenter">Referring Center</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
+        <th scope="col" jhiSortBy="isWithdrawn">
+          <span jhiTranslate="alfairouzApp.specimen.isWithdrawn">Is Withdrawn</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
+        <th scope="col"></th>
+      </tr>
       </thead>
       <tbody>
         <tr *ngFor="let specimen of specimen; trackBy: trackId" data-cy="entityTable">
@@ -83,9 +86,7 @@
           </td>
           <td>{{ specimen.labRefNo }}</td>
           <td>{{ specimen.labQr }}</td>
-          <td>{{ specimen.labRef }}</td>
           <td>{{ specimen.receivingDate | formatMediumDate }}</td>
-          <td>{{ specimen.isWithdrawn }}</td>
           <td jhiTranslate="{{ 'alfairouzApp.PaymentType.' + specimen.paymentType }}">{{ specimen.paymentType }}</td>
           <td>
             <div *ngIf="specimen.patient">
@@ -94,42 +95,45 @@
           </td>
           <td>
             <div *ngIf="specimen.specimenType">
-              <a [routerLink]="['/specimen-type', specimen.specimenType?.id, 'view']">{{ specimen.specimenType?.name }}</a>
+              <a
+                [routerLink]="['/specimen-type', specimen.specimenType?.id, 'view']">{{ specimen.specimenType?.name }}</a>
             </div>
           </td>
           <td>
             <div *ngIf="specimen.referringCenter">
-              <a [routerLink]="['/referring-center', specimen.referringCenter?.id, 'view']">{{ specimen.referringCenter?.name }}</a>
+              <a
+                [routerLink]="['/referring-center', specimen.referringCenter?.id, 'view']">{{ specimen.referringCenter?.name }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="!specimen.isWithdrawn" matTooltip="موجودة" style="font-size: 30px">
+              <mat-icon [inline]="true" class="text-success">check_circle_outline</mat-icon>
+            </div>
+            <div *ngIf="specimen.isWithdrawn" matTooltip="تم سحبها" style="font-size: 30px">
+              <mat-icon [inline]="true" class="text-danger">highlight_off</mat-icon>
             </div>
           </td>
 
-          <td class="text-end">
-            <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/specimen', specimen.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-              </button>
+          <td class="text-left">
+            <div class="btn-group flex-btn-group-container">
+              <mat-menu #appMenu="matMenu">
+                <button [routerLink]="['./', specimen.id, 'view']" mat-menu-item>
+                  <mat-icon>remove_red_eye</mat-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                </button>
 
-              <button
-                type="submit"
-                [routerLink]="['/specimen', specimen.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-              </button>
+                <button [routerLink]="['./', specimen.id, 'edit']" mat-menu-item>
+                  <mat-icon>edit</mat-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                </button>
+                <button (click)="delete(specimen)" *jhiHasAnyAuthority="['ROLE_ADMIN']" mat-menu-item>
+                  <mat-icon>delete</mat-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                </button>
+              </mat-menu>
 
-              <button type="submit" (click)="delete(specimen)" *jhiHasAnyAuthority="['ROLE_ADMIN']"
-                      class="btn btn-danger btn-sm"
-                      data-cy="entityDeleteButton">
-                <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              <button [matMenuTriggerFor]="appMenu" class="mr-2" mat-icon-button>
+                <mat-icon>more_vert</mat-icon>
               </button>
             </div>
           </td>

@@ -70,17 +70,7 @@
               </option>
             </select>
           </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.contractType" for="field_contractType">Contract
-              Type</label>
-            <select class="form-control" name="contractType" formControlName="contractType" id="field_contractType"
-                    data-cy="contractType">
-              <option [ngValue]="null">{{ 'alfairouzApp.ContractType.null' | translate }}</option>
-              <option *ngFor="let contractType of contractTypeValues" [value]="contractType">
-                {{ 'alfairouzApp.ContractType.' + contractType | translate }}
-              </option>
-            </select>
-          </div>
+
           <div class="row mb-3">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.fileNo" for="field_fileNo">File No</label>
             <input type="text" class="form-control" name="fileNo" id="field_fileNo" data-cy="fileNo"
@@ -181,7 +171,20 @@
             />
           </div>
 
-          <div class="row mb-3">
+          <div class="row mb-3" *ngIf="editForm.get('paymentType')!.value == 'MONTHLY'">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.contractType" for="field_contractType">Contract
+              Type</label>
+            <select class="form-control" name="contractType" formControlName="contractType" id="field_contractType"
+                    data-cy="contractType">
+              <option [ngValue]="null">{{ 'alfairouzApp.ContractType.null' | translate }}</option>
+              <option *ngFor="let contractType of contractTypeValues" [value]="contractType">
+                {{ 'alfairouzApp.ContractType.' + contractType | translate }}
+              </option>
+            </select>
+          </div>
+
+          <div class="row mb-3"
+               *ngIf="editForm.get('contractType')!.value == 'SPECIMEN' || editForm.get('paymentType')!.value == 'CASH'">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.specimenType" for="field_specimenType">Specimen
               Type</label>
             <select class="form-control" id="field_specimenType" data-cy="specimenType" name="specimenType"
@@ -197,7 +200,8 @@
               </option>
             </select>
           </div>
-          <div class="row mb-3">
+          <div class="row mb-3"
+               *ngIf="editForm.get('contractType')!.value == 'SIZE' && editForm.get('paymentType')!.value == 'MONTHLY'">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.size" for="field_size">Size</label>
             <select class="form-control" id="field_size" data-cy="size" name="size" formControlName="size">
               <option [ngValue]="null"></option>

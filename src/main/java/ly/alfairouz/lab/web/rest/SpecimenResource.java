@@ -67,7 +67,7 @@ public class SpecimenResource {
         if (specimenDTO.getId() != null) {
             throw new BadRequestAlertException("A new specimen cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        SpecimenDTO result = specimenService.save(specimenDTO);
+        SpecimenDTO result = specimenService.create(specimenDTO);
         return ResponseEntity
             .created(new URI("/api/specimen/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
