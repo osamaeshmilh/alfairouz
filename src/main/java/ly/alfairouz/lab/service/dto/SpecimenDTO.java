@@ -8,6 +8,7 @@ import ly.alfairouz.lab.domain.enumeration.ContractType;
 import ly.alfairouz.lab.domain.enumeration.LabRef;
 import ly.alfairouz.lab.domain.enumeration.PaymentType;
 import ly.alfairouz.lab.domain.enumeration.Results;
+import ly.alfairouz.lab.domain.enumeration.SpecimenStatus;
 
 /**
  * A DTO for the {@link ly.alfairouz.lab.domain.Specimen} entity.
@@ -17,6 +18,8 @@ public class SpecimenDTO implements Serializable {
     private Long id;
 
     private String labRefNo;
+
+    private String labRefOrder;
 
     private String labQr;
 
@@ -80,6 +83,20 @@ public class SpecimenDTO implements Serializable {
 
     private String notes;
 
+    private SpecimenStatus specimenStatus;
+
+    private Integer newBlocksRequested;
+
+    private Boolean receivedInFormalin;
+
+    private Boolean reserve;
+
+    private Boolean printedOut;
+
+    private Boolean smsSent;
+
+    private Boolean onlineReport;
+
     private PatientDTO patient;
 
     private BiopsyDTO biopsy;
@@ -118,6 +135,14 @@ public class SpecimenDTO implements Serializable {
 
     public void setLabRefNo(String labRefNo) {
         this.labRefNo = labRefNo;
+    }
+
+    public String getLabRefOrder() {
+        return labRefOrder;
+    }
+
+    public void setLabRefOrder(String labRefOrder) {
+        this.labRefOrder = labRefOrder;
     }
 
     public String getLabQr() {
@@ -368,6 +393,62 @@ public class SpecimenDTO implements Serializable {
         this.notes = notes;
     }
 
+    public SpecimenStatus getSpecimenStatus() {
+        return specimenStatus;
+    }
+
+    public void setSpecimenStatus(SpecimenStatus specimenStatus) {
+        this.specimenStatus = specimenStatus;
+    }
+
+    public Integer getNewBlocksRequested() {
+        return newBlocksRequested;
+    }
+
+    public void setNewBlocksRequested(Integer newBlocksRequested) {
+        this.newBlocksRequested = newBlocksRequested;
+    }
+
+    public Boolean getReceivedInFormalin() {
+        return receivedInFormalin;
+    }
+
+    public void setReceivedInFormalin(Boolean receivedInFormalin) {
+        this.receivedInFormalin = receivedInFormalin;
+    }
+
+    public Boolean getReserve() {
+        return reserve;
+    }
+
+    public void setReserve(Boolean reserve) {
+        this.reserve = reserve;
+    }
+
+    public Boolean getPrintedOut() {
+        return printedOut;
+    }
+
+    public void setPrintedOut(Boolean printedOut) {
+        this.printedOut = printedOut;
+    }
+
+    public Boolean getSmsSent() {
+        return smsSent;
+    }
+
+    public void setSmsSent(Boolean smsSent) {
+        this.smsSent = smsSent;
+    }
+
+    public Boolean getOnlineReport() {
+        return onlineReport;
+    }
+
+    public void setOnlineReport(Boolean onlineReport) {
+        this.onlineReport = onlineReport;
+    }
+
     public PatientDTO getPatient() {
         return patient;
     }
@@ -491,6 +572,7 @@ public class SpecimenDTO implements Serializable {
         return "SpecimenDTO{" +
             "id=" + getId() +
             ", labRefNo='" + getLabRefNo() + "'" +
+            ", labRefOrder='" + getLabRefOrder() + "'" +
             ", labQr='" + getLabQr() + "'" +
             ", labRef='" + getLabRef() + "'" +
             ", pdfFile='" + getPdfFile() + "'" +
@@ -521,6 +603,13 @@ public class SpecimenDTO implements Serializable {
             ", conclusion='" + getConclusion() + "'" +
             ", conclusionDate='" + getConclusionDate() + "'" +
             ", notes='" + getNotes() + "'" +
+            ", specimenStatus='" + getSpecimenStatus() + "'" +
+            ", newBlocksRequested=" + getNewBlocksRequested() +
+            ", receivedInFormalin='" + getReceivedInFormalin() + "'" +
+            ", reserve='" + getReserve() + "'" +
+            ", printedOut='" + getPrintedOut() + "'" +
+            ", smsSent='" + getSmsSent() + "'" +
+            ", onlineReport='" + getOnlineReport() + "'" +
             ", patient=" + getPatient() +
             ", biopsy=" + getBiopsy() +
             ", cytology=" + getCytology() +

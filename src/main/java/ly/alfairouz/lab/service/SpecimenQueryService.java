@@ -93,6 +93,9 @@ public class SpecimenQueryService extends QueryService<Specimen> {
             if (criteria.getLabRefNo() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getLabRefNo(), Specimen_.labRefNo));
             }
+            if (criteria.getLabRefOrder() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getLabRefOrder(), Specimen_.labRefOrder));
+            }
             if (criteria.getLabQr() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getLabQr(), Specimen_.labQr));
             }
@@ -179,6 +182,27 @@ public class SpecimenQueryService extends QueryService<Specimen> {
             }
             if (criteria.getNotes() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getNotes(), Specimen_.notes));
+            }
+            if (criteria.getSpecimenStatus() != null) {
+                specification = specification.and(buildSpecification(criteria.getSpecimenStatus(), Specimen_.specimenStatus));
+            }
+            if (criteria.getNewBlocksRequested() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getNewBlocksRequested(), Specimen_.newBlocksRequested));
+            }
+            if (criteria.getReceivedInFormalin() != null) {
+                specification = specification.and(buildSpecification(criteria.getReceivedInFormalin(), Specimen_.receivedInFormalin));
+            }
+            if (criteria.getReserve() != null) {
+                specification = specification.and(buildSpecification(criteria.getReserve(), Specimen_.reserve));
+            }
+            if (criteria.getPrintedOut() != null) {
+                specification = specification.and(buildSpecification(criteria.getPrintedOut(), Specimen_.printedOut));
+            }
+            if (criteria.getSmsSent() != null) {
+                specification = specification.and(buildSpecification(criteria.getSmsSent(), Specimen_.smsSent));
+            }
+            if (criteria.getOnlineReport() != null) {
+                specification = specification.and(buildSpecification(criteria.getOnlineReport(), Specimen_.onlineReport));
             }
             if (criteria.getPatientId() != null) {
                 specification =

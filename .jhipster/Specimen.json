@@ -10,6 +10,10 @@
       "fieldType": "String"
     },
     {
+      "fieldName": "labRefOrder",
+      "fieldType": "String"
+    },
+    {
       "fieldName": "labQr",
       "fieldType": "String"
     },
@@ -133,6 +137,35 @@
     {
       "fieldName": "notes",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "specimenStatus",
+      "fieldType": "SpecimenStatus",
+      "fieldValues": "RECEIVED,GROSSING,PROCESSING,EMBEDDING,CUTTING,STAINING,DIAGNOSING,TYPING,REVISION,READY"
+    },
+    {
+      "fieldName": "newBlocksRequested",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "receivedInFormalin",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "reserve",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "printedOut",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "smsSent",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "onlineReport",
+      "fieldType": "Boolean"
     }
   ],
   "fluentMethods": true,

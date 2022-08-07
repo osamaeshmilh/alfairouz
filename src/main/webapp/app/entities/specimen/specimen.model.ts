@@ -11,11 +11,13 @@ import { IEmployee } from 'app/entities/employee/employee.model';
 import { LabRef } from 'app/entities/enumerations/lab-ref.model';
 import { ContractType } from 'app/entities/enumerations/contract-type.model';
 import { PaymentType } from 'app/entities/enumerations/payment-type.model';
-import { Results } from 'app/entities/enumerations/results.model';
+import {Results} from 'app/entities/enumerations/results.model';
+import {SpecimenStatus} from 'app/entities/enumerations/specimen-status.model';
 
 export interface ISpecimen {
   id?: number;
   labRefNo?: string | null;
+  labRefOrder?: string | null;
   labQr?: string | null;
   labRef?: LabRef | null;
   pdfFileContentType?: string | null;
@@ -47,6 +49,13 @@ export interface ISpecimen {
   conclusion?: string | null;
   conclusionDate?: dayjs.Dayjs | null;
   notes?: string | null;
+  specimenStatus?: SpecimenStatus | null;
+  newBlocksRequested?: number | null;
+  receivedInFormalin?: boolean | null;
+  reserve?: boolean | null;
+  printedOut?: boolean | null;
+  smsSent?: boolean | null;
+  onlineReport?: boolean | null;
   patient?: IPatient | null;
   biopsy?: IBiopsy | null;
   cytology?: ICytology | null;
@@ -65,6 +74,7 @@ export class Specimen implements ISpecimen {
   constructor(
     public id?: number,
     public labRefNo?: string | null,
+    public labRefOrder?: string | null,
     public labQr?: string | null,
     public labRef?: LabRef | null,
     public pdfFileContentType?: string | null,
@@ -96,6 +106,13 @@ export class Specimen implements ISpecimen {
     public conclusion?: string | null,
     public conclusionDate?: dayjs.Dayjs | null,
     public notes?: string | null,
+    public specimenStatus?: SpecimenStatus | null,
+    public newBlocksRequested?: number | null,
+    public receivedInFormalin?: boolean | null,
+    public reserve?: boolean | null,
+    public printedOut?: boolean | null,
+    public smsSent?: boolean | null,
+    public onlineReport?: boolean | null,
     public patient?: IPatient | null,
     public biopsy?: IBiopsy | null,
     public cytology?: ICytology | null,
@@ -111,6 +128,11 @@ export class Specimen implements ISpecimen {
   ) {
     this.isWithdrawn = this.isWithdrawn ?? false;
     this.urgentSample = this.urgentSample ?? false;
+    this.receivedInFormalin = this.receivedInFormalin ?? false;
+    this.reserve = this.reserve ?? false;
+    this.printedOut = this.printedOut ?? false;
+    this.smsSent = this.smsSent ?? false;
+    this.onlineReport = this.onlineReport ?? false;
   }
 }
 

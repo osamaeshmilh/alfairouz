@@ -1,5 +1,5 @@
-<div class="entity-container">
-  <div class="mat-elevation-z1 round-card white-bg p-4 mt-5">
+<div class="d-flex justify-content-center">
+  <div class="col-8">
     <div *ngIf="specimen">
       <h2 data-cy="specimenDetailsHeading"><span jhiTranslate="alfairouzApp.specimen.detail.title">Specimen</span></h2>
 
@@ -17,6 +17,10 @@
         <dt><span jhiTranslate="alfairouzApp.specimen.labRefNo">Lab Ref No</span></dt>
         <dd>
           <span>{{ specimen.labRefNo }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.specimen.labRefOrder">Lab Ref Order</span></dt>
+        <dd>
+          <span>{{ specimen.labRefOrder }}</span>
         </dd>
         <dt><span jhiTranslate="alfairouzApp.specimen.labQr">Lab Qr</span></dt>
         <dd>
@@ -140,6 +144,35 @@
         <dt><span jhiTranslate="alfairouzApp.specimen.notes">Notes</span></dt>
         <dd>
           <span>{{ specimen.notes }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.specimen.specimenStatus">Specimen Status</span></dt>
+        <dd>
+          <span
+            jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.' + specimen.specimenStatus }}">{{ specimen.specimenStatus }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.specimen.newBlocksRequested">New Blocks Requested</span></dt>
+        <dd>
+          <span>{{ specimen.newBlocksRequested }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.specimen.receivedInFormalin">Received In Formalin</span></dt>
+        <dd>
+          <span>{{ specimen.receivedInFormalin }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.specimen.reserve">Reserve</span></dt>
+        <dd>
+          <span>{{ specimen.reserve }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.specimen.printedOut">Printed Out</span></dt>
+        <dd>
+          <span>{{ specimen.printedOut }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.specimen.smsSent">Sms Sent</span></dt>
+        <dd>
+          <span>{{ specimen.smsSent }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.specimen.onlineReport">Online Report</span></dt>
+        <dd>
+          <span>{{ specimen.onlineReport }}</span>
         </dd>
         <dt><span jhiTranslate="alfairouzApp.specimen.patient">Patient</span></dt>
         <dd>

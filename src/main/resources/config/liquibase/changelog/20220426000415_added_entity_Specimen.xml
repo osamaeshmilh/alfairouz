@@ -15,16 +15,19 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="lab_ref_no" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
+            </column>
+            <column name="lab_ref_order" type="varchar(255)">
+                <constraints nullable="true"/>
             </column>
             <column name="lab_qr" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="lab_ref" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="pdf_file" type="longblob">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="pdf_file_content_type" type="varchar(255)">
                 <constraints nullable="true" />
@@ -102,22 +105,43 @@
                 <constraints nullable="true" />
             </column>
             <column name="conclusion" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="conclusion_date" type="date">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="notes" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
+            </column>
+            <column name="specimen_status" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="new_blocks_requested" type="integer">
+                <constraints nullable="true"/>
+            </column>
+            <column name="received_in_formalin" type="boolean">
+                <constraints nullable="true"/>
+            </column>
+            <column name="reserve" type="boolean">
+                <constraints nullable="true"/>
+            </column>
+            <column name="printed_out" type="boolean">
+                <constraints nullable="true"/>
+            </column>
+            <column name="sms_sent" type="boolean">
+                <constraints nullable="true"/>
+            </column>
+            <column name="online_report" type="boolean">
+                <constraints nullable="true"/>
             </column>
             <column name="patient_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="biopsy_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="cytology_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="organ_id" type="bigint">
                 <constraints nullable="true" />
@@ -138,14 +162,23 @@
                 <constraints nullable="true" />
             </column>
             <column name="pathologist_doctor_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="operator_employee_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="corrector_employee_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
+
+            <column name="created_by" type="varchar(50)" defaultValue="system">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>
@@ -168,6 +201,7 @@
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="lab_ref_no" type="string"/>
+            <column name="lab_ref_order" type="string"/>
             <column name="lab_qr" type="string"/>
             <column name="lab_ref" type="string"/>
             <column name="pdf_file" type="blob"/>
@@ -199,6 +233,13 @@
             <column name="conclusion" type="string"/>
             <column name="conclusion_date" type="date"/>
             <column name="notes" type="string"/>
+            <column name="specimen_status" type="string"/>
+            <column name="new_blocks_requested" type="numeric"/>
+            <column name="received_in_formalin" type="boolean"/>
+            <column name="reserve" type="boolean"/>
+            <column name="printed_out" type="boolean"/>
+            <column name="sms_sent" type="boolean"/>
+            <column name="online_report" type="boolean"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

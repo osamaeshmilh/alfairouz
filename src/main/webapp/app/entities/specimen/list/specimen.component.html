@@ -80,6 +80,10 @@
           <span jhiTranslate="alfairouzApp.specimen.isWithdrawn">Is Withdrawn</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
+        <th scope="col" jhiSortBy="specimenStatus">
+          <span jhiTranslate="alfairouzApp.specimen.specimenStatus">Specimen Status</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
         <th scope="col"></th>
       </tr>
       </thead>
@@ -123,6 +127,9 @@
               <mat-icon [inline]="true" class="text-danger">highlight_off</mat-icon>
             </div>
           </td>
+          <td
+            jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.' + specimen.specimenStatus }}">{{ specimen.specimenStatus }}</td>
+
 
           <td class="text-left">
             <div class="btn-group flex-btn-group-container">

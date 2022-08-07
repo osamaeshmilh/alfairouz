@@ -8,13 +8,14 @@ import ly.alfairouz.lab.domain.enumeration.ContractType;
 import ly.alfairouz.lab.domain.enumeration.LabRef;
 import ly.alfairouz.lab.domain.enumeration.PaymentType;
 import ly.alfairouz.lab.domain.enumeration.Results;
+import ly.alfairouz.lab.domain.enumeration.SpecimenStatus;
 
 /**
  * A Specimen.
  */
 @Entity
 @Table(name = "specimen")
-public class Specimen implements Serializable {
+public class Specimen extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,6 +26,9 @@ public class Specimen implements Serializable {
 
     @Column(name = "lab_ref_no")
     private String labRefNo;
+
+    @Column(name = "lab_ref_order")
+    private String labRefOrder;
 
     @Column(name = "lab_qr")
     private String labQr;
@@ -124,6 +128,28 @@ public class Specimen implements Serializable {
     @Column(name = "notes")
     private String notes;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "specimen_status")
+    private SpecimenStatus specimenStatus;
+
+    @Column(name = "new_blocks_requested")
+    private Integer newBlocksRequested;
+
+    @Column(name = "received_in_formalin")
+    private Boolean receivedInFormalin;
+
+    @Column(name = "reserve")
+    private Boolean reserve;
+
+    @Column(name = "printed_out")
+    private Boolean printedOut;
+
+    @Column(name = "sms_sent")
+    private Boolean smsSent;
+
+    @Column(name = "online_report")
+    private Boolean onlineReport;
+
     @ManyToOne
     private Patient patient;
 
@@ -192,6 +218,19 @@ public class Specimen implements Serializable {
 
     public void setLabRefNo(String labRefNo) {
         this.labRefNo = labRefNo;
+    }
+
+    public String getLabRefOrder() {
+        return this.labRefOrder;
+    }
+
+    public Specimen labRefOrder(String labRefOrder) {
+        this.setLabRefOrder(labRefOrder);
+        return this;
+    }
+
+    public void setLabRefOrder(String labRefOrder) {
+        this.labRefOrder = labRefOrder;
     }
 
     public String getLabQr() {
@@ -597,6 +636,97 @@ public class Specimen implements Serializable {
         this.notes = notes;
     }
 
+    public SpecimenStatus getSpecimenStatus() {
+        return this.specimenStatus;
+    }
+
+    public Specimen specimenStatus(SpecimenStatus specimenStatus) {
+        this.setSpecimenStatus(specimenStatus);
+        return this;
+    }
+
+    public void setSpecimenStatus(SpecimenStatus specimenStatus) {
+        this.specimenStatus = specimenStatus;
+    }
+
+    public Integer getNewBlocksRequested() {
+        return this.newBlocksRequested;
+    }
+
+    public Specimen newBlocksRequested(Integer newBlocksRequested) {
+        this.setNewBlocksRequested(newBlocksRequested);
+        return this;
+    }
+
+    public void setNewBlocksRequested(Integer newBlocksRequested) {
+        this.newBlocksRequested = newBlocksRequested;
+    }
+
+    public Boolean getReceivedInFormalin() {
+        return this.receivedInFormalin;
+    }
+
+    public Specimen receivedInFormalin(Boolean receivedInFormalin) {
+        this.setReceivedInFormalin(receivedInFormalin);
+        return this;
+    }
+
+    public void setReceivedInFormalin(Boolean receivedInFormalin) {
+        this.receivedInFormalin = receivedInFormalin;
+    }
+
+    public Boolean getReserve() {
+        return this.reserve;
+    }
+
+    public Specimen reserve(Boolean reserve) {
+        this.setReserve(reserve);
+        return this;
+    }
+
+    public void setReserve(Boolean reserve) {
+        this.reserve = reserve;
+    }
+
+    public Boolean getPrintedOut() {
+        return this.printedOut;
+    }
+
+    public Specimen printedOut(Boolean printedOut) {
+        this.setPrintedOut(printedOut);
+        return this;
+    }
+
+    public void setPrintedOut(Boolean printedOut) {
+        this.printedOut = printedOut;
+    }
+
+    public Boolean getSmsSent() {
+        return this.smsSent;
+    }
+
+    public Specimen smsSent(Boolean smsSent) {
+        this.setSmsSent(smsSent);
+        return this;
+    }
+
+    public void setSmsSent(Boolean smsSent) {
+        this.smsSent = smsSent;
+    }
+
+    public Boolean getOnlineReport() {
+        return this.onlineReport;
+    }
+
+    public Specimen onlineReport(Boolean onlineReport) {
+        this.setOnlineReport(onlineReport);
+        return this;
+    }
+
+    public void setOnlineReport(Boolean onlineReport) {
+        this.onlineReport = onlineReport;
+    }
+
     public Patient getPatient() {
         return this.patient;
     }
@@ -778,6 +908,7 @@ public class Specimen implements Serializable {
         return "Specimen{" +
             "id=" + getId() +
             ", labRefNo='" + getLabRefNo() + "'" +
+            ", labRefOrder='" + getLabRefOrder() + "'" +
             ", labQr='" + getLabQr() + "'" +
             ", labRef='" + getLabRef() + "'" +
             ", pdfFile='" + getPdfFile() + "'" +
@@ -809,6 +940,13 @@ public class Specimen implements Serializable {
             ", conclusion='" + getConclusion() + "'" +
             ", conclusionDate='" + getConclusionDate() + "'" +
             ", notes='" + getNotes() + "'" +
+            ", specimenStatus='" + getSpecimenStatus() + "'" +
+            ", newBlocksRequested=" + getNewBlocksRequested() +
+            ", receivedInFormalin='" + getReceivedInFormalin() + "'" +
+            ", reserve='" + getReserve() + "'" +
+            ", printedOut='" + getPrintedOut() + "'" +
+            ", smsSent='" + getSmsSent() + "'" +
+            ", onlineReport='" + getOnlineReport() + "'" +
             "}";
     }
 }

@@ -15,6 +15,106 @@
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id"
                  [readonly]="true"/>
         </div>
+
+        <div class="row mb-3" hidden>
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.labRefOrder" for="field_labRefOrder">Lab Ref
+            Order</label>
+          <input
+            type="text"
+            class="form-control"
+            name="labRefOrder"
+            id="field_labRefOrder"
+            data-cy="labRefOrder"
+            formControlName="labRefOrder"
+          />
+        </div>
+        <div class="row mb-3" hidden>
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.specimenStatus" for="field_specimenStatus">Specimen
+            Status</label>
+          <select
+            class="form-control"
+            name="specimenStatus"
+            formControlName="specimenStatus"
+            id="field_specimenStatus"
+            data-cy="specimenStatus"
+          >
+            <option [ngValue]="null">{{ 'alfairouzApp.SpecimenStatus.null' | translate }}</option>
+            <option *ngFor="let specimenStatus of specimenStatusValues" [value]="specimenStatus">
+              {{ 'alfairouzApp.SpecimenStatus.' + specimenStatus | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3" hidden>
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.newBlocksRequested"
+                 for="field_newBlocksRequested"
+          >New Blocks Requested</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="newBlocksRequested"
+            id="field_newBlocksRequested"
+            data-cy="newBlocksRequested"
+            formControlName="newBlocksRequested"
+          />
+        </div>
+
+
+        <div class="row mb-3" hidden>
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.receivedInFormalin"
+                 for="field_receivedInFormalin"
+          >Received In Formalin</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="receivedInFormalin"
+            id="field_receivedInFormalin"
+            data-cy="receivedInFormalin"
+            formControlName="receivedInFormalin"
+          />
+        </div>
+
+        <div class="row mb-3" hidden>
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.reserve" for="field_reserve">Reserve</label>
+          <input type="checkbox" class="form-check" name="reserve" id="field_reserve" data-cy="reserve"
+                 formControlName="reserve"/>
+        </div>
+
+        <div class="row mb-3" hidden>
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.printedOut" for="field_printedOut">Printed
+            Out</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="printedOut"
+            id="field_printedOut"
+            data-cy="printedOut"
+            formControlName="printedOut"
+          />
+        </div>
+
+        <div class="row mb-3" hidden>
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.smsSent" for="field_smsSent">Sms Sent</label>
+          <input type="checkbox" class="form-check" name="smsSent" id="field_smsSent" data-cy="smsSent"
+                 formControlName="smsSent"/>
+        </div>
+
+        <div class="row mb-3" hidden>
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.onlineReport" for="field_onlineReport">Online
+            Report</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="onlineReport"
+            id="field_onlineReport"
+            data-cy="onlineReport"
+            formControlName="onlineReport"
+          />
+        </div>
+
+
         <div class="row mb-3" hidden>
           <label class="form-label" jhiTranslate="alfairouzApp.specimen.labQr" for="field_labQr">Lab Qr</label>
           <input type="text" class="form-control" name="labQr" id="field_labQr" data-cy="labQr"

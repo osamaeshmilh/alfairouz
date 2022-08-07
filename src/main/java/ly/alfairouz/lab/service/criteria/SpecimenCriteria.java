@@ -6,6 +6,7 @@ import ly.alfairouz.lab.domain.enumeration.ContractType;
 import ly.alfairouz.lab.domain.enumeration.LabRef;
 import ly.alfairouz.lab.domain.enumeration.PaymentType;
 import ly.alfairouz.lab.domain.enumeration.Results;
+import ly.alfairouz.lab.domain.enumeration.SpecimenStatus;
 import org.springdoc.api.annotations.ParameterObject;
 import tech.jhipster.service.Criteria;
 import tech.jhipster.service.filter.BooleanFilter;
@@ -97,11 +98,31 @@ public class SpecimenCriteria implements Serializable, Criteria {
         }
     }
 
+    /**
+     * Class for filtering SpecimenStatus
+     */
+    public static class SpecimenStatusFilter extends Filter<SpecimenStatus> {
+
+        public SpecimenStatusFilter() {
+        }
+
+        public SpecimenStatusFilter(SpecimenStatusFilter filter) {
+            super(filter);
+        }
+
+        @Override
+        public SpecimenStatusFilter copy() {
+            return new SpecimenStatusFilter(this);
+        }
+    }
+
     private static final long serialVersionUID = 1L;
 
     private LongFilter id;
 
     private StringFilter labRefNo;
+
+    private StringFilter labRefOrder;
 
     private StringFilter labQr;
 
@@ -161,6 +182,20 @@ public class SpecimenCriteria implements Serializable, Criteria {
 
     private StringFilter notes;
 
+    private SpecimenStatusFilter specimenStatus;
+
+    private IntegerFilter newBlocksRequested;
+
+    private BooleanFilter receivedInFormalin;
+
+    private BooleanFilter reserve;
+
+    private BooleanFilter printedOut;
+
+    private BooleanFilter smsSent;
+
+    private BooleanFilter onlineReport;
+
     private LongFilter patientId;
 
     private LongFilter biopsyId;
@@ -192,6 +227,7 @@ public class SpecimenCriteria implements Serializable, Criteria {
     public SpecimenCriteria(SpecimenCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.labRefNo = other.labRefNo == null ? null : other.labRefNo.copy();
+        this.labRefOrder = other.labRefOrder == null ? null : other.labRefOrder.copy();
         this.labQr = other.labQr == null ? null : other.labQr.copy();
         this.labRef = other.labRef == null ? null : other.labRef.copy();
         this.pdfFileUrl = other.pdfFileUrl == null ? null : other.pdfFileUrl.copy();
@@ -221,6 +257,13 @@ public class SpecimenCriteria implements Serializable, Criteria {
         this.conclusion = other.conclusion == null ? null : other.conclusion.copy();
         this.conclusionDate = other.conclusionDate == null ? null : other.conclusionDate.copy();
         this.notes = other.notes == null ? null : other.notes.copy();
+        this.specimenStatus = other.specimenStatus == null ? null : other.specimenStatus.copy();
+        this.newBlocksRequested = other.newBlocksRequested == null ? null : other.newBlocksRequested.copy();
+        this.receivedInFormalin = other.receivedInFormalin == null ? null : other.receivedInFormalin.copy();
+        this.reserve = other.reserve == null ? null : other.reserve.copy();
+        this.printedOut = other.printedOut == null ? null : other.printedOut.copy();
+        this.smsSent = other.smsSent == null ? null : other.smsSent.copy();
+        this.onlineReport = other.onlineReport == null ? null : other.onlineReport.copy();
         this.patientId = other.patientId == null ? null : other.patientId.copy();
         this.biopsyId = other.biopsyId == null ? null : other.biopsyId.copy();
         this.cytologyId = other.cytologyId == null ? null : other.cytologyId.copy();
@@ -269,6 +312,21 @@ public class SpecimenCriteria implements Serializable, Criteria {
 
     public void setLabRefNo(StringFilter labRefNo) {
         this.labRefNo = labRefNo;
+    }
+
+    public StringFilter getLabRefOrder() {
+        return labRefOrder;
+    }
+
+    public StringFilter labRefOrder() {
+        if (labRefOrder == null) {
+            labRefOrder = new StringFilter();
+        }
+        return labRefOrder;
+    }
+
+    public void setLabRefOrder(StringFilter labRefOrder) {
+        this.labRefOrder = labRefOrder;
     }
 
     public StringFilter getLabQr() {
@@ -706,6 +764,111 @@ public class SpecimenCriteria implements Serializable, Criteria {
         this.notes = notes;
     }
 
+    public SpecimenStatusFilter getSpecimenStatus() {
+        return specimenStatus;
+    }
+
+    public SpecimenStatusFilter specimenStatus() {
+        if (specimenStatus == null) {
+            specimenStatus = new SpecimenStatusFilter();
+        }
+        return specimenStatus;
+    }
+
+    public void setSpecimenStatus(SpecimenStatusFilter specimenStatus) {
+        this.specimenStatus = specimenStatus;
+    }
+
+    public IntegerFilter getNewBlocksRequested() {
+        return newBlocksRequested;
+    }
+
+    public IntegerFilter newBlocksRequested() {
+        if (newBlocksRequested == null) {
+            newBlocksRequested = new IntegerFilter();
+        }
+        return newBlocksRequested;
+    }
+
+    public void setNewBlocksRequested(IntegerFilter newBlocksRequested) {
+        this.newBlocksRequested = newBlocksRequested;
+    }
+
+    public BooleanFilter getReceivedInFormalin() {
+        return receivedInFormalin;
+    }
+
+    public BooleanFilter receivedInFormalin() {
+        if (receivedInFormalin == null) {
+            receivedInFormalin = new BooleanFilter();
+        }
+        return receivedInFormalin;
+    }
+
+    public void setReceivedInFormalin(BooleanFilter receivedInFormalin) {
+        this.receivedInFormalin = receivedInFormalin;
+    }
+
+    public BooleanFilter getReserve() {
+        return reserve;
+    }
+
+    public BooleanFilter reserve() {
+        if (reserve == null) {
+            reserve = new BooleanFilter();
+        }
+        return reserve;
+    }
+
+    public void setReserve(BooleanFilter reserve) {
+        this.reserve = reserve;
+    }
+
+    public BooleanFilter getPrintedOut() {
+        return printedOut;
+    }
+
+    public BooleanFilter printedOut() {
+        if (printedOut == null) {
+            printedOut = new BooleanFilter();
+        }
+        return printedOut;
+    }
+
+    public void setPrintedOut(BooleanFilter printedOut) {
+        this.printedOut = printedOut;
+    }
+
+    public BooleanFilter getSmsSent() {
+        return smsSent;
+    }
+
+    public BooleanFilter smsSent() {
+        if (smsSent == null) {
+            smsSent = new BooleanFilter();
+        }
+        return smsSent;
+    }
+
+    public void setSmsSent(BooleanFilter smsSent) {
+        this.smsSent = smsSent;
+    }
+
+    public BooleanFilter getOnlineReport() {
+        return onlineReport;
+    }
+
+    public BooleanFilter onlineReport() {
+        if (onlineReport == null) {
+            onlineReport = new BooleanFilter();
+        }
+        return onlineReport;
+    }
+
+    public void setOnlineReport(BooleanFilter onlineReport) {
+        this.onlineReport = onlineReport;
+    }
+
     public LongFilter getPatientId() {
         return patientId;
     }
@@ -905,17 +1068,18 @@ public class SpecimenCriteria implements Serializable, Criteria {
         final SpecimenCriteria that = (SpecimenCriteria) o;
         return (
             Objects.equals(id, that.id) &&
-            Objects.equals(labRefNo, that.labRefNo) &&
-            Objects.equals(labQr, that.labQr) &&
-            Objects.equals(labRef, that.labRef) &&
-            Objects.equals(pdfFileUrl, that.pdfFileUrl) &&
-            Objects.equals(samples, that.samples) &&
-            Objects.equals(blocks, that.blocks) &&
-            Objects.equals(slides, that.slides) &&
-            Objects.equals(samplingDate, that.samplingDate) &&
-            Objects.equals(receivingDate, that.receivingDate) &&
-            Objects.equals(contractType, that.contractType) &&
-            Objects.equals(isWithdrawn, that.isWithdrawn) &&
+                Objects.equals(labRefNo, that.labRefNo) &&
+                Objects.equals(labRefOrder, that.labRefOrder) &&
+                Objects.equals(labQr, that.labQr) &&
+                Objects.equals(labRef, that.labRef) &&
+                Objects.equals(pdfFileUrl, that.pdfFileUrl) &&
+                Objects.equals(samples, that.samples) &&
+                Objects.equals(blocks, that.blocks) &&
+                Objects.equals(slides, that.slides) &&
+                Objects.equals(samplingDate, that.samplingDate) &&
+                Objects.equals(receivingDate, that.receivingDate) &&
+                Objects.equals(contractType, that.contractType) &&
+                Objects.equals(isWithdrawn, that.isWithdrawn) &&
             Objects.equals(withdrawDate, that.withdrawDate) &&
             Objects.equals(fileNo, that.fileNo) &&
             Objects.equals(paymentType, that.paymentType) &&
@@ -925,26 +1089,33 @@ public class SpecimenCriteria implements Serializable, Criteria {
             Objects.equals(urgentSample, that.urgentSample) &&
             Objects.equals(revisionDate, that.revisionDate) &&
             Objects.equals(reportDate, that.reportDate) &&
-            Objects.equals(clinicalData, that.clinicalData) &&
-            Objects.equals(clinicalDate, that.clinicalDate) &&
-            Objects.equals(grossExamination, that.grossExamination) &&
-            Objects.equals(grossDate, that.grossDate) &&
-            Objects.equals(microscopicData, that.microscopicData) &&
-            Objects.equals(microscopicDate, that.microscopicDate) &&
-            Objects.equals(results, that.results) &&
-            Objects.equals(conclusion, that.conclusion) &&
-            Objects.equals(conclusionDate, that.conclusionDate) &&
-            Objects.equals(notes, that.notes) &&
-            Objects.equals(patientId, that.patientId) &&
-            Objects.equals(biopsyId, that.biopsyId) &&
-            Objects.equals(cytologyId, that.cytologyId) &&
-            Objects.equals(organId, that.organId) &&
-            Objects.equals(specimenTypeId, that.specimenTypeId) &&
-            Objects.equals(sizeId, that.sizeId) &&
-            Objects.equals(referringCenterId, that.referringCenterId) &&
-            Objects.equals(grossingDoctorId, that.grossingDoctorId) &&
-            Objects.equals(referringDoctorId, that.referringDoctorId) &&
-            Objects.equals(pathologistDoctorId, that.pathologistDoctorId) &&
+                Objects.equals(clinicalData, that.clinicalData) &&
+                Objects.equals(clinicalDate, that.clinicalDate) &&
+                Objects.equals(grossExamination, that.grossExamination) &&
+                Objects.equals(grossDate, that.grossDate) &&
+                Objects.equals(microscopicData, that.microscopicData) &&
+                Objects.equals(microscopicDate, that.microscopicDate) &&
+                Objects.equals(results, that.results) &&
+                Objects.equals(conclusion, that.conclusion) &&
+                Objects.equals(conclusionDate, that.conclusionDate) &&
+                Objects.equals(notes, that.notes) &&
+                Objects.equals(specimenStatus, that.specimenStatus) &&
+                Objects.equals(newBlocksRequested, that.newBlocksRequested) &&
+                Objects.equals(receivedInFormalin, that.receivedInFormalin) &&
+                Objects.equals(reserve, that.reserve) &&
+                Objects.equals(printedOut, that.printedOut) &&
+                Objects.equals(smsSent, that.smsSent) &&
+                Objects.equals(onlineReport, that.onlineReport) &&
+                Objects.equals(patientId, that.patientId) &&
+                Objects.equals(biopsyId, that.biopsyId) &&
+                Objects.equals(cytologyId, that.cytologyId) &&
+                Objects.equals(organId, that.organId) &&
+                Objects.equals(specimenTypeId, that.specimenTypeId) &&
+                Objects.equals(sizeId, that.sizeId) &&
+                Objects.equals(referringCenterId, that.referringCenterId) &&
+                Objects.equals(grossingDoctorId, that.grossingDoctorId) &&
+                Objects.equals(referringDoctorId, that.referringDoctorId) &&
+                Objects.equals(pathologistDoctorId, that.pathologistDoctorId) &&
             Objects.equals(operatorEmployeeId, that.operatorEmployeeId) &&
             Objects.equals(correctorEmployeeId, that.correctorEmployeeId) &&
             Objects.equals(distinct, that.distinct)
@@ -956,6 +1127,7 @@ public class SpecimenCriteria implements Serializable, Criteria {
         return Objects.hash(
             id,
             labRefNo,
+            labRefOrder,
             labQr,
             labRef,
             pdfFileUrl,
@@ -985,6 +1157,13 @@ public class SpecimenCriteria implements Serializable, Criteria {
             conclusion,
             conclusionDate,
             notes,
+            specimenStatus,
+            newBlocksRequested,
+            receivedInFormalin,
+            reserve,
+            printedOut,
+            smsSent,
+            onlineReport,
             patientId,
             biopsyId,
             cytologyId,
@@ -1007,6 +1186,7 @@ public class SpecimenCriteria implements Serializable, Criteria {
         return "SpecimenCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
             (labRefNo != null ? "labRefNo=" + labRefNo + ", " : "") +
+            (labRefOrder != null ? "labRefOrder=" + labRefOrder + ", " : "") +
             (labQr != null ? "labQr=" + labQr + ", " : "") +
             (labRef != null ? "labRef=" + labRef + ", " : "") +
             (pdfFileUrl != null ? "pdfFileUrl=" + pdfFileUrl + ", " : "") +
@@ -1036,6 +1216,13 @@ public class SpecimenCriteria implements Serializable, Criteria {
             (conclusion != null ? "conclusion=" + conclusion + ", " : "") +
             (conclusionDate != null ? "conclusionDate=" + conclusionDate + ", " : "") +
             (notes != null ? "notes=" + notes + ", " : "") +
+            (specimenStatus != null ? "specimenStatus=" + specimenStatus + ", " : "") +
+            (newBlocksRequested != null ? "newBlocksRequested=" + newBlocksRequested + ", " : "") +
+            (receivedInFormalin != null ? "receivedInFormalin=" + receivedInFormalin + ", " : "") +
+            (reserve != null ? "reserve=" + reserve + ", " : "") +
+            (printedOut != null ? "printedOut=" + printedOut + ", " : "") +
+            (smsSent != null ? "smsSent=" + smsSent + ", " : "") +
+            (onlineReport != null ? "onlineReport=" + onlineReport + ", " : "") +
             (patientId != null ? "patientId=" + patientId + ", " : "") +
             (biopsyId != null ? "biopsyId=" + biopsyId + ", " : "") +
             (cytologyId != null ? "cytologyId=" + cytologyId + ", " : "") +

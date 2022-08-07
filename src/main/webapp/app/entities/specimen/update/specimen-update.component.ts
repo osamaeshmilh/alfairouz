@@ -31,7 +31,8 @@ import { EmployeeService } from 'app/entities/employee/service/employee.service'
 import { LabRef } from 'app/entities/enumerations/lab-ref.model';
 import { ContractType } from 'app/entities/enumerations/contract-type.model';
 import { PaymentType } from 'app/entities/enumerations/payment-type.model';
-import { Results } from 'app/entities/enumerations/results.model';
+import {Results} from 'app/entities/enumerations/results.model';
+import {SpecimenStatus} from 'app/entities/enumerations/specimen-status.model';
 
 @Component({
   selector: 'jhi-specimen-update',
@@ -43,6 +44,7 @@ export class SpecimenUpdateComponent implements OnInit {
   contractTypeValues = Object.keys(ContractType);
   paymentTypeValues = Object.keys(PaymentType);
   resultsValues = Object.keys(Results);
+  specimenStatusValues = Object.keys(SpecimenStatus);
 
   patientsSharedCollection: IPatient[] = [];
   biopsiesSharedCollection: IBiopsy[] = [];
@@ -57,6 +59,7 @@ export class SpecimenUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     labRefNo: [],
+    labRefOrder: [],
     labQr: [],
     labRef: [],
     pdfFile: [],
@@ -88,6 +91,13 @@ export class SpecimenUpdateComponent implements OnInit {
     conclusion: [],
     conclusionDate: [],
     notes: [],
+    specimenStatus: [],
+    newBlocksRequested: [],
+    receivedInFormalin: [],
+    reserve: [],
+    printedOut: [],
+    smsSent: [],
+    onlineReport: [],
     patient: [],
     biopsy: [],
     cytology: [],
@@ -230,6 +240,7 @@ export class SpecimenUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: specimen.id,
       labRefNo: specimen.labRefNo,
+      labRefOrder: specimen.labRefOrder,
       labQr: specimen.labQr,
       labRef: specimen.labRef,
       pdfFile: specimen.pdfFile,
@@ -261,6 +272,13 @@ export class SpecimenUpdateComponent implements OnInit {
       conclusion: specimen.conclusion,
       conclusionDate: specimen.conclusionDate,
       notes: specimen.notes,
+      specimenStatus: specimen.specimenStatus,
+      newBlocksRequested: specimen.newBlocksRequested,
+      receivedInFormalin: specimen.receivedInFormalin,
+      reserve: specimen.reserve,
+      printedOut: specimen.printedOut,
+      smsSent: specimen.smsSent,
+      onlineReport: specimen.onlineReport,
       patient: specimen.patient,
       biopsy: specimen.biopsy,
       cytology: specimen.cytology,
@@ -396,6 +414,7 @@ export class SpecimenUpdateComponent implements OnInit {
       ...new Specimen(),
       id: this.editForm.get(['id'])!.value,
       labRefNo: this.editForm.get(['labRefNo'])!.value,
+      labRefOrder: this.editForm.get(['labRefOrder'])!.value,
       labQr: this.editForm.get(['labQr'])!.value,
       labRef: this.editForm.get(['labRef'])!.value,
       pdfFileContentType: this.editForm.get(['pdfFileContentType'])!.value,
@@ -427,6 +446,13 @@ export class SpecimenUpdateComponent implements OnInit {
       conclusion: this.editForm.get(['conclusion'])!.value,
       conclusionDate: this.editForm.get(['conclusionDate'])!.value,
       notes: this.editForm.get(['notes'])!.value,
+      specimenStatus: this.editForm.get(['specimenStatus'])!.value,
+      newBlocksRequested: this.editForm.get(['newBlocksRequested'])!.value,
+      receivedInFormalin: this.editForm.get(['receivedInFormalin'])!.value,
+      reserve: this.editForm.get(['reserve'])!.value,
+      printedOut: this.editForm.get(['printedOut'])!.value,
+      smsSent: this.editForm.get(['smsSent'])!.value,
+      onlineReport: this.editForm.get(['onlineReport'])!.value,
       patient: this.editForm.get(['patient'])!.value,
       biopsy: this.editForm.get(['biopsy'])!.value,
       cytology: this.editForm.get(['cytology'])!.value,
