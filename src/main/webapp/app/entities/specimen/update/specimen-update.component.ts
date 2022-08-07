@@ -126,7 +126,9 @@ export class SpecimenUpdateComponent implements OnInit {
 
     this.activatedRoute.data.subscribe(({ specimen }) => {
       this.paymentType = this.activatedRoute.snapshot.queryParams['paymentType'] ? this.activatedRoute.snapshot.queryParams['paymentType'] : '';
-      specimen.paymentType = this.paymentType;
+      if (this.activatedRoute.snapshot.queryParams['paymentType']) {
+        specimen.paymentType = this.paymentType;
+      }
       this.updateForm(specimen);
 
       this.loadRelationshipsOptions();

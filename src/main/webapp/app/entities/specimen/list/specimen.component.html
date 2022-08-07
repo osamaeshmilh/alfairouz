@@ -72,6 +72,10 @@
           <span jhiTranslate="alfairouzApp.specimen.referringCenter">Referring Center</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
+        <th scope="col" jhiSortBy="grossingDoctor.name">
+          <span jhiTranslate="alfairouzApp.specimen.grossingDoctor">Grossing Doctor</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
         <th scope="col" jhiSortBy="isWithdrawn">
           <span jhiTranslate="alfairouzApp.specimen.isWithdrawn">Is Withdrawn</span>
           <fa-icon icon="sort"></fa-icon>
@@ -106,6 +110,12 @@
             </div>
           </td>
           <td>
+            <div *ngIf="specimen.grossingDoctor">
+              <a
+                [routerLink]="['/grossing', specimen.grossingDoctor?.id, 'view']">{{ specimen.grossingDoctor?.name }}</a>
+            </div>
+          </td>
+          <td>
             <div *ngIf="!specimen.isWithdrawn" matTooltip="موجودة" style="font-size: 30px">
               <mat-icon [inline]="true" class="text-success">check_circle_outline</mat-icon>
             </div>
@@ -121,10 +131,16 @@
                   <mat-icon>remove_red_eye</mat-icon>
                   <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                 </button>
-
-                <button [routerLink]="['./', specimen.id, 'edit']" mat-menu-item>
+                <button [routerLink]="['./', specimen.id, 'edit']"
+                        *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION']" mat-menu-item>
                   <mat-icon>edit</mat-icon>
                   <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                </button>
+
+                <button [routerLink]="['./', specimen.id, 'edit']" *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR']"
+                        mat-menu-item>
+                  <mat-icon>edit</mat-icon>
+                  <span class="d-none d-md-inline">Grossing Data</span>
                 </button>
                 <button (click)="delete(specimen)" *jhiHasAnyAuthority="['ROLE_ADMIN']" mat-menu-item>
                   <mat-icon>delete</mat-icon>

@@ -7,6 +7,8 @@ import java.util.zip.CRC32;
 
 import ly.alfairouz.lab.domain.Specimen;
 import ly.alfairouz.lab.repository.SpecimenRepository;
+import ly.alfairouz.lab.security.AuthoritiesConstants;
+import ly.alfairouz.lab.security.SecurityUtils;
 import ly.alfairouz.lab.service.dto.SpecimenDTO;
 import ly.alfairouz.lab.service.mapper.SpecimenMapper;
 import org.slf4j.Logger;
@@ -29,9 +31,12 @@ public class SpecimenService {
 
     private final SpecimenMapper specimenMapper;
 
-    public SpecimenService(SpecimenRepository specimenRepository, SpecimenMapper specimenMapper) {
+    private final DoctorService doctorService;
+
+    public SpecimenService(SpecimenRepository specimenRepository, SpecimenMapper specimenMapper, DoctorService doctorService) {
         this.specimenRepository = specimenRepository;
         this.specimenMapper = specimenMapper;
+        this.doctorService = doctorService;
     }
 
     /**
@@ -42,6 +47,7 @@ public class SpecimenService {
      */
     public SpecimenDTO save(SpecimenDTO specimenDTO) {
         log.debug("Request to save Specimen : {}", specimenDTO);
+
         Specimen specimen = specimenMapper.toEntity(specimenDTO);
         specimen = specimenRepository.save(specimen);
         return specimenMapper.toDto(specimen);
@@ -55,6 +61,12 @@ public class SpecimenService {
      */
     public SpecimenDTO update(SpecimenDTO specimenDTO) {
         log.debug("Request to save Specimen : {}", specimenDTO);
+
+        if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.GROSSING_DOCTOR)) {
+            if (specimenDTO.getGrossingDoctor() == null) {
+                specimenDTO.setGrossingDoctor(doctorService.findOneDTOByUser());
+            }
+        }
         Specimen specimen = specimenMapper.toEntity(specimenDTO);
         specimen = specimenRepository.save(specimen);
         return specimenMapper.toDto(specimen);

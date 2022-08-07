@@ -3,7 +3,8 @@
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2 id="jhi-specimen-heading" data-cy="SpecimenCreateUpdateHeading"
       >
-        Create or edit a Specimen {{paymentType}}
+        Create or edit a Specimen {{paymentType}} <span
+        *ngIf="editForm.get('labRefNo')!.value"> - {{editForm.get('labRefNo')!.value}}</span>
       </h2>
 
       <div>
@@ -293,12 +294,119 @@
           </div>
 
         </div>
-        <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
+
+        <div *jhiHasAnyAuthority="'ROLE_GROSSING_DOCTOR'">
           <div class="row mb-3">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.blocks" for="field_blocks">Blocks</label>
             <input type="number" class="form-control" name="blocks" id="field_blocks" data-cy="blocks"
                    formControlName="blocks"/>
           </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.biopsy" for="field_biopsy">Biopsy</label>
+            <select class="form-control" id="field_biopsy" data-cy="biopsy" name="biopsy" formControlName="biopsy">
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="biopsyOption.id === editForm.get('biopsy')!.value?.id ? editForm.get('biopsy')!.value : biopsyOption"
+                *ngFor="let biopsyOption of biopsiesSharedCollection; trackBy: trackBiopsyById"
+              >
+                {{ biopsyOption.name }}
+              </option>
+            </select>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.cytology"
+                   for="field_cytology">Cytology</label>
+            <select class="form-control" id="field_cytology" data-cy="cytology" name="cytology"
+                    formControlName="cytology">
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="cytologyOption.id === editForm.get('cytology')!.value?.id ? editForm.get('cytology')!.value : cytologyOption"
+                *ngFor="let cytologyOption of cytologiesSharedCollection; trackBy: trackCytologyById"
+              >
+                {{ cytologyOption.name }}
+              </option>
+            </select>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.organ" for="field_organ">Organ</label>
+            <select class="form-control" id="field_organ" data-cy="organ" name="organ" formControlName="organ">
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="organOption.id === editForm.get('organ')!.value?.id ? editForm.get('organ')!.value : organOption"
+                *ngFor="let organOption of organsSharedCollection; trackBy: trackOrganById"
+              >
+                {{ organOption.name }}
+              </option>
+            </select>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.clinicalData" for="field_clinicalData">Clinical
+              Data</label>
+            <input
+              type="text"
+              class="form-control"
+              name="clinicalData"
+              id="field_clinicalData"
+              data-cy="clinicalData"
+              formControlName="clinicalData"
+            />
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.clinicalDate" for="field_clinicalDate">Clinical
+              Date</label>
+            <div class="input-group">
+              <input
+                id="field_clinicalDate"
+                data-cy="clinicalDate"
+                type="text"
+                class="form-control"
+                name="clinicalDate"
+                ngbDatepicker
+                #clinicalDateDp="ngbDatepicker"
+                formControlName="clinicalDate"
+              />
+              <button type="button" class="btn btn-secondary" (click)="clinicalDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.grossExamination" for="field_grossExamination"
+            >Gross Examination</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="grossExamination"
+              id="field_grossExamination"
+              data-cy="grossExamination"
+              formControlName="grossExamination"
+            />
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.grossDate" for="field_grossDate">Gross
+              Date</label>
+            <div class="input-group">
+              <input
+                id="field_grossDate"
+                data-cy="grossDate"
+                type="text"
+                class="form-control"
+                name="grossDate"
+                ngbDatepicker
+                #grossDateDp="ngbDatepicker"
+                formControlName="grossDate"
+              />
+              <button type="button" class="btn btn-secondary" (click)="grossDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
           <div class="row mb-3">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.slides" for="field_slides">Slides</label>
             <input type="number" class="form-control" name="slides" id="field_slides" data-cy="slides"
@@ -374,69 +482,6 @@
             </div>
           </div>
           <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.clinicalData" for="field_clinicalData">Clinical
-              Data</label>
-            <input
-              type="text"
-              class="form-control"
-              name="clinicalData"
-              id="field_clinicalData"
-              data-cy="clinicalData"
-              formControlName="clinicalData"
-            />
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.clinicalDate" for="field_clinicalDate">Clinical
-              Date</label>
-            <div class="input-group">
-              <input
-                id="field_clinicalDate"
-                data-cy="clinicalDate"
-                type="text"
-                class="form-control"
-                name="clinicalDate"
-                ngbDatepicker
-                #clinicalDateDp="ngbDatepicker"
-                formControlName="clinicalDate"
-              />
-              <button type="button" class="btn btn-secondary" (click)="clinicalDateDp.toggle()">
-                <fa-icon icon="calendar-alt"></fa-icon>
-              </button>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.grossExamination" for="field_grossExamination"
-            >Gross Examination</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              name="grossExamination"
-              id="field_grossExamination"
-              data-cy="grossExamination"
-              formControlName="grossExamination"
-            />
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.grossDate" for="field_grossDate">Gross
-              Date</label>
-            <div class="input-group">
-              <input
-                id="field_grossDate"
-                data-cy="grossDate"
-                type="text"
-                class="form-control"
-                name="grossDate"
-                ngbDatepicker
-                #grossDateDp="ngbDatepicker"
-                formControlName="grossDate"
-              />
-              <button type="button" class="btn btn-secondary" (click)="grossDateDp.toggle()">
-                <fa-icon icon="calendar-alt"></fa-icon>
-              </button>
-            </div>
-          </div>
-          <div class="row mb-3">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.microscopicData" for="field_microscopicData"
             >Microscopic Data</label
             >
@@ -507,49 +552,6 @@
                 <fa-icon icon="calendar-alt"></fa-icon>
               </button>
             </div>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.notes" for="field_notes">Notes</label>
-            <input type="text" class="form-control" name="notes" id="field_notes" data-cy="notes"
-                   formControlName="notes"/>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.biopsy" for="field_biopsy">Biopsy</label>
-            <select class="form-control" id="field_biopsy" data-cy="biopsy" name="biopsy" formControlName="biopsy">
-              <option [ngValue]="null"></option>
-              <option
-                [ngValue]="biopsyOption.id === editForm.get('biopsy')!.value?.id ? editForm.get('biopsy')!.value : biopsyOption"
-                *ngFor="let biopsyOption of biopsiesSharedCollection; trackBy: trackBiopsyById"
-              >
-                {{ biopsyOption.name }}
-              </option>
-            </select>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.cytology"
-                   for="field_cytology">Cytology</label>
-            <select class="form-control" id="field_cytology" data-cy="cytology" name="cytology"
-                    formControlName="cytology">
-              <option [ngValue]="null"></option>
-              <option
-                [ngValue]="cytologyOption.id === editForm.get('cytology')!.value?.id ? editForm.get('cytology')!.value : cytologyOption"
-                *ngFor="let cytologyOption of cytologiesSharedCollection; trackBy: trackCytologyById"
-              >
-                {{ cytologyOption.name }}
-              </option>
-            </select>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.organ" for="field_organ">Organ</label>
-            <select class="form-control" id="field_organ" data-cy="organ" name="organ" formControlName="organ">
-              <option [ngValue]="null"></option>
-              <option
-                [ngValue]="organOption.id === editForm.get('organ')!.value?.id ? editForm.get('organ')!.value : organOption"
-                *ngFor="let organOption of organsSharedCollection; trackBy: trackOrganById"
-              >
-                {{ organOption.name }}
-              </option>
-            </select>
           </div>
           <div class="row mb-3">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.grossingDoctor" for="field_grossingDoctor">Grossing

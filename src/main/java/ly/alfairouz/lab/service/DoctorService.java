@@ -145,4 +145,17 @@ public class DoctorService {
         return doctorMapper.toDto(doctor);
     }
 
+    public Doctor findOneByUser() {
+        if (userService.getUserWithAuthorities().isPresent()) return doctorRepository.findByInternalUser(
+            userService.getUserWithAuthorities().get()
+        );
+        else throw new BadRequestAlertException("Doctor User Not Found !", "", "DOC_NOT_FOUND");
+    }
+
+    public DoctorDTO findOneDTOByUser() {
+        if (userService.getUserWithAuthorities().isPresent()) return doctorMapper.toDto(
+            doctorRepository.findByInternalUser(userService.getUserWithAuthorities().get())
+        );
+        else throw new BadRequestAlertException("Doctor User Not Found !", "", "DOC_NOT_FOUND");
+    }
 }
