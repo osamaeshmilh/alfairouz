@@ -1,22 +1,28 @@
 package ly.alfairouz.lab.web.rest;
 
+import java.io.ByteArrayOutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
+
 import ly.alfairouz.lab.repository.SpecimenRepository;
 import ly.alfairouz.lab.service.SpecimenQueryService;
 import ly.alfairouz.lab.service.SpecimenService;
 import ly.alfairouz.lab.service.criteria.SpecimenCriteria;
 import ly.alfairouz.lab.service.dto.SpecimenDTO;
+import ly.alfairouz.lab.service.util.JasperReportsUtil;
 import ly.alfairouz.lab.web.rest.errors.BadRequestAlertException;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -43,6 +49,9 @@ public class SpecimenResource {
     private final SpecimenRepository specimenRepository;
 
     private final SpecimenQueryService specimenQueryService;
+
+    @Autowired
+    JasperReportsUtil jasperReportsUtil;
 
     public SpecimenResource(
         SpecimenService specimenService,
@@ -202,4 +211,88 @@ public class SpecimenResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    @GetMapping("/public/specimen/{id}")
+    public ResponseEntity<SpecimenDTO> getSpecimenPublic(@PathVariable Long id) {
+        Optional<SpecimenDTO> specimenDTO = specimenService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(specimenDTO);
+    }
+
+
+    @GetMapping(value = "/public/specimen/xlsx/", produces = "application/vnd.ms-excel")
+    public ResponseEntity<byte[]> getSpecimensAsXSLX() {
+        log.debug("REST request to get xslx");
+
+        String[] columns = {"Id", "QR", "Patient Name"};
+
+        //List<SpecimenDTO> specimenDTOList = specimenService.findAllByCreatedDateBetween(from, to);
+        List<SpecimenDTO> specimenDTOList = specimenService.findAll();
+
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("specimen");
+
+        Font headerFont = workbook.createFont();
+        headerFont.setBold(true);
+        headerFont.setFontHeightInPoints((short) 14);
+        headerFont.setColor(IndexedColors.BLACK.getIndex());
+
+        CellStyle headerCellStyle = workbook.createCellStyle();
+        headerCellStyle.setFont(headerFont);
+
+        // Create a Row
+        Row headerRow = sheet.createRow(0);
+
+        for (int i = 0; i < columns.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(columns[i]);
+            cell.setCellStyle(headerCellStyle);
+        }
+
+        // Create Other rows and cells with contacts data
+        int rowNum = 1;
+
+        for (SpecimenDTO specimenDTO : specimenDTOList) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(specimenDTO.getId());
+            row.createCell(1).setCellValue(specimenDTO.getLabQr());
+            row.createCell(2).setCellValue(specimenDTO.getPatient() != null ? specimenDTO.getPatient().getName() : "");
+
+        }
+
+        //Resize all columns to fit the content size
+        for (int i = 0; i < columns.length; i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+        byte[] bytes = new byte[0];
+
+        try {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            workbook.write(bos);
+            bos.close();
+            bytes = bos.toByteArray();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.valueOf("application/vnd.ms-excel"));
+        header.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + new Date() + ".xlsx");
+        header.setContentLength(bytes.length);
+
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(bytes), header);
+    }
+
+    @GetMapping(value = "/public/specimen/report/", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> printSharedInvoicePDF() {
+        log.debug("REST request to get report");
+        Map<String, Object> parameters = new HashMap<>();
+        byte[] fileBytes = jasperReportsUtil.getReportAsPDF(parameters, "report");
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.APPLICATION_PDF);
+        header.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=report_" + System.currentTimeMillis() + ".pdf");
+        header.setContentLength(fileBytes.length);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(fileBytes), header);
+    }
+
 }

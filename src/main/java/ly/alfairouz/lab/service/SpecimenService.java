@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 /**
  * Service Implementation for managing {@link Specimen}.
  */
@@ -103,6 +104,13 @@ public class SpecimenService {
         log.debug("Request to get all Specimen");
         return specimenRepository.findAll(pageable).map(specimenMapper::toDto);
     }
+
+    @Transactional(readOnly = true)
+    public List<SpecimenDTO> findAll() {
+        log.debug("Request to get all Specimen");
+        return specimenMapper.toDto(specimenRepository.findAll());
+    }
+
 
     /**
      * Get all the specimen with eager load of many-to-many relationships.

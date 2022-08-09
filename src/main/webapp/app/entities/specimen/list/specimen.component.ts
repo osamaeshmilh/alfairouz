@@ -106,6 +106,15 @@ export class SpecimenComponent implements OnInit {
       });
   }
 
+  getXslx(): void {
+    window.open('/api/public/specimen/xlsx/', '_blank');
+  }
+
+  getPdf(): void {
+    const url = '/api/public/specimen/report/';
+    window.open(url, '_blank');
+  }
+
   protected sort(): string[] {
     const result = [this.predicate + ',' + (this.ascending ? ASC : DESC)];
     if (this.predicate !== 'id') {

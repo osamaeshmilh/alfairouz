@@ -16,6 +16,7 @@ export type EntityArrayResponseType = HttpResponse<ISpecimen[]>;
 @Injectable({ providedIn: 'root' })
 export class SpecimenService {
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/specimen');
+  protected resourcePublicUrl = this.applicationConfigService.getEndpointFor('api/public/specimen');
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
@@ -49,12 +50,19 @@ export class SpecimenService {
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http
-      .get<ISpecimen[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .get<ISpecimen[]>(this.resourceUrl, {params: options, observe: 'response'})
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
+
+  findPublic(id: number): Observable<EntityResponseType> {
+    return this.http
+      .get<ISpecimen>(`${this.resourcePublicUrl}/${id}`, {observe: 'response'})
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
   delete(id: number): Observable<HttpResponse<{}>> {
-    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    return this.http.delete(`${this.resourceUrl}/${id}`, {observe: 'response'});
   }
 
   addSpecimenToCollectionIfMissing(specimenCollection: ISpecimen[], ...specimenToCheck: (ISpecimen | null | undefined)[]): ISpecimen[] {
@@ -119,4 +127,5 @@ export class SpecimenService {
     }
     return res;
   }
+
 }

@@ -27,6 +27,11 @@
       </mat-form-field>
 
     </form>
+
+    <button class="mr-auto" mat-stroked-button color="primary" (click)="getXslx()">
+      <mat-icon>insert_drive_file</mat-icon>
+      تقرير لكل العينات
+    </button>
   </div>
   <jhi-alert-error></jhi-alert-error>
 
@@ -143,7 +148,10 @@
                   <mat-icon>edit</mat-icon>
                   <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                 </button>
-
+                <button (click)="getPdf()" mat-menu-item>
+                  <mat-icon>insert_drive_file</mat-icon>
+                  <span class="d-none d-md-inline">Print</span>
+                </button>
                 <button [routerLink]="['./', specimen.id, 'edit']" *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR']"
                         mat-menu-item>
                   <mat-icon>edit</mat-icon>

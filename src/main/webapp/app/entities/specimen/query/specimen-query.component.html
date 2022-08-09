@@ -1,0 +1,112 @@
+<div class="entity-container">
+  <div class="mat-elevation-z1 round-card white-bg p-4 mt-5">
+    <br/>
+    <br/>
+    <h3 class="text-center">الاستعلام عن عينة</h3>
+    <br/>
+    <br/>
+
+    <div class="row text-center">
+      <form class="col-4 col-center-block mt-5">
+        <mat-form-field appearance="outline" class="fill">
+          <button (click)="search()" class="mr-2" mat-icon-button matPrefix type="submit">
+            <mat-icon>search</mat-icon>
+          </button>
+          <input [(ngModel)]="currentSearch" matInput name="currentSearch" placeholder="ادخل رقم التسجيل" type="text"/>
+          <mat-hint align="start"> ادخل رقم العينة وقم بضغط رز البحث لعرض حالة العينة</mat-hint>
+          <button (click)="clear()" *ngIf="currentSearch" class="ml-1" color="warn" mat-icon-button matSuffix>
+            <mat-icon>clear</mat-icon>
+          </button>
+        </mat-form-field>
+      </form>
+    </div>
+    <!--        <div class="row text-center">-->
+    <!--            <div class="col-4 col-center-block mt-5">-->
+    <!--                <zxing-scanner></zxing-scanner>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <div class="row text-center">
+      <div class="col-4 col-center-block mt-5">
+        <button (click)="search()" color="primary" mat-raised-button>
+          <mat-icon>search</mat-icon>
+          استعلام عن عينة
+        </button>
+      </div>
+    </div>
+    <div class="row text-center">
+      <div class="col d-flex flex-column align-items-center pb-5 m-4">
+        <mat-spinner *ngIf="isLoading" class="mt-5" diameter="50"></mat-spinner>
+      </div>
+    </div>
+    <div class="row text-center">
+      <div *ngIf="specimen">
+        <div class="col-10 col-center-block mt-5">
+          <div class="row detail-row mt-3">
+            <div class="col-4">
+              <div class="text-muted">رقم العينة</div>
+              <h6 matLine>{{ specimen.id }}</h6>
+            </div>
+            <div class="col-4">
+              <div class="text-muted">الاسم</div>
+              <h6 matLine *ngIf="specimen.patient">{{ specimen.patient?.name }}</h6>
+            </div>
+            <div class="col-4">
+              <div class="text-muted">حالة العينة</div>
+              <div
+                jhiTranslate="{{ 'pppInvestorApp.SpecimenStatus.' + specimen.specimenStatus }}"
+                class="{{ specimen.specimenStatus | getColor }}"
+              >
+                {{ specimen.specimenStatus }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <mat-stepper orientation="vertical" class="mat-step-header-no-click" [linear]="true">
+          <mat-step
+            [completed]="true"
+            [editable]="false" label="تم استلام العينة">
+          </mat-step>
+          <mat-step
+            [completed]="true"
+            [editable]="false" label="مرحلة التقطيع">
+          </mat-step>
+          <mat-step
+            [completed]="true"
+            [editable]="false" label="مرحلة المعالجة">
+          </mat-step>
+          <mat-step
+            [completed]="true"
+            [editable]="false" label="مرحلة الشمع">
+          </mat-step>
+          <mat-step
+            [completed]="true"
+            [editable]="false" label="مرحلة القطع">
+          </mat-step>
+          <mat-step
+            [completed]="true"
+            [editable]="false" label="مرحلة الصبغ">
+          </mat-step>
+          <mat-step
+            [completed]="false"
+            [editable]="false" label="مرحلة التشخيص">
+          </mat-step>
+          <mat-step
+            [completed]="false"
+            [editable]="false" label="مرحلة الطباعة">
+          </mat-step>
+          <mat-step
+            [completed]="false"
+            [editable]="false" label="مرحلة المراجعة">
+          </mat-step>
+          <mat-step
+            [completed]="false"
+            [editable]="false" label="النتيجة جاهزة">
+          </mat-step>
+        </mat-stepper>
+
+      </div>
+    </div>
+    <br/>
+    <br/>
+  </div>
+</div>
