@@ -13,6 +13,7 @@ import { ContractType } from 'app/entities/enumerations/contract-type.model';
 import { PaymentType } from 'app/entities/enumerations/payment-type.model';
 import {Results} from 'app/entities/enumerations/results.model';
 import {SpecimenStatus} from 'app/entities/enumerations/specimen-status.model';
+import {Gender} from '../enumerations/gender.model';
 
 export interface ISpecimen {
   id?: number;
@@ -68,6 +69,16 @@ export interface ISpecimen {
   pathologistDoctor?: IDoctor | null;
   operatorEmployee?: IEmployee | null;
   correctorEmployee?: IEmployee | null;
+
+  patientName?: string | null;
+  patientNameAr?: string | null;
+  patientMobileNumber?: string | null;
+  patientNationality?: string | null;
+  patientMotherName?: string | null;
+  patientAddress?: string | null;
+  patientGender?: Gender | null;
+  patientBirthDate?: dayjs.Dayjs | null;
+
 }
 
 export class Specimen implements ISpecimen {
@@ -124,7 +135,15 @@ export class Specimen implements ISpecimen {
     public referringDoctor?: IDoctor | null,
     public pathologistDoctor?: IDoctor | null,
     public operatorEmployee?: IEmployee | null,
-    public correctorEmployee?: IEmployee | null
+    public correctorEmployee?: IEmployee | null,
+    public patientName?: string | null,
+    public patientNameAr?: string | null,
+    public patientMobileNumber?: string | null,
+    public patientNationality?: string | null,
+    public patientMotherName?: string | null,
+    public patientAddress?: string | null,
+    public patientGender?: Gender | null,
+    public patientBirthDate?: dayjs.Dayjs | null,
   ) {
     this.isWithdrawn = this.isWithdrawn ?? false;
     this.urgentSample = this.urgentSample ?? false;

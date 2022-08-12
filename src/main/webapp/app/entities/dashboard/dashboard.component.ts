@@ -1,86 +1,66 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {SpecimenService} from "../specimen/service/specimen.service";
+import {DoctorService} from "../doctor/service/doctor.service";
+import {ReferringCenterService} from "../referring-center/service/referring-center.service";
+import {forkJoin} from "rxjs";
 
 @Component({
   selector: 'jhi-dashboard',
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent {
-  public doughnutChartLabels: string[] = [' تجربة', 'تجربة', 'تجربة', 'تجربة'];
-  public doughnutChartData: any;
-  public reservationStateData: Array<any> = [];
-  public doughnutChartType = 'doughnut';
+  public specimenStatusDoughnutChartLabels = ['RECEIVED', 'GROSSING', 'PROCESSING', 'EMBEDDING', 'CUTTING', 'STAINING', 'DIAGNOSING', 'TYPING', 'REVISION', 'READY'];
+  public specimenStatusDoughnutChartData: any;
+  public specimenStatusData: Array<any> = [];
 
   public pieChartLabels = ['شهر ٤', 'شهر ٣', 'شهر٢', 'شهر ١'];
   public pieChartData = [43, 54, 65, 33];
 
-  public lineChartData: Array<any> = [
-    {
-      data: [65, 59, 80, 81, 56, 55, 40, 42, 43, 55, 60, 45],
-      label: 'عدد التقارير',
-    },
-    // { data: [18, 48, 77, 9, 100, 27, 40], label: 'Series C' }
-  ];
-  public lineChartLabels: Array<any> = ['2019 Jun', '2019 Feb', '2019 Mar', '2019 Apr', '2019 May', '2019 Jun'];
-  public showLegends = false;
-  public lineChartOptions: any = {
-    responsive: true,
-    legend: {
-      display: false,
-    },
+  specimenCount: any;
+  doctorCount: any;
+  referringCenterCount: any;
 
-    scales: {
-      xAxes: [
-        {
-          display: true,
-          gridLines: {
-            display: false,
-          },
-        },
-      ],
-      yAxes: [
-        {
-          display: true,
-          gridLines: {
-            display: false,
-          },
-        },
-      ],
-    },
-  };
-  public lineChartColors: Array<any> = [
-    {
-      // grey
-      backgroundColor: 'rgb(19,124,183)',
-      borderColor: '#2d95e5',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-    },
-    // {
-    //     // dark grey
-    //     backgroundColor: 'rgba(77,83,96,0.2)',
-    //     borderColor: 'rgba(77,83,96,1)',
-    //     pointBackgroundColor: 'rgba(77,83,96,1)',
-    //     pointBorderColor: '#fff',
-    //     pointHoverBackgroundColor: '#fff',
-    //     pointHoverBorderColor: 'rgba(77,83,96,1)'
-    // },
-    // {
-    //     // grey
-    //     backgroundColor: 'rgba(148,159,177,0.2)',
-    //     borderColor: 'rgba(148,159,177,1)',
-    //     pointBackgroundColor: 'rgba(148,159,177,1)',
-    //     pointBorderColor: '#fff',
-    //     pointHoverBackgroundColor: '#fff',
-    //     pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    // }
-  ];
-  public lineChartLegend = true;
-  public lineChartType = 'line';
+  constructor(
+    private specimenService: SpecimenService,
+    private doctorService: DoctorService,
+    private referringCenterService: ReferringCenterService
+  ) {
+  }
 
-  cardsCount: any;
-  companyCount: any;
-  customerCount: any;
-  transactionCount: any;
+  ngOnInit(): void {
+    this.specimenService.count().subscribe((res: any) => {
+      this.specimenCount = res.body;
+    });
+    this.doctorService.count().subscribe((res: any) => {
+      this.doctorCount = res.body;
+    });
+    this.referringCenterService.count().subscribe((res: any) => {
+      this.referringCenterCount = res.body;
+    });
+
+    forkJoin([
+      this.specimenService.count({'specimenStatus.equals': 'RECEIVED'}),
+      this.specimenService.count({'specimenStatus.equals': 'GROSSING'}),
+      this.specimenService.count({'specimenStatus.equals': 'PROCESSING'}),
+      this.specimenService.count({'specimenStatus.equals': 'EMBEDDING'}),
+      this.specimenService.count({'specimenStatus.equals': 'CUTTING'}),
+      this.specimenService.count({'specimenStatus.equals': 'STAINING'}),
+      this.specimenService.count({'specimenStatus.equals': 'DIAGNOSING'}),
+      this.specimenService.count({'specimenStatus.equals': 'TYPING'}),
+      this.specimenService.count({'specimenStatus.equals': 'REVISION'}),
+      this.specimenService.count({'specimenStatus.equals': 'READY'}),
+    ]).subscribe(data => {
+      this.specimenStatusData.push(data[0].body);
+      this.specimenStatusData.push(data[1].body);
+      this.specimenStatusData.push(data[2].body);
+      this.specimenStatusData.push(data[3].body);
+      this.specimenStatusData.push(data[4].body);
+      this.specimenStatusData.push(data[5].body);
+      this.specimenStatusData.push(data[6].body);
+      this.specimenStatusData.push(data[7].body);
+      this.specimenStatusData.push(data[8].body);
+      this.specimenStatusData.push(data[9].body);
+      this.specimenStatusDoughnutChartData = this.specimenStatusData;
+    });
+  }
 }

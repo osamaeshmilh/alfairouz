@@ -4,11 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 import javax.persistence.Lob;
-import ly.alfairouz.lab.domain.enumeration.ContractType;
-import ly.alfairouz.lab.domain.enumeration.LabRef;
-import ly.alfairouz.lab.domain.enumeration.PaymentType;
-import ly.alfairouz.lab.domain.enumeration.Results;
-import ly.alfairouz.lab.domain.enumeration.SpecimenStatus;
+
+import ly.alfairouz.lab.domain.enumeration.*;
 
 /**
  * A DTO for the {@link ly.alfairouz.lab.domain.Specimen} entity.
@@ -120,6 +117,24 @@ public class SpecimenDTO implements Serializable {
     private EmployeeDTO operatorEmployee;
 
     private EmployeeDTO correctorEmployee;
+
+
+    private String patientName;
+
+    private String patientNameAr;
+
+    private LocalDate patientBirthDate;
+
+    private Gender patientGender;
+
+    private String patientMobileNumber;
+
+    private String patientNationality;
+
+    private String patientMotherName;
+
+    private String patientAddress;
+
 
     public Long getId() {
         return id;
@@ -543,6 +558,70 @@ public class SpecimenDTO implements Serializable {
 
     public void setCorrectorEmployee(EmployeeDTO correctorEmployee) {
         this.correctorEmployee = correctorEmployee;
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+    }
+
+    public String getPatientNameAr() {
+        return patientNameAr;
+    }
+
+    public void setPatientNameAr(String patientNameAr) {
+        this.patientNameAr = patientNameAr;
+    }
+
+    public LocalDate getPatientBirthDate() {
+        return patientBirthDate;
+    }
+
+    public void setPatientBirthDate(LocalDate patientBirthDate) {
+        this.patientBirthDate = patientBirthDate;
+    }
+
+    public Gender getPatientGender() {
+        return patientGender;
+    }
+
+    public void setPatientGender(Gender patientGender) {
+        this.patientGender = patientGender;
+    }
+
+    public String getPatientMobileNumber() {
+        return patientMobileNumber;
+    }
+
+    public void setPatientMobileNumber(String patientMobileNumber) {
+        this.patientMobileNumber = patientMobileNumber;
+    }
+
+    public String getPatientNationality() {
+        return patientNationality;
+    }
+
+    public void setPatientNationality(String patientNationality) {
+        this.patientNationality = patientNationality;
+    }
+
+    public String getPatientMotherName() {
+        return patientMotherName;
+    }
+
+    public void setPatientMotherName(String patientMotherName) {
+        this.patientMotherName = patientMotherName;
+    }
+
+    public String getPatientAddress() {
+        return patientAddress;
+    }
+
+    public void setPatientAddress(String patientAddress) {
+        this.patientAddress = patientAddress;
     }
 
     @Override

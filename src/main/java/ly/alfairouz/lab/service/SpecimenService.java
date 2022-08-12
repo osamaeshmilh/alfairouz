@@ -2,6 +2,8 @@ package ly.alfairouz.lab.service;
 
 import java.nio.ByteBuffer;
 import java.security.SecureRandom;
+import java.time.Year;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.zip.CRC32;
 
@@ -9,6 +11,7 @@ import ly.alfairouz.lab.domain.Specimen;
 import ly.alfairouz.lab.repository.SpecimenRepository;
 import ly.alfairouz.lab.security.AuthoritiesConstants;
 import ly.alfairouz.lab.security.SecurityUtils;
+import ly.alfairouz.lab.service.dto.PatientDTO;
 import ly.alfairouz.lab.service.dto.SpecimenDTO;
 import ly.alfairouz.lab.service.mapper.SpecimenMapper;
 import org.slf4j.Logger;
@@ -34,10 +37,13 @@ public class SpecimenService {
 
     private final DoctorService doctorService;
 
-    public SpecimenService(SpecimenRepository specimenRepository, SpecimenMapper specimenMapper, DoctorService doctorService) {
+    private final PatientService patientService;
+
+    public SpecimenService(SpecimenRepository specimenRepository, SpecimenMapper specimenMapper, DoctorService doctorService, PatientService patientService) {
         this.specimenRepository = specimenRepository;
         this.specimenMapper = specimenMapper;
         this.doctorService = doctorService;
+        this.patientService = patientService;
     }
 
     /**
@@ -144,7 +150,15 @@ public class SpecimenService {
     }
 
     public SpecimenDTO create(SpecimenDTO specimenDTO) {
-        String a = specimenDTO.getLabRefNo() + specimenDTO.getLabRef().toString() + specimenDTO.getReceivingDate().getYear();
+
+        String year = Year.now().format(DateTimeFormatter.ofPattern("uu"));
+        Long count = specimenRepository.countByLabRefNoStartingWith(year);
+        count++;
+        String all = year + specimenDTO.getLabRef().toString() + String.format("%05d", count);
+
+        specimenDTO.setLabRefOrder(count.toString());
+        specimenDTO.setLabRefNo(all);
+
         int mySaltSizeInBytes = 32;
         SecureRandom random = new SecureRandom();
 
@@ -152,15 +166,31 @@ public class SpecimenService {
 
         random.nextBytes(salt);
 
-        ByteBuffer bbuffer = ByteBuffer.allocate(mySaltSizeInBytes + a.length());
+        ByteBuffer bbuffer = ByteBuffer.allocate(mySaltSizeInBytes + all.length());
         bbuffer.put(salt);
-        bbuffer.put(a.getBytes());
+        bbuffer.put(all.getBytes());
 
         CRC32 crc = new CRC32();
         crc.update(bbuffer.array());
         String enc = Long.toHexString(crc.getValue());
+
         specimenDTO.setLabQr(enc);
-        specimenDTO.setLabRefNo(a);
+
+        if (specimenDTO.getPatient() == null) {
+            //TODO:: Create Patient
+            PatientDTO patientDTO = new PatientDTO();
+            patientDTO.setName(specimenDTO.getPatientName());
+            patientDTO.setNameAr(specimenDTO.getPatientNameAr());
+            patientDTO.setNationality(specimenDTO.getPatientNationality());
+            patientDTO.setAddress(specimenDTO.getPatientAddress());
+            patientDTO.setBirthDate(specimenDTO.getPatientBirthDate());
+            patientDTO.setGender(specimenDTO.getPatientGender());
+            patientDTO.setMobileNumber(specimenDTO.getPatientMobileNumber());
+            patientDTO.setMotherName(specimenDTO.getPatientMotherName());
+
+            PatientDTO result = patientService.save(patientDTO);
+            specimenDTO.setPatient(result);
+        }
 
         return save(specimenDTO);
     }

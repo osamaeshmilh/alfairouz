@@ -26,6 +26,8 @@ public interface SpecimenRepository extends JpaRepository<Specimen, Long>, JpaSp
         return this.findAllWithToOneRelationships(pageable);
     }
 
+    Long countByLabRefNoStartingWith(String year);
+
     @Query(
         value = "select distinct specimen from Specimen specimen left join fetch specimen.patient left join fetch specimen.biopsy left join fetch specimen.cytology left join fetch specimen.organ left join fetch specimen.specimenType left join fetch specimen.size left join fetch specimen.referringCenter left join fetch specimen.grossingDoctor left join fetch specimen.referringDoctor left join fetch specimen.pathologistDoctor left join fetch specimen.operatorEmployee left join fetch specimen.correctorEmployee",
         countQuery = "select count(distinct specimen) from Specimen specimen"
@@ -41,4 +43,6 @@ public interface SpecimenRepository extends JpaRepository<Specimen, Long>, JpaSp
         "select specimen from Specimen specimen left join fetch specimen.patient left join fetch specimen.biopsy left join fetch specimen.cytology left join fetch specimen.organ left join fetch specimen.specimenType left join fetch specimen.size left join fetch specimen.referringCenter left join fetch specimen.grossingDoctor left join fetch specimen.referringDoctor left join fetch specimen.pathologistDoctor left join fetch specimen.operatorEmployee left join fetch specimen.correctorEmployee where specimen.id =:id"
     )
     Optional<Specimen> findOneWithToOneRelationships(@Param("id") Long id);
+
+
 }

@@ -65,6 +65,11 @@ export class SpecimenService {
     return this.http.delete(`${this.resourceUrl}/${id}`, {observe: 'response'});
   }
 
+  count(req?: any): Observable<HttpResponse<any>> {
+    const options = createRequestOption(req);
+    return this.http.get<number>(this.resourceUrl + '/count', {params: options, observe: 'response'});
+  }
+
   addSpecimenToCollectionIfMissing(specimenCollection: ISpecimen[], ...specimenToCheck: (ISpecimen | null | undefined)[]): ISpecimen[] {
     const specimen: ISpecimen[] = specimenToCheck.filter(isPresent);
     if (specimen.length > 0) {
@@ -127,5 +132,6 @@ export class SpecimenService {
     }
     return res;
   }
+
 
 }

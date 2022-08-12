@@ -15,7 +15,6 @@
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id"
                  [readonly]="true"/>
         </div>
-
         <div class="row mb-3" hidden>
           <label class="form-label" jhiTranslate="alfairouzApp.specimen.labRefOrder" for="field_labRefOrder">Lab Ref
             Order</label>
@@ -44,7 +43,6 @@
             </option>
           </select>
         </div>
-
         <div class="row mb-3" hidden>
           <label class="form-label" jhiTranslate="alfairouzApp.specimen.newBlocksRequested"
                  for="field_newBlocksRequested"
@@ -59,8 +57,6 @@
             formControlName="newBlocksRequested"
           />
         </div>
-
-
         <div class="row mb-3" hidden>
           <label class="form-label" jhiTranslate="alfairouzApp.specimen.receivedInFormalin"
                  for="field_receivedInFormalin"
@@ -75,13 +71,11 @@
             formControlName="receivedInFormalin"
           />
         </div>
-
         <div class="row mb-3" hidden>
           <label class="form-label" jhiTranslate="alfairouzApp.specimen.reserve" for="field_reserve">Reserve</label>
           <input type="checkbox" class="form-check" name="reserve" id="field_reserve" data-cy="reserve"
                  formControlName="reserve"/>
         </div>
-
         <div class="row mb-3" hidden>
           <label class="form-label" jhiTranslate="alfairouzApp.specimen.printedOut" for="field_printedOut">Printed
             Out</label>
@@ -94,13 +88,11 @@
             formControlName="printedOut"
           />
         </div>
-
         <div class="row mb-3" hidden>
           <label class="form-label" jhiTranslate="alfairouzApp.specimen.smsSent" for="field_smsSent">Sms Sent</label>
           <input type="checkbox" class="form-check" name="smsSent" id="field_smsSent" data-cy="smsSent"
                  formControlName="smsSent"/>
         </div>
-
         <div class="row mb-3" hidden>
           <label class="form-label" jhiTranslate="alfairouzApp.specimen.onlineReport" for="field_onlineReport">Online
             Report</label>
@@ -113,8 +105,6 @@
             formControlName="onlineReport"
           />
         </div>
-
-
         <div class="row mb-3" hidden>
           <label class="form-label" jhiTranslate="alfairouzApp.specimen.labQr" for="field_labQr">Lab Qr</label>
           <input type="text" class="form-control" name="labQr" id="field_labQr" data-cy="labQr"
@@ -143,31 +133,70 @@
             </option>
           </select>
         </div>
+        <div class="row mb-3" hidden>
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.labRefNo" for="field_labRefNo">Lab Ref
+            No</label>
+          <input type="text" class="form-control" name="labRefNo" id="field_labRefNo" data-cy="labRefNo"
+                 formControlName="labRefNo"/>
+        </div>
 
-        <div *jhiHasAnyAuthority="'ROLE_RECEPTION'">
+        <div *jhiHasAnyAuthority="['ROLE_RECEPTION','ROLE_ADMIN']">
+          <br>
+          <br>
+          <a>بيانات المريض</a>
           <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.labRefNo" for="field_labRefNo">Lab Ref
-              No</label>
-            <input type="text" class="form-control" name="labRefNo" id="field_labRefNo" data-cy="labRefNo"
-                   formControlName="labRefNo"/>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.labRef" for="field_labRef">Lab Ref</label>
-            <select class="form-control" name="labRef" formControlName="labRef" id="field_labRef" data-cy="labRef">
-              <option [ngValue]="null">{{ 'alfairouzApp.LabRef.null' | translate }}</option>
-              <option *ngFor="let labRef of labRefValues"
-                      [value]="labRef">{{ 'alfairouzApp.LabRef.' + labRef | translate }}</option>
-            </select>
-          </div>
-
-          <div class="row mb-3">
-            <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedOption">
-              <mat-radio-button [value]="1">مريض مسجل مسبقا</mat-radio-button>
-              <mat-radio-button [value]="2">مريض جديد</mat-radio-button>
+            <mat-radio-group formControlName="newPatient">
+              <mat-radio-button class="example-radio-button m-4" [value]="1">مريض مسجل مسبقا</mat-radio-button>
+              <mat-radio-button class="example-radio-button m-4" [value]="2">مريض جديد</mat-radio-button>
             </mat-radio-group>
           </div>
+          <div *ngIf="editForm.get('newPatient')!.value === 2">
+            <div class="row">
+              <mat-form-field appearance="standard" class="col-lg col-sm">
+                <mat-label>اسم المريض عربي</mat-label>
+                <input formControlName="patientNameAr" matInput type="text" name="patientNameAr"/>
+              </mat-form-field>
+              <mat-form-field appearance="standard" class="col-lg col-sm">
+                <mat-label>اسم المريض انجليزي</mat-label>
+                <input formControlName="patientName" matInput type="text" name="patientName"/>
+              </mat-form-field>
+              <mat-form-field appearance="standard" class="col-lg col-sm">
+                <mat-label>رقم الهاتف</mat-label>
+                <input formControlName="patientMobileNumber" matInput type="text" name="patientMobileNumber"/>
+              </mat-form-field>
+            </div>
+            <div class="row">
+              <mat-form-field appearance="standard" class="col-lg col-sm">
+                <mat-label>اسم الام</mat-label>
+                <input formControlName="patientMotherName" matInput type="text" name="patientMotherName"/>
+              </mat-form-field>
+              <mat-form-field appearance="standard" class="col-lg col-sm">
+                <mat-label>العنوان</mat-label>
+                <input formControlName="patientAddress" matInput type="text" name="patientAddress"/>
+              </mat-form-field>
+              <mat-form-field appearance="standard" class="col-lg col-sm">
+                <mat-label>الجنسية</mat-label>
+                <input formControlName="patientNationality" matInput type="text" name="patientNationality"/>
+              </mat-form-field>
+            </div>
 
-          <div class="row mb-3" *ngIf="selectedOption == 1">
+            <div class="row">
+              <!--              <mat-form-field appearance="standard" class="col-lg col-sm">-->
+              <!--                <mat-label>الجنس</mat-label>-->
+              <!--                <input formControlName="patientMotherName" matInput type="text" name="patientMotherName" />-->
+              <!--              </mat-form-field>-->
+              <!--              <mat-form-field appearance="standard" class="col-lg col-sm">-->
+              <!--                <mat-label>تاريخ الميلاد</mat-label>-->
+              <!--                <input formControlName="patientAddress" matInput type="text" name="patientAddress" />-->
+              <!--              </mat-form-field>-->
+              <!--              <div class="col-lg col-sm">-->
+              <!--                -->
+              <!--              </div>-->
+            </div>
+
+
+          </div>
+          <div class="row mb-3" *ngIf="editForm.get('newPatient')!.value === 1">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.patient" for="field_patient">Patient</label>
             <select class="form-control" id="field_patient" data-cy="patient" name="patient" formControlName="patient">
               <option [ngValue]="null"></option>
@@ -179,223 +208,245 @@
               </option>
             </select>
           </div>
-
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.fileNo" for="field_fileNo">File No</label>
-            <input type="text" class="form-control" name="fileNo" id="field_fileNo" data-cy="fileNo"
-                   formControlName="fileNo"/>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.urgentSample" for="field_urgentSample">Urgent
-              Sample</label>
-            <input
-              type="checkbox"
-              class="form-check"
-              name="urgentSample"
-              id="field_urgentSample"
-              data-cy="urgentSample"
-              formControlName="urgentSample"
-            />
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.samples" for="field_samples">Samples</label>
-            <input type="number" class="form-control" name="samples" id="field_samples" data-cy="samples"
-                   formControlName="samples"/>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.samplingDate" for="field_samplingDate">Sampling
-              Date</label>
-            <div class="input-group">
+          <br>
+          <br>
+          <a>بيانات العينة</a>
+          <br>
+          <br>
+          <div class="row">
+            <div class="col-lg col-sm">
+              <label class="form-label" jhiTranslate="alfairouzApp.specimen.labRef" for="field_labRef">Lab Ref</label>
+              <select class="form-control" name="labRef" formControlName="labRef" id="field_labRef" data-cy="labRef">
+                <option [ngValue]="null">{{ 'alfairouzApp.LabRef.null' | translate }}</option>
+                <option *ngFor="let labRef of labRefValues"
+                        [value]="labRef">{{ 'alfairouzApp.LabRef.' + labRef | translate }}</option>
+              </select>
+            </div>
+            <div class="col-lg col-sm">
+              <label class="form-label" jhiTranslate="alfairouzApp.specimen.fileNo" for="field_fileNo">File No</label>
+              <input type="text" class="form-control" name="fileNo" id="field_fileNo" data-cy="fileNo"
+                     formControlName="fileNo"/>
+            </div>
+            <div class="col-lg col-sm">
+              <label class="form-label" jhiTranslate="alfairouzApp.specimen.urgentSample" for="field_urgentSample">Urgent
+                Sample</label>
               <input
-                id="field_samplingDate"
-                data-cy="samplingDate"
-                type="text"
-                class="form-control"
-                name="samplingDate"
-                ngbDatepicker
-                #samplingDateDp="ngbDatepicker"
-                formControlName="samplingDate"
+                type="checkbox"
+                class="form-check"
+                name="urgentSample"
+                id="field_urgentSample"
+                data-cy="urgentSample"
+                formControlName="urgentSample"
               />
-              <button type="button" class="btn btn-secondary" (click)="samplingDateDp.toggle()">
-                <fa-icon icon="calendar-alt"></fa-icon>
-              </button>
             </div>
           </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.receivingDate" for="field_receivingDate">Receiving
-              Date</label>
-            <div class="input-group">
-              <input
-                id="field_receivingDate"
-                data-cy="receivingDate"
-                type="text"
-                class="form-control"
-                name="receivingDate"
-                ngbDatepicker
-                #receivingDateDp="ngbDatepicker"
-                formControlName="receivingDate"
-              />
-              <button type="button" class="btn btn-secondary" (click)="receivingDateDp.toggle()">
-                <fa-icon icon="calendar-alt"></fa-icon>
-              </button>
+          <br>
+          <div class="row">
+            <div class="col-lg col-sm">
+              <label class="form-label" jhiTranslate="alfairouzApp.specimen.samples" for="field_samples">Samples</label>
+              <input type="number" class="form-control" name="samples" id="field_samples" data-cy="samples"
+                     formControlName="samples"/>
             </div>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.pdfFile" for="field_pdfFile">Pdf File</label>
-            <div>
-              <div *ngIf="editForm.get('pdfFile')!.value" class="form-text text-danger clearfix">
-                <a
-                  class="pull-start"
-                  (click)="openFile(editForm.get('pdfFile')!.value, editForm.get('pdfFileContentType')!.value)"
-                  jhiTranslate="entity.action.open"
-                >open</a
-                ><br/>
-                <span class="pull-start"
-                >{{ editForm.get('pdfFileContentType')!.value }}, {{ byteSize(editForm.get('pdfFile')!.value) }}</span
-                >
-                <button
-                  type="button"
-                  (click)="editForm.patchValue({ pdfFile: null }); editForm.patchValue({ pdfFileContentType: null })"
-                  class="btn btn-secondary btn-xs pull-end"
-                >
-                  <fa-icon icon="times"></fa-icon>
+            <div class="col-lg col-sm">
+              <label class="form-label" jhiTranslate="alfairouzApp.specimen.samplingDate" for="field_samplingDate">Sampling
+                Date</label>
+              <div class="input-group">
+                <input
+                  id="field_samplingDate"
+                  data-cy="samplingDate"
+                  type="text"
+                  class="form-control"
+                  name="samplingDate"
+                  ngbDatepicker
+                  #samplingDateDp="ngbDatepicker"
+                  formControlName="samplingDate"
+                />
+                <button type="button" class="btn btn-secondary" (click)="samplingDateDp.toggle()">
+                  <fa-icon icon="calendar-alt"></fa-icon>
                 </button>
               </div>
-              <input
-                type="file"
-                id="file_pdfFile"
-                data-cy="pdfFile"
-                (change)="setFileData($event, 'pdfFile', false)"
-                jhiTranslate="entity.action.addblob"
-              />
             </div>
-            <input type="hidden" class="form-control" name="pdfFile" id="field_pdfFile" data-cy="pdfFile"
-                   formControlName="pdfFile"/>
-            <input
-              type="hidden"
-              class="form-control"
-              name="pdfFileContentType"
-              id="field_pdfFileContentType"
-              formControlName="pdfFileContentType"
-            />
+            <div class="col-lg col-sm">
+              <label class="form-label" jhiTranslate="alfairouzApp.specimen.receivingDate" for="field_receivingDate">Receiving
+                Date</label>
+              <div class="input-group">
+                <input
+                  id="field_receivingDate"
+                  data-cy="receivingDate"
+                  type="text"
+                  class="form-control"
+                  name="receivingDate"
+                  ngbDatepicker
+                  #receivingDateDp="ngbDatepicker"
+                  formControlName="receivingDate"
+                />
+                <button type="button" class="btn btn-secondary" (click)="receivingDateDp.toggle()">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </div>
+            </div>
           </div>
-
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.referringCenter" for="field_referringCenter"
-            >Referring Center</label
-            >
-            <select
-              class="form-control"
-              id="field_referringCenter"
-              data-cy="referringCenter"
-              name="referringCenter"
-              formControlName="referringCenter"
-            >
-              <option [ngValue]="null"></option>
-              <option
-                [ngValue]="
+          <br>
+          <div class="row">
+            <div class="col-lg col-sm">
+              <label class="form-label" jhiTranslate="alfairouzApp.specimen.referringCenter" for="field_referringCenter"
+              >Referring Center</label
+              >
+              <select
+                class="form-control"
+                id="field_referringCenter"
+                data-cy="referringCenter"
+                name="referringCenter"
+                formControlName="referringCenter"
+                (change)="getCenterPrices()"
+              >
+                <option [ngValue]="null"></option>
+                <option
+                  [ngValue]="
                 referringCenterOption.id === editForm.get('referringCenter')!.value?.id
                   ? editForm.get('referringCenter')!.value
                   : referringCenterOption
               "
-                *ngFor="let referringCenterOption of referringCentersSharedCollection; trackBy: trackReferringCenterById"
+                  *ngFor="let referringCenterOption of referringCentersSharedCollection; trackBy: trackReferringCenterById"
+                >
+                  {{ referringCenterOption.name }}
+                </option>
+              </select>
+            </div>
+            <div class="col-lg col-sm">
+              <label class="form-label" jhiTranslate="alfairouzApp.specimen.referringDoctor" for="field_referringDoctor"
+              >Referring Doctor</label
               >
-                {{ referringCenterOption.name }}
-              </option>
-            </select>
-          </div>
-
-          <div class="row mb-3" *ngIf="editForm.get('paymentType')!.value == 'MONTHLY'">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.contractType" for="field_contractType">Contract
-              Type</label>
-            <select class="form-control" name="contractType" formControlName="contractType" id="field_contractType"
-                    data-cy="contractType">
-              <option [ngValue]="null">{{ 'alfairouzApp.ContractType.null' | translate }}</option>
-              <option *ngFor="let contractType of contractTypeValues" [value]="contractType">
-                {{ 'alfairouzApp.ContractType.' + contractType | translate }}
-              </option>
-            </select>
-          </div>
-
-          <div class="row mb-3"
-               *ngIf="editForm.get('contractType')!.value == 'SPECIMEN' || editForm.get('paymentType')!.value == 'CASH'">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.specimenType" for="field_specimenType">Specimen
-              Type</label>
-            <select class="form-control" id="field_specimenType" data-cy="specimenType" name="specimenType"
-                    formControlName="specimenType" (select)="getPrice($event)">
-              <option [ngValue]="null"></option>
-              <option
-                [ngValue]="
-                specimenTypeOption.id === editForm.get('specimenType')!.value?.id ? editForm.get('specimenType')!.value : specimenTypeOption
-              "
-                *ngFor="let specimenTypeOption of specimenTypesSharedCollection; trackBy: trackSpecimenTypeById"
+              <select
+                class="form-control"
+                id="field_referringDoctor"
+                data-cy="referringDoctor"
+                name="referringDoctor"
+                formControlName="referringDoctor"
               >
-                {{ specimenTypeOption.name }}
-              </option>
-            </select>
-          </div>
-          <div class="row mb-3"
-               *ngIf="editForm.get('contractType')!.value == 'SIZE' && editForm.get('paymentType')!.value == 'MONTHLY'">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.size" for="field_size">Size</label>
-            <select class="form-control" id="field_size" data-cy="size" name="size" formControlName="size">
-              <option [ngValue]="null"></option>
-              <option
-                [ngValue]="sizeOption.id === editForm.get('size')!.value?.id ? editForm.get('size')!.value : sizeOption"
-                *ngFor="let sizeOption of sizesSharedCollection; trackBy: trackSizeById"
-              >
-                {{ sizeOption.name }}
-              </option>
-            </select>
-          </div>
-
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.referringDoctor" for="field_referringDoctor"
-            >Referring Doctor</label
-            >
-            <select
-              class="form-control"
-              id="field_referringDoctor"
-              data-cy="referringDoctor"
-              name="referringDoctor"
-              formControlName="referringDoctor"
-            >
-              <option [ngValue]="null"></option>
-              <option
-                [ngValue]="
+                <option [ngValue]="null"></option>
+                <option
+                  [ngValue]="
                 doctorOption.id === editForm.get('referringDoctor')!.value?.id ? editForm.get('referringDoctor')!.value : doctorOption
               "
-                *ngFor="let doctorOption of doctorsSharedCollection; trackBy: trackDoctorById"
-              >
-                {{ doctorOption.name }}
-              </option>
-            </select>
+                  *ngFor="let doctorOption of doctorsSharedCollection; trackBy: trackDoctorById"
+                >
+                  {{ doctorOption.name }}
+                </option>
+              </select>
+            </div>
+            <div class="col-lg col-sm">
+              <label class="form-label" jhiTranslate="alfairouzApp.specimen.notes" for="field_notes">Notes</label>
+              <input type="text" class="form-control" name="notes" id="field_notes" data-cy="notes"
+                     formControlName="notes"/>
+            </div>
           </div>
-
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.price" for="field_price">Price</label>
-            <input type="number" class="form-control" name="price" id="field_price" data-cy="price"
-                   formControlName="price" [readonly]="true"/>
+          <br>
+          <div class="row">
+            <div class="col-lg col-sm" *ngIf="editForm.get('paymentType')!.value == 'MONTHLY'">
+              <div>
+                <a>{{editForm.get('contractType')!.value}}</a>
+              </div>
+            </div>
+            <div class="col-lg col-sm" *ngIf="editForm.get('contractType')!.value == 'SPECIMEN'">
+              <label class="form-label" jhiTranslate="alfairouzApp.specimen.specimenType" for="field_specimenType">Specimen
+                Type</label>
+              <select class="form-control" id="field_specimenType" data-cy="specimenType" name="specimenType"
+                      formControlName="specimenType" (change)="getPriceByType($event)">
+                <option [ngValue]="null"></option>
+                <option
+                  [ngValue]="
+                specimenTypeOption.id === editForm.get('specimenType')!.value?.id ? editForm.get('specimenType')!.value : specimenTypeOption
+              "
+                  *ngFor="let specimenTypeOption of specimenTypesSharedCollection; trackBy: trackSpecimenTypeById"
+                >
+                  {{ specimenTypeOption.name}} - {{specimenTypeOption.price }}
+                </option>
+              </select>
+            </div>
+            <div class="col-lg col-sm" *ngIf="editForm.get('contractType')!.value == 'SIZE'">
+              <div *ngIf="editForm.get('referringCenter')!.value">
+                <label class="form-label" jhiTranslate="alfairouzApp.specimen.size" for="field_size">Size</label>
+                <select class="form-control" id="field_size" data-cy="size" name="size" formControlName="size"
+                        (change)="getPriceBySize($event)">
+                  <option [ngValue]="null"></option>
+                  <option
+                    [ngValue]="sizeOption.id === editForm.get('size')!.value?.id ? editForm.get('size')!.value : sizeOption"
+                    *ngFor="let sizeOption of sizesSharedCollection; trackBy: trackSizeById"
+                  >
+                    {{ sizeOption.name }} - {{ sizeOption.price }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg col-sm">
+              <label class="form-label" jhiTranslate="alfairouzApp.specimen.pdfFile" for="field_pdfFile">Pdf
+                File</label>
+              <div>
+                <div *ngIf="editForm.get('pdfFile')!.value" class="form-text text-danger clearfix">
+                  <a
+                    class="pull-start"
+                    (click)="openFile(editForm.get('pdfFile')!.value, editForm.get('pdfFileContentType')!.value)"
+                    jhiTranslate="entity.action.open"
+                  >open</a
+                  ><br/>
+                  <span class="pull-start"
+                  >{{ editForm.get('pdfFileContentType')!.value }}, {{ byteSize(editForm.get('pdfFile')!.value) }}</span
+                  >
+                  <button
+                    type="button"
+                    (click)="editForm.patchValue({ pdfFile: null }); editForm.patchValue({ pdfFileContentType: null })"
+                    class="btn btn-secondary btn-xs pull-end"
+                  >
+                    <fa-icon icon="times"></fa-icon>
+                  </button>
+                </div>
+                <input
+                  type="file"
+                  id="file_pdfFile"
+                  data-cy="pdfFile"
+                  (change)="setFileData($event, 'pdfFile', false)"
+                  jhiTranslate="entity.action.addblob"
+                />
+              </div>
+              <input type="hidden" class="form-control" name="pdfFile" id="field_pdfFile" data-cy="pdfFile"
+                     formControlName="pdfFile"/>
+              <input
+                type="hidden"
+                class="form-control"
+                name="pdfFileContentType"
+                id="field_pdfFileContentType"
+                formControlName="pdfFileContentType"
+              />
+            </div>
+            <div class="col-lg col-sm" *ngIf="editForm.get('paymentType')!.value == 'CASH'">
+            </div>
           </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.paid" for="field_paid">Paid</label>
-            <input type="number" class="form-control" name="paid" id="field_paid" data-cy="paid"
-                   formControlName="paid"/>
+          <br>
+          <div class="row">
+            <div class="col-lg col-sm">
+              <label class="form-label" jhiTranslate="alfairouzApp.specimen.price" for="field_price">Price</label>
+              <input type="number" class="form-control" name="price" id="field_price" data-cy="price"
+                     formControlName="price" [readonly]="true"/>
+            </div>
+            <div class="col-lg col-sm">
+              <label class="form-label" jhiTranslate="alfairouzApp.specimen.paid" for="field_paid">Paid</label>
+              <input type="number" class="form-control" name="paid" id="field_paid" data-cy="paid"
+                     formControlName="paid" (change)="updatePayed()"/>
+            </div>
+            <div class="col-lg col-sm">
+              <label class="form-label" jhiTranslate="alfairouzApp.specimen.notPaid" for="field_notPaid">Not
+                Paid</label>
+              <input type="number" class="form-control" name="notPaid" id="field_notPaid" data-cy="notPaid"
+                     formControlName="notPaid" [readonly]="true"/>
+            </div>
           </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.notPaid" for="field_notPaid">Not Paid</label>
-            <input type="number" class="form-control" name="notPaid" id="field_notPaid" data-cy="notPaid"
-                   formControlName="notPaid"/>
-          </div>
-
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.notes" for="field_notes">Notes</label>
-            <input type="text" class="form-control" name="notes" id="field_notes" data-cy="notes"
-                   formControlName="notes"/>
-          </div>
-
+          <br>
         </div>
+        <br>
+        <br>
 
-        <div *jhiHasAnyAuthority="'ROLE_GROSSING_DOCTOR'">
+        <div *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR','ROLE_ADMIN']">
           <div class="row mb-3">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.blocks" for="field_blocks">Blocks</label>
             <input type="number" class="form-control" name="blocks" id="field_blocks" data-cy="blocks"
@@ -504,7 +555,6 @@
           </div>
 
         </div>
-
 
         <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
           <div class="row mb-3">

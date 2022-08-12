@@ -223,7 +223,7 @@ public class SpecimenResource {
     public ResponseEntity<byte[]> getSpecimensAsXSLX() {
         log.debug("REST request to get xslx");
 
-        String[] columns = {"Id", "QR", "Patient Name"};
+        String[] columns = {"Id", "QR", , "Patient Name"};
 
         //List<SpecimenDTO> specimenDTOList = specimenService.findAllByCreatedDateBetween(from, to);
         List<SpecimenDTO> specimenDTOList = specimenService.findAll();

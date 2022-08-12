@@ -5,10 +5,14 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
 import ly.alfairouz.lab.repository.SpecimenTypeRepository;
+import ly.alfairouz.lab.service.ReferringCenterService;
 import ly.alfairouz.lab.service.SpecimenTypeQueryService;
 import ly.alfairouz.lab.service.SpecimenTypeService;
 import ly.alfairouz.lab.service.criteria.SpecimenTypeCriteria;
+import ly.alfairouz.lab.service.dto.ReferringCenterDTO;
+import ly.alfairouz.lab.service.dto.SizeDTO;
 import ly.alfairouz.lab.service.dto.SpecimenTypeDTO;
 import ly.alfairouz.lab.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
@@ -44,14 +48,17 @@ public class SpecimenTypeResource {
 
     private final SpecimenTypeQueryService specimenTypeQueryService;
 
+    private final ReferringCenterService referringCenterService;
+
     public SpecimenTypeResource(
         SpecimenTypeService specimenTypeService,
         SpecimenTypeRepository specimenTypeRepository,
-        SpecimenTypeQueryService specimenTypeQueryService
-    ) {
+        SpecimenTypeQueryService specimenTypeQueryService,
+        ReferringCenterService referringCenterService) {
         this.specimenTypeService = specimenTypeService;
         this.specimenTypeRepository = specimenTypeRepository;
         this.specimenTypeQueryService = specimenTypeQueryService;
+        this.referringCenterService = referringCenterService;
     }
 
     /**
@@ -201,5 +208,20 @@ public class SpecimenTypeResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @GetMapping("/specimen-types/by-center/{centerId}")
+    public ResponseEntity<List<SpecimenTypeDTO>> getAllSpecimenTypeByCenter(
+        @PathVariable Long centerId,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    ) {
+        ReferringCenterDTO referringCenterDTO = referringCenterService.findOne(centerId).get();
+        Page<SpecimenTypeDTO> page = specimenTypeService.findAll(pageable);
+        page.forEach(specimenTypeDTO -> {
+            specimenTypeDTO.setPrice(specimenTypeDTO.getPrice() - (specimenTypeDTO.getPrice() * (referringCenterDTO.getDiscount() / 100)));
+        });
+
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 }

@@ -34,11 +34,16 @@ export class DoctorService {
 
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
-    return this.http.get<IDoctor[]>(this.resourceUrl, { params: options, observe: 'response' });
+    return this.http.get<IDoctor[]>(this.resourceUrl, {params: options, observe: 'response'});
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {
-    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    return this.http.delete(`${this.resourceUrl}/${id}`, {observe: 'response'});
+  }
+
+  count(req?: any): Observable<HttpResponse<any>> {
+    const options = createRequestOption(req);
+    return this.http.get<number>(this.resourceUrl + '/count', {params: options, observe: 'response'});
   }
 
   addDoctorToCollectionIfMissing(doctorCollection: IDoctor[], ...doctorsToCheck: (IDoctor | null | undefined)[]): IDoctor[] {
@@ -57,4 +62,5 @@ export class DoctorService {
     }
     return doctorCollection;
   }
+
 }

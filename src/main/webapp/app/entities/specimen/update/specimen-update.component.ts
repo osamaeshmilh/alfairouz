@@ -23,16 +23,18 @@ import { SpecimenTypeService } from 'app/entities/specimen-type/service/specimen
 import { ISize } from 'app/entities/size/size.model';
 import { SizeService } from 'app/entities/size/service/size.service';
 import { IReferringCenter } from 'app/entities/referring-center/referring-center.model';
-import { ReferringCenterService } from 'app/entities/referring-center/service/referring-center.service';
-import { IDoctor } from 'app/entities/doctor/doctor.model';
-import { DoctorService } from 'app/entities/doctor/service/doctor.service';
-import { IEmployee } from 'app/entities/employee/employee.model';
-import { EmployeeService } from 'app/entities/employee/service/employee.service';
-import { LabRef } from 'app/entities/enumerations/lab-ref.model';
-import { ContractType } from 'app/entities/enumerations/contract-type.model';
-import { PaymentType } from 'app/entities/enumerations/payment-type.model';
+import {ReferringCenterService} from 'app/entities/referring-center/service/referring-center.service';
+import {IDoctor} from 'app/entities/doctor/doctor.model';
+import {DoctorService} from 'app/entities/doctor/service/doctor.service';
+import {IEmployee} from 'app/entities/employee/employee.model';
+import {EmployeeService} from 'app/entities/employee/service/employee.service';
+import {LabRef} from 'app/entities/enumerations/lab-ref.model';
+import {ContractType} from 'app/entities/enumerations/contract-type.model';
+import {PaymentType} from 'app/entities/enumerations/payment-type.model';
 import {Results} from 'app/entities/enumerations/results.model';
 import {SpecimenStatus} from 'app/entities/enumerations/specimen-status.model';
+import {Gender} from "../../enumerations/gender.model";
+import dayjs from "dayjs/esm";
 
 @Component({
   selector: 'jhi-specimen-update',
@@ -110,9 +112,21 @@ export class SpecimenUpdateComponent implements OnInit {
     pathologistDoctor: [],
     operatorEmployee: [],
     correctorEmployee: [],
+
+    newPatient: [],
+
+    patientName: [],
+    patientNameAr: [],
+    patientMobileNumber: [],
+    patientNationality: [],
+    patientMotherName: [],
+    patientAddress: [],
+    patientGender: [],
+    patientBirthDate: [],
+
   });
   paymentType: any;
-  selectedOption = 1;
+  selectedOption = 0;
 
   constructor(
     protected dataUtils: DataUtils,
@@ -210,11 +224,41 @@ export class SpecimenUpdateComponent implements OnInit {
     return item.id!;
   }
 
-  getPrice($event: any): void {
+  getCenterPrices(): void {
+    this.editForm.get('contractType')!.setValue(this.editForm.get('referringCenter')!.value?.contractType);
+    if (this.paymentType === 'MONTHLY') {
+      this.specimenTypeService
+        .queryByCenter(this.editForm.get('referringCenter')!.value?.id)
+        .pipe(map((res: HttpResponse<ISpecimenType[]>) => res.body ?? []))
+        .pipe(
+          map((specimenTypes: ISpecimenType[]) =>
+            this.specimenTypeService.addSpecimenTypeToCollectionIfMissing(specimenTypes, this.editForm.get('specimenType')!.value)
+          )
+        )
+        .subscribe((specimenTypes: ISpecimenType[]) => (this.specimenTypesSharedCollection = specimenTypes));
 
+      this.sizeService
+        .queryByCenter(this.editForm.get('referringCenter')!.value?.id)
+        .pipe(map((res: HttpResponse<ISize[]>) => res.body ?? []))
+        .pipe(map((sizes: ISize[]) => this.sizeService.addSizeToCollectionIfMissing(sizes, this.editForm.get('size')!.value)))
+        .subscribe((sizes: ISize[]) => (this.sizesSharedCollection = sizes));
+    }
+  }
+
+  getPriceByType($event: any): void {
     /* eslint-disable no-console */
-    console.log($event)
-    this.editForm.get(['price'])?.setValue($event.target.value.price);
+    console.log($event.target.value)
+    this.editForm.get('price')!.setValue(this.editForm.get('specimenType')!.value?.price)
+  }
+
+  getPriceBySize($event: any): void {
+    /* eslint-disable no-console */
+    this.editForm.get('price')!.setValue(this.editForm.get('size')!.value?.price)
+  }
+
+  updatePayed(): void {
+    /* eslint-disable no-console */
+    this.editForm.get('notPaid')!.setValue(Number(this.editForm.get('price')!.value ?? 0) - Number(this.editForm.get('paid')!.value ?? 0))
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ISpecimen>>): void {
@@ -291,6 +335,15 @@ export class SpecimenUpdateComponent implements OnInit {
       pathologistDoctor: specimen.pathologistDoctor,
       operatorEmployee: specimen.operatorEmployee,
       correctorEmployee: specimen.correctorEmployee,
+
+      patientName: specimen.patientName,
+      patientNameAr: specimen.patientNameAr,
+      patientMobileNumber: specimen.patientMobileNumber,
+      patientNationality: specimen.patientNationality,
+      patientMotherName: specimen.patientMotherName,
+      patientAddress: specimen.patientAddress,
+      patientGender: specimen.patientGender,
+      patientBirthDate: specimen.patientBirthDate,
     });
 
     this.patientsSharedCollection = this.patientService.addPatientToCollectionIfMissing(this.patientsSharedCollection, specimen.patient);
@@ -465,6 +518,15 @@ export class SpecimenUpdateComponent implements OnInit {
       pathologistDoctor: this.editForm.get(['pathologistDoctor'])!.value,
       operatorEmployee: this.editForm.get(['operatorEmployee'])!.value,
       correctorEmployee: this.editForm.get(['correctorEmployee'])!.value,
+
+      patientName: this.editForm.get(['patientName'])!.value,
+      patientNameAr: this.editForm.get(['patientNameAr'])!.value,
+      patientMobileNumber: this.editForm.get(['patientMobileNumber'])!.value,
+      patientNationality: this.editForm.get(['patientNationality'])!.value,
+      patientMotherName: this.editForm.get(['patientMotherName'])!.value,
+      patientAddress: this.editForm.get(['patientAddress'])!.value,
+      patientGender: this.editForm.get(['patientGender'])!.value,
+      patientBirthDate: this.editForm.get(['patientBirthDate'])!.value,
     };
   }
 
