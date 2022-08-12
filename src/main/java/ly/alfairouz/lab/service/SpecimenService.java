@@ -15,6 +15,7 @@ import ly.alfairouz.lab.security.SecurityUtils;
 import ly.alfairouz.lab.service.dto.PatientDTO;
 import ly.alfairouz.lab.service.dto.SpecimenDTO;
 import ly.alfairouz.lab.service.mapper.SpecimenMapper;
+import ly.alfairouz.lab.service.util.FileTools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -55,8 +56,19 @@ public class SpecimenService {
      */
     public SpecimenDTO save(SpecimenDTO specimenDTO) {
         log.debug("Request to save Specimen : {}", specimenDTO);
-
         Specimen specimen = specimenMapper.toEntity(specimenDTO);
+
+        if (specimenDTO.getPdfFile() != null) {
+            String filePath = FileTools.upload(
+                specimen.getPdfFile(),
+                specimen.getPdfFileContentType(),
+                "attachment_" + specimen.getLabQr()
+            );
+            specimen.setPdfFile(null);
+            specimen.setPdfFileContentType(specimenDTO.getPdfFileContentType());
+            specimen.setPdfFileUrl(filePath);
+        }
+
         specimen = specimenRepository.save(specimen);
         return specimenMapper.toDto(specimen);
     }
@@ -74,7 +86,11 @@ public class SpecimenService {
             if (specimenDTO.getGrossingDoctor() == null) {
                 specimenDTO.setGrossingDoctor(doctorService.findOneDTOByUser());
             }
+            if (specimenDTO.getSpecimenStatus() == SpecimenStatus.RECEIVED) {
+                specimenDTO.setSpecimenStatus(SpecimenStatus.GROSSING);
+            }
         }
+
         Specimen specimen = specimenMapper.toEntity(specimenDTO);
         specimen = specimenRepository.save(specimen);
         return specimenMapper.toDto(specimen);
