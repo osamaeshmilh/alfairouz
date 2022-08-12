@@ -83,34 +83,34 @@
             <column name="report_date" type="date">
                 <constraints nullable="true" />
             </column>
-            <column name="clinical_data" type="varchar(255)">
-                <constraints nullable="true" />
+            <column name="clinical_data" type="longtext">
+                <constraints nullable="true"/>
             </column>
             <column name="clinical_date" type="date">
                 <constraints nullable="true" />
             </column>
-            <column name="gross_examination" type="varchar(255)">
-                <constraints nullable="true" />
+            <column name="gross_examination" type="longtext">
+                <constraints nullable="true"/>
             </column>
             <column name="gross_date" type="date">
                 <constraints nullable="true" />
             </column>
-            <column name="microscopic_data" type="varchar(255)">
-                <constraints nullable="true" />
+            <column name="microscopic_data" type="longtext">
+                <constraints nullable="true"/>
             </column>
             <column name="microscopic_date" type="date">
                 <constraints nullable="true" />
             </column>
-            <column name="results" type="varchar(255)">
-                <constraints nullable="true" />
+            <column name="results" type="longtext">
+                <constraints nullable="true"/>
             </column>
-            <column name="conclusion" type="varchar(255)">
+            <column name="conclusion" type="longtext">
                 <constraints nullable="true"/>
             </column>
             <column name="conclusion_date" type="date">
                 <constraints nullable="true"/>
             </column>
-            <column name="notes" type="varchar(255)">
+            <column name="notes" type="longtext">
                 <constraints nullable="true"/>
             </column>
             <column name="specimen_status" type="varchar(255)">

@@ -42,7 +42,12 @@ export class SpecimenTypeService {
   }
 
   queryByCenter(id: number): Observable<EntityArrayResponseType> {
-    return this.http.get<ISpecimenType[]>(`${this.resourceUrl}/by-center/${id}`, {observe: 'response'});
+    const options = createRequestOption({size: 200});
+
+    return this.http.get<ISpecimenType[]>(`${this.resourceUrl}/by-center/${id}`, {
+      params: options,
+      observe: 'response'
+    });
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {

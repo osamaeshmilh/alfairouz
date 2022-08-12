@@ -299,14 +299,28 @@ public class SpecimenResource {
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(bytes), header);
     }
 
-    @GetMapping(value = "/public/specimen/report/", produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<byte[]> printSharedInvoicePDF() {
+    @GetMapping(value = "/public/specimen/report/{specimenId}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> printReportPDF(@PathVariable Long specimenId) {
         log.debug("REST request to get report");
         Map<String, Object> parameters = new HashMap<>();
+        parameters.put("specimen_id", specimenId);
         byte[] fileBytes = jasperReportsUtil.getReportAsPDF(parameters, "report");
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.APPLICATION_PDF);
         header.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=report_" + System.currentTimeMillis() + ".pdf");
+        header.setContentLength(fileBytes.length);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(fileBytes), header);
+    }
+
+    @GetMapping(value = "/public/specimen/invoice/{specimenId}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> printInvoicePDF(@PathVariable Long specimenId) {
+        log.debug("REST request to get report");
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("specimen_id", specimenId);
+        byte[] fileBytes = jasperReportsUtil.getReportAsPDF(parameters, "invoice");
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.APPLICATION_PDF);
+        header.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=invoice_" + System.currentTimeMillis() + ".pdf");
         header.setContentLength(fileBytes.length);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(fileBytes), header);
     }

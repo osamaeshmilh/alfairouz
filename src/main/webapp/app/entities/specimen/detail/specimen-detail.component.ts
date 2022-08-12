@@ -35,4 +35,19 @@ export class SpecimenDetailComponent implements OnInit {
     return this.specimen?.labQr;
   }
 
+  getReciept(specimenId: any): void {
+    const url = '/api/public/specimen/invoice/' + String(specimenId);
+    window.open(url, '_blank');
+  }
+
+  getNormalReport(specimenId: any): void {
+    const url = '/api/public/specimen/report/' + String(specimenId);
+    window.open(url, '_blank');
+  }
+
+  getReport(specimenId: any): void {
+    const url = '/api/public/specimen/report/' + String(specimenId);
+    window.open(url, '_blank');
+  }
+
 }

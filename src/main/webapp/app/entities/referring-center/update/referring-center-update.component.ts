@@ -1,15 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import {FormBuilder} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs';
+import {finalize, map} from 'rxjs/operators';
 
-import { IReferringCenter, ReferringCenter } from '../referring-center.model';
-import { ReferringCenterService } from '../service/referring-center.service';
-import { IUser } from 'app/entities/user/user.model';
-import { UserService } from 'app/entities/user/user.service';
-import { ContractType } from 'app/entities/enumerations/contract-type.model';
+import {IReferringCenter, ReferringCenter} from '../referring-center.model';
+import {ReferringCenterService} from '../service/referring-center.service';
+import {IUser} from 'app/entities/user/user.model';
+import {UserService} from 'app/entities/user/user.service';
+import {ContractType} from 'app/entities/enumerations/contract-type.model';
+import {ISpecimenType} from "../../specimen-type/specimen-type.model";
+import {ISize} from "../../size/size.model";
+import {SpecimenTypeService} from "../../specimen-type/service/specimen-type.service";
+import {SizeService} from "../../size/service/size.service";
 
 @Component({
   selector: 'jhi-referring-center-update',
@@ -20,6 +24,8 @@ export class ReferringCenterUpdateComponent implements OnInit {
   contractTypeValues = Object.keys(ContractType);
 
   usersSharedCollection: IUser[] = [];
+  specimenTypesSharedCollection: ISpecimenType[] = [];
+  sizesSharedCollection: ISize[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -37,13 +43,23 @@ export class ReferringCenterUpdateComponent implements OnInit {
     protected referringCenterService: ReferringCenterService,
     protected userService: UserService,
     protected activatedRoute: ActivatedRoute,
+    protected specimenTypeService: SpecimenTypeService,
+    protected sizeService: SizeService,
     protected fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ referringCenter }) => {
       this.updateForm(referringCenter);
+      this.specimenTypeService
+        .queryByCenter(referringCenter?.id ?? 0)
+        .pipe(map((res: HttpResponse<ISpecimenType[]>) => res.body ?? []))
+        .subscribe((specimenTypes: ISpecimenType[]) => (this.specimenTypesSharedCollection = specimenTypes));
 
+      this.sizeService
+        .queryByCenter(referringCenter?.id ?? 0)
+        .pipe(map((res: HttpResponse<ISize[]>) => res.body ?? []))
+        .subscribe((sizes: ISize[]) => (this.sizesSharedCollection = sizes));
       this.loadRelationshipsOptions();
     });
   }
@@ -68,12 +84,13 @@ export class ReferringCenterUpdateComponent implements OnInit {
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IReferringCenter>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
-      next: () => this.onSaveSuccess(),
+      next: (response: HttpResponse<IReferringCenter>) => this.onSaveSuccess(response),
       error: () => this.onSaveError(),
     });
   }
 
-  protected onSaveSuccess(): void {
+  protected onSaveSuccess(response: HttpResponse<IReferringCenter>): void {
+
     this.previousState();
   }
 

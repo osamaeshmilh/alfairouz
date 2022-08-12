@@ -39,7 +39,8 @@ export class SizeService {
   }
 
   queryByCenter(id: number): Observable<EntityArrayResponseType> {
-    return this.http.get<ISize[]>(`${this.resourceUrl}/by-center/${id}`, {observe: 'response'});
+    const options = createRequestOption({size: 200});
+    return this.http.get<ISize[]>(`${this.resourceUrl}/by-center/${id}`, {params: options, observe: 'response'});
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {

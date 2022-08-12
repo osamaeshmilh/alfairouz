@@ -3,454 +3,433 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
-              name="invoicee" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20"
-              topMargin="20" bottomMargin="20" uuid="c6185b02-e9a8-4636-aea0-6bb04101c813">
+              name="alfirouzInvoice" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802"
+              leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20"
+              uuid="442c25b9-d4b3-4c18-b1f0-0838c6492335">
     <property name="com.jaspersoft.studio.data.sql.tables" value=""/>
     <property name="com.jaspersoft.studio.data.defaultdataadapter" value="Mysql"/>
-    <parameter name="flight_booking_id" class="java.lang.Long">
+    <parameter name="specimen_id" class="java.lang.Long">
         <parameterDescription><![CDATA[]]></parameterDescription>
     </parameter>
     <queryString language="SQL">
-        <![CDATA[SELECT
-flight_booking.id as 'bookingId',
-passenger_first_name as 'firstName',
-passenger_last_name as 'lastName',
-passenger_passport_no as 'passportNo',
-passenger_mobile_no as 'mobileNo',
-email_address as 'email',
-booking_type as 'bookingType',
-pax_no as 'paxNo',
-flight_booking.pnr as 'pnr',
-e_ticket_no as 'eTicket',
-total as 'total',
-issued_at as 'issuedAt',
-ticket_itinerary.flight_no as 'flightNo',
-ticket_itinerary.airline_text as 'AirlineName',
-ticket_itinerary.departure_airport_text as 'departureAirport',
-ticket_itinerary.departure_date_time as 'departureTime',
-ticket_itinerary.arrival_airport_text as 'arrivalAirport',
-ticket_itinerary.arrival_date_time as 'arrivalDate',
-ticket_itinerary.cabin_class as 'cabinClass'
-FROM flight_booking, ticket_itinerary
-WHERE flight_booking.id = ticket_itinerary.flight_booking_id
-and flight_booking.id = $P{flight_booking_id}]]>
+        <![CDATA[select  alfairouz.specimen.id as specimenId,
+alfairouz.specimen.lab_ref_no,
+alfairouz.specimen.lab_qr ,
+alfairouz.specimen.samples ,
+alfairouz.specimen.sampling_date,
+alfairouz.specimen.receiving_date,
+alfairouz.specimen.file_no,
+ alfairouz.specimen.price,
+ alfairouz.specimen.paid,
+ alfairouz.specimen.not_paid,
+alfairouz.specimen.report_date,
+alfairouz.referring_center.name_ar as referringCenterNameAr,
+alfairouz.doctor.name as referringDoctorName,
+alfairouz.patient.name_ar as patientNameAr,
+alfairouz.patient.name as patientName,
+alfairouz.patient.gender as patientGender,
+TIMESTAMPDIFF(YEAR, alfairouz.patient.birth_date  , CURDATE()) AS age,
+alfairouz.patient.mobile_number  as patientMobileNumber
+ from alfairouz.specimen
+ LEFT OUTER JOIN alfairouz.patient ON alfairouz.specimen.patient_id = alfairouz.patient.id
+LEFT OUTER JOIN alfairouz.referring_center ON alfairouz.specimen.referring_center_id = alfairouz.referring_center.id
+LEFT OUTER JOIN alfairouz.doctor ON alfairouz.specimen.referring_doctor_id = alfairouz.doctor.id
+where alfairouz.specimen.id = $P{specimen_id}]]>
     </queryString>
-    <field name="bookingId" class="java.lang.Long"/>
-    <field name="firstName" class="java.lang.String"/>
-    <field name="lastName" class="java.lang.String"/>
-    <field name="passportNo" class="java.lang.String"/>
-    <field name="mobileNo" class="java.lang.String"/>
-    <field name="email" class="java.lang.String"/>
-    <field name="total" class="java.lang.Double"/>
-    <field name="bookingType" class="java.lang.String"/>
-    <field name="paxNo" class="java.lang.Long"/>
-    <field name="pnr" class="java.lang.String"/>
-    <field name="eTicket" class="java.lang.String"/>
-    <field name="issued_at" class="java.lang.String"/>
-    <field name="flightNo" class="java.lang.String"/>
-    <field name="AirlineName" class="java.lang.String"/>
-    <field name="departureAirport" class="java.lang.String"/>
-    <field name="departureTime" class="java.lang.String"/>
-    <field name="arrivalAirport" class="java.lang.String"/>
-    <field name="arrivalDate" class="java.lang.String"/>
-    <field name="cabinClass" class="java.lang.String"/>
+    <field name="specimenId" class="java.lang.Long">
+        <property name="com.jaspersoft.studio.field.label" value="specimenId"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="lab_ref_no" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="lab_ref_no"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="lab_qr" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="lab_qr"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="samples" class="java.lang.Integer">
+        <property name="com.jaspersoft.studio.field.label" value="samples"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="sampling_date" class="java.sql.Date">
+        <property name="com.jaspersoft.studio.field.label" value="sampling_date"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="receiving_date" class="java.sql.Date">
+        <property name="com.jaspersoft.studio.field.label" value="receiving_date"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="file_no" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="file_no"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="price" class="java.lang.Float">
+        <property name="com.jaspersoft.studio.field.label" value="price"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="paid" class="java.lang.Float">
+        <property name="com.jaspersoft.studio.field.label" value="paid"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="not_paid" class="java.lang.Float">
+        <property name="com.jaspersoft.studio.field.label" value="not_paid"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="report_date" class="java.sql.Date">
+        <property name="com.jaspersoft.studio.field.label" value="report_date"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="referringCenterNameAr" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="referringCenterNameAr"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="referring_center"/>
+    </field>
+    <field name="referringDoctorName" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="referringDoctorName"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="doctor"/>
+    </field>
+    <field name="patientNameAr" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="patientNameAr"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+    </field>
+    <field name="patientName" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="patientName"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+    </field>
+    <field name="patientGender" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="patientGender"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+    </field>
+    <field name="age" class="java.lang.Long">
+        <property name="com.jaspersoft.studio.field.label" value="age"/>
+    </field>
+    <field name="patientMobileNumber" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="patientMobileNumber"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+    </field>
     <background>
-        <band/>
+        <band splitType="Stretch"/>
     </background>
     <title>
-        <band height="180" splitType="Stretch">
-            <staticText>
-                <reportElement x="310" y="19" width="170" height="30" uuid="3ef038d3-8251-425f-9607-83f4b5995fb1"/>
-                <textElement textAlignment="Right" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="18" isBold="true"/>
-                </textElement>
-                <text><![CDATA[ETravel]]></text>
-            </staticText>
+        <band height="181" splitType="Stretch">
             <image>
-                <reportElement x="490" y="19" width="65" height="70" uuid="bdbc96cd-b82a-474c-886f-e8fa98b699f3"/>
-                <imageExpression><![CDATA["logo.png"]]></imageExpression>
+                <reportElement x="155" y="0" width="450" height="181" uuid="109e8c2f-1742-42dc-84fd-ca339e24b662"/>
+                <imageExpression><![CDATA["/Users/osamaeshmilh/Downloads/invoice_header.png"]]></imageExpression>
             </image>
-            <textField textAdjust="StretchHeight">
-                <reportElement x="310" y="49" width="120" height="20" uuid="179d20b1-b73a-4ae1-b035-69157f0444b2">
-                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
-                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
-                </reportElement>
-                <textElement textAlignment="Right" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="10" isBold="true"/>
-                </textElement>
-                <textFieldExpression><![CDATA[$F{bookingId} + "#"]]></textFieldExpression>
-            </textField>
-            <textField textAdjust="StretchHeight">
-                <reportElement x="310" y="109" width="120" height="20" uuid="ef340d90-5397-436a-b87d-a690610cd237">
-                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
-                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
-                </reportElement>
-                <textElement textAlignment="Right" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="10"/>
-                </textElement>
-                <textFieldExpression><![CDATA[$F{passportNo}]]></textFieldExpression>
-            </textField>
-            <textField textAdjust="StretchHeight">
-                <reportElement x="310" y="89" width="120" height="20" uuid="0c15d049-92f5-4606-9f63-13faaeabe719">
-                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
-                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
-                </reportElement>
-                <textElement textAlignment="Right" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="10"/>
-                </textElement>
-                <textFieldExpression><![CDATA[$F{mobileNo}]]></textFieldExpression>
-            </textField>
-            <textField textAdjust="StretchHeight">
-                <reportElement x="310" y="69" width="120" height="20" uuid="194604b9-601f-4836-93da-423e4fa84c2b">
-                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
-                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
-                </reportElement>
-                <textElement textAlignment="Right" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="10"/>
-                </textElement>
-                <textFieldExpression><![CDATA[$F{firstName} +" "+ $F{lastName}]]></textFieldExpression>
-            </textField>
             <staticText>
-                <reportElement x="430" y="69" width="50" height="20" uuid="fd038300-6ead-48e5-a1f9-0bde83c27b76"/>
-                <textElement textAlignment="Right" verticalAlignment="Middle">
+                <reportElement x="-300" y="-209" width="98" height="20" uuid="44b9f6e4-7d87-45ea-a607-1d68db7de248"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="true"/>
                 </textElement>
-                <text><![CDATA[إسم الزبون:]]></text>
-            </staticText>
-            <staticText>
-                <reportElement x="430" y="109" width="50" height="20" uuid="90d6576d-74f9-46fc-a933-dfe581396d2c"/>
-                <textElement textAlignment="Right" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="10" isBold="true"/>
-                </textElement>
-                <text><![CDATA[رقم الجواز:]]></text>
-            </staticText>
-            <staticText>
-                <reportElement x="430" y="89" width="50" height="20" uuid="e98f30cb-9510-436a-b638-a729d92c7d53"/>
-                <textElement textAlignment="Right" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="10" isBold="true"/>
-                </textElement>
-                <text><![CDATA[هاتف الزبون:]]></text>
-            </staticText>
-            <staticText>
-                <reportElement x="430" y="49" width="50" height="20" uuid="a10e32d3-11b7-43b6-ae7e-ce890350d80a"/>
-                <textElement textAlignment="Right" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="10" isBold="true"/>
-                </textElement>
-                <text><![CDATA[رقم الحجز:]]></text>
-            </staticText>
-            <staticText>
-                <reportElement x="430" y="129" width="50" height="20" uuid="31265351-078f-48af-957d-85eb18c5bd9f"/>
-                <textElement textAlignment="Right" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="10" isBold="true"/>
-                </textElement>
-                <text><![CDATA[ايميل:]]></text>
-            </staticText>
-            <textField>
-                <reportElement x="310" y="129" width="120" height="20" uuid="c6009d92-5caf-44cf-ac61-72da2ae30dc1"/>
-                <textElement textAlignment="Right" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="10"/>
-                </textElement>
-                <textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
-            </textField>
-            <staticText>
-                <reportElement x="430" y="150" width="50" height="20" uuid="79f599c6-3536-43b0-ab5a-dd442b911fbe"/>
-                <textElement textAlignment="Right" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="10" isBold="true"/>
-                </textElement>
-                <text><![CDATA[تاريخ الحجز:]]></text>
-            </staticText>
-            <textField textAdjust="StretchHeight">
-                <reportElement x="310" y="150" width="120" height="20" uuid="eb8cacf8-838b-4cc7-96fa-170eb613b5d5">
-                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
-                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
-                </reportElement>
-                <textElement textAlignment="Right" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="10"/>
-                </textElement>
-                <textFieldExpression><![CDATA[$F{issued_at}]]></textFieldExpression>
-            </textField>
-            <textField textAdjust="StretchHeight">
-                <reportElement x="20" y="49" width="120" height="20" uuid="5bc74bc0-b93a-4539-867e-a44b667259fb">
-                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
-                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
-                </reportElement>
-                <textElement textAlignment="Right" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="10" isBold="true"/>
-                </textElement>
-                <textFieldExpression><![CDATA[$F{pnr}]]></textFieldExpression>
-            </textField>
-            <staticText>
-                <reportElement x="140" y="49" width="50" height="20" uuid="b08c5e61-4d17-4b3d-852a-0641c844dff7"/>
-                <textElement textAlignment="Right" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="10" isBold="true"/>
-                </textElement>
-                <text><![CDATA[PNR: ]]></text>
-            </staticText>
-            <textField textAdjust="StretchHeight">
-                <reportElement x="20" y="80" width="120" height="20" uuid="b3626c7d-956d-4570-94e5-9f929cb692e5">
-                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
-                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
-                </reportElement>
-                <textElement textAlignment="Right" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="10" isBold="true"/>
-                </textElement>
-                <textFieldExpression><![CDATA[$F{eTicket}]]></textFieldExpression>
-            </textField>
-            <staticText>
-                <reportElement x="140" y="80" width="50" height="20" uuid="e795fb3d-4dc0-44dd-a0ae-8a1f1f2606d6"/>
-                <textElement textAlignment="Right" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="10" isBold="true"/>
-                </textElement>
-                <text><![CDATA[E Ticket :]]></text>
+                <text><![CDATA[ايصال قبض]]></text>
             </staticText>
         </band>
     </title>
-    <pageHeader>
-        <band height="17"/>
-    </pageHeader>
-    <columnHeader>
-        <band height="30">
-            <staticText>
-                <reportElement mode="Opaque" x="0" y="0" width="70" height="30" forecolor="#FFFFFF" backcolor="#572D8A"
-                               uuid="5a3dde0d-e04d-47c6-bc62-5612501a85c1">
-                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
-                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
-                </reportElement>
-                <box>
-                    <pen lineColor="#572D8A"/>
-                </box>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="12" isBold="true"/>
-                </textElement>
-                <text><![CDATA[مطار الوصول]]></text>
-            </staticText>
-            <staticText>
-                <reportElement mode="Opaque" x="150" y="0" width="100" height="30" forecolor="#FFFFFF"
-                               backcolor="#572D8A" uuid="79a9e0ce-1f46-4993-89e6-88b6e5ff4de2">
-                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
-                              value="0463396d-0068-4d23-82af-a04239cb24f6"/>
-                </reportElement>
-                <box>
-                    <pen lineColor="#572D8A"/>
-                </box>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="12" isBold="true"/>
-                </textElement>
-                <text><![CDATA[موعد الاقلاع]]></text>
-            </staticText>
-            <staticText>
-                <reportElement mode="Opaque" x="250" y="0" width="219" height="30" forecolor="#FFFFFF"
-                               backcolor="#572D8A" uuid="edb69173-f89c-4957-b6e8-00b2b0a610c3">
-                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
-                              value="d1bb5851-7a1f-445f-af6f-e876d503f9c3"/>
-                </reportElement>
-                <box>
-                    <pen lineColor="#572D8A"/>
-                </box>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="12" isBold="true"/>
-                </textElement>
-                <text><![CDATA[الخطوط]]></text>
-            </staticText>
-            <staticText>
-                <reportElement mode="Opaque" x="469" y="0" width="86" height="30" forecolor="#FFFFFF"
-                               backcolor="#572D8A" uuid="ff35d568-c946-4cee-8066-de248fedaead">
-                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
-                              value="fc9821d0-ad3e-4942-b172-ff67367d7e56"/>
-                </reportElement>
-                <box>
-                    <pen lineColor="#572D8A"/>
-                </box>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="12" isBold="true"/>
-                </textElement>
-                <text><![CDATA[رقم الرحلة]]></text>
-            </staticText>
-            <staticText>
-                <reportElement mode="Opaque" x="70" y="0" width="40" height="30" forecolor="#FFFFFF" backcolor="#572D8A"
-                               uuid="040bc2cd-25e9-462e-8bf3-f8472b14c095">
-                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
-                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
-                </reportElement>
-                <box>
-                    <pen lineColor="#572D8A"/>
-                </box>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="12" isBold="true"/>
-                </textElement>
-                <text><![CDATA[مطار الذهاب]]></text>
-            </staticText>
-            <staticText>
-                <reportElement mode="Opaque" x="110" y="0" width="40" height="30" forecolor="#FFFFFF"
-                               backcolor="#572D8A" uuid="d323d451-7082-4470-894f-ea28ad4cb2d7">
-                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
-                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
-                </reportElement>
-                <box>
-                    <pen lineColor="#572D8A"/>
-                </box>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="12" isBold="true"/>
-                </textElement>
-                <text><![CDATA[موعد الوصول]]></text>
-            </staticText>
-        </band>
-    </columnHeader>
     <detail>
-        <band height="48">
+        <band height="270" splitType="Stretch">
+            <staticText>
+                <reportElement x="338" y="9" width="85" height="20" uuid="daa9fc96-2e6a-4735-9540-c4e50eb96b21"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[ايصال قبض]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="660" y="29" width="98" height="20" uuid="29ca61f5-5f61-4304-940b-d717a50f61a9"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[الاسم :]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="660" y="50" width="98" height="20" uuid="efc62c4e-ad68-4dd2-b7a4-1b70513ead52"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[رقم الهاتف:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="660" y="100" width="98" height="20" uuid="88e37a68-cb63-4082-9aa8-b97fc79919eb"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[كيفية الدفع:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="660" y="120" width="98" height="20" uuid="ad54a15e-18b3-461d-bd6b-76385b76fbf3"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[الثمن:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="660" y="140" width="98" height="20" uuid="f49f72a5-69c9-4c10-b92f-fdf86993cde4"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[المدفوع:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="659" y="160" width="98" height="20" uuid="e44b50ee-78e7-4e9f-9383-52ac59875aba"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[الباقي:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="660" y="200" width="98" height="20" uuid="4014e5b2-4f29-48ec-819c-21e86f26db15"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[كود العينة كيو ار :]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="40" y="30" width="85" height="20" uuid="a2fc2211-af6f-4eca-8757-e318bc906660"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Pt. Name:]]></text>
+            </staticText>
             <textField textAdjust="StretchHeight">
-                <reportElement x="0" y="0" width="70" height="48" uuid="bbcb07fd-dc6d-45cd-a954-390f20fb38fa">
+                <reportElement x="125" y="30" width="190" height="20" uuid="316c72da-7ef5-4a93-8e68-db9e8c9081d3">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
-                <box padding="5">
-                    <pen lineColor="#1C2C42"/>
-                    <topPen lineWidth="0.0" lineColor="#1C2C42"/>
-                    <leftPen lineWidth="1.0" lineColor="#1C2C42"/>
-                    <bottomPen lineWidth="1.0" lineColor="#1C2C42"/>
-                    <rightPen lineWidth="1.0" lineColor="#1C2C42"/>
-                </box>
-                <textElement textAlignment="Center" verticalAlignment="Top">
-                    <font fontName="Times New Roman" size="10"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{arrivalAirport}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{patientName}]]></textFieldExpression>
             </textField>
-            <textField textAdjust="StretchHeight">
-                <reportElement x="150" y="0" width="100" height="48" uuid="500e5ed6-3f5a-450f-a9b4-518542d70208">
-                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
-                              value="0463396d-0068-4d23-82af-a04239cb24f6"/>
-                </reportElement>
-                <box padding="5">
-                    <pen lineColor="#1C2C42"/>
-                    <topPen lineWidth="0.0" lineColor="#1C2C42"/>
-                    <leftPen lineWidth="1.0" lineColor="#1C2C42"/>
-                    <bottomPen lineWidth="1.0" lineColor="#1C2C42"/>
-                    <rightPen lineWidth="1.0" lineColor="#1C2C42"/>
-                </box>
-                <textElement textAlignment="Center" verticalAlignment="Top">
-                    <font fontName="Times New Roman" size="10"/>
+            <staticText>
+                <reportElement x="40" y="50" width="85" height="20" uuid="2e1758fb-dce9-4da7-917e-1ae82289d96f"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{departureTime}]]></textFieldExpression>
-            </textField>
+                <text><![CDATA[Age/Gender:]]></text>
+            </staticText>
             <textField textAdjust="StretchHeight">
-                <reportElement x="250" y="0" width="219" height="48" uuid="530c6269-2f01-419a-9cd2-98cab1373029">
-                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
-                              value="d1bb5851-7a1f-445f-af6f-e876d503f9c3"/>
-                </reportElement>
-                <box padding="5">
-                    <pen lineColor="#1C2C42"/>
-                    <topPen lineWidth="0.0" lineColor="#1C2C42"/>
-                    <leftPen lineWidth="1.0" lineColor="#1C2C42"/>
-                    <bottomPen lineWidth="1.0" lineColor="#1C2C42"/>
-                    <rightPen lineWidth="1.0" lineColor="#1C2C42"/>
-                </box>
-                <textElement textAlignment="Right" verticalAlignment="Top">
-                    <font fontName="Times New Roman" size="10"/>
-                </textElement>
-                <textFieldExpression><![CDATA[$F{AirlineName}]]></textFieldExpression>
-            </textField>
-            <textField textAdjust="StretchHeight">
-                <reportElement x="70" y="0" width="40" height="48" uuid="4ae23ca4-8237-474e-8a84-1449aafb322f">
+                <reportElement x="125" y="50" width="190" height="20" uuid="4316ba00-fe39-41f5-a7a4-b9f8db7277bb">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
-                <box padding="5">
-                    <pen lineColor="#1C2C42"/>
-                    <topPen lineWidth="0.0" lineColor="#1C2C42"/>
-                    <leftPen lineWidth="1.0" lineColor="#1C2C42"/>
-                    <bottomPen lineWidth="1.0" lineColor="#1C2C42"/>
-                    <rightPen lineWidth="1.0" lineColor="#1C2C42"/>
-                </box>
-                <textElement textAlignment="Center" verticalAlignment="Top">
-                    <font fontName="Times New Roman" size="10"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{departureAirport}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{age}+"   "+$F{patientGender}]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight">
-                <reportElement x="110" y="0" width="40" height="48" uuid="9c27c484-7315-4164-bf4c-698082dc05b9">
+                <reportElement x="125" y="100" width="190" height="20" uuid="9d8a113f-71a8-4fca-b4da-458719ad58e6">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
-                <box padding="5">
-                    <pen lineColor="#1C2C42"/>
-                    <topPen lineWidth="0.0" lineColor="#1C2C42"/>
-                    <leftPen lineWidth="1.0" lineColor="#1C2C42"/>
-                    <bottomPen lineWidth="1.0" lineColor="#1C2C42"/>
-                    <rightPen lineWidth="1.0" lineColor="#1C2C42"/>
-                </box>
-                <textElement textAlignment="Center" verticalAlignment="Top">
-                    <font fontName="Times New Roman" size="10"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{arrivalDate}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{referringCenterNameAr}]]></textFieldExpression>
             </textField>
-            <textField>
-                <reportElement x="469" y="0" width="86" height="48" uuid="bece374a-d2c3-45a7-8b51-3f3ba964bd5d">
+            <staticText>
+                <reportElement x="40" y="100" width="85" height="20" uuid="e373aba8-36c5-499b-a304-597ce9dca3c3"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Referring Center:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="40" y="120" width="85" height="20" uuid="525ae299-1348-4797-a02e-9639fb65bbe7"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Referring Doctor:]]></text>
+            </staticText>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="125" y="120" width="190" height="20" uuid="a7e8e96f-5c3b-4c86-9800-7ebe821f76cc">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
-                              value="d6b44877-494b-442b-9149-839dfadd9621"/>
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
-                <box padding="5">
-                    <pen lineColor="#1C2C42"/>
-                    <topPen lineWidth="0.0" lineColor="#1C2C42"/>
-                    <leftPen lineWidth="1.0" lineColor="#1C2C42"/>
-                    <bottomPen lineWidth="1.0" lineColor="#1C2C42"/>
-                    <rightPen lineWidth="1.0" lineColor="#1C2C42"/>
-                </box>
-                <textElement textAlignment="Center" verticalAlignment="Top">
-                    <font fontName="Times New Roman" size="10"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{flightNo}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{referringDoctorName}]]></textFieldExpression>
             </textField>
+            <staticText>
+                <reportElement x="40" y="140" width="85" height="20" uuid="9ea8cee6-2051-4776-ba90-9f2a4d7ac786"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Lab QR code:]]></text>
+            </staticText>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="125" y="140" width="190" height="20" uuid="a79c4e60-79fe-4844-805f-5a891d456b96">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="12" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{lab_qr}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="125" y="160" width="190" height="20" uuid="6db78e2f-c853-4a17-a66f-66d5638058ab">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="12" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{samples}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="40" y="180" width="85" height="20" uuid="f9f2eadf-9bd6-42f3-a662-47bf26d93131"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[File No:]]></text>
+            </staticText>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="125" y="180" width="190" height="20" uuid="25e4830a-9d45-417f-b98d-eaa8c88b046d">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="12" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{file_no}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="125" y="200" width="190" height="20" uuid="0c37bdc6-cb3d-4aa1-9720-07c140f51526">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="12" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{sampling_date}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="40" y="200" width="85" height="20" uuid="64e4f98d-78ff-4455-aba0-2fcf4d0e1e3f"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Date of Sampling:]]></text>
+            </staticText>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="125" y="220" width="190" height="20" uuid="c693c5e5-5969-4f5b-b289-36a254b673e5">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="12" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{receiving_date}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="40" y="220" width="85" height="20" uuid="0d5200d2-40db-462b-b17c-2fc8a476371c"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Date of Recieving:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="40" y="240" width="85" height="20" uuid="8d23e06a-7239-4913-970f-461b3364fb64"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Date of Report:]]></text>
+            </staticText>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="125" y="240" width="190" height="20" uuid="4714065b-7fe2-43dc-98d6-67402d45745f">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="12" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{report_date}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="40" y="160" width="85" height="20" uuid="24f46c43-af65-49aa-9bcc-52657e6f2f5d"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[No. of Samples:]]></text>
+            </staticText>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="460" y="30" width="200" height="20" uuid="fb63e1c6-e02b-456f-a026-a5d169c800bc">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="12" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{patientNameAr}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="460" y="50" width="200" height="20" uuid="cdd24ff4-9ed7-4d6a-890e-c5a130cdd231">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="12" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{patientMobileNumber}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="460" y="120" width="200" height="20" uuid="8d3f7b04-87fd-41e7-83b4-faae66a07767">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="12" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="460" y="140" width="200" height="20" uuid="73feea85-588f-43ac-ae23-4cd4b116090a">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="12" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{paid}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="460" y="160" width="199" height="20" uuid="686ace92-fda6-47b0-a4d9-ff7918cc8fb2">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="12" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{not_paid}]]></textFieldExpression>
+            </textField>
+            <componentElement>
+                <reportElement x="570" y="202" width="75" height="68" uuid="a0452ec7-3298-4cc2-a635-9eb2528c2e73"/>
+                <jr:QRCode xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components"
+                           xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+                    <jr:codeExpression><![CDATA[$F{lab_qr}]]></jr:codeExpression>
+                </jr:QRCode>
+            </componentElement>
         </band>
     </detail>
-    <columnFooter>
-        <band height="19">
-            <staticText>
-                <reportElement x="70" y="0" width="80" height="19" uuid="71ef67bf-69bd-4a99-835c-f45b538c1387"/>
-                <textElement textAlignment="Right">
-                    <font fontName="Times New Roman" size="14" isBold="true"/>
-                </textElement>
-                <text><![CDATA[الاجمالي:]]></text>
-            </staticText>
-            <textField textAdjust="StretchHeight">
-                <reportElement x="0" y="0" width="70" height="19" uuid="888fb6c7-34de-4fc2-88df-0656be806bea">
-                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
-                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
-                </reportElement>
-                <textElement textAlignment="Right">
-                    <font fontName="Times New Roman" size="14"/>
-                </textElement>
-                <textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
-            </textField>
-        </band>
-    </columnFooter>
     <pageFooter>
-        <band height="15">
-            <textField>
-                <reportElement mode="Opaque" x="0" y="0" width="515" height="15" backcolor="#E6E6E6"
-                               uuid="64ebb907-eb66-4dc5-9e72-7ef3e16d6624"/>
-                <textElement textAlignment="Right">
-                    <font fontName="Times New Roman"/>
+        <band height="89" splitType="Stretch">
+            <staticText>
+                <reportElement x="680" y="0" width="78" height="20" uuid="bbe26e7b-7127-4e30-a775-07d3f550b9d8"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
                 </textElement>
-                <textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
-            </textField>
-            <textField evaluationTime="Report">
-                <reportElement mode="Opaque" x="515" y="0" width="40" height="15" backcolor="#E6E6E6"
-                               uuid="ad74ae38-fd57-41ea-bcd3-799f422f7248"/>
-                <textElement>
-                    <font fontName="Times New Roman"/>
+                <text><![CDATA[ملاحظات:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="40" y="20" width="718" height="60" uuid="00b2207f-1e24-442f-9c47-49bdae0acc9d"/>
+                <textElement textAlignment="Justified" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-            </textField>
-            <textField pattern="EEEEE dd MMMMM yyyy">
-                <reportElement x="0" y="0" width="100" height="15" uuid="484d6f97-ed65-4470-bf88-b865aa5838b0"/>
-                <textElement>
-                    <font fontName="Times New Roman"/>
-                </textElement>
-                <textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-            </textField>
+                <text><![CDATA[1- في حالة سداد قيمة العينة كاملة، تستطيع الحصول على نتيجتك مباشرة وتحميلها او طباعتها من موقعنا الإلكتروني او تطبيق مختبر الفيروز على هاتفك  بدون الرجوع الى المختبر مرة اخرى، وذلك بالدخول على موقعنا في الرابط الموجود بالاسفل، وطباعة رقم الهاتف الموجود في الإيصال وكود العينة في المكان المخصص، أو تستطيع قراءة الكود الموجود في الإيصال بواسطة كاميرا الهاتف المحمول لتخرج لك النتيجة مباشرة
+
+2- المدة التقريبية حتى يجهز تقرير العينة هي من 3-5 أيام بالنسبة للعينات الصغيرة، و 7-10 أيام بالنسبة للعينات الكبيرة، بدون احتساب الجمعة لأنه ليس يوم عمل. أحياناً يحصل تأخير بسبب اعادة الفحص والتدقيق، ولكن ستتلقى رسالة نصية أو اتصال على هاتفك الموجود في الإيصال حين يكون التقرير جاهز للتسليم، تستطيع كذلك الاطلاع على حالة العينة في أي مرحلة وصلت من التجهيز عن طريق موقعنا الإلكتروني أو تطبيق مختبر الفيروز]]></text>
+            </staticText>
         </band>
     </pageFooter>
-    <summary>
-        <band/>
-    </summary>
 </jasperReport>

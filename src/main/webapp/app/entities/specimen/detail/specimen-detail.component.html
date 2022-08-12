@@ -1,8 +1,32 @@
 <div class="entity-container">
   <div class="mat-elevation-z1 round-card white-bg p-4 mt-5">
     <div *ngIf="specimen">
-      <h2 data-cy="specimenDetailsHeading"><span jhiTranslate="alfairouzApp.specimen.detail.title">Specimen</span></h2>
-
+      <div class="col-6">
+        <h3 id="page-heading"><span jhiTranslate="alfairouzApp.specimen.detail.title">Specimen</span>{{ specimen?.id }}
+        </h3>
+      </div>
+      <div class="col-12">
+        <div class="text-left">
+          <mat-menu #appMenu="matMenu">
+            <button (click)="getReciept(specimen?.id)" mat-menu-item>
+              <mat-icon>print</mat-icon>
+              طباعة ايصال قبض
+            </button>
+            <button (click)="getNormalReport(specimen?.id)" mat-menu-item>
+              <mat-icon>print</mat-icon>
+              طباعة التقرير فقط
+            </button>
+            <button (click)="getReport(specimen?.id)" mat-menu-item>
+              <mat-icon>print</mat-icon>
+              طباعة التقرير ملون
+            </button>
+          </mat-menu>
+          <button [matMenuTriggerFor]="appMenu" class="mr-2" mat-icon-button>
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </div>
+      </div>
+      <br/>
       <mat-tab-group animationDuration="0ms">
         <mat-tab>
           <ng-template mat-tab-label>

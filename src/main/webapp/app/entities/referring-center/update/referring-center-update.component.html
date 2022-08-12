@@ -84,9 +84,60 @@
           </select>
         </div>
       </div>
+      <div *ngIf="specimenTypesSharedCollection && specimenTypesSharedCollection.length > 0;"
+           class="col-12 p-0 mat-elevation-z1 mt-3">
+        <table class="col mat-table" *ngIf="editForm.get('contractType')!.value == 'SPECIMEN'">
+          <thead>
+          <tr>
+            <th scope="col">
+              <span>#</span>
+            </th>
+            <th scope="col">
+              <span>نوع العينة</span>
+            </th>
+            <th scope="col">
+              <span>السعر بعد التخفيض</span>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let specimenType of specimenTypesSharedCollection" data-cy="entityTable">
+            <td>{{ specimenType.id }}</td>
+            <td>{{ specimenType.name }}</td>
+            <td>{{ specimenType.price }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="sizesSharedCollection && sizesSharedCollection.length > 0;" class="col-12 p-0 mat-elevation-z1 mt-3">
+        <table class="col mat-table" *ngIf="editForm.get('contractType')!.value == 'SIZE'">
+          <thead>
+          <tr>
+            <th scope="col">
+              <span>#</span>
+            </th>
+            <th scope="col">
+              <span>الحجم</span>
+            </th>
+            <th scope="col">
+              <span>السعر بعد التخفيض</span>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let size of sizesSharedCollection" data-cy="entityTable">
+            <td>{{ size.id }}</td>
+            <td>{{ size.name }}</td>
+            <td>{{ size.price }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
 
       <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary"
+                (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
 

@@ -377,7 +377,7 @@ export class SpecimenUpdateComponent implements OnInit {
 
   protected loadRelationshipsOptions(): void {
     this.patientService
-      .query()
+      .query({size: 200})
       .pipe(map((res: HttpResponse<IPatient[]>) => res.body ?? []))
       .pipe(
         map((patients: IPatient[]) => this.patientService.addPatientToCollectionIfMissing(patients, this.editForm.get('patient')!.value))
@@ -385,13 +385,13 @@ export class SpecimenUpdateComponent implements OnInit {
       .subscribe((patients: IPatient[]) => (this.patientsSharedCollection = patients));
 
     this.biopsyService
-      .query()
+      .query({size: 200})
       .pipe(map((res: HttpResponse<IBiopsy[]>) => res.body ?? []))
       .pipe(map((biopsies: IBiopsy[]) => this.biopsyService.addBiopsyToCollectionIfMissing(biopsies, this.editForm.get('biopsy')!.value)))
       .subscribe((biopsies: IBiopsy[]) => (this.biopsiesSharedCollection = biopsies));
 
     this.cytologyService
-      .query()
+      .query({size: 200})
       .pipe(map((res: HttpResponse<ICytology[]>) => res.body ?? []))
       .pipe(
         map((cytologies: ICytology[]) =>
@@ -401,13 +401,13 @@ export class SpecimenUpdateComponent implements OnInit {
       .subscribe((cytologies: ICytology[]) => (this.cytologiesSharedCollection = cytologies));
 
     this.organService
-      .query()
+      .query({size: 200})
       .pipe(map((res: HttpResponse<IOrgan[]>) => res.body ?? []))
       .pipe(map((organs: IOrgan[]) => this.organService.addOrganToCollectionIfMissing(organs, this.editForm.get('organ')!.value)))
       .subscribe((organs: IOrgan[]) => (this.organsSharedCollection = organs));
 
     this.specimenTypeService
-      .query()
+      .query({size: 200})
       .pipe(map((res: HttpResponse<ISpecimenType[]>) => res.body ?? []))
       .pipe(
         map((specimenTypes: ISpecimenType[]) =>
@@ -417,13 +417,13 @@ export class SpecimenUpdateComponent implements OnInit {
       .subscribe((specimenTypes: ISpecimenType[]) => (this.specimenTypesSharedCollection = specimenTypes));
 
     this.sizeService
-      .query()
+      .query({size: 200})
       .pipe(map((res: HttpResponse<ISize[]>) => res.body ?? []))
       .pipe(map((sizes: ISize[]) => this.sizeService.addSizeToCollectionIfMissing(sizes, this.editForm.get('size')!.value)))
       .subscribe((sizes: ISize[]) => (this.sizesSharedCollection = sizes));
 
     this.referringCenterService
-      .query()
+      .query({size: 200})
       .pipe(map((res: HttpResponse<IReferringCenter[]>) => res.body ?? []))
       .pipe(
         map((referringCenters: IReferringCenter[]) =>
@@ -433,7 +433,7 @@ export class SpecimenUpdateComponent implements OnInit {
       .subscribe((referringCenters: IReferringCenter[]) => (this.referringCentersSharedCollection = referringCenters));
 
     this.doctorService
-      .query()
+      .query({size: 200})
       .pipe(map((res: HttpResponse<IDoctor[]>) => res.body ?? []))
       .pipe(
         map((doctors: IDoctor[]) =>
@@ -448,7 +448,7 @@ export class SpecimenUpdateComponent implements OnInit {
       .subscribe((doctors: IDoctor[]) => (this.doctorsSharedCollection = doctors));
 
     this.employeeService
-      .query()
+      .query({size: 200})
       .pipe(map((res: HttpResponse<IEmployee[]>) => res.body ?? []))
       .pipe(
         map((employees: IEmployee[]) =>

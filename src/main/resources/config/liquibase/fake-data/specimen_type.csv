@@ -1,11 +1,61 @@
-id;name;category;price
-1;Health;client-server Unions auxiliary;82032
-2;circuit Home calculating;tan infrastructure;33508
-3;Frozen Outdoors port;bi-directional synergistic;10229
-4;evolve SSL Assurance;Senior Intranet;22982
-5;deposit hacking;bypass Parks Granite;18836
-6;Markets;Intelligent Riel transmitter;91246
-7;sensor system;Chair software monitor;9506
-8;synthesize;e-enable Village;74845
-9;redundant;payment;90136
-10;mesh;Practical;80763
+name;category;price
+Uterus alone;Female reproductive system;200
+Uterus with both ovaries and tube ;Female reproductive system;300
+Uterus with only tubes;Female reproductive system;300
+Cervical bunch biopsy;Female reproductive system;120
+Cervical/ Endometrial polyp;Female reproductive system;120
+Cervical erosion ;Female reproductive system;120
+Cervical Smear;Female reproductive system;70
+Fibroid masses 1-2 masses;Female reproductive system;150
+Fibroid masses- more than 2 masses  ;Female reproductive system;250
+Ovarian cyst;Female reproductive system;200-300
+D&C/E&C;Female reproductive system;120
+Abortion;Female reproductive system;120
+Total breast ;Breast ;500
+Total breast with Axillary clearance ;Breast ;500
+Breast lump 1cm;Breast ;120
+Breast lump 2-3cm ;Breast ;150
+Breast lump more than 3cm;Breast ;200
+Breast lump medium;Breast ;200
+Breast lump large;Breast ;300
+Endoscopy/Laparoscopy biopsy ;Gastrointestinal system;120
+Colon biopsy small up to 1cm;Gastrointestinal system;120
+Colon large more than 5 cm;Gastrointestinal system;350
+Total/partial colon with lymph node ;Gastrointestinal system;500
+Endoscopy colonic polyp ;Gastrointestinal system;120
+Appendix ;Gastrointestinal system;120
+Stomach biopsy –mass ( Total-partial );Gastrointestinal system;320
+Gall bladder;Gastrointestinal system;200
+Gall bladder difficult;Gastrointestinal system;200
+Total /Partial liver ;Gastrointestinal system;300
+Liver biopsy ;Gastrointestinal system;200
+Thyroid one side Total;Glands;300
+Total thyroid both sides ;Glands;500
+Total tonsils;Glands;200
+Thymus gland;Glands;200
+Adrenal gland biopsy  ;Glands;200
+Total adrenal gland ;Glands;250
+Lymph nodes ;Blood and lymphatic system;150
+Total / partial spleen ;Blood and lymphatic system;200
+Bone marrow biopsy;Blood and lymphatic system;200
+Bone biopsy;Blood and lymphatic system;200
+Lung biopsy ;Respiratory System;200
+Total /partial lung one side;Respiratory System;350
+Plural biopsy;Respiratory System;120
+Testis biopsy ;Male reproductive system;200
+Testis ;Male reproductive system;300
+Prostatic biopsy;Male reproductive system;200
+Total prostate ;Male reproductive system;320
+Urinary bladder biopsy laparoscopy;Male reproductive system;120
+Kidney biopsy ;Male reproductive system;200
+Total kidney ;Male reproductive system;500
+Lipoma ;Skin and Soft Tissue;150
+Skin biopsy (Small-middle-large);Skin and Soft Tissue;200
+Skin biopsy with safety margin;Skin and Soft Tissue;200
+Other soft tissue small up to 1 cm;Skin and Soft Tissue;150
+Other soft biopsy medium ;Skin and Soft Tissue;200
+Other soft biopsy large more 3cm;Skin and Soft Tissue;300
+Fluid for Cytology;Cytology;70
+Ready smeared slide for cytology examination ;Cytology;70
+Second opinion report ;Cytology;200
+Immunohistochemistry stain;Cytology;800
