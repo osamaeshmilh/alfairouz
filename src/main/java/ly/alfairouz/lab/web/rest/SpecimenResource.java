@@ -223,7 +223,10 @@ public class SpecimenResource {
     public ResponseEntity<byte[]> getSpecimensAsXSLX() {
         log.debug("REST request to get xslx");
 
-        String[] columns = {"Id", "QR", , "Patient Name"};
+        String[] columns = {"Id", "QR", "labRefNo", "Patient Name", "samples", "blocks", "slides",
+            "samplingDate", "receivingDate", "contractType", "isWithdrawn", "withdrawDate", "fileNo",
+            "paymentType", "price", "paid", "notPaid", "specimenStatus", "size", "specimenType", "referringCenter",
+        };
 
         //List<SpecimenDTO> specimenDTOList = specimenService.findAllByCreatedDateBetween(from, to);
         List<SpecimenDTO> specimenDTOList = specimenService.findAll();
@@ -255,8 +258,21 @@ public class SpecimenResource {
             Row row = sheet.createRow(rowNum++);
             row.createCell(0).setCellValue(specimenDTO.getId());
             row.createCell(1).setCellValue(specimenDTO.getLabQr());
-            row.createCell(2).setCellValue(specimenDTO.getPatient() != null ? specimenDTO.getPatient().getName() : "");
-
+            row.createCell(2).setCellValue(specimenDTO.getLabRefNo());
+            row.createCell(3).setCellValue(specimenDTO.getPatient() != null ? specimenDTO.getPatient().getName() : "");
+            row.createCell(4).setCellValue(specimenDTO.getSamples() != null ? specimenDTO.getSamples() : 0);
+            row.createCell(5).setCellValue(specimenDTO.getSamplingDate().toString());
+            row.createCell(6).setCellValue(specimenDTO.getReceivingDate().toString());
+            row.createCell(7).setCellValue(specimenDTO.getContractType().toString());
+            row.createCell(8).setCellValue(specimenDTO.getFileNo());
+            row.createCell(9).setCellValue(specimenDTO.getPaymentType().toString());
+            row.createCell(10).setCellValue(specimenDTO.getPrice() != null ? specimenDTO.getPrice() : 0);
+            row.createCell(11).setCellValue(specimenDTO.getPaid() != null ? specimenDTO.getPaid() : 0);
+            row.createCell(12).setCellValue(specimenDTO.getNotPaid() != null ? specimenDTO.getNotPaid() : 0);
+            row.createCell(13).setCellValue(specimenDTO.getSpecimenStatus().toString());
+            row.createCell(14).setCellValue(specimenDTO.getSize() != null ? specimenDTO.getSize().getName() : "");
+            row.createCell(15).setCellValue(specimenDTO.getSpecimenType() != null ? specimenDTO.getSpecimenType().getName() : "");
+            row.createCell(16).setCellValue(specimenDTO.getReferringCenter() != null ? specimenDTO.getReferringCenter().getName() : "");
         }
 
         //Resize all columns to fit the content size
