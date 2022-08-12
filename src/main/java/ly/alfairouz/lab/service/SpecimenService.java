@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.zip.CRC32;
 
 import ly.alfairouz.lab.domain.Specimen;
+import ly.alfairouz.lab.domain.enumeration.SpecimenStatus;
 import ly.alfairouz.lab.repository.SpecimenRepository;
 import ly.alfairouz.lab.security.AuthoritiesConstants;
 import ly.alfairouz.lab.security.SecurityUtils;
@@ -191,6 +192,8 @@ public class SpecimenService {
             PatientDTO result = patientService.save(patientDTO);
             specimenDTO.setPatient(result);
         }
+
+        specimenDTO.setSpecimenStatus(SpecimenStatus.RECEIVED);
 
         return save(specimenDTO);
     }

@@ -6,9 +6,10 @@ import { SpecimenUpdateComponent } from './update/specimen-update.component';
 import { SpecimenDeleteDialogComponent } from './delete/specimen-delete-dialog.component';
 import {SpecimenRoutingModule} from './route/specimen-routing.module';
 import {SpecimenQueryComponent} from "./query/specimen-query.component";
+import {QRCodeModule} from "angularx-qrcode";
 
 @NgModule({
-  imports: [SharedModule, SpecimenRoutingModule],
+  imports: [SharedModule, SpecimenRoutingModule, QRCodeModule],
   declarations: [SpecimenComponent, SpecimenDetailComponent, SpecimenUpdateComponent, SpecimenDeleteDialogComponent, SpecimenQueryComponent],
   entryComponents: [SpecimenDeleteDialogComponent],
 })

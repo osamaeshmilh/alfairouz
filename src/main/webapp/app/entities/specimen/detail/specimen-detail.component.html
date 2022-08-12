@@ -1,7 +1,34 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
+<div class="entity-container">
+  <div class="mat-elevation-z1 round-card white-bg p-4 mt-5">
     <div *ngIf="specimen">
       <h2 data-cy="specimenDetailsHeading"><span jhiTranslate="alfairouzApp.specimen.detail.title">Specimen</span></h2>
+
+      <mat-tab-group animationDuration="0ms">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span>بيانات العينة</span>
+          </ng-template>
+          <div class="m-4 mt-4">
+            <br/>
+            <div class="row detail-row mt-3">
+              <div class="col">
+                <div class="text-muted" jhiTranslate="alfairouzApp.specimen.labQr">Lab Qr</div>
+                <qrcode [qrdata]="getLabQr()" [width]="60"></qrcode>
+                <h6 matLine>{{ specimen.labQr }}</h6>
+              </div>
+              <div class="col">
+                <div class="text-muted">رقم العينة</div>
+                <h6 matLine>{{ specimen.labRefNo }}</h6>
+              </div>
+              <div class="col">
+                <div class="text-muted">حالة العينة</div>
+                <h6 matLine
+                    jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.' + specimen.specimenStatus }}">{{ specimen.specimenStatus }}</h6>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
 
       <hr/>
 
@@ -14,22 +41,7 @@
         <dd>
           <span>{{ specimen.id }}</span>
         </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.labRefNo">Lab Ref No</span></dt>
-        <dd>
-          <span>{{ specimen.labRefNo }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.labRefOrder">Lab Ref Order</span></dt>
-        <dd>
-          <span>{{ specimen.labRefOrder }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.labQr">Lab Qr</span></dt>
-        <dd>
-          <span>{{ specimen.labQr }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.labRef">Lab Ref</span></dt>
-        <dd>
-          <span jhiTranslate="{{ 'alfairouzApp.LabRef.' + specimen.labRef }}">{{ specimen.labRef }}</span>
-        </dd>
+
         <dt><span jhiTranslate="alfairouzApp.specimen.pdfFile">Pdf File</span></dt>
         <dd>
           <div *ngIf="specimen.pdfFile">

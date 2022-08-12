@@ -30,4 +30,9 @@ export class SpecimenDetailComponent implements OnInit {
   previousState(): void {
     window.history.back();
   }
+
+  getLabQr(): any {
+    return this.specimen?.labQr;
+  }
+
 }
