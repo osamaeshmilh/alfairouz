@@ -67,7 +67,7 @@ public class EmployeeResource {
         if (employeeDTO.getId() != null) {
             throw new BadRequestAlertException("A new employee cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        EmployeeDTO result = employeeService.save(employeeDTO);
+        EmployeeDTO result = employeeService.create(employeeDTO);
         return ResponseEntity
             .created(new URI("/api/employees/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))

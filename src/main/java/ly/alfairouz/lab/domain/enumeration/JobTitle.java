@@ -4,7 +4,7 @@ package ly.alfairouz.lab.domain.enumeration;
  * The JobTitle enumeration.
  */
 public enum JobTitle {
-    RECIPTION,
+    RECEPTION,
     TYPING,
     EMBEDDING,
     MICROTOME,

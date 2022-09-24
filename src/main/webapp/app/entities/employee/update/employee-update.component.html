@@ -34,15 +34,16 @@
           <input type="number" class="form-control" name="salary" id="field_salary" data-cy="salary" formControlName="salary" />
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.employee.internalUser" for="field_internalUser">Internal User</label>
-          <select class="form-control" id="field_internalUser" data-cy="internalUser" name="internalUser" formControlName="internalUser">
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="alfairouzApp.employee.internalUser" for="field_internalUser">Internal
+            User</label>
+          <select class="form-control" id="field_internalUser" data-cy="internalUser" name="internalUser"
+                  formControlName="internalUser">
             <option [ngValue]="null"></option>
             <option
               [ngValue]="userOption.id === editForm.get('internalUser')!.value?.id ? editForm.get('internalUser')!.value : userOption"
-              *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById"
-            >
-              {{ userOption.id }}
+              *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById">
+              {{ userOption.login }}
             </option>
           </select>
         </div>

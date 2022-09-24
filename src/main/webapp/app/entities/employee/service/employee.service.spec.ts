@@ -23,7 +23,7 @@ describe('Employee Service', () => {
     elemDefault = {
       id: 0,
       name: 'AAAAAAA',
-      jobTitle: JobTitle.RECIPTION,
+      jobTitle: JobTitle.RECEPTION,
       salary: 0,
     };
   });

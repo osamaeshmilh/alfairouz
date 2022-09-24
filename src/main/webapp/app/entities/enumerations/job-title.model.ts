@@ -1,5 +1,5 @@
 export enum JobTitle {
-  RECIPTION = 'RECIPTION',
+  RECEPTION = 'RECEPTION',
 
   TYPING = 'TYPING',
 
