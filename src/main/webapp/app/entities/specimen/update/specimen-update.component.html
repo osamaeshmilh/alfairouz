@@ -181,17 +181,36 @@
             </div>
 
             <div class="row">
-              <!--              <mat-form-field appearance="standard" class="col-lg col-sm">-->
-              <!--                <mat-label>الجنس</mat-label>-->
-              <!--                <input formControlName="patientMotherName" matInput type="text" name="patientMotherName" />-->
-              <!--              </mat-form-field>-->
-              <!--              <mat-form-field appearance="standard" class="col-lg col-sm">-->
-              <!--                <mat-label>تاريخ الميلاد</mat-label>-->
-              <!--                <input formControlName="patientAddress" matInput type="text" name="patientAddress" />-->
-              <!--              </mat-form-field>-->
-              <!--              <div class="col-lg col-sm">-->
-              <!--                -->
-              <!--              </div>-->
+
+
+              <div class="col-lg col-sm">
+                <label class="form-label">الجنس</label>
+                <select class="form-control" name="patientGender" formControlName="patientGender">
+                  <option value="MALE">MALE</option>
+                  <option value="FEMALE">FEMALE</option>
+                </select>
+              </div>
+
+              <div class="col-lg col-sm">
+                <label class="form-label">تاريخ الميلاد</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="patientBirthDate"
+                    ngbDatepicker
+                    #patientBirthDateDateDp="ngbDatepicker"
+                    formControlName="patientBirthDate"
+                  />
+                  <button type="button" class="btn btn-secondary" (click)="patientBirthDateDateDp.toggle()">
+                    <fa-icon icon="calendar-alt"></fa-icon>
+                  </button>
+                </div>
+              </div>
+
+              <div class="col-lg col-sm">
+
+              </div>
             </div>
 
 
@@ -329,7 +348,7 @@
                   [ngValue]="
                 doctorOption.id === editForm.get('referringDoctor')!.value?.id ? editForm.get('referringDoctor')!.value : doctorOption
               "
-                  *ngFor="let doctorOption of doctorsSharedCollection; trackBy: trackDoctorById"
+                  *ngFor="let doctorOption of rDoctorsSharedCollection; trackBy: trackDoctorById"
                 >
                   {{ doctorOption.name }}
                 </option>
@@ -718,7 +737,7 @@
                 [ngValue]="
                 doctorOption.id === editForm.get('grossingDoctor')!.value?.id ? editForm.get('grossingDoctor')!.value : doctorOption
               "
-                *ngFor="let doctorOption of doctorsSharedCollection; trackBy: trackDoctorById"
+                *ngFor="let doctorOption of gDoctorsSharedCollection; trackBy: trackDoctorById"
               >
                 {{ doctorOption.name }}
               </option>
@@ -741,7 +760,7 @@
                 [ngValue]="
                 doctorOption.id === editForm.get('pathologistDoctor')!.value?.id ? editForm.get('pathologistDoctor')!.value : doctorOption
               "
-                *ngFor="let doctorOption of doctorsSharedCollection; trackBy: trackDoctorById"
+                *ngFor="let doctorOption of pDoctorsSharedCollection; trackBy: trackDoctorById"
               >
                 {{ doctorOption.name }}
               </option>

@@ -82,6 +82,31 @@ public class SpecimenService {
     public SpecimenDTO update(SpecimenDTO specimenDTO) {
         log.debug("Request to save Specimen : {}", specimenDTO);
 
+        String prevType = specimenRepository.getById(specimenDTO.getId()).getLabRef().toString();
+        String newType = specimenDTO.getLabRef().toString();
+        if (!prevType.equals(newType)) {
+            String year = Year.now().format(DateTimeFormatter.ofPattern("uu"));
+            String all = year + specimenDTO.getLabRef().toString() + String.format("%05d", Integer.parseInt(specimenDTO.getLabRefOrder()));
+            specimenDTO.setLabRefNo(all);
+
+            int mySaltSizeInBytes = 32;
+            SecureRandom random = new SecureRandom();
+
+            byte salt[] = new byte[mySaltSizeInBytes];
+
+            random.nextBytes(salt);
+
+            ByteBuffer bbuffer = ByteBuffer.allocate(mySaltSizeInBytes + all.length());
+            bbuffer.put(salt);
+            bbuffer.put(all.getBytes());
+
+            CRC32 crc = new CRC32();
+            crc.update(bbuffer.array());
+            String enc = Long.toHexString(crc.getValue());
+
+            specimenDTO.setLabQr(enc);
+        }
+
         if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.GROSSING_DOCTOR)) {
             if (specimenDTO.getGrossingDoctor() == null) {
                 specimenDTO.setGrossingDoctor(doctorService.findOneDTOByUser());

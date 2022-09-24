@@ -55,8 +55,11 @@ export class SpecimenUpdateComponent implements OnInit {
   specimenTypesSharedCollection: ISpecimenType[] = [];
   sizesSharedCollection: ISize[] = [];
   referringCentersSharedCollection: IReferringCenter[] = [];
-  doctorsSharedCollection: IDoctor[] = [];
   employeesSharedCollection: IEmployee[] = [];
+
+  gDoctorsSharedCollection: IDoctor[] = [];
+  rDoctorsSharedCollection: IDoctor[] = [];
+  pDoctorsSharedCollection: IDoctor[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -362,10 +365,16 @@ export class SpecimenUpdateComponent implements OnInit {
       this.referringCentersSharedCollection,
       specimen.referringCenter
     );
-    this.doctorsSharedCollection = this.doctorService.addDoctorToCollectionIfMissing(
-      this.doctorsSharedCollection,
+    this.gDoctorsSharedCollection = this.doctorService.addDoctorToCollectionIfMissing(
+      this.gDoctorsSharedCollection,
       specimen.grossingDoctor,
+    );
+    this.rDoctorsSharedCollection = this.doctorService.addDoctorToCollectionIfMissing(
+      this.rDoctorsSharedCollection,
       specimen.referringDoctor,
+    );
+    this.pDoctorsSharedCollection = this.doctorService.addDoctorToCollectionIfMissing(
+      this.pDoctorsSharedCollection,
       specimen.pathologistDoctor
     );
     this.employeesSharedCollection = this.employeeService.addEmployeeToCollectionIfMissing(
@@ -433,19 +442,43 @@ export class SpecimenUpdateComponent implements OnInit {
       .subscribe((referringCenters: IReferringCenter[]) => (this.referringCentersSharedCollection = referringCenters));
 
     this.doctorService
-      .query({size: 200})
+      .query({size: 200, 'doctorType.equals': 'GROSSING'})
       .pipe(map((res: HttpResponse<IDoctor[]>) => res.body ?? []))
       .pipe(
         map((doctors: IDoctor[]) =>
           this.doctorService.addDoctorToCollectionIfMissing(
             doctors,
-            this.editForm.get('grossingDoctor')!.value,
-            this.editForm.get('referringDoctor')!.value,
+            this.editForm.get('grossingDoctor')!.value
+          )
+        )
+      )
+      .subscribe((doctors: IDoctor[]) => (this.gDoctorsSharedCollection = doctors));
+
+    this.doctorService
+      .query({size: 200, 'doctorType.equals': 'REFERRING'})
+      .pipe(map((res: HttpResponse<IDoctor[]>) => res.body ?? []))
+      .pipe(
+        map((doctors: IDoctor[]) =>
+          this.doctorService.addDoctorToCollectionIfMissing(
+            doctors,
+            this.editForm.get('referringDoctor')!.value
+          )
+        )
+      )
+      .subscribe((doctors: IDoctor[]) => (this.rDoctorsSharedCollection = doctors));
+
+    this.doctorService
+      .query({size: 200, 'doctorType.equals': 'PATHOLOGIST'})
+      .pipe(map((res: HttpResponse<IDoctor[]>) => res.body ?? []))
+      .pipe(
+        map((doctors: IDoctor[]) =>
+          this.doctorService.addDoctorToCollectionIfMissing(
+            doctors,
             this.editForm.get('pathologistDoctor')!.value
           )
         )
       )
-      .subscribe((doctors: IDoctor[]) => (this.doctorsSharedCollection = doctors));
+      .subscribe((doctors: IDoctor[]) => (this.pDoctorsSharedCollection = doctors));
 
     this.employeeService
       .query({size: 200})
