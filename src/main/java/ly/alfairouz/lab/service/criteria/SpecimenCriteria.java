@@ -30,12 +30,29 @@ import tech.jhipster.service.filter.StringFilter;
 @ParameterObject
 public class SpecimenCriteria implements Serializable, Criteria {
 
+    public Boolean getIsOr() {
+        return isOr;
+    }
+
+    public void setIsOr(Boolean isOr) {
+        this.isOr = isOr;
+    }
+
+    public StringFilter getPatientNameAr() {
+        return patientNameAr;
+    }
+
+    public void setPatientNameAr(StringFilter patientNameAr) {
+        this.patientNameAr = patientNameAr;
+    }
+
     /**
      * Class for filtering LabRef
      */
     public static class LabRefFilter extends Filter<LabRef> {
 
-        public LabRefFilter() {}
+        public LabRefFilter() {
+        }
 
         public LabRefFilter(LabRefFilter filter) {
             super(filter);
@@ -198,6 +215,8 @@ public class SpecimenCriteria implements Serializable, Criteria {
 
     private LongFilter patientId;
 
+    private StringFilter patientNameAr;
+
     private LongFilter biopsyId;
 
     private LongFilter cytologyId;
@@ -222,7 +241,10 @@ public class SpecimenCriteria implements Serializable, Criteria {
 
     private Boolean distinct;
 
-    public SpecimenCriteria() {}
+    private Boolean isOr;
+
+    public SpecimenCriteria() {
+    }
 
     public SpecimenCriteria(SpecimenCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
@@ -277,6 +299,8 @@ public class SpecimenCriteria implements Serializable, Criteria {
         this.operatorEmployeeId = other.operatorEmployeeId == null ? null : other.operatorEmployeeId.copy();
         this.correctorEmployeeId = other.correctorEmployeeId == null ? null : other.correctorEmployeeId.copy();
         this.distinct = other.distinct;
+        this.isOr = other.isOr;
+        this.patientNameAr = other.patientNameAr;
     }
 
     @Override
@@ -1116,9 +1140,11 @@ public class SpecimenCriteria implements Serializable, Criteria {
                 Objects.equals(grossingDoctorId, that.grossingDoctorId) &&
                 Objects.equals(referringDoctorId, that.referringDoctorId) &&
                 Objects.equals(pathologistDoctorId, that.pathologistDoctorId) &&
-            Objects.equals(operatorEmployeeId, that.operatorEmployeeId) &&
-            Objects.equals(correctorEmployeeId, that.correctorEmployeeId) &&
-            Objects.equals(distinct, that.distinct)
+                Objects.equals(operatorEmployeeId, that.operatorEmployeeId) &&
+                Objects.equals(correctorEmployeeId, that.correctorEmployeeId) &&
+                Objects.equals(patientNameAr, that.patientNameAr) &&
+                Objects.equals(isOr, that.isOr) &&
+                Objects.equals(distinct, that.distinct)
         );
     }
 
@@ -1176,6 +1202,8 @@ public class SpecimenCriteria implements Serializable, Criteria {
             pathologistDoctorId,
             operatorEmployeeId,
             correctorEmployeeId,
+            patientNameAr,
+            isOr,
             distinct
         );
     }
@@ -1236,6 +1264,8 @@ public class SpecimenCriteria implements Serializable, Criteria {
             (operatorEmployeeId != null ? "operatorEmployeeId=" + operatorEmployeeId + ", " : "") +
             (correctorEmployeeId != null ? "correctorEmployeeId=" + correctorEmployeeId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
+            (patientNameAr != null ? "patientNameAr=" + patientNameAr + ", " : "") +
+            (isOr != null ? "isOr=" + isOr + ", " : "") +
             "}";
     }
 }

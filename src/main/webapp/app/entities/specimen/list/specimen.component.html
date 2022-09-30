@@ -28,7 +28,7 @@
 
     </form>
 
-    <button class="mr-auto" mat-stroked-button color="primary" (click)="getXslx()">
+    <button *jhiHasAnyAuthority="'ROLE_ADMIN'" class="mr-auto" mat-stroked-button color="primary" (click)="getXslx()">
       <mat-icon>insert_drive_file</mat-icon>
       تقرير لكل العينات
     </button>

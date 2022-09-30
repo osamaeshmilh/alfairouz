@@ -44,39 +44,6 @@
           </select>
         </div>
         <div class="row mb-3" hidden>
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.newBlocksRequested"
-                 for="field_newBlocksRequested"
-          >New Blocks Requested</label
-          >
-          <input
-            type="number"
-            class="form-control"
-            name="newBlocksRequested"
-            id="field_newBlocksRequested"
-            data-cy="newBlocksRequested"
-            formControlName="newBlocksRequested"
-          />
-        </div>
-        <div class="row mb-3" hidden>
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.receivedInFormalin"
-                 for="field_receivedInFormalin"
-          >Received In Formalin</label
-          >
-          <input
-            type="checkbox"
-            class="form-check"
-            name="receivedInFormalin"
-            id="field_receivedInFormalin"
-            data-cy="receivedInFormalin"
-            formControlName="receivedInFormalin"
-          />
-        </div>
-        <div class="row mb-3" hidden>
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.reserve" for="field_reserve">Reserve</label>
-          <input type="checkbox" class="form-check" name="reserve" id="field_reserve" data-cy="reserve"
-                 formControlName="reserve"/>
-        </div>
-        <div class="row mb-3" hidden>
           <label class="form-label" jhiTranslate="alfairouzApp.specimen.printedOut" for="field_printedOut">Printed
             Out</label>
           <input
@@ -355,9 +322,7 @@
               </select>
             </div>
             <div class="col-lg col-sm">
-              <label class="form-label" jhiTranslate="alfairouzApp.specimen.notes" for="field_notes">Notes</label>
-              <input type="text" class="form-control" name="notes" id="field_notes" data-cy="notes"
-                     formControlName="notes"/>
+
             </div>
           </div>
           <br>
@@ -467,6 +432,40 @@
 
         <div *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR','ROLE_ADMIN']">
           <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.reserve" for="field_reserve">Reserve</label>
+            <input type="checkbox" class="form-check" name="reserve" id="field_reserve" data-cy="reserve"
+                   formControlName="reserve"/>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.newBlocksRequested"
+                   for="field_newBlocksRequested"
+            >New Blocks Requested</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="newBlocksRequested"
+              id="field_newBlocksRequested"
+              data-cy="newBlocksRequested"
+              formControlName="newBlocksRequested"
+            />
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.receivedInFormalin"
+                   for="field_receivedInFormalin"
+            >Received In Formalin</label
+            >
+            <input
+              type="checkbox"
+              class="form-check"
+              name="receivedInFormalin"
+              id="field_receivedInFormalin"
+              data-cy="receivedInFormalin"
+              formControlName="receivedInFormalin"
+            />
+          </div>
+
+          <div class="row mb-3">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.blocks" for="field_blocks">Blocks</label>
             <input type="number" class="form-control" name="blocks" id="field_blocks" data-cy="blocks"
                    formControlName="blocks"/>
@@ -512,14 +511,15 @@
           <div class="row mb-3">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.clinicalData" for="field_clinicalData">Clinical
               Data</label>
-            <input
+            <textarea
+              rows="4"
               type="text"
               class="form-control"
               name="clinicalData"
               id="field_clinicalData"
               data-cy="clinicalData"
               formControlName="clinicalData"
-            />
+            ></textarea>
           </div>
           <div class="row mb-3">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.clinicalDate" for="field_clinicalDate">Clinical
@@ -544,14 +544,15 @@
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.grossExamination" for="field_grossExamination"
             >Gross Examination</label
             >
-            <input
+            <textarea
+              rows="4"
               type="text"
               class="form-control"
               name="grossExamination"
               id="field_grossExamination"
               data-cy="grossExamination"
               formControlName="grossExamination"
-            />
+            ></textarea>
           </div>
           <div class="row mb-3">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.grossDate" for="field_grossDate">Gross
@@ -654,14 +655,15 @@
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.microscopicData" for="field_microscopicData"
             >Microscopic Data</label
             >
-            <input
+            <textarea
+              rows="4"
               type="text"
               class="form-control"
               name="microscopicData"
               id="field_microscopicData"
               data-cy="microscopicData"
               formControlName="microscopicData"
-            />
+            ></textarea>
           </div>
           <div class="row mb-3">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.microscopicDate" for="field_microscopicDate"
@@ -694,14 +696,15 @@
           <div class="row mb-3">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.conclusion"
                    for="field_conclusion">Conclusion</label>
-            <input
+            <textarea
+              rows="4"
               type="text"
               class="form-control"
               name="conclusion"
               id="field_conclusion"
               data-cy="conclusion"
               formControlName="conclusion"
-            />
+            ></textarea>
           </div>
           <div class="row mb-3">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.conclusionDate" for="field_conclusionDate">Conclusion
@@ -814,6 +817,14 @@
             </select>
           </div>
         </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.notes" for="field_notes">Notes</label>
+          <textarea
+            rows="4" type="text" class="form-control" name="notes" id="field_notes" data-cy="notes"
+            formControlName="notes"></textarea>
+        </div>
+
 
       </div>
 

@@ -42,6 +42,11 @@ export class SpecimenComponent implements OnInit {
     this.specimenService
       .query({
         'labRefNo.contains': this.currentSearch,
+        'labQr.contains': this.currentSearch,
+        'fileNo.contains': this.currentSearch,
+        'notes.contains': this.currentSearch,
+        'patientNameAr.contains': this.currentSearch,
+        'isOr': true,
         page: pageToLoad,
         size: this.itemsPerPage,
         sort: this.sort(),
@@ -90,6 +95,11 @@ export class SpecimenComponent implements OnInit {
     this.specimenService
       .query({
         'labRefNo.contains': this.currentSearch,
+        'labQr.contains': this.currentSearch,
+        'fileNo.contains': this.currentSearch,
+        'notes.contains': this.currentSearch,
+        'patientNameAr.contains': this.currentSearch,
+        'isOr': true,
         page: 0,
         size: this.itemsPerPage,
         sort: this.sort(),
@@ -145,6 +155,11 @@ export class SpecimenComponent implements OnInit {
       this.router.navigate(['/specimen'], {
         queryParams: {
           'labRefNo.contains': this.currentSearch,
+          'labQr.contains': this.currentSearch,
+          'fileNo.contains': this.currentSearch,
+          'notes.contains': this.currentSearch,
+          'patientNameAr.contains': this.currentSearch,
+          'isOr': true,
           page: this.page,
           size: this.itemsPerPage,
           sort: this.predicate + ',' + (this.ascending ? ASC : DESC),

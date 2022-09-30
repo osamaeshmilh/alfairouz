@@ -1,48 +1,51 @@
 <div class="entity-container">
-  <div class="row white-bg">
-    <div class="mat-elevation-z1 p-3 round-card col-6">
-      <p>التقارير حسب</p>
-      <canvas [data]="pieChartData" [labels]="pieChartLabels" baseChart chartType="pie"></canvas>
+  <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
+    <div class="row white-bg">
+      <div class="mat-elevation-z1 p-3 round-card col-6">
+        <p>التقارير حسب</p>
+        <canvas [data]="pieChartData" [labels]="pieChartLabels" baseChart chartType="pie"></canvas>
+      </div>
+
+      <div class="mat-elevation-z1 p-3 round-card col-6">
+        <p>العينات حسب الحالة</p>
+        <canvas
+          *ngIf="specimenStatusDoughnutChartData && specimenStatusDoughnutChartLabels"
+          [data]="specimenStatusDoughnutChartData"
+          [labels]="specimenStatusDoughnutChartLabels"
+          baseChart
+          chartType="doughnut"
+        ></canvas>
+      </div>
     </div>
 
-    <div class="mat-elevation-z1 p-3 round-card col-6">
-      <p>العينات حسب الحالة</p>
-      <canvas
-        *ngIf="specimenStatusDoughnutChartData && specimenStatusDoughnutChartLabels"
-        [data]="specimenStatusDoughnutChartData"
-        [labels]="specimenStatusDoughnutChartLabels"
-        baseChart
-        chartType="doughnut"
-      ></canvas>
+    <div class="detail-row align-items-center mt-3">
+      <div class="mat-elevation-z1 px-4 py-3 d-flex round-card col-3 white-bg">
+        <div class="d-flex flex-column">
+          <h3 class="m-0">{{ specimenCount }}</h3>
+          <p class="m-0">عدد العينات</p>
+        </div>
+        <mat-icon class="big-icon mr-auto" color="primary">payment</mat-icon>
+      </div>
+
+      <span class="mx-2"></span>
+
+      <div class="mat-elevation-z1 px-4 py-3 d-flex round-card col-3 white-bg">
+        <div class="d-flex flex-column">
+          <h3 class="m-0">{{ doctorCount }}</h3>
+          <p class="m-0">عدد الاطباء</p>
+        </div>
+        <mat-icon class="big-icon mr-auto" color="primary">account_circle</mat-icon>
+      </div>
+
+      <span class="mx-2"></span>
+      <div class="mat-elevation-z1 px-4 py-3 d-flex round-card col-3 white-bg">
+        <div class="d-flex flex-column">
+          <h3 class="m-0">{{ referringCenterCount }}</h3>
+          <p class="m-0">عدد المراكز</p>
+        </div>
+        <mat-icon class="big-icon mr-auto" color="primary">business</mat-icon>
+      </div>
     </div>
   </div>
 
-  <div class="detail-row align-items-center mt-3">
-    <div class="mat-elevation-z1 px-4 py-3 d-flex round-card col-3 white-bg">
-      <div class="d-flex flex-column">
-        <h3 class="m-0">{{ specimenCount }}</h3>
-        <p class="m-0">عدد العينات</p>
-      </div>
-      <mat-icon class="big-icon mr-auto" color="primary">payment</mat-icon>
-    </div>
-
-    <span class="mx-2"></span>
-
-    <div class="mat-elevation-z1 px-4 py-3 d-flex round-card col-3 white-bg">
-      <div class="d-flex flex-column">
-        <h3 class="m-0">{{ doctorCount }}</h3>
-        <p class="m-0">عدد الاطباء</p>
-      </div>
-      <mat-icon class="big-icon mr-auto" color="primary">account_circle</mat-icon>
-    </div>
-
-    <span class="mx-2"></span>
-    <div class="mat-elevation-z1 px-4 py-3 d-flex round-card col-3 white-bg">
-      <div class="d-flex flex-column">
-        <h3 class="m-0">{{ referringCenterCount }}</h3>
-        <p class="m-0">عدد المراكز</p>
-      </div>
-      <mat-icon class="big-icon mr-auto" color="primary">business</mat-icon>
-    </div>
-  </div>
 </div>
