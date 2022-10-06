@@ -49,7 +49,8 @@
         <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
-        <th scope="col" jhiSortBy="labRefNo">
+        <th scope="col" jhiSortBy="labRefNo"
+            *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
           <span jhiTranslate="alfairouzApp.specimen.labRefNo">Lab Ref No</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
@@ -58,13 +59,21 @@
           <fa-icon icon="sort"></fa-icon>
         </th>
 
-          <th scope="col" jhiSortBy="receivingDate">
-            <span jhiTranslate="alfairouzApp.specimen.receivingDate">Receiving Date</span> <fa-icon icon="sort"></fa-icon>
-          </th>
+        <th scope="col" jhiSortBy="receivingDate">
+          <span jhiTranslate="alfairouzApp.specimen.receivingDate">Receiving Date</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
+        <th scope="col" jhiSortBy="samplingDate"
+            *jhiHasAnyAuthority="['ROLE_REFERRING_DOCTOR', 'ROLE_REFERRING_CENTER']">
+          <span jhiTranslate="alfairouzApp.specimen.samplingDate">Sampling Date</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
 
-          <th scope="col" jhiSortBy="paymentType">
-            <span jhiTranslate="alfairouzApp.specimen.paymentType">Payment Type</span> <fa-icon icon="sort"></fa-icon>
-          </th>
+        <th scope="col" jhiSortBy="paymentType"
+            *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
+          <span jhiTranslate="alfairouzApp.specimen.paymentType">Payment Type</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
         <th scope="col" jhiSortBy="patient.name">
           <span jhiTranslate="alfairouzApp.specimen.patient">Patient</span>
           <fa-icon icon="sort"></fa-icon>
@@ -85,6 +94,10 @@
           <span jhiTranslate="alfairouzApp.specimen.isWithdrawn">Is Withdrawn</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
+        <th scope="col" jhiSortBy="organ.name" *jhiHasAnyAuthority="['ROLE_REFERRING_DOCTOR', 'ROLE_REFERRING_CENTER']">
+          <span jhiTranslate="alfairouzApp.specimen.organ">Organ</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
         <th scope="col" jhiSortBy="specimenStatus">
           <span jhiTranslate="alfairouzApp.specimen.specimenStatus">Specimen Status</span>
           <fa-icon icon="sort"></fa-icon>
@@ -93,58 +106,66 @@
       </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let specimen of specimen; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/specimen', specimen.id, 'view']">{{ specimen.id }}</a>
-          </td>
-          <td>{{ specimen.labRefNo }}</td>
-          <td>{{ specimen.labQr }}</td>
-          <td>{{ specimen.receivingDate | formatMediumDate }}</td>
-          <td jhiTranslate="{{ 'alfairouzApp.PaymentType.' + specimen.paymentType }}">{{ specimen.paymentType }}</td>
-          <td>
-            <div *ngIf="specimen.patient">
-              <a [routerLink]="['/patient', specimen.patient?.id, 'view']">{{ specimen.patient?.name }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="specimen.specimenType">
-              <a
-                [routerLink]="['/specimen-type', specimen.specimenType?.id, 'view']">{{ specimen.specimenType?.name }}</a>
-            </div>
-          </td>
+      <tr *ngFor="let specimen of specimen; trackBy: trackId" data-cy="entityTable">
+        <td>
+          <a>{{ specimen.id }}</a>
+        </td>
+        <td
+          *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">{{ specimen.labRefNo }}</td>
+        <td>{{ specimen.labQr }}</td>
+        <td>{{ specimen.receivingDate | formatMediumDate }}</td>
+        <td *jhiHasAnyAuthority="['ROLE_REFERRING_DOCTOR', 'ROLE_REFERRING_CENTER']">
+          {{ specimen.samplingDate | formatMediumDate }}
+        </td>
+        <td *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']"
+            jhiTranslate="{{ 'alfairouzApp.PaymentType.' + specimen.paymentType }}">{{ specimen.paymentType }}</td>
+        <td>
+          <div *ngIf="specimen.patient">
+            <a>{{ specimen.patient?.name }}</a>
+          </div>
+        </td>
+        <td>
+          <div *ngIf="specimen.specimenType">
+            <a>{{ specimen.specimenType?.name }}</a>
+          </div>
+        </td>
           <td>
             <div *ngIf="specimen.referringCenter">
-              <a
-                [routerLink]="['/referring-center', specimen.referringCenter?.id, 'view']">{{ specimen.referringCenter?.name }}</a>
+              <a>{{ specimen.referringCenter?.name }}</a>
             </div>
           </td>
           <td>
             <div *ngIf="specimen.grossingDoctor">
-              <a
-                [routerLink]="['/grossing', specimen.grossingDoctor?.id, 'view']">{{ specimen.grossingDoctor?.name }}</a>
+              <a>{{ specimen.grossingDoctor?.name }}</a>
             </div>
           </td>
-          <td>
-            <div *ngIf="!specimen.isWithdrawn" matTooltip="موجودة" style="font-size: 30px">
-              <mat-icon [inline]="true" class="text-success">check_circle_outline</mat-icon>
-            </div>
-            <div *ngIf="specimen.isWithdrawn" matTooltip="تم سحبها" style="font-size: 30px">
-              <mat-icon [inline]="true" class="text-danger">highlight_off</mat-icon>
-            </div>
-          </td>
-          <td
-            jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.' + specimen.specimenStatus }}">{{ specimen.specimenStatus }}</td>
+        <td>
+          <div *ngIf="!specimen.isWithdrawn" matTooltip="موجودة" style="font-size: 30px">
+            <mat-icon [inline]="true" class="text-success">check_circle_outline</mat-icon>
+          </div>
+          <div *ngIf="specimen.isWithdrawn" matTooltip="تم سحبها" style="font-size: 30px">
+            <mat-icon [inline]="true" class="text-danger">highlight_off</mat-icon>
+          </div>
+        </td>
+        <td *jhiHasAnyAuthority="['ROLE_REFERRING_DOCTOR', 'ROLE_REFERRING_CENTER']">
+          <div *ngIf="specimen.organ">
+            <a>{{ specimen.organ?.name }}</a>
+          </div>
+        </td>
+        <td
+          jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.' + specimen.specimenStatus }}">{{ specimen.specimenStatus }}</td>
 
-
-          <td class="text-left">
-            <div class="btn-group flex-btn-group-container">
-              <mat-menu #appMenu="matMenu">
-                <button [routerLink]="['./', specimen.id, 'view']" mat-menu-item>
-                  <mat-icon>remove_red_eye</mat-icon>
-                  <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                </button>
-                <button [routerLink]="['./', specimen.id, 'edit']"
-                        *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']"
+        <td class="text-left">
+          <div class="btn-group flex-btn-group-container">
+            <mat-menu #appMenu="matMenu">
+              <button
+                *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']"
+                [routerLink]="['./', specimen.id, 'view']" mat-menu-item>
+                <mat-icon>remove_red_eye</mat-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+              <button [routerLink]="['./', specimen.id, 'edit']"
+                      *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']"
                         mat-menu-item>
                   <mat-icon>edit</mat-icon>
                   <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
