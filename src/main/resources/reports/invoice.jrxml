@@ -114,7 +114,7 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
         <band height="181" splitType="Stretch">
             <image>
                 <reportElement x="155" y="0" width="450" height="181" uuid="109e8c2f-1742-42dc-84fd-ca339e24b662"/>
-                <imageExpression><![CDATA["/Users/osamaeshmilh/Downloads/invoice_header.png"]]></imageExpression>
+                <imageExpression><![CDATA["invoice_header.png"]]></imageExpression>
             </image>
             <staticText>
                 <reportElement x="-300" y="-209" width="98" height="20" uuid="44b9f6e4-7d87-45ea-a607-1d68db7de248"/>
