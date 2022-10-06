@@ -120,8 +120,8 @@ export class SpecimenComponent implements OnInit {
     window.open('/api/public/specimen/xlsx/', '_blank');
   }
 
-  getPdf(): void {
-    const url = '/api/public/specimen/report/';
+  getPdf(id: any): void {
+    const url = '/api/public/specimen/report/' + String(id);
     window.open(url, '_blank');
   }
 

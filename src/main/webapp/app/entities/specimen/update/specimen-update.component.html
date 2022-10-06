@@ -426,11 +426,45 @@
             </div>
           </div>
           <br>
+          <div class="row">
+            <div class="col-lg col-sm">
+              <label class="form-label" jhiTranslate="alfairouzApp.specimen.isWithdrawn" for="field_isWithdrawn">Is
+                Withdrawn</label>
+              <input
+                type="checkbox"
+                class="form-check"
+                name="isWithdrawn"
+                id="field_isWithdrawn"
+                data-cy="isWithdrawn"
+                formControlName="isWithdrawn"
+              />
+            </div>
+            <div class="col-lg col-sm">
+              <label class="form-label" jhiTranslate="alfairouzApp.specimen.withdrawDate" for="field_withdrawDate">Withdraw
+                Date</label>
+              <div class="input-group">
+                <input
+                  id="field_withdrawDate"
+                  data-cy="withdrawDate"
+                  type="text"
+                  class="form-control"
+                  name="withdrawDate"
+                  ngbDatepicker
+                  #withdrawDateDp="ngbDatepicker"
+                  formControlName="withdrawDate"
+                />
+                <button type="button" class="btn btn-secondary" (click)="withdrawDateDp.toggle()">
+                  <fa-icon icon="calendar-alt"></fa-icon>
+                </button>
+              </div>
+            </div>
+            <div class="col-lg col-sm"></div>
+          </div>
         </div>
         <br>
         <br>
 
-        <div *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR','ROLE_ADMIN']">
+        <div *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_ADMIN']">
           <div class="row mb-3">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.reserve" for="field_reserve">Reserve</label>
             <input type="checkbox" class="form-check" name="reserve" id="field_reserve" data-cy="reserve"
@@ -576,80 +610,12 @@
 
         </div>
 
-        <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
+        <div *jhiHasAnyAuthority="['ROLE_PATHOLOGIST_DOCTOR','ROLE_ADMIN']">
+
           <div class="row mb-3">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.slides" for="field_slides">Slides</label>
             <input type="number" class="form-control" name="slides" id="field_slides" data-cy="slides"
                    formControlName="slides"/>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.isWithdrawn" for="field_isWithdrawn">Is
-              Withdrawn</label>
-            <input
-              type="checkbox"
-              class="form-check"
-              name="isWithdrawn"
-              id="field_isWithdrawn"
-              data-cy="isWithdrawn"
-              formControlName="isWithdrawn"
-            />
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.withdrawDate" for="field_withdrawDate">Withdraw
-              Date</label>
-            <div class="input-group">
-              <input
-                id="field_withdrawDate"
-                data-cy="withdrawDate"
-                type="text"
-                class="form-control"
-                name="withdrawDate"
-                ngbDatepicker
-                #withdrawDateDp="ngbDatepicker"
-                formControlName="withdrawDate"
-              />
-              <button type="button" class="btn btn-secondary" (click)="withdrawDateDp.toggle()">
-                <fa-icon icon="calendar-alt"></fa-icon>
-              </button>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.revisionDate" for="field_revisionDate">Revision
-              Date</label>
-            <div class="input-group">
-              <input
-                id="field_revisionDate"
-                data-cy="revisionDate"
-                type="text"
-                class="form-control"
-                name="revisionDate"
-                ngbDatepicker
-                #revisionDateDp="ngbDatepicker"
-                formControlName="revisionDate"
-              />
-              <button type="button" class="btn btn-secondary" (click)="revisionDateDp.toggle()">
-                <fa-icon icon="calendar-alt"></fa-icon>
-              </button>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.reportDate" for="field_reportDate">Report
-              Date</label>
-            <div class="input-group">
-              <input
-                id="field_reportDate"
-                data-cy="reportDate"
-                type="text"
-                class="form-control"
-                name="reportDate"
-                ngbDatepicker
-                #reportDateDp="ngbDatepicker"
-                formControlName="reportDate"
-              />
-              <button type="button" class="btn btn-secondary" (click)="reportDateDp.toggle()">
-                <fa-icon icon="calendar-alt"></fa-icon>
-              </button>
-            </div>
           </div>
           <div class="row mb-3">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.microscopicData" for="field_microscopicData"
@@ -725,6 +691,50 @@
               </button>
             </div>
           </div>
+        </div>
+
+        <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
+
+
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.revisionDate" for="field_revisionDate">Revision
+              Date</label>
+            <div class="input-group">
+              <input
+                id="field_revisionDate"
+                data-cy="revisionDate"
+                type="text"
+                class="form-control"
+                name="revisionDate"
+                ngbDatepicker
+                #revisionDateDp="ngbDatepicker"
+                formControlName="revisionDate"
+              />
+              <button type="button" class="btn btn-secondary" (click)="revisionDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.reportDate" for="field_reportDate">Report
+              Date</label>
+            <div class="input-group">
+              <input
+                id="field_reportDate"
+                data-cy="reportDate"
+                type="text"
+                class="form-control"
+                name="reportDate"
+                ngbDatepicker
+                #reportDateDp="ngbDatepicker"
+                formControlName="reportDate"
+              />
+              <button type="button" class="btn btn-secondary" (click)="reportDateDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </div>
+          </div>
+
           <div class="row mb-3">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.grossingDoctor" for="field_grossingDoctor">Grossing
               Doctor</label>

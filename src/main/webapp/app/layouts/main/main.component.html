@@ -63,11 +63,12 @@
         <mat-icon mat-list-icon>dashboard</mat-icon>
         <span>الرئيسية</span>
       </mat-list-item>
+      <mat-list-item routerLink="specimen">
+        <mat-icon mat-list-icon>receipt_long</mat-icon>
+        <span jhiTranslate="global.menu.entities.specimen">specimen</span>
+      </mat-list-item>
       <div *jhiHasAnyAuthority="['ROLE_RECEPTION']">
-        <mat-list-item routerLink="specimen">
-          <mat-icon mat-list-icon>receipt_long</mat-icon>
-          <span jhiTranslate="global.menu.entities.specimen">specimen</span>
-        </mat-list-item>
+
         <mat-list-item routerLink="patient">
           <mat-icon mat-list-icon>receipt_long</mat-icon>
           <span jhiTranslate="global.menu.entities.patient">patient</span>
@@ -87,10 +88,6 @@
       </div>
 
       <div *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR']">
-        <mat-list-item routerLink="specimen">
-          <mat-icon mat-list-icon>receipt_long</mat-icon>
-          <span jhiTranslate="global.menu.entities.specimen">specimen</span>
-        </mat-list-item>
         <mat-list-item routerLink="biopsy">
           <mat-icon mat-list-icon>receipt_long</mat-icon>
           <span jhiTranslate="global.menu.entities.biopsy">biopsy</span>
@@ -165,10 +162,7 @@
           <mat-icon mat-list-icon>receipt_long</mat-icon>
           <span jhiTranslate="global.menu.entities.size">size</span>
         </mat-list-item>
-        <mat-list-item routerLink="specimen">
-          <mat-icon mat-list-icon>receipt_long</mat-icon>
-          <span jhiTranslate="global.menu.entities.specimen">specimen</span>
-        </mat-list-item>
+
         <mat-list-item routerLink="specimen-type">
           <mat-icon mat-list-icon>receipt_long</mat-icon>
           <span jhiTranslate="global.menu.entities.specimenType">specimen type</span>
