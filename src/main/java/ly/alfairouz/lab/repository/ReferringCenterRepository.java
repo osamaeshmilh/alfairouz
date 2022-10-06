@@ -1,6 +1,7 @@
 package ly.alfairouz.lab.repository;
 
 import ly.alfairouz.lab.domain.ReferringCenter;
+import ly.alfairouz.lab.domain.User;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +10,7 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface ReferringCenterRepository extends JpaRepository<ReferringCenter, Long>, JpaSpecificationExecutor<ReferringCenter> {}
+public interface ReferringCenterRepository extends JpaRepository<ReferringCenter, Long>, JpaSpecificationExecutor<ReferringCenter> {
+    ReferringCenter findByInternalUser(User user);
+
+}

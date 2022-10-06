@@ -1,10 +1,14 @@
 package ly.alfairouz.lab.service;
 
 import java.util.Optional;
+
 import ly.alfairouz.lab.domain.ReferringCenter;
+import ly.alfairouz.lab.domain.User;
 import ly.alfairouz.lab.repository.ReferringCenterRepository;
 import ly.alfairouz.lab.service.dto.ReferringCenterDTO;
 import ly.alfairouz.lab.service.mapper.ReferringCenterMapper;
+import ly.alfairouz.lab.web.rest.errors.BadRequestAlertException;
+import ly.alfairouz.lab.web.rest.vm.ManagedUserVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -25,9 +29,12 @@ public class ReferringCenterService {
 
     private final ReferringCenterMapper referringCenterMapper;
 
-    public ReferringCenterService(ReferringCenterRepository referringCenterRepository, ReferringCenterMapper referringCenterMapper) {
+    private final UserService userService;
+
+    public ReferringCenterService(ReferringCenterRepository referringCenterRepository, ReferringCenterMapper referringCenterMapper, UserService userService) {
         this.referringCenterRepository = referringCenterRepository;
         this.referringCenterMapper = referringCenterMapper;
+        this.userService = userService;
     }
 
     /**
@@ -109,4 +116,35 @@ public class ReferringCenterService {
         log.debug("Request to delete ReferringCenter : {}", id);
         referringCenterRepository.deleteById(id);
     }
+
+    public ReferringCenterDTO create(ReferringCenterDTO referringCenterDTO) {
+        String role = "";
+
+        ManagedUserVM managedUserVM = new ManagedUserVM();
+        managedUserVM.setFirstName(referringCenterDTO.getName());
+        managedUserVM.setEmail(referringCenterDTO.getEmail());
+        managedUserVM.setLogin(referringCenterDTO.getMobileNumber());
+        managedUserVM.setPhone(referringCenterDTO.getMobileNumber());
+        User user = userService.createAndAssignUser(managedUserVM, role);
+
+        ReferringCenter referringCenter = referringCenterMapper.toEntity(referringCenterDTO);
+        referringCenter.setInternalUser(user);
+        referringCenter = referringCenterRepository.save(referringCenter);
+        return referringCenterMapper.toDto(referringCenter);
+    }
+
+    public ReferringCenter findOneByUser() {
+        if (userService.getUserWithAuthorities().isPresent()) return referringCenterRepository.findByInternalUser(
+            userService.getUserWithAuthorities().get()
+        );
+        else throw new BadRequestAlertException("ReferringCenter User Not Found !", "", "REF_NOT_FOUND");
+    }
+
+    public ReferringCenterDTO findOneDTOByUser() {
+        if (userService.getUserWithAuthorities().isPresent()) return referringCenterMapper.toDto(
+            referringCenterRepository.findByInternalUser(userService.getUserWithAuthorities().get())
+        );
+        else throw new BadRequestAlertException("ReferringCenter User Not Found !", "", "REF_NOT_FOUND");
+    }
+
 }

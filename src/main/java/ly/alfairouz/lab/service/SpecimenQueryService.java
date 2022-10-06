@@ -118,6 +118,100 @@ public class SpecimenQueryService extends QueryService<Specimen> {
                         );
                 }
 
+                if (criteria.getPatientId() != null) {
+                    specification =
+                        specification.and(
+                            buildSpecification(criteria.getPatientId(), root -> root.join(Specimen_.patient, JoinType.LEFT).get(Patient_.id))
+                        );
+                }
+                if (criteria.getBiopsyId() != null) {
+                    specification =
+                        specification.and(
+                            buildSpecification(criteria.getBiopsyId(), root -> root.join(Specimen_.biopsy, JoinType.LEFT).get(Biopsy_.id))
+                        );
+                }
+                if (criteria.getCytologyId() != null) {
+                    specification =
+                        specification.and(
+                            buildSpecification(criteria.getCytologyId(), root -> root.join(Specimen_.cytology, JoinType.LEFT).get(Cytology_.id))
+                        );
+                }
+                if (criteria.getOrganId() != null) {
+                    specification =
+                        specification.and(
+                            buildSpecification(criteria.getOrganId(), root -> root.join(Specimen_.organ, JoinType.LEFT).get(Organ_.id))
+                        );
+                }
+                if (criteria.getSpecimenTypeId() != null) {
+                    specification =
+                        specification.and(
+                            buildSpecification(
+                                criteria.getSpecimenTypeId(),
+                                root -> root.join(Specimen_.specimenType, JoinType.LEFT).get(SpecimenType_.id)
+                            )
+                        );
+                }
+                if (criteria.getSizeId() != null) {
+                    specification =
+                        specification.and(
+                            buildSpecification(criteria.getSizeId(), root -> root.join(Specimen_.size, JoinType.LEFT).get(Size_.id))
+                        );
+                }
+                if (criteria.getReferringCenterId() != null) {
+                    specification =
+                        specification.and(
+                            buildSpecification(
+                                criteria.getReferringCenterId(),
+                                root -> root.join(Specimen_.referringCenter, JoinType.LEFT).get(ReferringCenter_.id)
+                            )
+                        );
+                }
+                if (criteria.getGrossingDoctorId() != null) {
+                    specification =
+                        specification.and(
+                            buildSpecification(
+                                criteria.getGrossingDoctorId(),
+                                root -> root.join(Specimen_.grossingDoctor, JoinType.LEFT).get(Doctor_.id)
+                            )
+                        );
+                }
+                if (criteria.getReferringDoctorId() != null) {
+                    specification =
+                        specification.and(
+                            buildSpecification(
+                                criteria.getReferringDoctorId(),
+                                root -> root.join(Specimen_.referringDoctor, JoinType.LEFT).get(Doctor_.id)
+                            )
+                        );
+                }
+                if (criteria.getPathologistDoctorId() != null) {
+                    specification =
+                        specification.and(
+                            buildSpecification(
+                                criteria.getPathologistDoctorId(),
+                                root -> root.join(Specimen_.pathologistDoctor, JoinType.LEFT).get(Doctor_.id)
+                            )
+                        );
+                }
+                if (criteria.getOperatorEmployeeId() != null) {
+                    specification =
+                        specification.and(
+                            buildSpecification(
+                                criteria.getOperatorEmployeeId(),
+                                root -> root.join(Specimen_.operatorEmployee, JoinType.LEFT).get(Employee_.id)
+                            )
+                        );
+                }
+                if (criteria.getCorrectorEmployeeId() != null) {
+                    specification =
+                        specification.and(
+                            buildSpecification(
+                                criteria.getCorrectorEmployeeId(),
+                                root -> root.join(Specimen_.correctorEmployee, JoinType.LEFT).get(Employee_.id)
+                            )
+                        );
+                }
+
             } else {
                 if (criteria.getDistinct() != null) {
                     specification = specification.and(distinct(criteria.getDistinct()));

@@ -152,8 +152,14 @@
 
                 <button (click)="getPdf(specimen.id)" mat-menu-item>
                   <mat-icon>insert_drive_file</mat-icon>
-                  <span class="d-none d-md-inline">Print</span>
+                  <span class="d-none d-md-inline">Print Report</span>
                 </button>
+                <button *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION']" (click)="getInvoice(specimen.id)"
+                        mat-menu-item>
+                  <mat-icon>insert_drive_file</mat-icon>
+                  <span class="d-none d-md-inline">Print Invoice</span>
+                </button>
+
                 <button (click)="delete(specimen)" *jhiHasAnyAuthority="['ROLE_ADMIN']" mat-menu-item>
                   <mat-icon>delete</mat-icon>
                   <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>

@@ -3,10 +3,13 @@ package ly.alfairouz.lab.web.rest;
 import java.io.ByteArrayOutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.LocalDate;
 import java.util.*;
 
 import ly.alfairouz.lab.repository.SpecimenRepository;
+import ly.alfairouz.lab.security.AuthoritiesConstants;
+import ly.alfairouz.lab.security.SecurityUtils;
+import ly.alfairouz.lab.service.DoctorService;
+import ly.alfairouz.lab.service.ReferringCenterService;
 import ly.alfairouz.lab.service.SpecimenQueryService;
 import ly.alfairouz.lab.service.SpecimenService;
 import ly.alfairouz.lab.service.criteria.SpecimenCriteria;
@@ -26,6 +29,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import tech.jhipster.service.filter.LongFilter;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -50,17 +54,23 @@ public class SpecimenResource {
 
     private final SpecimenQueryService specimenQueryService;
 
+    private final ReferringCenterService referringCenterService;
+
+    private final DoctorService doctorService;
+
     @Autowired
     JasperReportsUtil jasperReportsUtil;
 
     public SpecimenResource(
         SpecimenService specimenService,
         SpecimenRepository specimenRepository,
-        SpecimenQueryService specimenQueryService
-    ) {
+        SpecimenQueryService specimenQueryService,
+        ReferringCenterService referringCenterService, DoctorService doctorService) {
         this.specimenService = specimenService;
         this.specimenRepository = specimenRepository;
         this.specimenQueryService = specimenQueryService;
+        this.referringCenterService = referringCenterService;
+        this.doctorService = doctorService;
     }
 
     /**
@@ -166,7 +176,29 @@ public class SpecimenResource {
         @org.springdoc.api.annotations.ParameterObject Pageable pageable
     ) {
         log.debug("REST request to get Specimen by criteria: {}", criteria);
-        Page<SpecimenDTO> page = specimenQueryService.findByCriteria(criteria, pageable);
+
+        Page<SpecimenDTO> page;
+        LongFilter longFilter = new LongFilter();
+        if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.RECEPTION)) {
+            page = specimenQueryService.findByCriteria(criteria, pageable);
+        } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.ADMIN)) {
+            page = specimenQueryService.findByCriteria(criteria, pageable);
+        } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.GROSSING_DOCTOR)) {
+            page = specimenQueryService.findByCriteria(criteria, pageable);
+        } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.PATHOLOGIST_DOCTOR)) {
+            page = specimenQueryService.findByCriteria(criteria, pageable);
+        } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REFERRING_CENTER)) {
+            longFilter.setEquals(referringCenterService.findOneByUser().getId());
+            criteria.setReferringCenterId(longFilter);
+            page = specimenQueryService.findByCriteria(criteria, pageable);
+        } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REFERRING_DOCTOR)) {
+            longFilter.setEquals(doctorService.findOneByUser().getId());
+            criteria.setReferringDoctorId(longFilter);
+            page = specimenQueryService.findByCriteria(criteria, pageable);
+        } else {
+            page = Page.empty();
+        }
+
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

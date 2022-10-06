@@ -125,6 +125,11 @@ export class SpecimenComponent implements OnInit {
     window.open(url, '_blank');
   }
 
+  getInvoice(id: any): void {
+    const url = '/api/public/specimen/invoice/' + String(id);
+    window.open(url, '_blank');
+  }
+
   protected sort(): string[] {
     const result = [this.predicate + ',' + (this.ascending ? ASC : DESC)];
     if (this.predicate !== 'id') {

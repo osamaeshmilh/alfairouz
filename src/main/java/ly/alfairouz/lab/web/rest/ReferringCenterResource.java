@@ -68,7 +68,7 @@ public class ReferringCenterResource {
         if (referringCenterDTO.getId() != null) {
             throw new BadRequestAlertException("A new referringCenter cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        ReferringCenterDTO result = referringCenterService.save(referringCenterDTO);
+        ReferringCenterDTO result = referringCenterService.create(referringCenterDTO);
         return ResponseEntity
             .created(new URI("/api/referring-centers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
