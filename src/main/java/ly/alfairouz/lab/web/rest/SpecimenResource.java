@@ -181,6 +181,16 @@ public class SpecimenResource {
         LongFilter longFilter = new LongFilter();
         if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.RECEPTION)) {
             page = specimenQueryService.findByCriteria(criteria, pageable);
+        } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.MICROTOME)) {
+            page = specimenQueryService.findByCriteria(criteria, pageable);
+        } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.EMBEDDING)) {
+            page = specimenQueryService.findByCriteria(criteria, pageable);
+        } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.TYPING)) {
+            page = specimenQueryService.findByCriteria(criteria, pageable);
+        } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.STAINING)) {
+            page = specimenQueryService.findByCriteria(criteria, pageable);
+        } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REVISION)) {
+            page = specimenQueryService.findByCriteria(criteria, pageable);
         } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.ADMIN)) {
             page = specimenQueryService.findByCriteria(criteria, pageable);
         } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.GROSSING_DOCTOR)) {

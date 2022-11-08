@@ -126,6 +126,16 @@ public class EmployeeService {
 
         if (employeeDTO.getJobTitle() == JobTitle.RECEPTION) {
             role = AuthoritiesConstants.RECEPTION;
+        } else if (employeeDTO.getJobTitle() == JobTitle.EMBEDDING) {
+            role = AuthoritiesConstants.EMBEDDING;
+        } else if (employeeDTO.getJobTitle() == JobTitle.MICROTOME) {
+            role = AuthoritiesConstants.MICROTOME;
+        } else if (employeeDTO.getJobTitle() == JobTitle.TYPING) {
+            role = AuthoritiesConstants.TYPING;
+        } else if (employeeDTO.getJobTitle() == JobTitle.REVISION) {
+            role = AuthoritiesConstants.REVISION;
+        } else if (employeeDTO.getJobTitle() == JobTitle.STAINING) {
+            role = AuthoritiesConstants.STAINING;
         } else {
             Employee employee = employeeMapper.toEntity(employeeDTO);
             employee = employeeRepository.save(employee);
