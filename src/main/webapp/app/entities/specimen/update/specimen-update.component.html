@@ -471,20 +471,6 @@
                    formControlName="reserve"/>
           </div>
           <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.newBlocksRequested"
-                   for="field_newBlocksRequested"
-            >New Blocks Requested</label
-            >
-            <input
-              type="number"
-              class="form-control"
-              name="newBlocksRequested"
-              id="field_newBlocksRequested"
-              data-cy="newBlocksRequested"
-              formControlName="newBlocksRequested"
-            />
-          </div>
-          <div class="row mb-3">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.receivedInFormalin"
                    for="field_receivedInFormalin"
             >Received In Formalin</label
@@ -504,6 +490,28 @@
             <input type="number" class="form-control" name="blocks" id="field_blocks" data-cy="blocks"
                    formControlName="blocks"/>
           </div>
+
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.newBlocksRequested"
+                   for="field_newBlocksRequested"
+            >New Blocks Requested</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="newBlocksRequested"
+              id="field_newBlocksRequested"
+              data-cy="newBlocksRequested"
+              formControlName="newBlocksRequested"
+            />
+          </div>
+
+          <div class="row mb-3" *jhiHasAnyAuthority="[ 'ROLE_PATHOLOGIST_DOCTOR','ROLE_ADMIN']">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.slides" for="field_slides">Slides</label>
+            <input type="number" class="form-control" name="slides" id="field_slides" data-cy="slides"
+                   formControlName="slides"/>
+          </div>
+
           <div class="row mb-3">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.biopsy" for="field_biopsy">Biopsy</label>
             <select class="form-control" id="field_biopsy" data-cy="biopsy" name="biopsy" formControlName="biopsy">
@@ -610,13 +618,21 @@
 
         </div>
 
-        <div *jhiHasAnyAuthority="['ROLE_PATHOLOGIST_DOCTOR','ROLE_ADMIN']">
+        <div *jhiHasAnyAuthority="['ROLE_PATHOLOGIST_DOCTOR', 'ROLE_REFERRING_DOCTOR','ROLE_ADMIN']">
 
           <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.slides" for="field_slides">Slides</label>
-            <input type="number" class="form-control" name="slides" id="field_slides" data-cy="slides"
-                   formControlName="slides"/>
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.results" for="field_results">Results</label>
+            <select class="form-control" name="results" formControlName="results" id="field_results" data-cy="results">
+              <option [ngValue]="null">{{ 'alfairouzApp.Results.null' | translate }}</option>
+              <option *ngFor="let results of resultsValues"
+                      [value]="results">{{ 'alfairouzApp.Results.' + results | translate }}</option>
+            </select>
           </div>
+        </div>
+
+        <div *jhiHasAnyAuthority="['ROLE_PATHOLOGIST_DOCTOR','ROLE_ADMIN']">
+
+
           <div class="row mb-3">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.microscopicData" for="field_microscopicData"
             >Microscopic Data</label
@@ -650,14 +666,6 @@
                 <fa-icon icon="calendar-alt"></fa-icon>
               </button>
             </div>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.results" for="field_results">Results</label>
-            <select class="form-control" name="results" formControlName="results" id="field_results" data-cy="results">
-              <option [ngValue]="null">{{ 'alfairouzApp.Results.null' | translate }}</option>
-              <option *ngFor="let results of resultsValues"
-                      [value]="results">{{ 'alfairouzApp.Results.' + results | translate }}</option>
-            </select>
           </div>
           <div class="row mb-3">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.conclusion"
@@ -834,7 +842,6 @@
             rows="4" type="text" class="form-control" name="notes" id="field_notes" data-cy="notes"
             formControlName="notes"></textarea>
         </div>
-
 
       </div>
 

@@ -86,11 +86,16 @@
           <span jhiTranslate="alfairouzApp.specimen.referringCenter">Referring Center</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
+        <th scope="col" jhiSortBy="referringDoctor.name">
+          <span jhiTranslate="alfairouzApp.specimen.referringDoctor">Referring Doctor</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
         <th scope="col" jhiSortBy="grossingDoctor.name">
           <span jhiTranslate="alfairouzApp.specimen.grossingDoctor">Grossing Doctor</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
-        <th scope="col" jhiSortBy="isWithdrawn">
+        <th scope="col" jhiSortBy="isWithdrawn"
+            *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
           <span jhiTranslate="alfairouzApp.specimen.isWithdrawn">Is Withdrawn</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
@@ -100,6 +105,10 @@
         </th>
         <th scope="col" jhiSortBy="specimenStatus">
           <span jhiTranslate="alfairouzApp.specimen.specimenStatus">Specimen Status</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
+        <th scope="col" jhiSortBy="results">
+          <span jhiTranslate="alfairouzApp.specimen.results">Results</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
         <th scope="col"></th>
@@ -129,17 +138,22 @@
             <a>{{ specimen.specimenType?.name }}</a>
           </div>
         </td>
-          <td>
-            <div *ngIf="specimen.referringCenter">
-              <a>{{ specimen.referringCenter?.name }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="specimen.grossingDoctor">
-              <a>{{ specimen.grossingDoctor?.name }}</a>
-            </div>
-          </td>
         <td>
+          <div *ngIf="specimen.referringCenter">
+            <a>{{ specimen.referringCenter?.name }}</a>
+          </div>
+        </td>
+        <td>
+          <div *ngIf="specimen.referringDoctor">
+            <a>{{ specimen.referringDoctor?.name }}</a>
+          </div>
+        </td>
+        <td>
+          <div *ngIf="specimen.grossingDoctor">
+            <a>{{ specimen.grossingDoctor?.name }}</a>
+          </div>
+        </td>
+        <td *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
           <div *ngIf="!specimen.isWithdrawn" matTooltip="موجودة" style="font-size: 30px">
             <mat-icon [inline]="true" class="text-success">check_circle_outline</mat-icon>
           </div>
@@ -154,6 +168,8 @@
         </td>
         <td
           jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.' + specimen.specimenStatus }}">{{ specimen.specimenStatus }}</td>
+        <td
+          jhiTranslate="{{ 'alfairouzApp.Results.' + specimen.results }}">{{ specimen.results }}</td>
 
         <td class="text-left">
           <div class="btn-group flex-btn-group-container">
