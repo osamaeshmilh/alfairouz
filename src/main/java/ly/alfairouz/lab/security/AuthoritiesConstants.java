@@ -22,6 +22,8 @@ public final class AuthoritiesConstants {
 
     public static final String REVISION = "ROLE_REVISION";
 
+    public static final String TECHNICIAN = "ROLE_TECHNICIAN";
+
 
     public static final String GROSSING_DOCTOR = "ROLE_GROSSING_DOCTOR";
 
