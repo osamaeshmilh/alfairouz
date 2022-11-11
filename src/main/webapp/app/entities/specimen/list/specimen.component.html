@@ -69,6 +69,17 @@
           <fa-icon icon="sort"></fa-icon>
         </th>
 
+        <th scope="col" jhiSortBy="revisionDate"
+            *jhiHasAnyAuthority="['ROLE_TYPING', 'ROLE_REVISION']">
+          <span jhiTranslate="alfairouzApp.specimen.revisionDate">revision Date</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
+        <th scope="col" jhiSortBy="reportDate"
+            *jhiHasAnyAuthority="['ROLE_TYPING', 'ROLE_REVISION']">
+          <span jhiTranslate="alfairouzApp.specimen.reportDate">reportDate Date</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
+
         <th scope="col" jhiSortBy="paymentType"
             *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
           <span jhiTranslate="alfairouzApp.specimen.paymentType">Payment Type</span>
@@ -125,6 +136,12 @@
         <td>{{ specimen.receivingDate | formatMediumDate }}</td>
         <td *jhiHasAnyAuthority="['ROLE_REFERRING_DOCTOR', 'ROLE_REFERRING_CENTER']">
           {{ specimen.samplingDate | formatMediumDate }}
+        </td>
+        <td *jhiHasAnyAuthority="['ROLE_TYPING', 'ROLE_REVISION']">
+          {{ specimen.revisionDate | formatMediumDate }}
+        </td>
+        <td *jhiHasAnyAuthority="['ROLE_TYPING', 'ROLE_REVISION']">
+          {{ specimen.reportDate | formatMediumDate }}
         </td>
         <td *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']"
             jhiTranslate="{{ 'alfairouzApp.PaymentType.' + specimen.paymentType }}">{{ specimen.paymentType }}</td>

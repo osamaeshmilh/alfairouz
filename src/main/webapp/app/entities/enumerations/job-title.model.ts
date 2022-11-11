@@ -11,5 +11,7 @@ export enum JobTitle {
 
   REVISION = 'REVISION',
 
+  TECHNICIAN = 'TECHNICIAN',
+
   OTHERS = 'OTHERS',
 }

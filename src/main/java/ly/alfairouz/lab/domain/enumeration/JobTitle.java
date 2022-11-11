@@ -10,5 +10,6 @@ public enum JobTitle {
     MICROTOME,
     STAINING,
     REVISION,
+    TECHNICIAN,
     OTHERS,
 }
