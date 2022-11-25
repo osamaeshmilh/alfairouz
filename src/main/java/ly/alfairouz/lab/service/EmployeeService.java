@@ -136,6 +136,8 @@ public class EmployeeService {
             role = AuthoritiesConstants.REVISION;
         } else if (employeeDTO.getJobTitle() == JobTitle.STAINING) {
             role = AuthoritiesConstants.STAINING;
+        } else if (employeeDTO.getJobTitle() == JobTitle.TECHNICIAN) {
+            role = AuthoritiesConstants.TECHNICIAN;
         } else {
             Employee employee = employeeMapper.toEntity(employeeDTO);
             employee = employeeRepository.save(employee);

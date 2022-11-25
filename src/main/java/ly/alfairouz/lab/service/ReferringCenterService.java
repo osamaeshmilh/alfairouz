@@ -5,6 +5,7 @@ import java.util.Optional;
 import ly.alfairouz.lab.domain.ReferringCenter;
 import ly.alfairouz.lab.domain.User;
 import ly.alfairouz.lab.repository.ReferringCenterRepository;
+import ly.alfairouz.lab.security.AuthoritiesConstants;
 import ly.alfairouz.lab.service.dto.ReferringCenterDTO;
 import ly.alfairouz.lab.service.mapper.ReferringCenterMapper;
 import ly.alfairouz.lab.web.rest.errors.BadRequestAlertException;
@@ -118,14 +119,12 @@ public class ReferringCenterService {
     }
 
     public ReferringCenterDTO create(ReferringCenterDTO referringCenterDTO) {
-        String role = "";
-
         ManagedUserVM managedUserVM = new ManagedUserVM();
         managedUserVM.setFirstName(referringCenterDTO.getName());
         managedUserVM.setEmail(referringCenterDTO.getEmail());
-        managedUserVM.setLogin(referringCenterDTO.getMobileNumber());
+        managedUserVM.setLogin(referringCenterDTO.getEmail());
         managedUserVM.setPhone(referringCenterDTO.getMobileNumber());
-        User user = userService.createAndAssignUser(managedUserVM, role);
+        User user = userService.createAndAssignUser(managedUserVM, AuthoritiesConstants.REFERRING_CENTER);
 
         ReferringCenter referringCenter = referringCenterMapper.toEntity(referringCenterDTO);
         referringCenter.setInternalUser(user);
