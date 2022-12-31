@@ -50,6 +50,8 @@ public class SpecimenDTO implements Serializable {
 
     private Float price;
 
+    private Float discount;
+
     private Float paid;
 
     private Float notPaid;
@@ -77,6 +79,8 @@ public class SpecimenDTO implements Serializable {
     private String conclusion;
 
     private LocalDate conclusionDate;
+
+    private String discountNotes;
 
     private String notes;
 
@@ -113,6 +117,8 @@ public class SpecimenDTO implements Serializable {
     private DoctorDTO referringDoctor;
 
     private DoctorDTO pathologistDoctor;
+
+    private DoctorDTO pathologistDoctorTwo;
 
     private EmployeeDTO operatorEmployee;
 
@@ -288,6 +294,14 @@ public class SpecimenDTO implements Serializable {
         this.price = price;
     }
 
+    public Float getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Float discount) {
+        this.discount = discount;
+    }
+
     public Float getPaid() {
         return paid;
     }
@@ -398,6 +412,14 @@ public class SpecimenDTO implements Serializable {
 
     public void setConclusionDate(LocalDate conclusionDate) {
         this.conclusionDate = conclusionDate;
+    }
+
+    public String getDiscountNotes() {
+        return discountNotes;
+    }
+
+    public void setDiscountNotes(String discountNotes) {
+        this.discountNotes = discountNotes;
     }
 
     public String getNotes() {
@@ -544,6 +566,14 @@ public class SpecimenDTO implements Serializable {
         this.pathologistDoctor = pathologistDoctor;
     }
 
+    public DoctorDTO getPathologistDoctorTwo() {
+        return pathologistDoctorTwo;
+    }
+
+    public void setPathologistDoctorTwo(DoctorDTO pathologistDoctorTwo) {
+        this.pathologistDoctorTwo = pathologistDoctorTwo;
+    }
+
     public EmployeeDTO getOperatorEmployee() {
         return operatorEmployee;
     }
@@ -667,6 +697,7 @@ public class SpecimenDTO implements Serializable {
             ", fileNo='" + getFileNo() + "'" +
             ", paymentType='" + getPaymentType() + "'" +
             ", price=" + getPrice() +
+            ", discount=" + getDiscount() +
             ", paid=" + getPaid() +
             ", notPaid=" + getNotPaid() +
             ", urgentSample='" + getUrgentSample() + "'" +
@@ -681,6 +712,7 @@ public class SpecimenDTO implements Serializable {
             ", results='" + getResults() + "'" +
             ", conclusion='" + getConclusion() + "'" +
             ", conclusionDate='" + getConclusionDate() + "'" +
+            ", discountNotes='" + getDiscountNotes() + "'" +
             ", notes='" + getNotes() + "'" +
             ", specimenStatus='" + getSpecimenStatus() + "'" +
             ", newBlocksRequested=" + getNewBlocksRequested() +
@@ -699,6 +731,7 @@ public class SpecimenDTO implements Serializable {
             ", grossingDoctor=" + getGrossingDoctor() +
             ", referringDoctor=" + getReferringDoctor() +
             ", pathologistDoctor=" + getPathologistDoctor() +
+            ", pathologistDoctorTwo=" + getPathologistDoctorTwo() +
             ", operatorEmployee=" + getOperatorEmployee() +
             ", correctorEmployee=" + getCorrectorEmployee() +
             "}";

@@ -78,6 +78,10 @@
       "fieldType": "Float"
     },
     {
+      "fieldName": "discount",
+      "fieldType": "Float"
+    },
+    {
       "fieldName": "paid",
       "fieldType": "Float"
     },
@@ -133,6 +137,10 @@
     {
       "fieldName": "conclusionDate",
       "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "discountNotes",
+      "fieldType": "String"
     },
     {
       "fieldName": "notes",
@@ -242,6 +250,13 @@
       "otherEntityName": "doctor",
       "otherEntityRelationshipName": "specimen",
       "relationshipName": "pathologistDoctor",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "doctor",
+      "otherEntityRelationshipName": "specimen",
+      "relationshipName": "pathologistDoctorTwo",
       "relationshipType": "many-to-one"
     },
     {

@@ -37,6 +37,7 @@ public interface SpecimenMapper extends EntityMapper<SpecimenDTO, Specimen> {
     @Mapping(target = "grossingDoctor", source = "grossingDoctor", qualifiedByName = "doctorName")
     @Mapping(target = "referringDoctor", source = "referringDoctor", qualifiedByName = "doctorName")
     @Mapping(target = "pathologistDoctor", source = "pathologistDoctor", qualifiedByName = "doctorName")
+    @Mapping(target = "pathologistDoctorTwo", source = "pathologistDoctorTwo", qualifiedByName = "doctorName")
     @Mapping(target = "operatorEmployee", source = "operatorEmployee", qualifiedByName = "employeeName")
     @Mapping(target = "correctorEmployee", source = "correctorEmployee", qualifiedByName = "employeeName")
     SpecimenDTO toDto(Specimen s);

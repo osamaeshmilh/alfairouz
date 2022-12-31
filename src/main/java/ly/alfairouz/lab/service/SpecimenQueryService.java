@@ -105,6 +105,7 @@ public class SpecimenQueryService extends QueryService<Specimen> {
                 if (criteria.getNotes() != null) {
                     specification = specification.or(buildStringSpecification(criteria.getNotes(), Specimen_.notes));
                 }
+
                 if (criteria.getPatientNameAr() != null) {
                     specification =
                         specification.or(

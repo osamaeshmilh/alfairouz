@@ -69,6 +69,7 @@
       "grossingDoctor": "Grossing Doctor",
       "referringDoctor": "Referring Doctor",
       "pathologistDoctor": "Pathologist Doctor",
+      "pathologistDoctorTwo": "Pathologist Doctor Two",
       "operatorEmployee": "Operator Employee",
       "correctorEmployee": "Corrector Employee"
     }

@@ -68,6 +68,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="doctor"/>
 
+        <addForeignKeyConstraint baseColumnNames="pathologist_doctor_two_id"
+                                 baseTableName="specimen"
+                                 constraintName="fk_specimen__pathologist_doctor_two_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="doctor"/>
+
         <addForeignKeyConstraint baseColumnNames="operator_employee_id"
                                  baseTableName="specimen"
                                  constraintName="fk_specimen__operator_employee_id"

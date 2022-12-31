@@ -60,22 +60,25 @@
                 <constraints nullable="true" />
             </column>
             <column name="file_no" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="payment_type" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="price" type="${floatType}">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
+            </column>
+            <column name="discount" type="${floatType}">
+                <constraints nullable="true"/>
             </column>
             <column name="paid" type="${floatType}">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="not_paid" type="${floatType}">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="urgent_sample" type="boolean">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="revision_date" type="date">
                 <constraints nullable="true" />
@@ -153,15 +156,18 @@
                 <constraints nullable="true" />
             </column>
             <column name="referring_center_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="grossing_doctor_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="referring_doctor_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="pathologist_doctor_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="pathologist_doctor_two_id" type="bigint">
                 <constraints nullable="true"/>
             </column>
             <column name="operator_employee_id" type="bigint">
@@ -218,6 +224,7 @@
             <column name="file_no" type="string"/>
             <column name="payment_type" type="string"/>
             <column name="price" type="numeric"/>
+            <column name="discount" type="numeric"/>
             <column name="paid" type="numeric"/>
             <column name="not_paid" type="numeric"/>
             <column name="urgent_sample" type="boolean"/>
@@ -232,6 +239,7 @@
             <column name="results" type="string"/>
             <column name="conclusion" type="string"/>
             <column name="conclusion_date" type="date"/>
+            <column name="discount_notes" type="string"/>
             <column name="notes" type="string"/>
             <column name="specimen_status" type="string"/>
             <column name="new_blocks_requested" type="numeric"/>

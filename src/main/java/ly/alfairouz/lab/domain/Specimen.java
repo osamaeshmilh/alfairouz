@@ -82,6 +82,9 @@ public class Specimen extends AbstractAuditingEntity implements Serializable {
     @Column(name = "price")
     private Float price;
 
+    @Column(name = "discount")
+    private Float discount;
+
     @Column(name = "paid")
     private Float paid;
 
@@ -124,6 +127,9 @@ public class Specimen extends AbstractAuditingEntity implements Serializable {
 
     @Column(name = "conclusion_date")
     private LocalDate conclusionDate;
+
+    @Column(name = "discount_notes")
+    private String discountNotes;
 
     @Column(name = "notes")
     private String notes;
@@ -177,19 +183,23 @@ public class Specimen extends AbstractAuditingEntity implements Serializable {
     private Doctor grossingDoctor;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "internalUser" }, allowSetters = true)
+    @JsonIgnoreProperties(value = {"internalUser"}, allowSetters = true)
     private Doctor referringDoctor;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "internalUser" }, allowSetters = true)
+    @JsonIgnoreProperties(value = {"internalUser"}, allowSetters = true)
     private Doctor pathologistDoctor;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "internalUser" }, allowSetters = true)
+    @JsonIgnoreProperties(value = {"internalUser"}, allowSetters = true)
+    private Doctor pathologistDoctorTwo;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = {"internalUser"}, allowSetters = true)
     private Employee operatorEmployee;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "internalUser" }, allowSetters = true)
+    @JsonIgnoreProperties(value = {"internalUser"}, allowSetters = true)
     private Employee correctorEmployee;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -441,6 +451,19 @@ public class Specimen extends AbstractAuditingEntity implements Serializable {
         this.price = price;
     }
 
+    public Float getDiscount() {
+        return this.discount;
+    }
+
+    public Specimen discount(Float discount) {
+        this.setDiscount(discount);
+        return this;
+    }
+
+    public void setDiscount(Float discount) {
+        this.discount = discount;
+    }
+
     public Float getPaid() {
         return this.paid;
     }
@@ -621,6 +644,19 @@ public class Specimen extends AbstractAuditingEntity implements Serializable {
 
     public void setConclusionDate(LocalDate conclusionDate) {
         this.conclusionDate = conclusionDate;
+    }
+
+    public String getDiscountNotes() {
+        return this.discountNotes;
+    }
+
+    public Specimen discountNotes(String discountNotes) {
+        this.setDiscountNotes(discountNotes);
+        return this;
+    }
+
+    public void setDiscountNotes(String discountNotes) {
+        this.discountNotes = discountNotes;
     }
 
     public String getNotes() {
@@ -857,6 +893,19 @@ public class Specimen extends AbstractAuditingEntity implements Serializable {
         return this;
     }
 
+    public Doctor getPathologistDoctorTwo() {
+        return this.pathologistDoctorTwo;
+    }
+
+    public void setPathologistDoctorTwo(Doctor doctor) {
+        this.pathologistDoctorTwo = doctor;
+    }
+
+    public Specimen pathologistDoctorTwo(Doctor doctor) {
+        this.setPathologistDoctorTwo(doctor);
+        return this;
+    }
+
     public Employee getOperatorEmployee() {
         return this.operatorEmployee;
     }
@@ -925,6 +974,7 @@ public class Specimen extends AbstractAuditingEntity implements Serializable {
             ", fileNo='" + getFileNo() + "'" +
             ", paymentType='" + getPaymentType() + "'" +
             ", price=" + getPrice() +
+            ", discount=" + getDiscount() +
             ", paid=" + getPaid() +
             ", notPaid=" + getNotPaid() +
             ", urgentSample='" + getUrgentSample() + "'" +
@@ -939,6 +989,7 @@ public class Specimen extends AbstractAuditingEntity implements Serializable {
             ", results='" + getResults() + "'" +
             ", conclusion='" + getConclusion() + "'" +
             ", conclusionDate='" + getConclusionDate() + "'" +
+            ", discountNotes='" + getDiscountNotes() + "'" +
             ", notes='" + getNotes() + "'" +
             ", specimenStatus='" + getSpecimenStatus() + "'" +
             ", newBlocksRequested=" + getNewBlocksRequested() +

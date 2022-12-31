@@ -113,6 +113,7 @@ export class SpecimenUpdateComponent implements OnInit {
     grossingDoctor: [],
     referringDoctor: [],
     pathologistDoctor: [],
+    pathologistDoctorTwo: [],
     operatorEmployee: [],
     correctorEmployee: [],
 
@@ -336,6 +337,7 @@ export class SpecimenUpdateComponent implements OnInit {
       grossingDoctor: specimen.grossingDoctor,
       referringDoctor: specimen.referringDoctor,
       pathologistDoctor: specimen.pathologistDoctor,
+      pathologistDoctorTwo: specimen.pathologistDoctorTwo,
       operatorEmployee: specimen.operatorEmployee,
       correctorEmployee: specimen.correctorEmployee,
 
@@ -549,6 +551,7 @@ export class SpecimenUpdateComponent implements OnInit {
       grossingDoctor: this.editForm.get(['grossingDoctor'])!.value,
       referringDoctor: this.editForm.get(['referringDoctor'])!.value,
       pathologistDoctor: this.editForm.get(['pathologistDoctor'])!.value,
+      pathologistDoctorTwo: this.editForm.get(['pathologistDoctorTwo'])!.value,
       operatorEmployee: this.editForm.get(['operatorEmployee'])!.value,
       correctorEmployee: this.editForm.get(['correctorEmployee'])!.value,
 

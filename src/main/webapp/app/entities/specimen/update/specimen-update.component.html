@@ -787,6 +787,31 @@
               </option>
             </select>
           </div>
+
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="alfairouzApp.specimen.pathologistDoctorTwo"
+                   for="field_pathologistDoctorTwo"
+            >Pathologist Doctor</label
+            >
+            <select
+              class="form-control"
+              id="field_pathologistDoctorTwo"
+              data-cy="pathologistDoctorTwo"
+              name="pathologistDoctorTwo"
+              formControlName="pathologistDoctorTwo"
+            >
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="
+                doctorOption.id === editForm.get('pathologistDoctorTwo')!.value?.id ? editForm.get('pathologistDoctorTwo')!.value : doctorOption
+              "
+                *ngFor="let doctorOption of pDoctorsSharedCollection; trackBy: trackDoctorById"
+              >
+                {{ doctorOption.name }}
+              </option>
+            </select>
+          </div>
+
           <div class="row mb-3">
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.operatorEmployee" for="field_operatorEmployee"
             >Operator Employee</label

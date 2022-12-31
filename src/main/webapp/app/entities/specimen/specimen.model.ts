@@ -35,6 +35,7 @@ export interface ISpecimen {
   fileNo?: string | null;
   paymentType?: PaymentType | null;
   price?: number | null;
+  discount?: number | null;
   paid?: number | null;
   notPaid?: number | null;
   urgentSample?: boolean | null;
@@ -49,6 +50,7 @@ export interface ISpecimen {
   results?: Results | null;
   conclusion?: string | null;
   conclusionDate?: dayjs.Dayjs | null;
+  discountNotes?: string | null;
   notes?: string | null;
   specimenStatus?: SpecimenStatus | null;
   newBlocksRequested?: number | null;
@@ -67,6 +69,7 @@ export interface ISpecimen {
   grossingDoctor?: IDoctor | null;
   referringDoctor?: IDoctor | null;
   pathologistDoctor?: IDoctor | null;
+  pathologistDoctorTwo?: IDoctor | null;
   operatorEmployee?: IEmployee | null;
   correctorEmployee?: IEmployee | null;
 
@@ -102,6 +105,7 @@ export class Specimen implements ISpecimen {
     public fileNo?: string | null,
     public paymentType?: PaymentType | null,
     public price?: number | null,
+    public discount?: number | null,
     public paid?: number | null,
     public notPaid?: number | null,
     public urgentSample?: boolean | null,
@@ -116,6 +120,7 @@ export class Specimen implements ISpecimen {
     public results?: Results | null,
     public conclusion?: string | null,
     public conclusionDate?: dayjs.Dayjs | null,
+    public discountNotes?: string | null,
     public notes?: string | null,
     public specimenStatus?: SpecimenStatus | null,
     public newBlocksRequested?: number | null,
@@ -134,6 +139,7 @@ export class Specimen implements ISpecimen {
     public grossingDoctor?: IDoctor | null,
     public referringDoctor?: IDoctor | null,
     public pathologistDoctor?: IDoctor | null,
+    public pathologistDoctorTwo?: IDoctor | null,
     public operatorEmployee?: IEmployee | null,
     public correctorEmployee?: IEmployee | null,
     public patientName?: string | null,
