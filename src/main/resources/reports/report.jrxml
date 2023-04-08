@@ -336,10 +336,10 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <textElement textAlignment="Justified" verticalAlignment="Top">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA["\n\n Clinical Data: \n\n" + $F{clinical_data} +
-                "\n\n Gross Examination: \n\n" + $F{gross_examination} +
-                "\n\n Microscopically: \n\n" + $F{microscopic_data} +
-                "\n\n Conclusion: \n\n" + $F{conclusion}]]></textFieldExpression>
+                <textFieldExpression><![CDATA["\nClinical Data: \n\n" + $F{clinical_data} +
+                "\n\n\nGross Examination: \n\n" + $F{gross_examination} +
+                "\n\n\nMicroscopically: \n\n" + $F{microscopic_data} +
+                "\n\n\nConclusion: \n\n" + $F{conclusion}]]></textFieldExpression>
             </textField>
         </band>
     </detail>
