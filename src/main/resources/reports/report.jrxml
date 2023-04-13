@@ -121,16 +121,16 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
         <band splitType="Stretch"/>
     </background>
     <pageHeader>
-        <band height="238" splitType="Stretch">
+        <band height="310" splitType="Stretch">
             <staticText>
-                <reportElement x="13" y="101" width="87" height="20" uuid="52e1886f-e354-488f-be4b-6dd73573a979"/>
+                <reportElement x="13" y="190" width="87" height="20" uuid="52e1886f-e354-488f-be4b-6dd73573a979"/>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="true"/>
                 </textElement>
                 <text><![CDATA[Pt. Name:]]></text>
             </staticText>
             <textField textAdjust="StretchHeight">
-                <reportElement x="100" y="101" width="135" height="20" uuid="8cf6257d-a864-4474-86ca-535781eee20f">
+                <reportElement x="100" y="190" width="135" height="20" uuid="8cf6257d-a864-4474-86ca-535781eee20f">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
@@ -140,7 +140,7 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <textFieldExpression><![CDATA[$F{patientName}]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight">
-                <reportElement x="100" y="121" width="135" height="20" uuid="07e84190-2fef-4598-b5bf-b1c904b87e69">
+                <reportElement x="100" y="210" width="135" height="20" uuid="07e84190-2fef-4598-b5bf-b1c904b87e69">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
@@ -150,14 +150,14 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <textFieldExpression><![CDATA[$F{patientNameAr}]]></textFieldExpression>
             </textField>
             <staticText>
-                <reportElement x="13" y="141" width="87" height="20" uuid="70711d9e-3dcc-4140-9ad9-9dd75c832372"/>
+                <reportElement x="13" y="230" width="87" height="20" uuid="70711d9e-3dcc-4140-9ad9-9dd75c832372"/>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="true"/>
                 </textElement>
                 <text><![CDATA[Age/Gender:]]></text>
             </staticText>
             <textField textAdjust="StretchHeight">
-                <reportElement x="100" y="141" width="135" height="20" uuid="55193369-4f1f-4720-a970-0cadae95dee9">
+                <reportElement x="100" y="230" width="135" height="20" uuid="55193369-4f1f-4720-a970-0cadae95dee9">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
@@ -167,7 +167,7 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <textFieldExpression><![CDATA[$F{age}+"   "+$F{patientGender}]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight">
-                <reportElement x="100" y="161" width="135" height="20" uuid="7f7634c9-ffc7-463e-9678-10f954c4295f">
+                <reportElement x="100" y="250" width="135" height="20" uuid="7f7634c9-ffc7-463e-9678-10f954c4295f">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
@@ -177,14 +177,14 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <textFieldExpression><![CDATA[$F{patientMobileNumber}]]></textFieldExpression>
             </textField>
             <staticText>
-                <reportElement x="13" y="161" width="87" height="20" uuid="73801508-12ab-4ce0-a073-1186a25796f3"/>
+                <reportElement x="13" y="250" width="87" height="20" uuid="73801508-12ab-4ce0-a073-1186a25796f3"/>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="true"/>
                 </textElement>
                 <text><![CDATA[Phone:]]></text>
             </staticText>
             <textField textAdjust="StretchHeight">
-                <reportElement x="100" y="181" width="135" height="20" uuid="321177ce-98f8-429a-ba97-165654dda627">
+                <reportElement x="100" y="270" width="135" height="20" uuid="321177ce-98f8-429a-ba97-165654dda627">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
@@ -194,21 +194,21 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <textFieldExpression><![CDATA[$F{referringCenterNameAr}]]></textFieldExpression>
             </textField>
             <staticText>
-                <reportElement x="13" y="181" width="87" height="20" uuid="30d7cb07-7ee8-4fa8-a653-bea5f366862c"/>
+                <reportElement x="13" y="270" width="87" height="20" uuid="30d7cb07-7ee8-4fa8-a653-bea5f366862c"/>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="true"/>
                 </textElement>
                 <text><![CDATA[Referring Center:]]></text>
             </staticText>
             <staticText>
-                <reportElement x="13" y="201" width="87" height="20" uuid="19729a84-4873-44e6-b251-a1772afe3e82"/>
+                <reportElement x="13" y="290" width="87" height="20" uuid="19729a84-4873-44e6-b251-a1772afe3e82"/>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="true"/>
                 </textElement>
                 <text><![CDATA[Referring Doctor:]]></text>
             </staticText>
             <textField textAdjust="StretchHeight">
-                <reportElement x="100" y="201" width="135" height="20" uuid="131e9197-30e5-439d-8957-c6dd74b51ca4">
+                <reportElement x="100" y="290" width="135" height="20" uuid="131e9197-30e5-439d-8957-c6dd74b51ca4">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
@@ -218,14 +218,14 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <textFieldExpression><![CDATA[$F{referringCenterNameAr}]]></textFieldExpression>
             </textField>
             <staticText>
-                <reportElement x="309" y="101" width="85" height="20" uuid="83650bce-aec2-4168-8bd0-2cffa06557d8"/>
+                <reportElement x="309" y="190" width="85" height="20" uuid="83650bce-aec2-4168-8bd0-2cffa06557d8"/>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="true"/>
                 </textElement>
                 <text><![CDATA[Lab QR code:]]></text>
             </staticText>
             <textField textAdjust="StretchHeight">
-                <reportElement x="394" y="101" width="146" height="20" uuid="0da4f28f-c7f0-4ded-864f-975f71346b9c">
+                <reportElement x="394" y="190" width="146" height="20" uuid="0da4f28f-c7f0-4ded-864f-975f71346b9c">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
@@ -235,7 +235,7 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <textFieldExpression><![CDATA[$F{lab_qr}]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight">
-                <reportElement x="394" y="121" width="146" height="20" uuid="bae97869-d46f-41c1-9bac-0b3aebfdfe60">
+                <reportElement x="394" y="210" width="146" height="20" uuid="bae97869-d46f-41c1-9bac-0b3aebfdfe60">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
@@ -245,14 +245,14 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <textFieldExpression><![CDATA[$F{samples}]]></textFieldExpression>
             </textField>
             <staticText>
-                <reportElement x="309" y="141" width="85" height="20" uuid="9232e730-7fba-4960-a86d-bb75f3596ab0"/>
+                <reportElement x="309" y="230" width="85" height="20" uuid="9232e730-7fba-4960-a86d-bb75f3596ab0"/>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="true"/>
                 </textElement>
                 <text><![CDATA[File No:]]></text>
             </staticText>
             <textField textAdjust="StretchHeight">
-                <reportElement x="394" y="141" width="146" height="20" uuid="3205af43-35b2-4081-8979-11a64c80ea57">
+                <reportElement x="394" y="230" width="146" height="20" uuid="3205af43-35b2-4081-8979-11a64c80ea57">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
@@ -262,7 +262,7 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <textFieldExpression><![CDATA[$F{file_no}]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight">
-                <reportElement x="394" y="161" width="146" height="20" uuid="b2e37269-b029-43cd-8265-cf9ee6678b7e">
+                <reportElement x="394" y="250" width="146" height="20" uuid="b2e37269-b029-43cd-8265-cf9ee6678b7e">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
@@ -272,14 +272,14 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <textFieldExpression><![CDATA[$F{sampling_date}]]></textFieldExpression>
             </textField>
             <staticText>
-                <reportElement x="309" y="161" width="85" height="20" uuid="9b553782-4c23-493a-8eb3-94c4dfd538a1"/>
+                <reportElement x="309" y="250" width="85" height="20" uuid="9b553782-4c23-493a-8eb3-94c4dfd538a1"/>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="true"/>
                 </textElement>
                 <text><![CDATA[Date of Sampling:]]></text>
             </staticText>
             <textField textAdjust="StretchHeight">
-                <reportElement x="394" y="181" width="146" height="20" uuid="3fe1b659-5f47-4d32-92cf-1501b9ebc4a7">
+                <reportElement x="394" y="270" width="146" height="20" uuid="3fe1b659-5f47-4d32-92cf-1501b9ebc4a7">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
@@ -289,21 +289,21 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <textFieldExpression><![CDATA[$F{receiving_date}]]></textFieldExpression>
             </textField>
             <staticText>
-                <reportElement x="309" y="181" width="85" height="20" uuid="50be3fb1-5dc9-4f41-a280-df70995e4b5e"/>
+                <reportElement x="309" y="270" width="85" height="20" uuid="50be3fb1-5dc9-4f41-a280-df70995e4b5e"/>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="true"/>
                 </textElement>
                 <text><![CDATA[Date of Recieving:]]></text>
             </staticText>
             <staticText>
-                <reportElement x="309" y="201" width="85" height="20" uuid="21c5173f-36ec-4370-8e31-de988163f4e2"/>
+                <reportElement x="309" y="290" width="85" height="20" uuid="21c5173f-36ec-4370-8e31-de988163f4e2"/>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="true"/>
                 </textElement>
                 <text><![CDATA[Date of Report:]]></text>
             </staticText>
             <textField textAdjust="StretchHeight">
-                <reportElement x="394" y="201" width="146" height="20" uuid="64942e0b-b8b9-41c1-9bf8-eda01114c40b">
+                <reportElement x="394" y="290" width="146" height="20" uuid="64942e0b-b8b9-41c1-9bf8-eda01114c40b">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
@@ -313,7 +313,7 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <textFieldExpression><![CDATA[$F{report_date}]]></textFieldExpression>
             </textField>
             <staticText>
-                <reportElement x="309" y="121" width="85" height="20" uuid="3dcea5d2-31bd-4946-8d20-7a595b3a19f5"/>
+                <reportElement x="309" y="210" width="85" height="20" uuid="3dcea5d2-31bd-4946-8d20-7a595b3a19f5"/>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="true"/>
                 </textElement>
@@ -322,9 +322,9 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
         </band>
     </pageHeader>
     <detail>
-        <band height="73" splitType="Stretch">
+        <band height="40" splitType="Stretch">
             <textField textAdjust="StretchHeight">
-                <reportElement x="13" y="20" width="527" height="50" uuid="7cabce35-79a1-44bc-926e-b191f57e7a87">
+                <reportElement x="13" y="0" width="527" height="40" uuid="7cabce35-79a1-44bc-926e-b191f57e7a87">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
@@ -339,23 +339,23 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
         </band>
     </detail>
     <pageFooter>
-        <band height="120" splitType="Stretch">
+        <band height="139" splitType="Stretch">
             <staticText>
-                <reportElement x="138" y="10" width="102" height="20" uuid="86e91751-42d3-4117-9c82-1444c87a365a"/>
+                <reportElement x="138" y="0" width="102" height="20" uuid="86e91751-42d3-4117-9c82-1444c87a365a"/>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="true" isItalic="false" isUnderline="false"/>
                 </textElement>
                 <text><![CDATA[Consultant Pathologist]]></text>
             </staticText>
             <staticText>
-                <reportElement x="340" y="10" width="85" height="20" uuid="51a7544b-9d98-4a6f-b84e-d55b68057ce1"/>
+                <reportElement x="340" y="0" width="85" height="20" uuid="51a7544b-9d98-4a6f-b84e-d55b68057ce1"/>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="true" isItalic="false" isUnderline="false"/>
                 </textElement>
                 <text><![CDATA[Pathologist MD]]></text>
             </staticText>
             <textField textAdjust="StretchHeight">
-                <reportElement x="113" y="35" width="150" height="20" uuid="50376019-f7d8-4fa8-92bc-a2e9629acf9c">
+                <reportElement x="113" y="25" width="150" height="20" uuid="50376019-f7d8-4fa8-92bc-a2e9629acf9c">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
@@ -365,7 +365,7 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <textFieldExpression><![CDATA[$F{pathologistDoctorName}]]></textFieldExpression>
             </textField>
             <staticText>
-                <reportElement x="13" y="58" width="460" height="20" uuid="bea44d1c-e411-4961-832d-df48466ad15d"/>
+                <reportElement x="13" y="48" width="460" height="20" uuid="bea44d1c-e411-4961-832d-df48466ad15d"/>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="8" isBold="false" isItalic="false" isUnderline="false"/>
                 </textElement>
@@ -373,7 +373,7 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                     This report is electronically signed, any abrasion or modification would render it void. To check authenticity and credibility please scan the code.]]></text>
             </staticText>
             <componentElement>
-                <reportElement x="483" y="19" width="61" height="56" uuid="295e359a-c193-462e-afa3-d51fa0beeee7"/>
+                <reportElement x="483" y="9" width="60" height="55" uuid="295e359a-c193-462e-afa3-d51fa0beeee7"/>
                 <jr:QRCode xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components"
                            xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
                     <jr:codeExpression><![CDATA[$F{lab_qr}]]></jr:codeExpression>
