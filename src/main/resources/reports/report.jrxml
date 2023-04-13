@@ -120,8 +120,8 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
     <background>
         <band splitType="Stretch"/>
     </background>
-    <title>
-        <band height="231" splitType="Stretch">
+    <pageHeader>
+        <band height="238" splitType="Stretch">
             <staticText>
                 <reportElement x="13" y="101" width="87" height="20" uuid="52e1886f-e354-488f-be4b-6dd73573a979"/>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
@@ -133,7 +133,6 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <reportElement x="100" y="101" width="135" height="20" uuid="8cf6257d-a864-4474-86ca-535781eee20f">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
-                    <printWhenExpression><![CDATA[$F{patientName} != null]]></printWhenExpression>
                 </reportElement>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
@@ -144,7 +143,6 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <reportElement x="100" y="121" width="135" height="20" uuid="07e84190-2fef-4598-b5bf-b1c904b87e69">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
-                    <printWhenExpression><![CDATA[$F{patientNameAr} != null]]></printWhenExpression>
                 </reportElement>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
@@ -162,7 +160,6 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <reportElement x="100" y="141" width="135" height="20" uuid="55193369-4f1f-4720-a970-0cadae95dee9">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
-                    <printWhenExpression><![CDATA[$F{age} != null]]></printWhenExpression>
                 </reportElement>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
@@ -173,7 +170,6 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <reportElement x="100" y="161" width="135" height="20" uuid="7f7634c9-ffc7-463e-9678-10f954c4295f">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
-                    <printWhenExpression><![CDATA[$F{patientMobileNumber} != null]]></printWhenExpression>
                 </reportElement>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
@@ -191,7 +187,6 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <reportElement x="100" y="181" width="135" height="20" uuid="321177ce-98f8-429a-ba97-165654dda627">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
-                    <printWhenExpression><![CDATA[$F{referringCenterNameAr} != null]]></printWhenExpression>
                 </reportElement>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
@@ -325,26 +320,26 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <text><![CDATA[No. of Samples:]]></text>
             </staticText>
         </band>
-    </title>
+    </pageHeader>
     <detail>
         <band height="73" splitType="Stretch">
             <textField textAdjust="StretchHeight">
-                <reportElement x="13" y="26" width="527" height="44" uuid="7cabce35-79a1-44bc-926e-b191f57e7a87">
+                <reportElement x="13" y="20" width="527" height="50" uuid="7cabce35-79a1-44bc-926e-b191f57e7a87">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
                 <textElement textAlignment="Justified" verticalAlignment="Top">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA["\nClinical Data: \n\n" + $F{clinical_data} +
-                "\n\n\nGross Examination: \n\n" + $F{gross_examination} +
-                "\n\n\nMicroscopically: \n\n" + $F{microscopic_data} +
-                "\n\n\nConclusion: \n\n" + $F{conclusion}]]></textFieldExpression>
+                <textFieldExpression><![CDATA["\n\n Clinical Data: \n\n" + $F{clinical_data} +
+                "\n\n Gross Examination: \n\n" + $F{gross_examination} +
+                "\n\n Microscopically: \n\n" + $F{microscopic_data} +
+                "\n\n Conclusion: \n\n" + $F{conclusion}]]></textFieldExpression>
             </textField>
         </band>
     </detail>
     <pageFooter>
-        <band height="90" splitType="Stretch">
+        <band height="120" splitType="Stretch">
             <staticText>
                 <reportElement x="138" y="10" width="102" height="20" uuid="86e91751-42d3-4117-9c82-1444c87a365a"/>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
