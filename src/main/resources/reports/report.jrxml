@@ -29,7 +29,14 @@ pathologistDoctors.name as pathologistDoctorName,
 alfairouz.patient.name_ar as patientNameAr,
 alfairouz.patient.name as patientName,
 alfairouz.patient.gender as patientGender,
-TIMESTAMPDIFF(YEAR, alfairouz.patient.birth_date  , CURDATE()) AS age,
+  CONCAT(
+    TIMESTAMPDIFF(YEAR, alfairouz.patient.birth_date, CURDATE()),
+    ' years, ',
+    TIMESTAMPDIFF(MONTH, alfairouz.patient.birth_date, CURDATE()) % 12,
+    ' months, ',
+    TIMESTAMPDIFF(DAY, alfairouz.patient.birth_date, CURDATE()) % 30,
+    ' days'
+  ) AS age,
 alfairouz.patient.mobile_number  as patientMobileNumber
  from alfairouz.specimen
  LEFT OUTER JOIN alfairouz.patient ON alfairouz.specimen.patient_id = alfairouz.patient.id
@@ -324,7 +331,7 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
     <detail>
         <band height="40" splitType="Stretch">
             <textField textAdjust="StretchHeight">
-                <reportElement x="13" y="0" width="527" height="40" uuid="7cabce35-79a1-44bc-926e-b191f57e7a87">
+                <reportElement x="13" y="10" width="527" height="30" uuid="7cabce35-79a1-44bc-926e-b191f57e7a87">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
