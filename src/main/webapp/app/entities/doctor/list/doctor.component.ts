@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnInit} from '@angular/core';
+import {HttpHeaders, HttpResponse} from '@angular/common/http';
+import {ActivatedRoute, Router} from '@angular/router';
+import {combineLatest} from 'rxjs';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
-import { IDoctor } from '../doctor.model';
+import {IDoctor} from '../doctor.model';
 
-import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/config/pagination.constants';
-import { DoctorService } from '../service/doctor.service';
-import { DoctorDeleteDialogComponent } from '../delete/doctor-delete-dialog.component';
+import {ASC, DESC, ITEMS_PER_PAGE, SORT} from 'app/config/pagination.constants';
+import {DoctorService} from '../service/doctor.service';
+import {DoctorDeleteDialogComponent} from '../delete/doctor-delete-dialog.component';
+import {DoctorType} from "../../enumerations/doctor-type.model";
 
 @Component({
   selector: 'jhi-doctor',
@@ -62,7 +63,7 @@ export class DoctorComponent implements OnInit {
   }
 
   delete(doctor: IDoctor): void {
-    const modalRef = this.modalService.open(DoctorDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    const modalRef = this.modalService.open(DoctorDeleteDialogComponent, {size: 'lg', backdrop: 'static'});
     modalRef.componentInstance.doctor = doctor;
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed.subscribe(reason => {
@@ -70,6 +71,17 @@ export class DoctorComponent implements OnInit {
         this.loadPage();
       }
     });
+  }
+
+  getSpecimenXslx(doctor: IDoctor): void {
+    const doctorId = String(doctor.id);
+    if (doctor.doctorType === DoctorType.GROSSING) {
+      window.open(`/api/public/specimen/xlsx/criteria/?grossingDoctorId.equals=${doctorId}`, '_blank');
+    } else if (doctor.doctorType === DoctorType.PATHOLOGIST) {
+      window.open(`/api/public/specimen/xlsx/criteria/?pathologistDoctorId.equals=${doctorId}`, '_blank');
+    } else if (doctor.doctorType === DoctorType.REFERRING) {
+      window.open(`/api/public/specimen/xlsx/criteria/?referringDoctorId.equals=${doctorId}`, '_blank');
+    }
   }
 
   protected sort(): string[] {
@@ -114,4 +126,6 @@ export class DoctorComponent implements OnInit {
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 0;
   }
+
+
 }

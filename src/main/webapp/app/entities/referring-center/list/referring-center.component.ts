@@ -62,7 +62,7 @@ export class ReferringCenterComponent implements OnInit {
   }
 
   delete(referringCenter: IReferringCenter): void {
-    const modalRef = this.modalService.open(ReferringCenterDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    const modalRef = this.modalService.open(ReferringCenterDeleteDialogComponent, {size: 'lg', backdrop: 'static'});
     modalRef.componentInstance.referringCenter = referringCenter;
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed.subscribe(reason => {
@@ -70,6 +70,10 @@ export class ReferringCenterComponent implements OnInit {
         this.loadPage();
       }
     });
+  }
+
+  getSpecimenXslx(id: any): void {
+    window.open(`/api/public/specimen/xlsx/criteria/?referringCenterId.equals=${String(id)}`, '_blank');
   }
 
   protected sort(): string[] {

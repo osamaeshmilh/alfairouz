@@ -117,11 +117,16 @@ export class SpecimenComponent implements OnInit {
   }
 
   getXslx(): void {
-    window.open('/api/public/specimen/xlsx/', '_blank');
+    window.open('/api/public/specimen/xlsx/criteria/', '_blank');
   }
 
   getPdf(id: any): void {
     const url = '/api/public/specimen/report/' + String(id);
+    window.open(url, '_blank');
+  }
+
+  getPdfColored(id: any): void {
+    const url = '/api/public/specimen/report-colored/' + String(id);
     window.open(url, '_blank');
   }
 

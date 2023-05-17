@@ -62,7 +62,10 @@ export class RepresentativeDeliveryComponent implements OnInit {
   }
 
   delete(representativeDelivery: IRepresentativeDelivery): void {
-    const modalRef = this.modalService.open(RepresentativeDeliveryDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    const modalRef = this.modalService.open(RepresentativeDeliveryDeleteDialogComponent, {
+      size: 'lg',
+      backdrop: 'static'
+    });
     modalRef.componentInstance.representativeDelivery = representativeDelivery;
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed.subscribe(reason => {
@@ -70,6 +73,10 @@ export class RepresentativeDeliveryComponent implements OnInit {
         this.loadPage();
       }
     });
+  }
+
+  getXslx(): void {
+    window.open('/api/public/representative-deliveries/xlsx/criteria/', '_blank');
   }
 
   protected sort(): string[] {

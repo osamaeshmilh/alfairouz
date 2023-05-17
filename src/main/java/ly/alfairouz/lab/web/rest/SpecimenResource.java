@@ -3,6 +3,7 @@ package ly.alfairouz.lab.web.rest;
 import java.io.ByteArrayOutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.*;
 
 import ly.alfairouz.lab.repository.SpecimenRepository;
@@ -269,18 +270,18 @@ public class SpecimenResource {
         return ResponseUtil.wrapOrNotFound(specimenDTO);
     }
 
-
-    @GetMapping(value = "/public/specimen/xlsx/", produces = "application/vnd.ms-excel")
-    public ResponseEntity<byte[]> getSpecimensAsXSLX() {
+    @GetMapping(value = "/public/specimen/xlsx/criteria/", produces = "application/vnd.ms-excel")
+    public ResponseEntity<byte[]> getSpecimensAsXSLXByCriteria(SpecimenCriteria criteria) {
         log.debug("REST request to get xslx");
 
-        String[] columns = {"Id", "QR", "labRefNo", "Patient Name", "samples", "blocks", "slides",
-            "samplingDate", "receivingDate", "contractType", "isWithdrawn", "withdrawDate", "fileNo",
-            "paymentType", "price", "paid", "notPaid", "specimenStatus", "size", "specimenType", "referringCenter",
+        String[] columns = {
+            "Id", "Lab Ref No", "Lab QR", "Sampling Date", "Receiving Date", "Report Date", "Payment type",
+            "Patient", "Patient Ar", "Referring center", "Referring Doctor", "Grossing Doctor",
+            "Pathologist 1", "Pathologist 2", "Specimen State", "Specimen type", "Biopsy", "Cytology",
+            "Organ", "Price", "Paid", "Not Paid"
         };
 
-        //List<SpecimenDTO> specimenDTOList = specimenService.findAllByCreatedDateBetween(from, to);
-        List<SpecimenDTO> specimenDTOList = specimenService.findAll();
+        List<SpecimenDTO> specimenDTOList = specimenQueryService.findByCriteria(criteria);
 
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("specimen");
@@ -308,22 +309,27 @@ public class SpecimenResource {
         for (SpecimenDTO specimenDTO : specimenDTOList) {
             Row row = sheet.createRow(rowNum++);
             row.createCell(0).setCellValue(specimenDTO.getId());
-            row.createCell(1).setCellValue(specimenDTO.getLabQr());
-            row.createCell(2).setCellValue(specimenDTO.getLabRefNo());
-            row.createCell(3).setCellValue(specimenDTO.getPatient() != null ? specimenDTO.getPatient().getName() : "");
-            row.createCell(4).setCellValue(specimenDTO.getSamples() != null ? specimenDTO.getSamples() : 0);
-            row.createCell(5).setCellValue(specimenDTO.getSamplingDate().toString());
-            row.createCell(6).setCellValue(specimenDTO.getReceivingDate().toString());
-            row.createCell(7).setCellValue(specimenDTO.getContractType().toString());
-            row.createCell(8).setCellValue(specimenDTO.getFileNo());
-            row.createCell(9).setCellValue(specimenDTO.getPaymentType().toString());
-            row.createCell(10).setCellValue(specimenDTO.getPrice() != null ? specimenDTO.getPrice() : 0);
-            row.createCell(11).setCellValue(specimenDTO.getPaid() != null ? specimenDTO.getPaid() : 0);
-            row.createCell(12).setCellValue(specimenDTO.getNotPaid() != null ? specimenDTO.getNotPaid() : 0);
-            row.createCell(13).setCellValue(specimenDTO.getSpecimenStatus().toString());
-            row.createCell(14).setCellValue(specimenDTO.getSize() != null ? specimenDTO.getSize().getName() : "");
+            row.createCell(1).setCellValue(specimenDTO.getLabRefNo());
+            row.createCell(2).setCellValue(specimenDTO.getLabQr());
+            row.createCell(3).setCellValue(specimenDTO.getSamplingDate().toString());
+            row.createCell(4).setCellValue(specimenDTO.getReceivingDate().toString());
+            row.createCell(5).setCellValue(specimenDTO.getReportDate() != null ? specimenDTO.getReportDate().toString() : "");
+            row.createCell(6).setCellValue(specimenDTO.getPaymentType().toString());
+            row.createCell(7).setCellValue(specimenDTO.getPatient() != null ? specimenDTO.getPatient().getName() : "");
+            row.createCell(8).setCellValue(specimenDTO.getPatientNameAr());
+            row.createCell(9).setCellValue(specimenDTO.getReferringCenter() != null ? specimenDTO.getReferringCenter().getName() : "");
+            row.createCell(10).setCellValue(specimenDTO.getReferringDoctor() != null ? specimenDTO.getReferringDoctor().getName() : "");
+            row.createCell(11).setCellValue(specimenDTO.getGrossingDoctor() != null ? specimenDTO.getGrossingDoctor().getName() : "");
+            row.createCell(12).setCellValue(specimenDTO.getPathologistDoctor() != null ? specimenDTO.getPathologistDoctor().getName() : "");
+            row.createCell(13).setCellValue(specimenDTO.getPathologistDoctorTwo() != null ? specimenDTO.getPathologistDoctorTwo().getName() : "");
+            row.createCell(14).setCellValue(specimenDTO.getSpecimenStatus().toString());
             row.createCell(15).setCellValue(specimenDTO.getSpecimenType() != null ? specimenDTO.getSpecimenType().getName() : "");
-            row.createCell(16).setCellValue(specimenDTO.getReferringCenter() != null ? specimenDTO.getReferringCenter().getName() : "");
+            row.createCell(16).setCellValue(specimenDTO.getBiopsy() != null ? specimenDTO.getBiopsy().getName() : "");
+            row.createCell(17).setCellValue(specimenDTO.getCytology() != null ? specimenDTO.getCytology().getName() : "");
+            row.createCell(18).setCellValue(specimenDTO.getOrgan() != null ? specimenDTO.getOrgan().getName() : "");
+            row.createCell(19).setCellValue(specimenDTO.getPrice() != null ? specimenDTO.getPrice() : 0);
+            row.createCell(19).setCellValue(specimenDTO.getPaid() != null ? specimenDTO.getPaid() : 0);
+            row.createCell(19).setCellValue(specimenDTO.getNotPaid() != null ? specimenDTO.getNotPaid() : 0);
         }
 
         //Resize all columns to fit the content size
@@ -350,12 +356,105 @@ public class SpecimenResource {
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(bytes), header);
     }
 
+//    @GetMapping(value = "/public/specimen/xlsx/", produces = "application/vnd.ms-excel")
+//    public ResponseEntity<byte[]> getSpecimensAsXSLX() {
+//        log.debug("REST request to get xslx");
+//
+//        String[] columns = {"Id", "QR", "labRefNo", "Patient Name", "samples", "blocks", "slides",
+//            "samplingDate", "receivingDate", "contractType", "isWithdrawn", "withdrawDate", "fileNo",
+//            "paymentType", "price", "paid", "notPaid", "specimenStatus", "size", "specimenType", "referringCenter",
+//        };
+//
+//        //List<SpecimenDTO> specimenDTOList = specimenService.findAllByCreatedDateBetween(from, to);
+//        List<SpecimenDTO> specimenDTOList = specimenService.findAll();
+//
+//        Workbook workbook = new XSSFWorkbook();
+//        Sheet sheet = workbook.createSheet("specimen");
+//
+//        Font headerFont = workbook.createFont();
+//        headerFont.setBold(true);
+//        headerFont.setFontHeightInPoints((short) 14);
+//        headerFont.setColor(IndexedColors.BLACK.getIndex());
+//
+//        CellStyle headerCellStyle = workbook.createCellStyle();
+//        headerCellStyle.setFont(headerFont);
+//
+//        // Create a Row
+//        Row headerRow = sheet.createRow(0);
+//
+//        for (int i = 0; i < columns.length; i++) {
+//            Cell cell = headerRow.createCell(i);
+//            cell.setCellValue(columns[i]);
+//            cell.setCellStyle(headerCellStyle);
+//        }
+//
+//        // Create Other rows and cells with contacts data
+//        int rowNum = 1;
+//
+//        for (SpecimenDTO specimenDTO : specimenDTOList) {
+//            Row row = sheet.createRow(rowNum++);
+//            row.createCell(0).setCellValue(specimenDTO.getId());
+//            row.createCell(1).setCellValue(specimenDTO.getLabQr());
+//            row.createCell(2).setCellValue(specimenDTO.getLabRefNo());
+//            row.createCell(3).setCellValue(specimenDTO.getPatient() != null ? specimenDTO.getPatient().getName() : "");
+//            row.createCell(4).setCellValue(specimenDTO.getSamples() != null ? specimenDTO.getSamples() : 0);
+//            row.createCell(5).setCellValue(specimenDTO.getSamplingDate().toString());
+//            row.createCell(6).setCellValue(specimenDTO.getReceivingDate().toString());
+//            row.createCell(7).setCellValue(specimenDTO.getContractType().toString());
+//            row.createCell(8).setCellValue(specimenDTO.getFileNo());
+//            row.createCell(9).setCellValue(specimenDTO.getPaymentType().toString());
+//            row.createCell(10).setCellValue(specimenDTO.getPrice() != null ? specimenDTO.getPrice() : 0);
+//            row.createCell(11).setCellValue(specimenDTO.getPaid() != null ? specimenDTO.getPaid() : 0);
+//            row.createCell(12).setCellValue(specimenDTO.getNotPaid() != null ? specimenDTO.getNotPaid() : 0);
+//            row.createCell(13).setCellValue(specimenDTO.getSpecimenStatus().toString());
+//            row.createCell(14).setCellValue(specimenDTO.getSize() != null ? specimenDTO.getSize().getName() : "");
+//            row.createCell(15).setCellValue(specimenDTO.getSpecimenType() != null ? specimenDTO.getSpecimenType().getName() : "");
+//            row.createCell(16).setCellValue(specimenDTO.getReferringCenter() != null ? specimenDTO.getReferringCenter().getName() : "");
+//        }
+//
+//        //Resize all columns to fit the content size
+//        for (int i = 0; i < columns.length; i++) {
+//            sheet.autoSizeColumn(i);
+//        }
+//
+//        byte[] bytes = new byte[0];
+//
+//        try {
+//            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//            workbook.write(bos);
+//            bos.close();
+//            bytes = bos.toByteArray();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        HttpHeaders header = new HttpHeaders();
+//        header.setContentType(MediaType.valueOf("application/vnd.ms-excel"));
+//        header.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + new Date() + ".xlsx");
+//        header.setContentLength(bytes.length);
+//
+//        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(bytes), header);
+//    }
+
     @GetMapping(value = "/public/specimen/report/{specimenId}", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<byte[]> printReportPDF(@PathVariable Long specimenId) {
         log.debug("REST request to get report");
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("specimen_id", specimenId);
         byte[] fileBytes = jasperReportsUtil.getReportAsPDF(parameters, "report");
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.APPLICATION_PDF);
+        header.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=report_" + System.currentTimeMillis() + ".pdf");
+        header.setContentLength(fileBytes.length);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(fileBytes), header);
+    }
+
+    @GetMapping(value = "/public/specimen/report-colored/{specimenId}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> printReportPDFColored(@PathVariable Long specimenId) {
+        log.debug("REST request to get report");
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("specimen_id", specimenId);
+        byte[] fileBytes = jasperReportsUtil.getReportAsPDF(parameters, "color_report");
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.APPLICATION_PDF);
         header.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=report_" + System.currentTimeMillis() + ".pdf");

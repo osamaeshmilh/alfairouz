@@ -62,7 +62,7 @@ export class PapSmearSaleComponent implements OnInit {
   }
 
   delete(papSmearSale: IPapSmearSale): void {
-    const modalRef = this.modalService.open(PapSmearSaleDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    const modalRef = this.modalService.open(PapSmearSaleDeleteDialogComponent, {size: 'lg', backdrop: 'static'});
     modalRef.componentInstance.papSmearSale = papSmearSale;
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed.subscribe(reason => {
@@ -70,6 +70,10 @@ export class PapSmearSaleComponent implements OnInit {
         this.loadPage();
       }
     });
+  }
+
+  getXslx(): void {
+    window.open('/api/public/pap-smear-sales/xlsx/criteria/', '_blank');
   }
 
   protected sort(): string[] {
@@ -114,4 +118,6 @@ export class PapSmearSaleComponent implements OnInit {
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 0;
   }
+
+
 }

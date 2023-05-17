@@ -1,22 +1,30 @@
 package ly.alfairouz.lab.web.rest;
 
+import java.io.ByteArrayOutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
 import ly.alfairouz.lab.repository.PapSmearSaleRepository;
 import ly.alfairouz.lab.service.PapSmearSaleQueryService;
 import ly.alfairouz.lab.service.PapSmearSaleService;
 import ly.alfairouz.lab.service.criteria.PapSmearSaleCriteria;
+import ly.alfairouz.lab.service.criteria.SpecimenCriteria;
 import ly.alfairouz.lab.service.dto.PapSmearSaleDTO;
+import ly.alfairouz.lab.service.dto.SpecimenDTO;
 import ly.alfairouz.lab.web.rest.errors.BadRequestAlertException;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -201,5 +209,73 @@ public class PapSmearSaleResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @GetMapping(value = "/public/pap-smear-sales/xlsx/criteria/", produces = "application/vnd.ms-excel")
+    public ResponseEntity<byte[]> getPapSmearSaleAsXSLXByCriteria(PapSmearSaleCriteria criteria) {
+        log.debug("REST request to get xslx");
+
+        String[] columns = {
+            "Id", "Date At", "Details", "Payment Type", "Quantity", "Total", "Referring Center"
+        };
+
+        List<PapSmearSaleDTO> papSmearSaleDTOList = papSmearSaleQueryService.findByCriteria(criteria);
+
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("papSmearSale");
+
+        Font headerFont = workbook.createFont();
+        headerFont.setBold(true);
+        headerFont.setFontHeightInPoints((short) 14);
+        headerFont.setColor(IndexedColors.BLACK.getIndex());
+
+        CellStyle headerCellStyle = workbook.createCellStyle();
+        headerCellStyle.setFont(headerFont);
+
+        // Create a Row
+        Row headerRow = sheet.createRow(0);
+
+        for (int i = 0; i < columns.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(columns[i]);
+            cell.setCellStyle(headerCellStyle);
+        }
+
+        // Create Other rows and cells with contacts data
+        int rowNum = 1;
+
+        for (PapSmearSaleDTO papSmearSaleDTO : papSmearSaleDTOList) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(papSmearSaleDTO.getId());
+            row.createCell(1).setCellValue(papSmearSaleDTO.getDateAt().toString());
+            row.createCell(2).setCellValue(papSmearSaleDTO.getDetails());
+            row.createCell(3).setCellValue(papSmearSaleDTO.getPaymentType().toString());
+            row.createCell(4).setCellValue(papSmearSaleDTO.getQuantity());
+            row.createCell(5).setCellValue(papSmearSaleDTO.getTotal());
+            row.createCell(6).setCellValue(papSmearSaleDTO.getReferringCenter() != null ? papSmearSaleDTO.getReferringCenter().getName() : "");
+        }
+
+        //Resize all columns to fit the content size
+        for (int i = 0; i < columns.length; i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+        byte[] bytes = new byte[0];
+
+        try {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            workbook.write(bos);
+            bos.close();
+            bytes = bos.toByteArray();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.valueOf("application/vnd.ms-excel"));
+        header.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + new Date() + ".xlsx");
+        header.setContentLength(bytes.length);
+
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(bytes), header);
     }
 }

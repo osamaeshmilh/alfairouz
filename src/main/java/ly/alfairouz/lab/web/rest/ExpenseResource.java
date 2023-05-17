@@ -1,22 +1,30 @@
 package ly.alfairouz.lab.web.rest;
 
+import java.io.ByteArrayOutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
 import ly.alfairouz.lab.repository.ExpenseRepository;
 import ly.alfairouz.lab.service.ExpenseQueryService;
 import ly.alfairouz.lab.service.ExpenseService;
 import ly.alfairouz.lab.service.criteria.ExpenseCriteria;
+import ly.alfairouz.lab.service.criteria.PapSmearSaleCriteria;
 import ly.alfairouz.lab.service.dto.ExpenseDTO;
+import ly.alfairouz.lab.service.dto.PapSmearSaleDTO;
 import ly.alfairouz.lab.web.rest.errors.BadRequestAlertException;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -197,5 +205,72 @@ public class ExpenseResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @GetMapping(value = "/public/expenses/xlsx/criteria/", produces = "application/vnd.ms-excel")
+    public ResponseEntity<byte[]> getExpensesAsXSLXByCriteria(ExpenseCriteria criteria) {
+        log.debug("REST request to get xslx");
+
+        String[] columns = {
+            "Id", "Date", "Details", "Amount", "Expense Type", "Employee"
+        };
+
+        List<ExpenseDTO> expenseDTOList = expenseQueryService.findByCriteria(criteria);
+
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("expenses");
+
+        Font headerFont = workbook.createFont();
+        headerFont.setBold(true);
+        headerFont.setFontHeightInPoints((short) 14);
+        headerFont.setColor(IndexedColors.BLACK.getIndex());
+
+        CellStyle headerCellStyle = workbook.createCellStyle();
+        headerCellStyle.setFont(headerFont);
+
+        // Create a Row
+        Row headerRow = sheet.createRow(0);
+
+        for (int i = 0; i < columns.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(columns[i]);
+            cell.setCellStyle(headerCellStyle);
+        }
+
+        // Create Other rows and cells with contacts data
+        int rowNum = 1;
+
+        for (ExpenseDTO expenseDTO : expenseDTOList) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(expenseDTO.getId());
+            row.createCell(1).setCellValue(expenseDTO.getDateAt().toString());
+            row.createCell(2).setCellValue(expenseDTO.getDetails());
+            row.createCell(3).setCellValue(expenseDTO.getAmount());
+            row.createCell(4).setCellValue(expenseDTO.getExpenseType().toString());
+            row.createCell(5).setCellValue(expenseDTO.getEmployee() != null ? expenseDTO.getEmployee().getName() + " - " + expenseDTO.getEmployee().getJobTitle() : "");
+        }
+
+        //Resize all columns to fit the content size
+        for (int i = 0; i < columns.length; i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+        byte[] bytes = new byte[0];
+
+        try {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            workbook.write(bos);
+            bos.close();
+            bytes = bos.toByteArray();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.valueOf("application/vnd.ms-excel"));
+        header.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + new Date() + ".xlsx");
+        header.setContentLength(bytes.length);
+
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(bytes), header);
     }
 }

@@ -1,24 +1,19 @@
 <div class="entity-container">
-  <h2 id="page-heading" data-cy="ExpenseHeading">
+  <h3 id="page-heading">
     <span jhiTranslate="alfairouzApp.expense.home.title">Expenses</span>
+  </h3>
+  <div class="mt-1 ml-1 d-flex align-items-center">
+    <button [routerLink]="['./new']" class="m-2" color="primary"
+            mat-raised-button *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_RECEPTION']">
+      <mat-icon>add</mat-icon>
+      <span jhiTranslate="alfairouzApp.expense.home.createLabel"> Create a new Expense </span>
+    </button>
 
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="alfairouzApp.expense.home.refreshListLabel">Refresh List</span>
-      </button>
-
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-expense"
-        [routerLink]="['/expense/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="alfairouzApp.expense.home.createLabel"> Create a new Expense </span>
-      </button>
-    </div>
-  </h2>
+    <button *jhiHasAnyAuthority="'ROLE_ADMIN'" class="mr-auto" mat-stroked-button color="primary" (click)="getXslx()">
+      <mat-icon>insert_drive_file</mat-icon>
+      تقرير
+    </button>
+  </div>
 
   <jhi-alert-error></jhi-alert-error>
 

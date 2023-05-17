@@ -62,7 +62,7 @@ export class ExpenseComponent implements OnInit {
   }
 
   delete(expense: IExpense): void {
-    const modalRef = this.modalService.open(ExpenseDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    const modalRef = this.modalService.open(ExpenseDeleteDialogComponent, {size: 'lg', backdrop: 'static'});
     modalRef.componentInstance.expense = expense;
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed.subscribe(reason => {
@@ -70,6 +70,10 @@ export class ExpenseComponent implements OnInit {
         this.loadPage();
       }
     });
+  }
+
+  getXslx(): void {
+    window.open('/api/public/expenses/xlsx/criteria/', '_blank');
   }
 
   protected sort(): string[] {

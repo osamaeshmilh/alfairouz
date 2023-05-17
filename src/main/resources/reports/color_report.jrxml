@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="alfirouzReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20"
+              topMargin="20" bottomMargin="20" uuid="e425e21f-146f-4177-b4ec-b91b2124a35a">
+    <property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+    <property name="com.jaspersoft.studio.data.defaultdataadapter" value="Mysql"/>
+    <parameter name="specimen_id" class="java.lang.Long">
+        <parameterDescription><![CDATA[]]></parameterDescription>
+    </parameter>
+    <queryString language="SQL">
+        <![CDATA[SELECT
+alfairouz.specimen.id AS specimenId,
+alfairouz.specimen.lab_ref_no,
+alfairouz.specimen.lab_qr ,
+alfairouz.specimen.samples ,
+alfairouz.specimen.sampling_date,
+alfairouz.specimen.receiving_date,
+alfairouz.specimen.file_no,
+alfairouz.specimen.report_date,
+alfairouz.specimen.clinical_data,
+alfairouz.specimen.gross_examination,
+alfairouz.specimen.microscopic_data,
+alfairouz.specimen.conclusion,
+alfairouz.referring_center.name_ar AS referringCenterNameAr,
+alfairouz.doctor.name AS referringDoctorName,
+pathologistDoctors.name AS pathologistDoctorName,
+pathologistDoctorTwo.name AS pathologistDoctorTwoName,
+alfairouz.patient.name_ar AS patientNameAr,
+alfairouz.patient.name AS patientName,
+alfairouz.patient.gender AS patientGender,
+CONCAT(
+TIMESTAMPDIFF(YEAR, alfairouz.patient.birth_date, CURDATE()),' years, ',
+TIMESTAMPDIFF(MONTH, alfairouz.patient.birth_date, CURDATE()) % 12,' months, ',
+TIMESTAMPDIFF(DAY, alfairouz.patient.birth_date, CURDATE()) % 30,' days') AS age,
+alfairouz.patient.mobile_number AS patientMobileNumber
+FROM alfairouz.specimen
+LEFT OUTER JOIN alfairouz.patient ON alfairouz.specimen.patient_id = alfairouz.patient.id
+LEFT OUTER JOIN alfairouz.referring_center ON alfairouz.specimen.referring_center_id = alfairouz.referring_center.id
+LEFT OUTER JOIN alfairouz.doctor ON alfairouz.specimen.referring_doctor_id = alfairouz.doctor.id
+LEFT OUTER JOIN alfairouz.doctor AS pathologistDoctors ON alfairouz.specimen.pathologist_doctor_id = pathologistDoctors.id
+LEFT OUTER JOIN alfairouz.doctor AS pathologistDoctorTwo ON alfairouz.specimen.pathologist_doctor_two_id = pathologistDoctorTwo.id
+WHERE alfairouz.specimen.id = $P{specimen_id};]]>
+    </queryString>
+    <field name="specimenId" class="java.lang.Long">
+        <property name="com.jaspersoft.studio.field.label" value="specimenId"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="lab_ref_no" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="lab_ref_no"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="lab_qr" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="lab_qr"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="samples" class="java.lang.Integer">
+        <property name="com.jaspersoft.studio.field.label" value="samples"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="sampling_date" class="java.sql.Date">
+        <property name="com.jaspersoft.studio.field.label" value="sampling_date"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="receiving_date" class="java.sql.Date">
+        <property name="com.jaspersoft.studio.field.label" value="receiving_date"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="file_no" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="file_no"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="report_date" class="java.sql.Date">
+        <property name="com.jaspersoft.studio.field.label" value="report_date"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="clinical_data" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="clinical_data"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="gross_examination" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="gross_examination"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="microscopic_data" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="microscopic_data"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="conclusion" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="conclusion"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="referringCenterNameAr" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="referringCenterNameAr"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="referring_center"/>
+    </field>
+    <field name="referringDoctorName" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="referringDoctorName"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="doctor"/>
+    </field>
+    <field name="pathologistDoctorName" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="pathologistDoctorName"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="doctor"/>
+    </field>
+    <field name="pathologistDoctorTwoName" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="pathologistDoctorTwoName"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="doctor"/>
+    </field>
+    <field name="patientNameAr" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="patientNameAr"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+    </field>
+    <field name="patientName" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="patientName"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+    </field>
+    <field name="patientGender" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="patientGender"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+    </field>
+    <field name="age" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="age"/>
+    </field>
+    <field name="patientMobileNumber" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="patientMobileNumber"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+    </field>
+    <background>
+        <band height="802" splitType="Stretch">
+            <image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
+                <reportElement x="0" y="0" width="595" height="802" uuid="309be566-674b-44af-a470-094dd2135a76"/>
+                <imageExpression><![CDATA["report_template.png"]]></imageExpression>
+            </image>
+        </band>
+    </background>
+    <pageHeader>
+        <band height="310" splitType="Stretch">
+            <staticText>
+                <reportElement x="13" y="190" width="87" height="20" uuid="52e1886f-e354-488f-be4b-6dd73573a979"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Pt. Name:]]></text>
+            </staticText>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="100" y="190" width="135" height="20" uuid="8cf6257d-a864-4474-86ca-535781eee20f">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{patientName}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="100" y="210" width="135" height="20" uuid="07e84190-2fef-4598-b5bf-b1c904b87e69">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{patientNameAr}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="13" y="230" width="87" height="20" uuid="70711d9e-3dcc-4140-9ad9-9dd75c832372"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Age/Gender:]]></text>
+            </staticText>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="100" y="230" width="135" height="20" uuid="55193369-4f1f-4720-a970-0cadae95dee9">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{age}+"   "+$F{patientGender}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="100" y="250" width="135" height="20" uuid="7f7634c9-ffc7-463e-9678-10f954c4295f">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{patientMobileNumber}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="13" y="250" width="87" height="20" uuid="73801508-12ab-4ce0-a073-1186a25796f3"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Phone:]]></text>
+            </staticText>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="100" y="270" width="135" height="20" uuid="321177ce-98f8-429a-ba97-165654dda627">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{referringCenterNameAr}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="13" y="270" width="87" height="20" uuid="30d7cb07-7ee8-4fa8-a653-bea5f366862c"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Referring Center:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="13" y="290" width="87" height="20" uuid="19729a84-4873-44e6-b251-a1772afe3e82"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Referring Doctor:]]></text>
+            </staticText>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="100" y="290" width="135" height="20" uuid="131e9197-30e5-439d-8957-c6dd74b51ca4">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{referringDoctorName}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="309" y="190" width="85" height="20" uuid="83650bce-aec2-4168-8bd0-2cffa06557d8"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Lab QR code:]]></text>
+            </staticText>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="394" y="190" width="146" height="20" uuid="0da4f28f-c7f0-4ded-864f-975f71346b9c">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{lab_qr}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="394" y="210" width="146" height="20" uuid="bae97869-d46f-41c1-9bac-0b3aebfdfe60">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{samples}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="309" y="230" width="85" height="20" uuid="9232e730-7fba-4960-a86d-bb75f3596ab0"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[File No:]]></text>
+            </staticText>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="394" y="230" width="146" height="20" uuid="3205af43-35b2-4081-8979-11a64c80ea57">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{file_no}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="394" y="250" width="146" height="20" uuid="b2e37269-b029-43cd-8265-cf9ee6678b7e">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <textFieldExpression>
+                    <![CDATA[new SimpleDateFormat("yyyy-MM-dd").format($F{sampling_date})]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="309" y="250" width="85" height="20" uuid="9b553782-4c23-493a-8eb3-94c4dfd538a1"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Date of Sampling:]]></text>
+            </staticText>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="394" y="270" width="146" height="20" uuid="3fe1b659-5f47-4d32-92cf-1501b9ebc4a7">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <textFieldExpression>
+                    <![CDATA[new SimpleDateFormat("yyyy-MM-dd").format($F{receiving_date})]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="309" y="270" width="85" height="20" uuid="50be3fb1-5dc9-4f41-a280-df70995e4b5e"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Date of Recieving:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="309" y="290" width="85" height="20" uuid="21c5173f-36ec-4370-8e31-de988163f4e2"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Date of Report:]]></text>
+            </staticText>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="394" y="290" width="146" height="20" uuid="64942e0b-b8b9-41c1-9bf8-eda01114c40b">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <textFieldExpression>
+                    <![CDATA[new SimpleDateFormat("yyyy-MM-dd").format($F{report_date})]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="309" y="210" width="85" height="20" uuid="3dcea5d2-31bd-4946-8d20-7a595b3a19f5"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[No. of Samples:]]></text>
+            </staticText>
+        </band>
+    </pageHeader>
+    <detail>
+        <band height="40" splitType="Stretch">
+            <textField textAdjust="StretchHeight" isBlankWhenNull="true">
+                <reportElement x="13" y="10" width="527" height="30" uuid="7cabce35-79a1-44bc-926e-b191f57e7a87">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Justified" verticalAlignment="Top" markup="html">
+                    <font fontName="Times New Roman" size="10"/>
+                </textElement>
+                <textFieldExpression><![CDATA["<br><br><b><u> Clinical Data: </u></b><br><br>" + $F{clinical_data} +
+            "<br><br><b><u> Gross Examination: </u></b><br><br>" + $F{gross_examination} +
+            "<br><br><b><u> Microscopically: </u></b><br><br>" + $F{microscopic_data} +
+            "<br><br><b><u> Conclusion: </u></b><br><br>" + $F{conclusion}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <pageFooter>
+        <band height="139" splitType="Stretch">
+            <staticText>
+                <reportElement x="138" y="0" width="102" height="20" uuid="86e91751-42d3-4117-9c82-1444c87a365a"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true" isItalic="false" isUnderline="false"/>
+                </textElement>
+                <text><![CDATA[Consultant Pathologist]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="340" y="0" width="85" height="20" uuid="51a7544b-9d98-4a6f-b84e-d55b68057ce1"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="true" isItalic="false" isUnderline="false"/>
+                </textElement>
+                <text><![CDATA[Pathologist MD]]></text>
+            </staticText>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="113" y="25" width="150" height="20" uuid="50376019-f7d8-4fa8-92bc-a2e9629acf9c">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{pathologistDoctorName}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="13" y="48" width="470" height="20" uuid="bea44d1c-e411-4961-832d-df48466ad15d"/>
+                <textElement textAlignment="Left" verticalAlignment="Top">
+                    <font fontName="Times New Roman" size="8" isBold="false" isItalic="false" isUnderline="false"/>
+                </textElement>
+                <text><![CDATA[
+                    This report is electronically signed, any abrasion or modification would render it void. To check authenticity and credibility please scan the code.]]></text>
+            </staticText>
+            <componentElement>
+                <reportElement x="483" y="9" width="60" height="55" uuid="295e359a-c193-462e-afa3-d51fa0beeee7"/>
+                <jr:QRCode xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components"
+                           xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+                    <jr:codeExpression><![CDATA[$F{lab_qr}]]></jr:codeExpression>
+                </jr:QRCode>
+            </componentElement>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="302" y="25" width="150" height="20" uuid="bf061dd7-a318-4963-9693-5bb6292e1a96">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{pathologistDoctorTwoName}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+</jasperReport>

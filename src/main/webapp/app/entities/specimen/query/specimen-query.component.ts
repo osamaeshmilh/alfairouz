@@ -70,7 +70,7 @@ export class SpecimenQueryComponent {
   }
 
   getPdf(id: any): void {
-    const url = '/api/public/specimen/report/' + String(id);
+    const url = '/api/public/specimen/report-colored/' + String(id);
     window.open(url, '_blank');
   }
 
