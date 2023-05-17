@@ -68,4 +68,10 @@ export class SpecimenQueryComponent {
     const statusIndex = this.statusOrder.indexOf(status);
     return statusIndex <= currentStatusIndex;
   }
+
+  getPdf(id: any): void {
+    const url = '/api/public/specimen/report/' + String(id);
+    window.open(url, '_blank');
+  }
+
 }

@@ -108,12 +108,31 @@ public class SpecimenService {
             specimenDTO.setLabQr(enc);
         }
 
+        //if SpecimenStatus changing from status to the next one
+        if (specimenDTO.getSpecimenStatus() == SpecimenStatus.RECEIVED) {
+            specimenDTO.setSpecimenStatus(SpecimenStatus.GROSSING);
+        }
+
         if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.GROSSING_DOCTOR)) {
             if (specimenDTO.getGrossingDoctor() == null) {
                 specimenDTO.setGrossingDoctor(doctorService.findOneDTOByUser());
             }
             if (specimenDTO.getSpecimenStatus() == SpecimenStatus.RECEIVED) {
                 specimenDTO.setSpecimenStatus(SpecimenStatus.GROSSING);
+            }
+        }
+
+        if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.TECHNICIAN)) {
+            if (specimenDTO.getSlides() != null) {
+                if (specimenDTO.getSpecimenStatus() == SpecimenStatus.GROSSING) {
+                    specimenDTO.setSpecimenStatus(SpecimenStatus.PROCESSING);
+                }
+            }
+        }
+
+        if (specimenDTO.getReportDate() != null) {
+            if (specimenDTO.getSpecimenStatus() == SpecimenStatus.TYPING || specimenDTO.getSpecimenStatus() == SpecimenStatus.REVISION) {
+                specimenDTO.setSpecimenStatus(SpecimenStatus.READY);
             }
         }
 
