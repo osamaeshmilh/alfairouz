@@ -191,6 +191,8 @@ public class SpecimenResource {
             page = specimenQueryService.findByCriteria(criteria, pageable);
         } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REVISION)) {
             page = specimenQueryService.findByCriteria(criteria, pageable);
+        } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.TECHNICIAN)) {
+            page = specimenQueryService.findByCriteria(criteria, pageable);
         } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.ADMIN)) {
             page = specimenQueryService.findByCriteria(criteria, pageable);
         } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.GROSSING_DOCTOR)) {
@@ -235,6 +237,13 @@ public class SpecimenResource {
     public ResponseEntity<SpecimenDTO> getSpecimen(@PathVariable Long id) {
         log.debug("REST request to get Specimen : {}", id);
         Optional<SpecimenDTO> specimenDTO = specimenService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(specimenDTO);
+    }
+
+    @GetMapping("/public/specimen/by-qr/{qr}")
+    public ResponseEntity<SpecimenDTO> getSpecimenByQrPublic(@PathVariable String qr) {
+        log.debug("REST request to get Specimen : {}", qr);
+        Optional<SpecimenDTO> specimenDTO = specimenService.findOneByLabQr(qr);
         return ResponseUtil.wrapOrNotFound(specimenDTO);
     }
 

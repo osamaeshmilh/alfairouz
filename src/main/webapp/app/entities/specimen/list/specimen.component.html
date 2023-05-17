@@ -50,7 +50,7 @@
           <fa-icon icon="sort"></fa-icon>
         </th>
         <th scope="col" jhiSortBy="labRefNo"
-            *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
+            *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION', 'ROLE_TECHNICIAN','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
           <span jhiTranslate="alfairouzApp.specimen.labRefNo">Lab Ref No</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
@@ -114,6 +114,15 @@
           <span jhiTranslate="alfairouzApp.specimen.organ">Organ</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
+        <th scope="col" jhiSortBy="blocks" *jhiHasAnyAuthority="['ROLE_TECHNICIAN']">
+          <span jhiTranslate="alfairouzApp.specimen.blocks">Blocks</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
+        <th scope="col" jhiSortBy="slides" *jhiHasAnyAuthority="['ROLE_TECHNICIAN']">
+          <span jhiTranslate="alfairouzApp.specimen.slides">Slides</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
+
         <th scope="col" jhiSortBy="specimenStatus">
           <span jhiTranslate="alfairouzApp.specimen.specimenStatus">Specimen Status</span>
           <fa-icon icon="sort"></fa-icon>
@@ -131,7 +140,7 @@
           <a>{{ specimen.id }}</a>
         </td>
         <td
-          *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">{{ specimen.labRefNo }}</td>
+          *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION', 'ROLE_TECHNICIAN','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">{{ specimen.labRefNo }}</td>
         <td>{{ specimen.labQr }}</td>
         <td>{{ specimen.receivingDate | formatMediumDate }}</td>
         <td *jhiHasAnyAuthority="['ROLE_REFERRING_DOCTOR', 'ROLE_REFERRING_CENTER']">
@@ -183,6 +192,9 @@
             <a>{{ specimen.organ?.name }}</a>
           </div>
         </td>
+        <td *jhiHasAnyAuthority="['ROLE_TECHNICIAN']">{{ specimen.blocks }}</td>
+        <td *jhiHasAnyAuthority="['ROLE_TECHNICIAN']">{{ specimen.slides }}</td>
+
         <td
           jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.' + specimen.specimenStatus }}">{{ specimen.specimenStatus }}</td>
         <td
@@ -192,29 +204,31 @@
           <div class="btn-group flex-btn-group-container">
             <mat-menu #appMenu="matMenu">
               <button
-                *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']"
+                *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_TECHNICIAN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR', 'ROLE_TYPING', 'ROLE_REVISION']"
                 [routerLink]="['./', specimen.id, 'view']" mat-menu-item>
                 <mat-icon>remove_red_eye</mat-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
               </button>
               <button [routerLink]="['./', specimen.id, 'edit']"
-                      *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']"
-                        mat-menu-item>
-                  <mat-icon>edit</mat-icon>
-                  <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                </button>
+                      *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_TECHNICIAN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR', 'ROLE_TYPING', 'ROLE_REVISION']"
+                      mat-menu-item>
+                <mat-icon>edit</mat-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
 
-                <button (click)="getPdf(specimen.id)" mat-menu-item>
-                  <mat-icon>insert_drive_file</mat-icon>
-                  <span class="d-none d-md-inline">Print Report</span>
-                </button>
-                <button *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION']" (click)="getInvoice(specimen.id)"
-                        mat-menu-item>
-                  <mat-icon>insert_drive_file</mat-icon>
-                  <span class="d-none d-md-inline">Print Invoice</span>
-                </button>
+              <button
+                *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_TECHNICIAN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR', 'ROLE_TYPING', 'ROLE_REVISION']"
+                (click)="getPdf(specimen.id)" mat-menu-item>
+                <mat-icon>insert_drive_file</mat-icon>
+                <span class="d-none d-md-inline">Print Report</span>
+              </button>
+              <button *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION']" (click)="getInvoice(specimen.id)"
+                      mat-menu-item>
+                <mat-icon>insert_drive_file</mat-icon>
+                <span class="d-none d-md-inline">Print Invoice</span>
+              </button>
 
-                <button (click)="delete(specimen)" *jhiHasAnyAuthority="['ROLE_ADMIN']" mat-menu-item>
+              <button (click)="delete(specimen)" *jhiHasAnyAuthority="['ROLE_ADMIN']" mat-menu-item>
                   <mat-icon>delete</mat-icon>
                   <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                 </button>

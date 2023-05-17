@@ -2,16 +2,16 @@
   "alfairouzApp": {
     "SpecimenStatus": {
       "null": "",
-      "RECEIVED": "RECEIVED",
-      "GROSSING": "GROSSING",
-      "PROCESSING": "PROCESSING",
+      "RECEIVED": "تم استلام العينة",
+      "GROSSING": "مرحلة التقطيع",
+      "PROCESSING": "مرحلة المعالجة",
       "EMBEDDING": "EMBEDDING",
       "CUTTING": "CUTTING",
       "STAINING": "STAINING",
-      "DIAGNOSING": "DIAGNOSING",
-      "TYPING": "TYPING",
-      "REVISION": "REVISION",
-      "READY": "READY"
+      "DIAGNOSING": "مرحلة التشخيص",
+      "TYPING": "مرحلة الطباعة",
+      "REVISION": "مرحلة المراجعة",
+      "READY": "النتيجة جاهزة"
     }
   }
 }

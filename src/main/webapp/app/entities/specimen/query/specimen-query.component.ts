@@ -5,6 +5,7 @@ import {HttpResponse} from '@angular/common/http';
 import swal from 'sweetalert2';
 import {SpecimenService} from "../service/specimen.service";
 import {ISpecimen} from "../specimen.model";
+import {SpecimenStatus} from "../../enumerations/specimen-status.model";
 
 @Component({
   selector: 'jhi-specimen-query',
@@ -14,6 +15,16 @@ export class SpecimenQueryComponent {
   specimen: any;
   isLoading: any;
   currentSearch: any;
+
+  statusOrder: SpecimenStatus[] = [
+    SpecimenStatus.RECEIVED,
+    SpecimenStatus.GROSSING,
+    SpecimenStatus.PROCESSING,
+    SpecimenStatus.DIAGNOSING,
+    SpecimenStatus.TYPING,
+    SpecimenStatus.REVISION,
+    SpecimenStatus.READY,
+  ];
 
   constructor(protected activatedRoute: ActivatedRoute, private specimenService: SpecimenService) {
   }
@@ -30,7 +41,7 @@ export class SpecimenQueryComponent {
   search(): void {
     this.specimen = null;
     this.isLoading = true;
-    this.specimenService.findPublic(this.currentSearch).subscribe(
+    this.specimenService.findPublicByQr(this.currentSearch).subscribe(
       (response: HttpResponse<ISpecimen>) => {
         this.specimen = response.body;
         this.currentSearch = '';
@@ -50,5 +61,11 @@ export class SpecimenQueryComponent {
           });
       }
     );
+  }
+
+  isCompleted(status: any): boolean {
+    const currentStatusIndex = this.statusOrder.indexOf(this.specimen.specimenStatus);
+    const statusIndex = this.statusOrder.indexOf(status);
+    return statusIndex <= currentStatusIndex;
   }
 }

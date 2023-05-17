@@ -11,7 +11,8 @@
         <parameterDescription><![CDATA[]]></parameterDescription>
     </parameter>
     <queryString language="SQL">
-        <![CDATA[select  alfairouz.specimen.id as specimenId,
+        <![CDATA[SELECT
+alfairouz.specimen.id AS specimenId,
 alfairouz.specimen.lab_ref_no,
 alfairouz.specimen.lab_qr ,
 alfairouz.specimen.samples ,
@@ -23,27 +24,25 @@ alfairouz.specimen.clinical_data,
 alfairouz.specimen.gross_examination,
 alfairouz.specimen.microscopic_data,
 alfairouz.specimen.conclusion,
-alfairouz.referring_center.name_ar as referringCenterNameAr,
-alfairouz.doctor.name as referringDoctorName,
-pathologistDoctors.name as pathologistDoctorName,
-alfairouz.patient.name_ar as patientNameAr,
-alfairouz.patient.name as patientName,
-alfairouz.patient.gender as patientGender,
-  CONCAT(
-    TIMESTAMPDIFF(YEAR, alfairouz.patient.birth_date, CURDATE()),
-    ' years, ',
-    TIMESTAMPDIFF(MONTH, alfairouz.patient.birth_date, CURDATE()) % 12,
-    ' months, ',
-    TIMESTAMPDIFF(DAY, alfairouz.patient.birth_date, CURDATE()) % 30,
-    ' days'
-  ) AS age,
-alfairouz.patient.mobile_number  as patientMobileNumber
- from alfairouz.specimen
- LEFT OUTER JOIN alfairouz.patient ON alfairouz.specimen.patient_id = alfairouz.patient.id
+alfairouz.referring_center.name_ar AS referringCenterNameAr,
+alfairouz.doctor.name AS referringDoctorName,
+pathologistDoctors.name AS pathologistDoctorName,
+pathologistDoctorTwo.name AS pathologistDoctorTwoName,
+alfairouz.patient.name_ar AS patientNameAr,
+alfairouz.patient.name AS patientName,
+alfairouz.patient.gender AS patientGender,
+CONCAT(
+TIMESTAMPDIFF(YEAR, alfairouz.patient.birth_date, CURDATE()),' years, ',
+TIMESTAMPDIFF(MONTH, alfairouz.patient.birth_date, CURDATE()) % 12,' months, ',
+TIMESTAMPDIFF(DAY, alfairouz.patient.birth_date, CURDATE()) % 30,' days') AS age,
+alfairouz.patient.mobile_number AS patientMobileNumber
+FROM alfairouz.specimen
+LEFT OUTER JOIN alfairouz.patient ON alfairouz.specimen.patient_id = alfairouz.patient.id
 LEFT OUTER JOIN alfairouz.referring_center ON alfairouz.specimen.referring_center_id = alfairouz.referring_center.id
 LEFT OUTER JOIN alfairouz.doctor ON alfairouz.specimen.referring_doctor_id = alfairouz.doctor.id
-LEFT OUTER JOIN alfairouz.doctor as pathologistDoctors ON alfairouz.specimen.pathologist_doctor_id = pathologistDoctors.id
-where alfairouz.specimen.id = $P{specimen_id}]]>
+LEFT OUTER JOIN alfairouz.doctor AS pathologistDoctors ON alfairouz.specimen.pathologist_doctor_id = pathologistDoctors.id
+LEFT OUTER JOIN alfairouz.doctor AS pathologistDoctorTwo ON alfairouz.specimen.pathologist_doctor_two_id = pathologistDoctorTwo.id
+WHERE alfairouz.specimen.id = $P{specimen_id};]]>
     </queryString>
     <field name="specimenId" class="java.lang.Long">
         <property name="com.jaspersoft.studio.field.label" value="specimenId"/>
@@ -103,6 +102,10 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
     </field>
     <field name="pathologistDoctorName" class="java.lang.String">
         <property name="com.jaspersoft.studio.field.label" value="pathologistDoctorName"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="doctor"/>
+    </field>
+    <field name="pathologistDoctorTwoName" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="pathologistDoctorTwoName"/>
         <property name="com.jaspersoft.studio.field.tree.path" value="doctor"/>
     </field>
     <field name="patientNameAr" class="java.lang.String">
@@ -222,7 +225,7 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{referringCenterNameAr}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{referringDoctorName}]]></textFieldExpression>
             </textField>
             <staticText>
                 <reportElement x="309" y="190" width="85" height="20" uuid="83650bce-aec2-4168-8bd0-2cffa06557d8"/>
@@ -276,7 +279,8 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{sampling_date}]]></textFieldExpression>
+                <textFieldExpression>
+                    <![CDATA[new SimpleDateFormat("yyyy-MM-dd").format($F{sampling_date})]]></textFieldExpression>
             </textField>
             <staticText>
                 <reportElement x="309" y="250" width="85" height="20" uuid="9b553782-4c23-493a-8eb3-94c4dfd538a1"/>
@@ -293,7 +297,8 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{receiving_date}]]></textFieldExpression>
+                <textFieldExpression>
+                    <![CDATA[new SimpleDateFormat("yyyy-MM-dd").format($F{receiving_date})]]></textFieldExpression>
             </textField>
             <staticText>
                 <reportElement x="309" y="270" width="85" height="20" uuid="50be3fb1-5dc9-4f41-a280-df70995e4b5e"/>
@@ -317,7 +322,8 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{report_date}]]></textFieldExpression>
+                <textFieldExpression>
+                    <![CDATA[new SimpleDateFormat("yyyy-MM-dd").format($F{report_date})]]></textFieldExpression>
             </textField>
             <staticText>
                 <reportElement x="309" y="210" width="85" height="20" uuid="3dcea5d2-31bd-4946-8d20-7a595b3a19f5"/>
@@ -330,18 +336,18 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
     </pageHeader>
     <detail>
         <band height="40" splitType="Stretch">
-            <textField textAdjust="StretchHeight">
+            <textField textAdjust="StretchHeight" isStretchWithOverflow="true" isBlankWhenNull="true">
                 <reportElement x="13" y="10" width="527" height="30" uuid="7cabce35-79a1-44bc-926e-b191f57e7a87">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
-                <textElement textAlignment="Justified" verticalAlignment="Top">
-                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                <textElement textAlignment="Justified" verticalAlignment="Top" markup="html">
+                    <font fontName="Times New Roman" size="10"/>
                 </textElement>
-                <textFieldExpression><![CDATA["\n\n Clinical Data: \n\n" + $F{clinical_data} +
-                "\n\n Gross Examination: \n\n" + $F{gross_examination} +
-                "\n\n Microscopically: \n\n" + $F{microscopic_data} +
-                "\n\n Conclusion: \n\n" + $F{conclusion}]]></textFieldExpression>
+                <textFieldExpression><![CDATA["<br><br><b><u> Clinical Data: </u></b><br><br>" + $F{clinical_data} +
+            "<br><br><b><u> Gross Examination: </u></b><br><br>" + $F{gross_examination} +
+            "<br><br><b><u> Microscopically: </u></b><br><br>" + $F{microscopic_data} +
+            "<br><br><b><u> Conclusion: </u></b><br><br>" + $F{conclusion}]]></textFieldExpression>
             </textField>
         </band>
     </detail>
@@ -366,18 +372,18 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
-                <textElement textAlignment="Left" verticalAlignment="Middle">
+                <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
                 <textFieldExpression><![CDATA[$F{pathologistDoctorName}]]></textFieldExpression>
             </textField>
             <staticText>
-                <reportElement x="13" y="48" width="460" height="20" uuid="bea44d1c-e411-4961-832d-df48466ad15d"/>
-                <textElement textAlignment="Left" verticalAlignment="Middle">
+                <reportElement x="13" y="48" width="470" height="20" uuid="bea44d1c-e411-4961-832d-df48466ad15d"/>
+                <textElement textAlignment="Left" verticalAlignment="Top">
                     <font fontName="Times New Roman" size="8" isBold="false" isItalic="false" isUnderline="false"/>
                 </textElement>
-                <text><![CDATA[
-                    This report is electronically signed, any abrasion or modification would render it void. To check authenticity and credibility please scan the code.]]></text>
+                <text>
+                    <![CDATA[This report is electronically signed, any abrasion or modification would render it void. To check authenticity and credibility please scan the code.]]></text>
             </staticText>
             <componentElement>
                 <reportElement x="483" y="9" width="60" height="55" uuid="295e359a-c193-462e-afa3-d51fa0beeee7"/>
@@ -386,6 +392,16 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                     <jr:codeExpression><![CDATA[$F{lab_qr}]]></jr:codeExpression>
                 </jr:QRCode>
             </componentElement>
+            <textField textAdjust="StretchHeight">
+                <reportElement x="302" y="25" width="150" height="20" uuid="bf061dd7-a318-4963-9693-5bb6292e1a96">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{pathologistDoctorTwoName}]]></textFieldExpression>
+            </textField>
         </band>
     </pageFooter>
 </jasperReport>

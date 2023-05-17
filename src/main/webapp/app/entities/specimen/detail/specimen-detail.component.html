@@ -273,15 +273,30 @@
         <dt><span jhiTranslate="alfairouzApp.specimen.operatorEmployee">Operator Employee</span></dt>
         <dd>
           <div *ngIf="specimen.operatorEmployee">
-            <a [routerLink]="['/employee', specimen.operatorEmployee?.id, 'view']">{{ specimen.operatorEmployee?.name }}</a>
+            <a
+              [routerLink]="['/employee', specimen.operatorEmployee?.id, 'view']">{{ specimen.operatorEmployee?.name }}</a>
           </div>
         </dd>
         <dt><span jhiTranslate="alfairouzApp.specimen.correctorEmployee">Corrector Employee</span></dt>
         <dd>
           <div *ngIf="specimen.correctorEmployee">
-            <a [routerLink]="['/employee', specimen.correctorEmployee?.id, 'view']">{{ specimen.correctorEmployee?.name }}</a>
+            <a
+              [routerLink]="['/employee', specimen.correctorEmployee?.id, 'view']">{{ specimen.correctorEmployee?.name }}</a>
           </div>
         </dd>
+
+        <dt><span jhiTranslate="userManagement.createdBy">Created By</span></dt>
+        <dd>{{ specimen.createdBy }}</dd>
+
+        <dt><span jhiTranslate="userManagement.createdDate">Created Date</span></dt>
+        <dd>{{ specimen.createdDate | date: 'dd/MM/yy HH:mm' }}</dd>
+
+        <dt><span jhiTranslate="userManagement.lastModifiedBy">Last Modified By</span></dt>
+        <dd>{{ specimen.lastModifiedBy }}</dd>
+
+        <dt><span jhiTranslate="userManagement.lastModifiedDate">Last Modified Date</span></dt>
+        <dd>{{ specimen.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</dd>
+
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

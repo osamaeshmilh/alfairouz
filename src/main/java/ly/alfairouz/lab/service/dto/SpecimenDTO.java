@@ -10,7 +10,7 @@ import ly.alfairouz.lab.domain.enumeration.*;
 /**
  * A DTO for the {@link ly.alfairouz.lab.domain.Specimen} entity.
  */
-public class SpecimenDTO implements Serializable {
+public class SpecimenDTO extends AbstractAuditingDTO implements Serializable {
 
     private Long id;
 

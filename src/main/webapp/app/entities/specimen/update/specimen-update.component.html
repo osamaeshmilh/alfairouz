@@ -464,414 +464,429 @@
         <br>
         <br>
 
-        <div *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_ADMIN']">
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.reserve" for="field_reserve">Reserve</label>
-            <input type="checkbox" class="form-check" name="reserve" id="field_reserve" data-cy="reserve"
-                   formControlName="reserve"/>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.receivedInFormalin"
-                   for="field_receivedInFormalin"
-            >Received In Formalin</label
+        <div class="row mb-3" *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_ADMIN']">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.reserve" for="field_reserve">Reserve</label>
+          <input type="checkbox" class="form-check" name="reserve" id="field_reserve" data-cy="reserve"
+                 formControlName="reserve"/>
+        </div>
+
+        <div class="row mb-3" *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_ADMIN']">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.receivedInFormalin"
+                 for="field_receivedInFormalin"
+          >Received In Formalin</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="receivedInFormalin"
+            id="field_receivedInFormalin"
+            data-cy="receivedInFormalin"
+            formControlName="receivedInFormalin"
+          />
+        </div>
+
+        <div class="row mb-3" *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_ADMIN']">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.blocks" for="field_blocks">Blocks</label>
+          <input type="number" class="form-control" name="blocks" id="field_blocks" data-cy="blocks"
+                 formControlName="blocks"/>
+        </div>
+
+        <div class="row mb-3" *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_ADMIN']">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.newBlocksRequested"
+                 for="field_newBlocksRequested"
+          >New Blocks Requested</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="newBlocksRequested"
+            id="field_newBlocksRequested"
+            data-cy="newBlocksRequested"
+            formControlName="newBlocksRequested"
+          />
+        </div>
+
+        <div class="row mb-3" *jhiHasAnyAuthority="[ 'ROLE_TECHNICIAN', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_ADMIN']">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.slides" for="field_slides">Slides</label>
+          <input type="number" class="form-control" name="slides" id="field_slides" data-cy="slides"
+                 formControlName="slides"/>
+        </div>
+
+        <div class="row mb-3" *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_ADMIN']">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.biopsy" for="field_biopsy">Biopsy</label>
+          <select class="form-control" id="field_biopsy" data-cy="biopsy" name="biopsy" formControlName="biopsy">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="biopsyOption.id === editForm.get('biopsy')!.value?.id ? editForm.get('biopsy')!.value : biopsyOption"
+              *ngFor="let biopsyOption of biopsiesSharedCollection; trackBy: trackBiopsyById"
             >
+              {{ biopsyOption.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3" *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_ADMIN']">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.cytology"
+                 for="field_cytology">Cytology</label>
+          <select class="form-control" id="field_cytology" data-cy="cytology" name="cytology"
+                  formControlName="cytology">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="cytologyOption.id === editForm.get('cytology')!.value?.id ? editForm.get('cytology')!.value : cytologyOption"
+              *ngFor="let cytologyOption of cytologiesSharedCollection; trackBy: trackCytologyById"
+            >
+              {{ cytologyOption.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3" *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_ADMIN']">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.organ" for="field_organ">Organ</label>
+          <select class="form-control" id="field_organ" data-cy="organ" name="organ" formControlName="organ">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="organOption.id === editForm.get('organ')!.value?.id ? editForm.get('organ')!.value : organOption"
+              *ngFor="let organOption of organsSharedCollection; trackBy: trackOrganById"
+            >
+              {{ organOption.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3"
+             *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.clinicalData" for="field_clinicalData">Clinical
+            Data</label>
+          <textarea
+            rows="4"
+            type="text"
+            class="form-control"
+            name="clinicalData"
+            id="field_clinicalData"
+            data-cy="clinicalData"
+            formControlName="clinicalData"
+          ></textarea>
+        </div>
+
+        <div class="row mb-3"
+             *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.clinicalDate" for="field_clinicalDate">Clinical
+            Date</label>
+          <div class="input-group">
             <input
-              type="checkbox"
-              class="form-check"
-              name="receivedInFormalin"
-              id="field_receivedInFormalin"
-              data-cy="receivedInFormalin"
-              formControlName="receivedInFormalin"
+              id="field_clinicalDate"
+              data-cy="clinicalDate"
+              type="text"
+              class="form-control"
+              name="clinicalDate"
+              ngbDatepicker
+              #clinicalDateDp="ngbDatepicker"
+              formControlName="clinicalDate"
             />
+            <button type="button" class="btn btn-secondary" (click)="clinicalDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
           </div>
+        </div>
 
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.blocks" for="field_blocks">Blocks</label>
-            <input type="number" class="form-control" name="blocks" id="field_blocks" data-cy="blocks"
-                   formControlName="blocks"/>
-          </div>
+        <div class="row mb-3"
+             *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.grossExamination" for="field_grossExamination"
+          >Gross Examination</label
+          >
+          <textarea
+            rows="4"
+            type="text"
+            class="form-control"
+            name="grossExamination"
+            id="field_grossExamination"
+            data-cy="grossExamination"
+            formControlName="grossExamination"
+          ></textarea>
+        </div>
 
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.newBlocksRequested"
-                   for="field_newBlocksRequested"
-            >New Blocks Requested</label
-            >
+        <div class="row mb-3"
+             *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.grossDate" for="field_grossDate">Gross
+            Date</label>
+          <div class="input-group">
             <input
-              type="number"
+              id="field_grossDate"
+              data-cy="grossDate"
+              type="text"
               class="form-control"
-              name="newBlocksRequested"
-              id="field_newBlocksRequested"
-              data-cy="newBlocksRequested"
-              formControlName="newBlocksRequested"
+              name="grossDate"
+              ngbDatepicker
+              #grossDateDp="ngbDatepicker"
+              formControlName="grossDate"
             />
-          </div>
-
-          <div class="row mb-3" *jhiHasAnyAuthority="[ 'ROLE_PATHOLOGIST_DOCTOR','ROLE_ADMIN']">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.slides" for="field_slides">Slides</label>
-            <input type="number" class="form-control" name="slides" id="field_slides" data-cy="slides"
-                   formControlName="slides"/>
-          </div>
-
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.biopsy" for="field_biopsy">Biopsy</label>
-            <select class="form-control" id="field_biopsy" data-cy="biopsy" name="biopsy" formControlName="biopsy">
-              <option [ngValue]="null"></option>
-              <option
-                [ngValue]="biopsyOption.id === editForm.get('biopsy')!.value?.id ? editForm.get('biopsy')!.value : biopsyOption"
-                *ngFor="let biopsyOption of biopsiesSharedCollection; trackBy: trackBiopsyById"
-              >
-                {{ biopsyOption.name }}
-              </option>
-            </select>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.cytology"
-                   for="field_cytology">Cytology</label>
-            <select class="form-control" id="field_cytology" data-cy="cytology" name="cytology"
-                    formControlName="cytology">
-              <option [ngValue]="null"></option>
-              <option
-                [ngValue]="cytologyOption.id === editForm.get('cytology')!.value?.id ? editForm.get('cytology')!.value : cytologyOption"
-                *ngFor="let cytologyOption of cytologiesSharedCollection; trackBy: trackCytologyById"
-              >
-                {{ cytologyOption.name }}
-              </option>
-            </select>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.organ" for="field_organ">Organ</label>
-            <select class="form-control" id="field_organ" data-cy="organ" name="organ" formControlName="organ">
-              <option [ngValue]="null"></option>
-              <option
-                [ngValue]="organOption.id === editForm.get('organ')!.value?.id ? editForm.get('organ')!.value : organOption"
-                *ngFor="let organOption of organsSharedCollection; trackBy: trackOrganById"
-              >
-                {{ organOption.name }}
-              </option>
-            </select>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.clinicalData" for="field_clinicalData">Clinical
-              Data</label>
-            <textarea
-              rows="4"
-              type="text"
-              class="form-control"
-              name="clinicalData"
-              id="field_clinicalData"
-              data-cy="clinicalData"
-              formControlName="clinicalData"
-            ></textarea>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.clinicalDate" for="field_clinicalDate">Clinical
-              Date</label>
-            <div class="input-group">
-              <input
-                id="field_clinicalDate"
-                data-cy="clinicalDate"
-                type="text"
-                class="form-control"
-                name="clinicalDate"
-                ngbDatepicker
-                #clinicalDateDp="ngbDatepicker"
-                formControlName="clinicalDate"
-              />
-              <button type="button" class="btn btn-secondary" (click)="clinicalDateDp.toggle()">
-                <fa-icon icon="calendar-alt"></fa-icon>
-              </button>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.grossExamination" for="field_grossExamination"
-            >Gross Examination</label
-            >
-            <textarea
-              rows="4"
-              type="text"
-              class="form-control"
-              name="grossExamination"
-              id="field_grossExamination"
-              data-cy="grossExamination"
-              formControlName="grossExamination"
-            ></textarea>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.grossDate" for="field_grossDate">Gross
-              Date</label>
-            <div class="input-group">
-              <input
-                id="field_grossDate"
-                data-cy="grossDate"
-                type="text"
-                class="form-control"
-                name="grossDate"
-                ngbDatepicker
-                #grossDateDp="ngbDatepicker"
-                formControlName="grossDate"
-              />
-              <button type="button" class="btn btn-secondary" (click)="grossDateDp.toggle()">
-                <fa-icon icon="calendar-alt"></fa-icon>
-              </button>
-            </div>
-          </div>
-
-        </div>
-
-        <div *jhiHasAnyAuthority="['ROLE_PATHOLOGIST_DOCTOR', 'ROLE_REFERRING_DOCTOR','ROLE_ADMIN']">
-
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.results" for="field_results">Results</label>
-            <select class="form-control" name="results" formControlName="results" id="field_results" data-cy="results">
-              <option [ngValue]="null">{{ 'alfairouzApp.Results.null' | translate }}</option>
-              <option *ngFor="let results of resultsValues"
-                      [value]="results">{{ 'alfairouzApp.Results.' + results | translate }}</option>
-            </select>
+            <button type="button" class="btn btn-secondary" (click)="grossDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
           </div>
         </div>
 
-        <div *jhiHasAnyAuthority="['ROLE_PATHOLOGIST_DOCTOR','ROLE_ADMIN']">
+        <div class="row mb-3"
+             *jhiHasAnyAuthority="['ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.microscopicData" for="field_microscopicData"
+          >Microscopic Data</label
+          >
+          <textarea
+            rows="4"
+            type="text"
+            class="form-control"
+            name="microscopicData"
+            id="field_microscopicData"
+            data-cy="microscopicData"
+            formControlName="microscopicData"
+          ></textarea>
+        </div>
 
-
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.microscopicData" for="field_microscopicData"
-            >Microscopic Data</label
-            >
-            <textarea
-              rows="4"
+        <div class="row mb-3"
+             *jhiHasAnyAuthority="['ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.microscopicDate" for="field_microscopicDate"
+          >Microscopic Date</label
+          >
+          <div class="input-group">
+            <input
+              id="field_microscopicDate"
+              data-cy="microscopicDate"
               type="text"
               class="form-control"
-              name="microscopicData"
-              id="field_microscopicData"
-              data-cy="microscopicData"
-              formControlName="microscopicData"
-            ></textarea>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.microscopicDate" for="field_microscopicDate"
-            >Microscopic Date</label
-            >
-            <div class="input-group">
-              <input
-                id="field_microscopicDate"
-                data-cy="microscopicDate"
-                type="text"
-                class="form-control"
-                name="microscopicDate"
-                ngbDatepicker
-                #microscopicDateDp="ngbDatepicker"
-                formControlName="microscopicDate"
-              />
-              <button type="button" class="btn btn-secondary" (click)="microscopicDateDp.toggle()">
-                <fa-icon icon="calendar-alt"></fa-icon>
-              </button>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.conclusion"
-                   for="field_conclusion">Conclusion</label>
-            <textarea
-              rows="4"
-              type="text"
-              class="form-control"
-              name="conclusion"
-              id="field_conclusion"
-              data-cy="conclusion"
-              formControlName="conclusion"
-            ></textarea>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.conclusionDate" for="field_conclusionDate">Conclusion
-              Date</label>
-            <div class="input-group">
-              <input
-                id="field_conclusionDate"
-                data-cy="conclusionDate"
-                type="text"
-                class="form-control"
-                name="conclusionDate"
-                ngbDatepicker
-                #conclusionDateDp="ngbDatepicker"
-                formControlName="conclusionDate"
-              />
-              <button type="button" class="btn btn-secondary" (click)="conclusionDateDp.toggle()">
-                <fa-icon icon="calendar-alt"></fa-icon>
-              </button>
-            </div>
+              name="microscopicDate"
+              ngbDatepicker
+              #microscopicDateDp="ngbDatepicker"
+              formControlName="microscopicDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="microscopicDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
           </div>
         </div>
 
-        <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
+        <div class="row mb-3"
+             *jhiHasAnyAuthority="['ROLE_REFERRING_DOCTOR', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.results" for="field_results">Results</label>
+          <select class="form-control" name="results" formControlName="results" id="field_results" data-cy="results">
+            <option [ngValue]="null">{{ 'alfairouzApp.Results.null' | translate }}</option>
+            <option *ngFor="let results of resultsValues"
+                    [value]="results">{{ 'alfairouzApp.Results.' + results | translate }}</option>
+          </select>
+        </div>
 
+        <div class="row mb-3"
+             *jhiHasAnyAuthority="['ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.conclusion"
+                 for="field_conclusion">Conclusion</label>
+          <textarea
+            rows="4"
+            type="text"
+            class="form-control"
+            name="conclusion"
+            id="field_conclusion"
+            data-cy="conclusion"
+            formControlName="conclusion"
+          ></textarea>
+        </div>
 
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.revisionDate" for="field_revisionDate">Revision
-              Date</label>
-            <div class="input-group">
-              <input
-                id="field_revisionDate"
-                data-cy="revisionDate"
-                type="text"
-                class="form-control"
-                name="revisionDate"
-                ngbDatepicker
-                #revisionDateDp="ngbDatepicker"
-                formControlName="revisionDate"
-              />
-              <button type="button" class="btn btn-secondary" (click)="revisionDateDp.toggle()">
-                <fa-icon icon="calendar-alt"></fa-icon>
-              </button>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.reportDate" for="field_reportDate">Report
-              Date</label>
-            <div class="input-group">
-              <input
-                id="field_reportDate"
-                data-cy="reportDate"
-                type="text"
-                class="form-control"
-                name="reportDate"
-                ngbDatepicker
-                #reportDateDp="ngbDatepicker"
-                formControlName="reportDate"
-              />
-              <button type="button" class="btn btn-secondary" (click)="reportDateDp.toggle()">
-                <fa-icon icon="calendar-alt"></fa-icon>
-              </button>
-            </div>
-          </div>
-
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.grossingDoctor" for="field_grossingDoctor">Grossing
-              Doctor</label>
-            <select
+        <div class="row mb-3"
+             *jhiHasAnyAuthority="['ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.conclusionDate" for="field_conclusionDate">Conclusion
+            Date</label>
+          <div class="input-group">
+            <input
+              id="field_conclusionDate"
+              data-cy="conclusionDate"
+              type="text"
               class="form-control"
-              id="field_grossingDoctor"
-              data-cy="grossingDoctor"
-              name="grossingDoctor"
-              formControlName="grossingDoctor"
-            >
-              <option [ngValue]="null"></option>
-              <option
-                [ngValue]="
-                doctorOption.id === editForm.get('grossingDoctor')!.value?.id ? editForm.get('grossingDoctor')!.value : doctorOption
-              "
-                *ngFor="let doctorOption of gDoctorsSharedCollection; trackBy: trackDoctorById"
-              >
-                {{ doctorOption.name }}
-              </option>
-            </select>
+              name="conclusionDate"
+              ngbDatepicker
+              #conclusionDateDp="ngbDatepicker"
+              formControlName="conclusionDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="conclusionDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
           </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.pathologistDoctor"
-                   for="field_pathologistDoctor"
-            >Pathologist Doctor</label
-            >
-            <select
-              class="form-control"
-              id="field_pathologistDoctor"
-              data-cy="pathologistDoctor"
-              name="pathologistDoctor"
-              formControlName="pathologistDoctor"
-            >
-              <option [ngValue]="null"></option>
-              <option
-                [ngValue]="
+        </div>
+
+        <div class="row mb-3" *jhiHasAnyAuthority="['ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.pathologistDoctor"
+                 for="field_pathologistDoctor"
+          >Pathologist Doctor</label
+          >
+          <select
+            class="form-control"
+            id="field_pathologistDoctor"
+            data-cy="pathologistDoctor"
+            name="pathologistDoctor"
+            formControlName="pathologistDoctor"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
                 doctorOption.id === editForm.get('pathologistDoctor')!.value?.id ? editForm.get('pathologistDoctor')!.value : doctorOption
               "
-                *ngFor="let doctorOption of pDoctorsSharedCollection; trackBy: trackDoctorById"
-              >
-                {{ doctorOption.name }}
-              </option>
-            </select>
-          </div>
+              *ngFor="let doctorOption of pDoctorsSharedCollection; trackBy: trackDoctorById"
+            >
+              {{ doctorOption.name }}
+            </option>
+          </select>
+        </div>
 
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.pathologistDoctorTwo"
-                   for="field_pathologistDoctorTwo"
-            >Pathologist Doctor</label
-            >
-            <select
-              class="form-control"
-              id="field_pathologistDoctorTwo"
-              data-cy="pathologistDoctorTwo"
-              name="pathologistDoctorTwo"
-              formControlName="pathologistDoctorTwo"
-            >
-              <option [ngValue]="null"></option>
-              <option
-                [ngValue]="
+        <div class="row mb-3" *jhiHasAnyAuthority="['ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.pathologistDoctorTwo"
+                 for="field_pathologistDoctorTwo"
+          >Pathologist Doctor 2</label
+          >
+          <select
+            class="form-control"
+            id="field_pathologistDoctorTwo"
+            data-cy="pathologistDoctorTwo"
+            name="pathologistDoctorTwo"
+            formControlName="pathologistDoctorTwo"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
                 doctorOption.id === editForm.get('pathologistDoctorTwo')!.value?.id ? editForm.get('pathologistDoctorTwo')!.value : doctorOption
               "
-                *ngFor="let doctorOption of pDoctorsSharedCollection; trackBy: trackDoctorById"
-              >
-                {{ doctorOption.name }}
-              </option>
-            </select>
-          </div>
+              *ngFor="let doctorOption of pDoctorsSharedCollection; trackBy: trackDoctorById"
+            >
+              {{ doctorOption.name }}
+            </option>
+          </select>
+        </div>
 
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.operatorEmployee" for="field_operatorEmployee"
-            >Operator Employee</label
-            >
-            <select
+        <div class="row mb-3" *jhiHasAnyAuthority="['ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.reportDate" for="field_reportDate">Report
+            Date (Typing date)</label>
+          <div class="input-group">
+            <input
+              id="field_reportDate"
+              data-cy="reportDate"
+              type="text"
               class="form-control"
-              id="field_operatorEmployee"
-              data-cy="operatorEmployee"
-              name="operatorEmployee"
-              formControlName="operatorEmployee"
-            >
-              <option [ngValue]="null"></option>
-              <option
-                [ngValue]="
-                employeeOption.id === editForm.get('operatorEmployee')!.value?.id ? editForm.get('operatorEmployee')!.value : employeeOption
-              "
-                *ngFor="let employeeOption of employeesSharedCollection; trackBy: trackEmployeeById"
-              >
-                {{ employeeOption.name }}
-              </option>
-            </select>
-          </div>
-          <div class="row mb-3">
-            <label class="form-label" jhiTranslate="alfairouzApp.specimen.correctorEmployee"
-                   for="field_correctorEmployee"
-            >Corrector Employee</label
-            >
-            <select
-              class="form-control"
-              id="field_correctorEmployee"
-              data-cy="correctorEmployee"
-              name="correctorEmployee"
-              formControlName="correctorEmployee"
-            >
-              <option [ngValue]="null"></option>
-              <option
-                [ngValue]="
-                employeeOption.id === editForm.get('correctorEmployee')!.value?.id
-                  ? editForm.get('correctorEmployee')!.value
-                  : employeeOption
-              "
-                *ngFor="let employeeOption of employeesSharedCollection; trackBy: trackEmployeeById"
-              >
-                {{ employeeOption.name }}
-              </option>
-            </select>
+              name="reportDate"
+              ngbDatepicker
+              #reportDateDp="ngbDatepicker"
+              formControlName="reportDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="reportDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
           </div>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.notes" for="field_notes">Notes</label>
-          <textarea
-            rows="4" type="text" class="form-control" name="notes" id="field_notes" data-cy="notes"
-            formControlName="notes"></textarea>
+        <div class="row mb-3" *jhiHasAnyAuthority="['ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.revisionDate" for="field_revisionDate">Revision
+            Date</label>
+          <div class="input-group">
+            <input
+              id="field_revisionDate"
+              data-cy="revisionDate"
+              type="text"
+              class="form-control"
+              name="revisionDate"
+              ngbDatepicker
+              #revisionDateDp="ngbDatepicker"
+              formControlName="revisionDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="revisionDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
         </div>
 
       </div>
 
+
+      <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
+
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.grossingDoctor" for="field_grossingDoctor">Grossing
+            Doctor</label>
+          <select
+            class="form-control"
+            id="field_grossingDoctor"
+            data-cy="grossingDoctor"
+            name="grossingDoctor"
+            formControlName="grossingDoctor"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                doctorOption.id === editForm.get('grossingDoctor')!.value?.id ? editForm.get('grossingDoctor')!.value : doctorOption
+              "
+              *ngFor="let doctorOption of gDoctorsSharedCollection; trackBy: trackDoctorById"
+            >
+              {{ doctorOption.name }}
+            </option>
+          </select>
+        </div>
+
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.operatorEmployee" for="field_operatorEmployee"
+          >Operator Employee</label
+          >
+          <select
+            class="form-control"
+            id="field_operatorEmployee"
+            data-cy="operatorEmployee"
+            name="operatorEmployee"
+            formControlName="operatorEmployee"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                employeeOption.id === editForm.get('operatorEmployee')!.value?.id ? editForm.get('operatorEmployee')!.value : employeeOption
+              "
+              *ngFor="let employeeOption of employeesSharedCollection; trackBy: trackEmployeeById"
+            >
+              {{ employeeOption.name }}
+            </option>
+          </select>
+        </div>
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.correctorEmployee"
+                 for="field_correctorEmployee"
+          >Corrector Employee</label
+          >
+          <select
+            class="form-control"
+            id="field_correctorEmployee"
+            data-cy="correctorEmployee"
+            name="correctorEmployee"
+            formControlName="correctorEmployee"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                employeeOption.id === editForm.get('correctorEmployee')!.value?.id
+                  ? editForm.get('correctorEmployee')!.value
+                  : employeeOption
+              "
+              *ngFor="let employeeOption of employeesSharedCollection; trackBy: trackEmployeeById"
+            >
+              {{ employeeOption.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" jhiTranslate="alfairouzApp.specimen.notes" for="field_notes">Notes</label>
+        <textarea
+          rows="4" type="text" class="form-control" name="notes" id="field_notes" data-cy="notes"
+          formControlName="notes"></textarea>
+      </div>
+
+
       <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary"
+                (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
 

@@ -46,6 +46,7 @@ public interface SpecimenMapper extends EntityMapper<SpecimenDTO, Specimen> {
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     @Mapping(target = "name", source = "name")
+    @Mapping(target = "nameAr", source = "nameAr")
     PatientDTO toDtoPatientName(Patient patient);
 
     @Named("biopsyName")

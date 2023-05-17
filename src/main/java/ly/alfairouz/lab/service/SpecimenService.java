@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.zip.CRC32;
 
 import ly.alfairouz.lab.domain.Specimen;
+import ly.alfairouz.lab.domain.enumeration.LabRef;
 import ly.alfairouz.lab.domain.enumeration.SpecimenStatus;
 import ly.alfairouz.lab.repository.SpecimenRepository;
 import ly.alfairouz.lab.security.AuthoritiesConstants;
@@ -181,6 +182,12 @@ public class SpecimenService {
         return specimenRepository.findOneWithEagerRelationships(id).map(specimenMapper::toDto);
     }
 
+    @Transactional(readOnly = true)
+    public Optional<SpecimenDTO> findOneByLabQr(String labQr) {
+        log.debug("Request to get Specimen : {}", labQr);
+        return specimenRepository.findOneByLabQrWithToOneRelationships(labQr).map(specimenMapper::toDto);
+    }
+
     /**
      * Delete the specimen by id.
      *
@@ -194,11 +201,29 @@ public class SpecimenService {
     public SpecimenDTO create(SpecimenDTO specimenDTO) {
 
         String year = Year.now().format(DateTimeFormatter.ofPattern("uu"));
-        Long count = specimenRepository.countByLabRefNoStartingWith(year);
+
+        // determine the counter to use based on the LabRef type
+        String counterPrefix = null;
+        Long count;
+        if (specimenDTO.getLabRef() == LabRef.C) {
+            count = specimenRepository.countByLabRefNoStartingWith(year + "C");
+        } else if (specimenDTO.getLabRef() == LabRef.IH) {
+            count = specimenRepository.countByLabRefNoStartingWith(year + "IH");
+        } else {
+            // for H, HSO, and IHSO, get the max count
+            Long countH = specimenRepository.countByLabRefNoStartingWith(year + "H");
+            Long countHSO = specimenRepository.countByLabRefNoStartingWith(year + "HSO");
+            Long countIHSO = specimenRepository.countByLabRefNoStartingWith(year + "IHSO");
+            count = Math.max(countH, Math.max(countHSO, countIHSO));
+
+            System.out.println(countH);
+
+        }
+
         count++;
         String all = year + specimenDTO.getLabRef().toString() + String.format("%05d", count);
 
-        specimenDTO.setLabRefOrder(count.toString());
+        specimenDTO.setLabRefOrder(count.toString());  // this is the overall order
         specimenDTO.setLabRefNo(all);
 
         int mySaltSizeInBytes = 32;
@@ -238,4 +263,6 @@ public class SpecimenService {
 
         return save(specimenDTO);
     }
+
+
 }

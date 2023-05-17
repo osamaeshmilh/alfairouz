@@ -12,8 +12,9 @@
           <button (click)="search()" class="mr-2" mat-icon-button matPrefix type="submit">
             <mat-icon>search</mat-icon>
           </button>
-          <input [(ngModel)]="currentSearch" matInput name="currentSearch" placeholder="ادخل رقم التسجيل" type="text"/>
-          <mat-hint align="start"> ادخل رقم العينة وقم بضغط رز البحث لعرض حالة العينة</mat-hint>
+          <input [(ngModel)]="currentSearch" matInput name="currentSearch" placeholder=" ادخل كود العينة QR"
+                 type="text"/>
+          <mat-hint align="start"> ادخل كود العينة QR وقم بالضغط على بحث لعرض حالة العينة</mat-hint>
           <button (click)="clear()" *ngIf="currentSearch" class="ml-1" color="warn" mat-icon-button matSuffix>
             <mat-icon>clear</mat-icon>
           </button>
@@ -43,17 +44,17 @@
         <div class="col-10 col-center-block mt-5">
           <div class="row detail-row mt-3">
             <div class="col-4">
-              <div class="text-muted">رقم العينة</div>
-              <h6 matLine>{{ specimen.id }}</h6>
+              <div class="text-muted">رقم QR العينة</div>
+              <h6 matLine>{{ specimen.labQr }}</h6>
             </div>
             <div class="col-4">
               <div class="text-muted">الاسم</div>
-              <h6 matLine *ngIf="specimen.patient">{{ specimen.patient?.name }}</h6>
+              <h6 matLine *ngIf="specimen.patient">{{ specimen.patient?.nameAr }}</h6>
             </div>
             <div class="col-4">
               <div class="text-muted">حالة العينة</div>
               <div
-                jhiTranslate="{{ 'pppInvestorApp.SpecimenStatus.' + specimen.specimenStatus }}"
+                jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.' + specimen.specimenStatus }}"
                 class="{{ specimen.specimenStatus | getColor }}"
               >
                 {{ specimen.specimenStatus }}
@@ -61,48 +62,46 @@
             </div>
           </div>
         </div>
+
+
         <mat-stepper orientation="vertical" class="mat-step-header-no-click" [linear]="true">
-          <mat-step
-            [completed]="true"
-            [editable]="false" label="تم استلام العينة">
+          <mat-step [completed]="isCompleted('RECEIVED')" [editable]="false">
+            <ng-template matStepLabel>
+              <span jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.RECEIVED' }}">RECEIVED</span>
+            </ng-template>
           </mat-step>
-          <mat-step
-            [completed]="true"
-            [editable]="false" label="مرحلة التقطيع">
+          <mat-step [completed]="isCompleted('GROSSING')" [editable]="false">
+            <ng-template matStepLabel>
+              <span jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.GROSSING' }}">GROSSING</span>
+            </ng-template>
           </mat-step>
-          <mat-step
-            [completed]="true"
-            [editable]="false" label="مرحلة المعالجة">
+          <mat-step [completed]="isCompleted('PROCESSING')" [editable]="false">
+            <ng-template matStepLabel>
+              <span jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.PROCESSING' }}">PROCESSING</span>
+            </ng-template>
           </mat-step>
-          <mat-step
-            [completed]="true"
-            [editable]="false" label="مرحلة الشمع">
+          <mat-step [completed]="isCompleted('DIAGNOSING')" [editable]="false">
+            <ng-template matStepLabel>
+              <span jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.DIAGNOSING' }}">DIAGNOSING</span>
+            </ng-template>
           </mat-step>
-          <mat-step
-            [completed]="true"
-            [editable]="false" label="مرحلة القطع">
+          <mat-step [completed]="isCompleted('TYPING')" [editable]="false">
+            <ng-template matStepLabel>
+              <span jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.TYPING' }}">TYPING</span>
+            </ng-template>
           </mat-step>
-          <mat-step
-            [completed]="true"
-            [editable]="false" label="مرحلة الصبغ">
+          <mat-step [completed]="isCompleted('REVISION')" [editable]="false">
+            <ng-template matStepLabel>
+              <span jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.REVISION' }}">REVISION</span>
+            </ng-template>
           </mat-step>
-          <mat-step
-            [completed]="false"
-            [editable]="false" label="مرحلة التشخيص">
-          </mat-step>
-          <mat-step
-            [completed]="false"
-            [editable]="false" label="مرحلة الطباعة">
-          </mat-step>
-          <mat-step
-            [completed]="false"
-            [editable]="false" label="مرحلة المراجعة">
-          </mat-step>
-          <mat-step
-            [completed]="false"
-            [editable]="false" label="النتيجة جاهزة">
+          <mat-step [completed]="isCompleted('READY')" [editable]="false">
+            <ng-template matStepLabel>
+              <span jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.READY' }}">READY</span>
+            </ng-template>
           </mat-step>
         </mat-stepper>
+
 
       </div>
     </div>

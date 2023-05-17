@@ -28,9 +28,10 @@ public interface SpecimenRepository extends JpaRepository<Specimen, Long>, JpaSp
 
     @Query(value = "SELECT COUNT(id) " +
         "FROM specimen " +
-        "where SUBSTRING(specimen.lab_ref_no, 1, 2) = :year ",
+        "where SUBSTRING(specimen.lab_ref_no, 1, LENGTH(:prefix)) = :prefix",
         nativeQuery = true)
-    long countByLabRefNoStartingWith(@Param("year") String year);
+    long countByLabRefNoStartingWith(@Param("prefix") String prefix);
+
 
     @Query(
         value = "select distinct specimen from Specimen specimen left join fetch specimen.patient left join fetch specimen.biopsy left join fetch specimen.cytology left join fetch specimen.organ left join fetch specimen.specimenType left join fetch specimen.size left join fetch specimen.referringCenter left join fetch specimen.grossingDoctor left join fetch specimen.referringDoctor left join fetch specimen.pathologistDoctor left join fetch specimen.operatorEmployee left join fetch specimen.correctorEmployee",
@@ -48,5 +49,9 @@ public interface SpecimenRepository extends JpaRepository<Specimen, Long>, JpaSp
     )
     Optional<Specimen> findOneWithToOneRelationships(@Param("id") Long id);
 
+    @Query(
+        "select specimen from Specimen specimen left join fetch specimen.patient left join fetch specimen.biopsy left join fetch specimen.cytology left join fetch specimen.organ left join fetch specimen.specimenType left join fetch specimen.size left join fetch specimen.referringCenter left join fetch specimen.grossingDoctor left join fetch specimen.referringDoctor left join fetch specimen.pathologistDoctor left join fetch specimen.operatorEmployee left join fetch specimen.correctorEmployee where specimen.labQr =:labQr"
+    )
+    Optional<Specimen> findOneByLabQrWithToOneRelationships(@Param("labQr") String labQr);
 
 }

@@ -4,9 +4,14 @@ package ly.alfairouz.lab.domain.enumeration;
  * The LabRef enumeration.
  */
 public enum LabRef {
-    H,
+    //1
     C,
-    HSO,
+
+    //2
     IH,
+
+    //3
+    H,
+    HSO,
     IHSO,
 }

@@ -81,7 +81,10 @@ export interface ISpecimen {
   patientAddress?: string | null;
   patientGender?: Gender | null;
   patientBirthDate?: dayjs.Dayjs | null;
-
+  createdBy?: string | null;
+  createdDate?: Date | null;
+  lastModifiedBy?: string | null;
+  lastModifiedDate?: Date | null;
 }
 
 export class Specimen implements ISpecimen {
@@ -150,6 +153,10 @@ export class Specimen implements ISpecimen {
     public patientAddress?: string | null,
     public patientGender?: Gender | null,
     public patientBirthDate?: dayjs.Dayjs | null,
+    public createdBy?: string | null,
+    public createdDate?: Date | null,
+    public lastModifiedBy?: string | null,
+    public lastModifiedDate?: Date | null,
   ) {
     this.isWithdrawn = this.isWithdrawn ?? false;
     this.urgentSample = this.urgentSample ?? false;

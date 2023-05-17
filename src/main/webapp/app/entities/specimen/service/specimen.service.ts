@@ -55,9 +55,9 @@ export class SpecimenService {
   }
 
 
-  findPublic(id: number): Observable<EntityResponseType> {
+  findPublicByQr(qr: string): Observable<EntityResponseType> {
     return this.http
-      .get<ISpecimen>(`${this.resourcePublicUrl}/${id}`, {observe: 'response'})
+      .get<ISpecimen>(`${this.resourcePublicUrl}/by-qr/${qr}`, {observe: 'response'})
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
