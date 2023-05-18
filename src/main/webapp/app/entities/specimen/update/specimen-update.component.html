@@ -1,4 +1,4 @@
-<div class="entity-container">
+<div class="entity-container" style="direction:ltr;">
   <div class="mat-elevation-z1 round-card white-bg p-4 mt-5">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2 id="jhi-specimen-heading" data-cy="SpecimenCreateUpdateHeading"
@@ -553,12 +553,13 @@
           </select>
         </div>
 
+
         <div class="row mb-3"
              *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
           <label class="form-label" jhiTranslate="alfairouzApp.specimen.clinicalData" for="field_clinicalData">Clinical
             Data</label>
           <textarea
-            rows="4"
+            rows="6"
             type="text"
             class="form-control"
             name="clinicalData"
@@ -595,7 +596,7 @@
           >Gross Examination</label
           >
           <textarea
-            rows="4"
+            rows="6"
             type="text"
             class="form-control"
             name="grossExamination"
@@ -632,7 +633,7 @@
           >Microscopic Data</label
           >
           <textarea
-            rows="4"
+            rows="6"
             type="text"
             class="form-control"
             name="microscopicData"
@@ -679,7 +680,7 @@
           <label class="form-label" jhiTranslate="alfairouzApp.specimen.conclusion"
                  for="field_conclusion">Conclusion</label>
           <textarea
-            rows="4"
+            rows="6"
             type="text"
             class="form-control"
             name="conclusion"
@@ -879,7 +880,7 @@
       <div class="row mb-3">
         <label class="form-label" jhiTranslate="alfairouzApp.specimen.notes" for="field_notes">Notes</label>
         <textarea
-          rows="4" type="text" class="form-control" name="notes" id="field_notes" data-cy="notes"
+          rows="6" type="text" class="form-control" name="notes" id="field_notes" data-cy="notes"
           formControlName="notes"></textarea>
       </div>
 

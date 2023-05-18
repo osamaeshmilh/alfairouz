@@ -59,7 +59,8 @@
               >
                 {{ specimen.specimenStatus }}
               </div>
-              <button *ngIf="isCompleted('READY')" class="m-2" color="primary" (click)="getPdf(specimen.id)"
+              <button *ngIf="isCompleted('READY') && specimen.notPaid == 0" class="m-2" color="primary"
+                      (click)="getPdf(specimen.id)"
                       mat-raised-button>
                 <mat-icon>insert_drive_file</mat-icon>
                 <span class="d-none d-md-inline">Print Report</span>

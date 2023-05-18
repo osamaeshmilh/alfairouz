@@ -24,7 +24,7 @@ alfairouz.specimen.clinical_data,
 alfairouz.specimen.gross_examination,
 alfairouz.specimen.microscopic_data,
 alfairouz.specimen.conclusion,
-alfairouz.referring_center.name_ar AS referringCenterNameAr,
+alfairouz.referring_center.name AS referringCenterName,
 alfairouz.doctor.name AS referringDoctorName,
 pathologistDoctors.name AS pathologistDoctorName,
 pathologistDoctorTwo.name AS pathologistDoctorTwoName,
@@ -92,8 +92,8 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
         <property name="com.jaspersoft.studio.field.label" value="conclusion"/>
         <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
     </field>
-    <field name="referringCenterNameAr" class="java.lang.String">
-        <property name="com.jaspersoft.studio.field.label" value="referringCenterNameAr"/>
+    <field name="referringCenterName" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="referringCenterName"/>
         <property name="com.jaspersoft.studio.field.tree.path" value="referring_center"/>
     </field>
     <field name="referringDoctorName" class="java.lang.String">
@@ -201,7 +201,7 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{referringCenterNameAr}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{referringCenterName}]]></textFieldExpression>
             </textField>
             <staticText>
                 <reportElement x="13" y="270" width="87" height="20" uuid="30d7cb07-7ee8-4fa8-a653-bea5f366862c"/>
@@ -378,8 +378,8 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 <textFieldExpression><![CDATA[$F{pathologistDoctorName}]]></textFieldExpression>
             </textField>
             <staticText>
-                <reportElement x="13" y="48" width="470" height="20" uuid="bea44d1c-e411-4961-832d-df48466ad15d"/>
-                <textElement textAlignment="Left" verticalAlignment="Top">
+                <reportElement x="5" y="48" width="520" height="20" uuid="bea44d1c-e411-4961-832d-df48466ad15d"/>
+                <textElement textAlignment="Center" verticalAlignment="Top">
                     <font fontName="Times New Roman" size="8" isBold="false" isItalic="false" isUnderline="false"/>
                 </textElement>
                 <text>

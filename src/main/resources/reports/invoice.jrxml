@@ -28,7 +28,10 @@ alfairouz.doctor.name as referringDoctorName,
 alfairouz.patient.name_ar as patientNameAr,
 alfairouz.patient.name as patientName,
 alfairouz.patient.gender as patientGender,
-TIMESTAMPDIFF(YEAR, alfairouz.patient.birth_date  , CURDATE()) AS age,
+CONCAT(
+TIMESTAMPDIFF(YEAR, alfairouz.patient.birth_date, CURDATE()),' years, ',
+TIMESTAMPDIFF(MONTH, alfairouz.patient.birth_date, CURDATE()) % 12,' months, ',
+TIMESTAMPDIFF(DAY, alfairouz.patient.birth_date, CURDATE()) % 30,' days') AS age,
 alfairouz.patient.mobile_number  as patientMobileNumber
  from alfairouz.specimen
  LEFT OUTER JOIN alfairouz.patient ON alfairouz.specimen.patient_id = alfairouz.patient.id
@@ -100,7 +103,7 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
         <property name="com.jaspersoft.studio.field.label" value="patientGender"/>
         <property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
     </field>
-    <field name="age" class="java.lang.Long">
+    <field name="age" class="java.lang.String">
         <property name="com.jaspersoft.studio.field.label" value="age"/>
     </field>
     <field name="patientMobileNumber" class="java.lang.String">
@@ -114,7 +117,7 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
         <band height="181" splitType="Stretch">
             <image>
                 <reportElement x="155" y="0" width="450" height="181" uuid="109e8c2f-1742-42dc-84fd-ca339e24b662"/>
-                <imageExpression><![CDATA["invoice_header.png"]]></imageExpression>
+                <imageExpression><![CDATA["new_header.png"]]></imageExpression>
             </image>
             <staticText>
                 <reportElement x="-300" y="-209" width="98" height="20" uuid="44b9f6e4-7d87-45ea-a607-1d68db7de248"/>
@@ -303,7 +306,8 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{sampling_date}]]></textFieldExpression>
+                <textFieldExpression>
+                    <![CDATA[new SimpleDateFormat("yyyy-MM-dd").format($F{sampling_date})]]></textFieldExpression>
             </textField>
             <staticText>
                 <reportElement x="40" y="200" width="85" height="20" uuid="64e4f98d-78ff-4455-aba0-2fcf4d0e1e3f"/>
@@ -320,7 +324,8 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{receiving_date}]]></textFieldExpression>
+                <textFieldExpression>
+                    <![CDATA[new SimpleDateFormat("yyyy-MM-dd").format($F{receiving_date})]]></textFieldExpression>
             </textField>
             <staticText>
                 <reportElement x="40" y="220" width="85" height="20" uuid="0d5200d2-40db-462b-b17c-2fc8a476371c"/>
@@ -344,7 +349,8 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{report_date}]]></textFieldExpression>
+                <textFieldExpression>
+                    <![CDATA[new SimpleDateFormat("yyyy-MM-dd").format($F{report_date})]]></textFieldExpression>
             </textField>
             <staticText>
                 <reportElement x="40" y="160" width="85" height="20" uuid="24f46c43-af65-49aa-9bcc-52657e6f2f5d"/>
@@ -426,9 +432,8 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <textElement textAlignment="Justified" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <text><![CDATA[1- في حالة سداد قيمة العينة كاملة، تستطيع الحصول على نتيجتك مباشرة وتحميلها او طباعتها من موقعنا الإلكتروني او تطبيق مختبر الفيروز على هاتفك  بدون الرجوع الى المختبر مرة اخرى، وذلك بالدخول على موقعنا في الرابط الموجود بالاسفل، وطباعة رقم الهاتف الموجود في الإيصال وكود العينة في المكان المخصص، أو تستطيع قراءة الكود الموجود في الإيصال بواسطة كاميرا الهاتف المحمول لتخرج لك النتيجة مباشرة
-
-2- المدة التقريبية حتى يجهز تقرير العينة هي من 3-5 أيام بالنسبة للعينات الصغيرة، و 7-10 أيام بالنسبة للعينات الكبيرة، بدون احتساب الجمعة لأنه ليس يوم عمل. أحياناً يحصل تأخير بسبب اعادة الفحص والتدقيق، ولكن ستتلقى رسالة نصية أو اتصال على هاتفك الموجود في الإيصال حين يكون التقرير جاهز للتسليم، تستطيع كذلك الاطلاع على حالة العينة في أي مرحلة وصلت من التجهيز عن طريق موقعنا الإلكتروني أو تطبيق مختبر الفيروز]]></text>
+                <text>
+                    <![CDATA[1- المدة التقريبية حتى يجهز تقرير العينة هي من 3-5 أيام بالنسبة للعينات الصغيرة، و 7-10 أيام بالنسبة للعينات الكبيرة، بدون احتساب الجمعة لأنه ليس يوم عمل. أحياناً يحصل تأخير بسبب اعادة الفحص والتدقيق، ولكن ستتلقى رسالة نصية أو اتصال على هاتفك الموجود في الإيصال حين يكون التقرير جاهز للتسليم، تستطيع كذلك الاطلاع على حالة العينة في أي مرحلة وصلت من التجهيز عن طريق موقعنا الإلكتروني أو تطبيق مختبر الفيروز]]></text>
             </staticText>
         </band>
     </pageFooter>

@@ -24,7 +24,7 @@ alfairouz.specimen.clinical_data,
 alfairouz.specimen.gross_examination,
 alfairouz.specimen.microscopic_data,
 alfairouz.specimen.conclusion,
-alfairouz.referring_center.name_ar AS referringCenterNameAr,
+alfairouz.referring_center.name AS referringCenterName,
 alfairouz.doctor.name AS referringDoctorName,
 pathologistDoctors.name AS pathologistDoctorName,
 pathologistDoctorTwo.name AS pathologistDoctorTwoName,
@@ -92,8 +92,8 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
         <property name="com.jaspersoft.studio.field.label" value="conclusion"/>
         <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
     </field>
-    <field name="referringCenterNameAr" class="java.lang.String">
-        <property name="com.jaspersoft.studio.field.label" value="referringCenterNameAr"/>
+    <field name="referringCenterName" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="referringCenterName"/>
         <property name="com.jaspersoft.studio.field.tree.path" value="referring_center"/>
     </field>
     <field name="referringDoctorName" class="java.lang.String">
@@ -129,9 +129,9 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
     </field>
     <background>
         <band height="802" splitType="Stretch">
-            <image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
-                <reportElement x="0" y="0" width="595" height="802" uuid="309be566-674b-44af-a470-094dd2135a76"/>
-                <imageExpression><![CDATA["report_template.png"]]></imageExpression>
+            <image scaleImage="FillFrame" hAlign="Left" vAlign="Middle">
+                <reportElement x="-19" y="0" width="595" height="802" uuid="309be566-674b-44af-a470-094dd2135a76"/>
+                <imageExpression><![CDATA["template_new.png"]]></imageExpression>
             </image>
         </band>
     </background>
@@ -206,7 +206,7 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{referringCenterNameAr}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{referringCenterName}]]></textFieldExpression>
             </textField>
             <staticText>
                 <reportElement x="13" y="270" width="87" height="20" uuid="30d7cb07-7ee8-4fa8-a653-bea5f366862c"/>
@@ -383,12 +383,12 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 <textFieldExpression><![CDATA[$F{pathologistDoctorName}]]></textFieldExpression>
             </textField>
             <staticText>
-                <reportElement x="13" y="48" width="470" height="20" uuid="bea44d1c-e411-4961-832d-df48466ad15d"/>
-                <textElement textAlignment="Left" verticalAlignment="Top">
+                <reportElement x="5" y="48" width="520" height="20" uuid="bea44d1c-e411-4961-832d-df48466ad15d"/>
+                <textElement textAlignment="Center" verticalAlignment="Top">
                     <font fontName="Times New Roman" size="8" isBold="false" isItalic="false" isUnderline="false"/>
                 </textElement>
-                <text><![CDATA[
-                    This report is electronically signed, any abrasion or modification would render it void. To check authenticity and credibility please scan the code.]]></text>
+                <text>
+                    <![CDATA[This report is electronically signed, any abrasion or modification would render it void. To check authenticity and credibility please scan the code.]]></text>
             </staticText>
             <componentElement>
                 <reportElement x="483" y="9" width="60" height="55" uuid="295e359a-c193-462e-afa3-d51fa0beeee7"/>

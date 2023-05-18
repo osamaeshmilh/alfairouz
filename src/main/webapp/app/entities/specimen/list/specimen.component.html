@@ -90,7 +90,8 @@
           <span jhiTranslate="alfairouzApp.specimen.patient">Patient</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
-        <th scope="col" jhiSortBy="specimenType.name">
+        <th scope="col" jhiSortBy="specimenType.name"
+            *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_REFERRING_CENTER','ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
           <span jhiTranslate="alfairouzApp.specimen.specimenType">Specimen Type</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
@@ -102,12 +103,12 @@
         </th>
 
         <th scope="col" jhiSortBy="referringCenter.name"
-            *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_REFERRING_DOCTOR', 'ROLE_TECHNICIAN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
+            *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_TYPING', 'ROLE_REFERRING_DOCTOR', 'ROLE_TECHNICIAN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
           <span jhiTranslate="alfairouzApp.specimen.referringCenter">Referring Center</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
         <th scope="col" jhiSortBy="referringDoctor.name"
-            *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_REFERRING_CENTER', 'ROLE_TECHNICIAN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
+            *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_TYPING', 'ROLE_REFERRING_CENTER', 'ROLE_TECHNICIAN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
           <span jhiTranslate="alfairouzApp.specimen.referringDoctor">Referring Doctor</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
@@ -180,19 +181,21 @@
             <a>{{ specimen.patient?.nameAr }}</a>
           </div>
         </td>
-        <td>
+        <td
+          *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_REFERRING_CENTER','ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
           <div *ngIf="specimen.specimenType">
             <a>{{ specimen.specimenType?.name }}</a>
           </div>
         </td>
         <td *jhiHasAnyAuthority="['ROLE_REFERRING_CENTER']">{{ specimen.price }} LYD</td>
-        <td>
+        <td
+          *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_TYPING', 'ROLE_REFERRING_DOCTOR', 'ROLE_TECHNICIAN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
           <div *ngIf="specimen.referringCenter">
             <a>{{ specimen.referringCenter?.name }}</a>
           </div>
         </td>
         <td
-          *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_TECHNICIAN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
+          *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_TYPING', 'ROLE_REFERRING_CENTER', 'ROLE_TECHNICIAN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
           <div *ngIf="specimen.referringDoctor">
             <a>{{ specimen.referringDoctor?.name }}</a>
           </div>
