@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="sticker" pageWidth="144" pageHeight="95" columnWidth="140" leftMargin="0" rightMargin="0"
+              topMargin="0" bottomMargin="0" uuid="3b1a56d0-19f6-4e96-9bda-3f4552a2becc">
+    <property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+    <property name="com.jaspersoft.studio.data.defaultdataadapter" value="Mysql"/>
+    <parameter name="specimen_id" class="java.lang.Long">
+        <parameterDescription><![CDATA[]]></parameterDescription>
+    </parameter>
+    <queryString language="SQL">
+        <![CDATA[SELECT
+alfairouz.specimen.id AS specimenId,
+alfairouz.specimen.lab_ref_no,
+alfairouz.specimen.lab_qr ,
+alfairouz.specimen.samples ,
+alfairouz.specimen.sampling_date,
+alfairouz.specimen.receiving_date,
+alfairouz.specimen.file_no,
+alfairouz.specimen.report_date,
+alfairouz.specimen.clinical_data,
+alfairouz.specimen.gross_examination,
+alfairouz.specimen.microscopic_data,
+alfairouz.specimen.conclusion,
+alfairouz.specimen.notes,
+alfairouz.specimen.blocks,
+alfairouz.specimen.slides,
+alfairouz.specimen.received_in_formalin,
+alfairouz.specimen.reserve,
+alfairouz.specimen.urgent_sample,
+alfairouz.referring_center.name_ar AS referringCenterNameAr,
+alfairouz.doctor.name AS referringDoctorName,
+grossingDoctors.name AS grossingDoctorName,
+pathologistDoctors.name AS pathologistDoctorName,
+pathologistDoctorTwo.name AS pathologistDoctorTwoName,
+alfairouz.patient.name_ar AS patientNameAr,
+alfairouz.patient.name AS patientName,
+alfairouz.patient.gender AS patientGender,
+biopsy.name AS biopsyName,
+cytology.name AS cytologyName,
+organ.name AS organName,
+CONCAT(
+TIMESTAMPDIFF(YEAR, alfairouz.patient.birth_date, CURDATE()),' years, ',
+TIMESTAMPDIFF(MONTH, alfairouz.patient.birth_date, CURDATE()) % 12,' months, ',
+TIMESTAMPDIFF(DAY, alfairouz.patient.birth_date, CURDATE()) % 30,' days') AS age,
+alfairouz.patient.mobile_number AS patientMobileNumber
+FROM alfairouz.specimen
+LEFT OUTER JOIN alfairouz.patient ON alfairouz.specimen.patient_id = alfairouz.patient.id
+LEFT OUTER JOIN alfairouz.referring_center ON alfairouz.specimen.referring_center_id = alfairouz.referring_center.id
+LEFT OUTER JOIN alfairouz.doctor ON alfairouz.specimen.referring_doctor_id = alfairouz.doctor.id
+LEFT OUTER JOIN alfairouz.doctor AS grossingDoctors ON alfairouz.specimen.grossing_doctor_id = grossingDoctors.id
+LEFT OUTER JOIN alfairouz.doctor AS pathologistDoctors ON alfairouz.specimen.pathologist_doctor_id = pathologistDoctors.id
+LEFT OUTER JOIN alfairouz.doctor AS pathologistDoctorTwo ON alfairouz.specimen.pathologist_doctor_two_id = pathologistDoctorTwo.id
+LEFT OUTER JOIN alfairouz.biopsy ON alfairouz.specimen.biopsy_id = alfairouz.biopsy.id
+LEFT OUTER JOIN alfairouz.cytology ON alfairouz.specimen.cytology_id = alfairouz.cytology.id
+LEFT OUTER JOIN alfairouz.organ ON alfairouz.specimen.organ_id = alfairouz.organ.id
+WHERE alfairouz.specimen.id = $P{specimen_id};]]>
+    </queryString>
+    <field name="specimenId" class="java.lang.Long">
+        <property name="com.jaspersoft.studio.field.label" value="specimenId"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="lab_ref_no" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="lab_ref_no"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="lab_qr" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="lab_qr"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="samples" class="java.lang.Integer">
+        <property name="com.jaspersoft.studio.field.label" value="samples"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="sampling_date" class="java.sql.Date">
+        <property name="com.jaspersoft.studio.field.label" value="sampling_date"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="receiving_date" class="java.sql.Date">
+        <property name="com.jaspersoft.studio.field.label" value="receiving_date"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="file_no" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="file_no"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="report_date" class="java.sql.Date">
+        <property name="com.jaspersoft.studio.field.label" value="report_date"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="clinical_data" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="clinical_data"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="gross_examination" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="gross_examination"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="microscopic_data" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="microscopic_data"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="conclusion" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="conclusion"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="referringCenterNameAr" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="referringCenterNameAr"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="referring_center"/>
+    </field>
+    <field name="referringDoctorName" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="referringDoctorName"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="doctor"/>
+    </field>
+    <field name="grossingDoctorName" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="GrossingDoctor"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="doctor"/>
+    </field>
+    <field name="pathologistDoctorName" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="pathologistDoctorName"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="doctor"/>
+    </field>
+    <field name="pathologistDoctorTwoName" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="pathologistDoctorTwoName"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="doctor"/>
+    </field>
+    <field name="patientNameAr" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="patientNameAr"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+    </field>
+    <field name="patientName" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="patientName"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+    </field>
+    <field name="patientGender" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="patientGender"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+    </field>
+    <field name="age" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="age"/>
+    </field>
+    <field name="patientMobileNumber" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="patientMobileNumber"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="patient"/>
+    </field>
+    <field name="biopsyName" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="biopsyName"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="biopsy"/>
+    </field>
+    <field name="cytologyName" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="cytologyName"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="cytology"/>
+    </field>
+    <field name="organName" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="organName"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="organ"/>
+    </field>
+    <field name="notes" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="notes"/>
+    </field>
+    <field name="blocks" class="java.lang.Integer">
+        <property name="com.jaspersoft.studio.field.label" value="blocks"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="slides" class="java.lang.Integer">
+        <property name="com.jaspersoft.studio.field.label" value="slides"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="received_in_formalin" class="java.lang.Boolean">
+        <property name="com.jaspersoft.studio.field.label" value="received_in_formalin"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="reserve" class="java.lang.Boolean">
+        <property name="com.jaspersoft.studio.field.label" value="reserve"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="urgent_sample" class="java.lang.Boolean">
+        <property name="com.jaspersoft.studio.field.label" value="urgent_sample"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <detail>
+        <band height="95" splitType="Stretch">
+            <componentElement>
+                <reportElement x="73" y="10" width="59" height="54" uuid="94d9e777-6e01-493b-889b-d854410368bc"/>
+                <jr:QRCode xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components"
+                           xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+                    <jr:codeExpression><![CDATA[$F{lab_qr}]]></jr:codeExpression>
+                </jr:QRCode>
+            </componentElement>
+            <textField>
+                <reportElement x="10" y="64" width="62" height="15" uuid="b58675fe-f102-4add-abba-1994253d0b80"/>
+                <textFieldExpression><![CDATA[$F{patientNameAr}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>

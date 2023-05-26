@@ -135,6 +135,17 @@ export class SpecimenComponent implements OnInit {
     window.open(url, '_blank');
   }
 
+  getDataPdf(id: any): void {
+    const url = '/api/public/specimen/data-report/' + String(id);
+    window.open(url, '_blank');
+  }
+
+  getStickerPdf(id: any): void {
+    const url = '/api/public/specimen/sticker/' + String(id);
+    window.open(url, '_blank');
+  }
+
+
   protected sort(): string[] {
     const result = [this.predicate + ',' + (this.ascending ? ASC : DESC)];
     if (this.predicate !== 'id') {

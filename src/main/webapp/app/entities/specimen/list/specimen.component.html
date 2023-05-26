@@ -259,6 +259,20 @@
                 <mat-icon>insert_drive_file</mat-icon>
                 <span class="d-none d-md-inline">Print Report</span>
               </button>
+
+              <button
+                *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_TECHNICIAN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR', 'ROLE_TYPING', 'ROLE_REVISION']"
+                (click)="getDataPdf(specimen.id)" mat-menu-item>
+                <mat-icon>insert_drive_file</mat-icon>
+                <span class="d-none d-md-inline">Print Data Report</span>
+              </button>
+
+              <button
+                *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_TECHNICIAN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR', 'ROLE_TYPING', 'ROLE_REVISION']"
+                (click)="getStickerPdf(specimen.id)" mat-menu-item>
+                <mat-icon>insert_drive_file</mat-icon>
+                <span class="d-none d-md-inline">Print Sticker</span>
+              </button>
               <button
                 *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_REFERRING_CENTER', 'ROLE_TECHNICIAN', 'ROLE_RECEPTION', 'ROLE_REFERRING_DOCTOR' ,'ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR', 'ROLE_TYPING', 'ROLE_REVISION']"
                 (click)="getPdfColored(specimen.id)" mat-menu-item>

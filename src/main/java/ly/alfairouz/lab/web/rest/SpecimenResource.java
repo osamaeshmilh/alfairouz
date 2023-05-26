@@ -475,4 +475,30 @@ public class SpecimenResource {
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(fileBytes), header);
     }
 
+    @GetMapping(value = "/public/specimen/data-report/{specimenId}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> printReportDataPDF(@PathVariable Long specimenId) {
+        log.debug("REST request to get report");
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("specimen_id", specimenId);
+        byte[] fileBytes = jasperReportsUtil.getReportAsPDF(parameters, "data_report");
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.APPLICATION_PDF);
+        header.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=report_" + System.currentTimeMillis() + ".pdf");
+        header.setContentLength(fileBytes.length);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(fileBytes), header);
+    }
+
+    @GetMapping(value = "/public/specimen/sticker/{specimenId}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> printStickerPDF(@PathVariable Long specimenId) {
+        log.debug("REST request to get report");
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("specimen_id", specimenId);
+        byte[] fileBytes = jasperReportsUtil.getReportAsPDF(parameters, "sticker");
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.APPLICATION_PDF);
+        header.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=report_" + System.currentTimeMillis() + ".pdf");
+        header.setContentLength(fileBytes.length);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(fileBytes), header);
+    }
+
 }

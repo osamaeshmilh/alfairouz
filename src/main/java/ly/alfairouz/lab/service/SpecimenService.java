@@ -130,6 +130,18 @@ public class SpecimenService {
             }
         }
 
+        if (specimenDTO.getSpecimenStatus() == SpecimenStatus.PROCESSING && specimenDTO.getMicroscopicDate() != null) {
+            specimenDTO.setSpecimenStatus(SpecimenStatus.DIAGNOSING);
+        }
+
+        if (specimenDTO.getSpecimenStatus() == SpecimenStatus.DIAGNOSING && specimenDTO.getConclusionDate() != null) {
+            specimenDTO.setSpecimenStatus(SpecimenStatus.TYPING);
+        }
+
+        if (specimenDTO.getSpecimenStatus() == SpecimenStatus.TYPING && specimenDTO.getRevisionDate() != null) {
+            specimenDTO.setSpecimenStatus(SpecimenStatus.REVISION);
+        }
+
         if (specimenDTO.getReportDate() != null) {
             if (specimenDTO.getSpecimenStatus() == SpecimenStatus.TYPING || specimenDTO.getSpecimenStatus() == SpecimenStatus.REVISION) {
                 specimenDTO.setSpecimenStatus(SpecimenStatus.READY);
