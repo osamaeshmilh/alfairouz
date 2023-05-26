@@ -87,7 +87,23 @@ public class SpecimenService {
         String newType = specimenDTO.getLabRef().toString();
         if (!prevType.equals(newType)) {
             String year = Year.now().format(DateTimeFormatter.ofPattern("uu"));
-            String all = year + specimenDTO.getLabRef().toString() + String.format("%05d", Integer.parseInt(specimenDTO.getLabRefOrder()));
+
+            // Recalculate count (LabRefOrder)
+            Long count;
+            if (specimenDTO.getLabRef() == LabRef.C) {
+                count = specimenRepository.countByLabRefNoStartingWith(year + "C");
+            } else if (specimenDTO.getLabRef() == LabRef.IH) {
+                count = specimenRepository.countByLabRefNoStartingWith(year + "IH");
+            } else {
+                Long countH = specimenRepository.countByLabRefNoStartingWith(year + "H");
+                Long countHSO = specimenRepository.countByLabRefNoStartingWith(year + "HSO");
+                Long countIHSO = specimenRepository.countByLabRefNoStartingWith(year + "IHSO");
+                count = Math.max(countH, Math.max(countHSO, countIHSO));
+            }
+            count++;
+            specimenDTO.setLabRefOrder(count.toString()); // Set the updated LabRefOrder
+
+            String all = year + specimenDTO.getLabRef().toString() + String.format("%05d", count);
             specimenDTO.setLabRefNo(all);
 
             int mySaltSizeInBytes = 32;
