@@ -6,6 +6,8 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.*;
 
+import liquibase.pro.packaged.P;
+import ly.alfairouz.lab.domain.enumeration.PaymentType;
 import ly.alfairouz.lab.repository.SpecimenRepository;
 import ly.alfairouz.lab.security.AuthoritiesConstants;
 import ly.alfairouz.lab.security.SecurityUtils;
@@ -201,6 +203,9 @@ public class SpecimenResource {
         } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.PATHOLOGIST_DOCTOR)) {
             page = specimenQueryService.findByCriteria(criteria, pageable);
         } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REFERRING_CENTER)) {
+            SpecimenCriteria.PaymentTypeFilter paymentTypeFilter = new SpecimenCriteria.PaymentTypeFilter();
+            paymentTypeFilter.setEquals(PaymentType.MONTHLY);
+            criteria.setPaymentType(paymentTypeFilter);
             longFilter.setEquals(referringCenterService.findOneByUser().getId());
             criteria.setReferringCenterId(longFilter);
             page = specimenQueryService.findByCriteria(criteria, pageable);

@@ -9,13 +9,17 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
       },
       {
+        path: 'reports',
+        loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule),
+      },
+      {
         path: 'biopsy',
-        data: { pageTitle: 'alfairouzApp.biopsy.home.title' },
+        data: {pageTitle: 'alfairouzApp.biopsy.home.title'},
         loadChildren: () => import('./biopsy/biopsy.module').then(m => m.BiopsyModule),
       },
       {
         path: 'cytology',
-        data: { pageTitle: 'alfairouzApp.cytology.home.title' },
+        data: {pageTitle: 'alfairouzApp.cytology.home.title'},
         loadChildren: () => import('./cytology/cytology.module').then(m => m.CytologyModule),
       },
       {

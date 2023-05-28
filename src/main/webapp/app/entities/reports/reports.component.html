@@ -1,0 +1,89 @@
+<div class="entity-container">
+  <div class="mat-elevation-z1 round-card white-bg p-4 mt-5">
+    <div *jhiHasAnyAuthority="['ROLE_ADMIN']">
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="mr-auto" appearance="standard">
+            <mat-select [(ngModel)]="reportType" placeholder="نوع التقرير">
+              <mat-option value="ALL_SPECIMEN">All Specimen Report</mat-option>
+              <mat-option value="SPECIMEN_BY_GROSSING_DOCTOR">Grossing Doctor Report</mat-option>
+              <mat-option value="SPECIMEN_BY_PATHOLOGIST_DOCTOR">Pathologist Doctor Report</mat-option>
+              <mat-option value="SPECIMEN_BY_REFERRING_DOCTOR">Referring Doctor Report</mat-option>
+              <mat-option value="SPECIMEN_BY_REFERRING_CENTER">Referring Center Report</mat-option>
+              <mat-option value="REPRESENTATIVE_DELIVERY">Representative Deliveries Report</mat-option>
+              <mat-option value="PAP_SMEAR_SALES">Pap Smear Sales</mat-option>
+              <mat-option value="EXPENSES">Expenses</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div *ngIf="reportType == 'SPECIMEN_BY_GROSSING_DOCTOR'" class="col">
+          <mat-form-field appearance="standard" class="col">
+            <mat-label>Grossing Doctor</mat-label>
+            <mat-select [(ngModel)]="selectedId" id="field_grossing_doctor">
+              <mat-option [value]="null"></mat-option>
+              <mat-option *ngFor="let grossingDoctorOption of grossingDoctors;"
+                          [value]="grossingDoctorOption.id">{{ grossingDoctorOption.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div *ngIf="reportType == 'SPECIMEN_BY_PATHOLOGIST_DOCTOR'" class="col">
+          <mat-form-field appearance="standard" class="col">
+            <mat-label>Pathologist Doctor</mat-label>
+            <mat-select [(ngModel)]="selectedId" id="field_pathologist_doctor">
+              <mat-option [value]="null"></mat-option>
+              <mat-option *ngFor="let pathologistDoctorOption of pathologistDoctors;"
+                          [value]="pathologistDoctorOption.id">{{ pathologistDoctorOption.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div *ngIf="reportType == 'SPECIMEN_BY_REFERRING_DOCTOR'" class="col">
+          <mat-form-field appearance="standard" class="col">
+            <mat-label>Referring Doctor</mat-label>
+            <mat-select [(ngModel)]="selectedId" id="field_referring_doctor">
+              <mat-option [value]="null"></mat-option>
+              <mat-option *ngFor="let referringDoctorOption of referringDoctors;"
+                          [value]="referringDoctorOption.id">{{ referringDoctorOption.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div *ngIf="reportType == 'SPECIMEN_BY_REFERRING_CENTER'" class="col">
+          <mat-form-field appearance="standard" class="col">
+            <mat-label>Referring Center</mat-label>
+            <mat-select [(ngModel)]="selectedId" id="field_referring_center">
+              <mat-option [value]="null"></mat-option>
+              <mat-option *ngFor="let referringCenterOption of referringCenters;"
+                          [value]="referringCenterOption.id">{{ referringCenterOption.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="mr-auto" appearance="standard">
+            <mat-label>اختر بداية التقرير</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="from"/>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="mr-auto" appearance="standard">
+            <mat-label>اختر نهاية التقرير</mat-label>
+            <input matInput [matDatepicker]="picker2" [(ngModel)]="to"/>
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <button class="mr-auto mt-4" mat-raised-button color="primary" [disabled]="!to || !from || !reportType"
+                  (click)="getReport()">
+            <mat-icon>assignment</mat-icon>
+            عرض التقرير
+          </button>
+        </div>
+      </div>
+      <br/>
+      <br/>
+      <mat-progress-bar *ngIf="isLoading" class="round-50 mt-2 fill" mode="indeterminate"></mat-progress-bar>
+    </div>
+  </div>
+</div>

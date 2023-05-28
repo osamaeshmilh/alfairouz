@@ -183,15 +183,19 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
     <detail>
         <band height="95" splitType="Stretch">
             <componentElement>
-                <reportElement x="73" y="10" width="59" height="54" uuid="94d9e777-6e01-493b-889b-d854410368bc"/>
+                <reportElement x="81" y="6" width="59" height="54" uuid="94d9e777-6e01-493b-889b-d854410368bc"/>
                 <jr:QRCode xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components"
                            xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
                     <jr:codeExpression><![CDATA[$F{lab_qr}]]></jr:codeExpression>
                 </jr:QRCode>
             </componentElement>
             <textField>
-                <reportElement x="10" y="64" width="62" height="15" uuid="b58675fe-f102-4add-abba-1994253d0b80"/>
+                <reportElement x="9" y="60" width="129" height="25" uuid="b58675fe-f102-4add-abba-1994253d0b80"/>
                 <textFieldExpression><![CDATA[$F{patientNameAr}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="9" y="28" width="60" height="25" uuid="496e26b7-c1bc-4370-be7e-dd8d99bcd7d3"/>
+                <textFieldExpression><![CDATA[$F{lab_qr}]]></textFieldExpression>
             </textField>
         </band>
     </detail>
