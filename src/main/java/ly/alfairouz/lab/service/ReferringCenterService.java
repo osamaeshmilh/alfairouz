@@ -3,10 +3,13 @@ package ly.alfairouz.lab.service;
 import java.util.Optional;
 
 import ly.alfairouz.lab.domain.ReferringCenter;
+import ly.alfairouz.lab.domain.ReferringCenterPrice;
 import ly.alfairouz.lab.domain.User;
+import ly.alfairouz.lab.domain.enumeration.ContractType;
 import ly.alfairouz.lab.repository.ReferringCenterRepository;
 import ly.alfairouz.lab.security.AuthoritiesConstants;
 import ly.alfairouz.lab.service.dto.ReferringCenterDTO;
+import ly.alfairouz.lab.service.dto.ReferringCenterPriceDTO;
 import ly.alfairouz.lab.service.mapper.ReferringCenterMapper;
 import ly.alfairouz.lab.web.rest.errors.BadRequestAlertException;
 import ly.alfairouz.lab.web.rest.vm.ManagedUserVM;
@@ -32,10 +35,19 @@ public class ReferringCenterService {
 
     private final UserService userService;
 
-    public ReferringCenterService(ReferringCenterRepository referringCenterRepository, ReferringCenterMapper referringCenterMapper, UserService userService) {
+    private final SpecimenTypeService specimenTypeService;
+
+    private final SizeService sizeService;
+
+    private final ReferringCenterPriceService referringCenterPriceService;
+
+    public ReferringCenterService(ReferringCenterRepository referringCenterRepository, ReferringCenterMapper referringCenterMapper, UserService userService, SpecimenTypeService specimenTypeService, SizeService sizeService, ReferringCenterPriceService referringCenterPriceService) {
         this.referringCenterRepository = referringCenterRepository;
         this.referringCenterMapper = referringCenterMapper;
         this.userService = userService;
+        this.specimenTypeService = specimenTypeService;
+        this.sizeService = sizeService;
+        this.referringCenterPriceService = referringCenterPriceService;
     }
 
     /**
@@ -129,6 +141,31 @@ public class ReferringCenterService {
         ReferringCenter referringCenter = referringCenterMapper.toEntity(referringCenterDTO);
         referringCenter.setInternalUser(user);
         referringCenter = referringCenterRepository.save(referringCenter);
+
+        ReferringCenter finalReferringCenter = referringCenter;
+        if (referringCenterDTO.getContractType() == ContractType.SPECIMEN) {
+            specimenTypeService.findAll().forEach(specimenTypeDTO -> {
+
+                ReferringCenterPriceDTO referringCenterPriceDTO = new ReferringCenterPriceDTO();
+                referringCenterPriceDTO.setReferringCenter(referringCenterMapper.toDto(finalReferringCenter));
+                referringCenterPriceDTO.setPrice(specimenTypeDTO.getPrice());
+                referringCenterPriceDTO.setPricingType(ContractType.SPECIMEN);
+                referringCenterPriceDTO.setSpecimenType(specimenTypeDTO);
+
+                referringCenterPriceService.save(referringCenterPriceDTO);
+            });
+        } else if (referringCenterDTO.getContractType() == ContractType.SIZE)
+            sizeService.findAll().forEach(sizeDTO -> {
+
+                ReferringCenterPriceDTO referringCenterPriceDTO = new ReferringCenterPriceDTO();
+                referringCenterPriceDTO.setReferringCenter(referringCenterMapper.toDto(finalReferringCenter));
+                referringCenterPriceDTO.setPrice(sizeDTO.getPrice());
+                referringCenterPriceDTO.setPricingType(ContractType.SIZE);
+                referringCenterPriceDTO.setSize(sizeDTO);
+
+                referringCenterPriceService.save(referringCenterPriceDTO);
+            });
+
         return referringCenterMapper.toDto(referringCenter);
     }
 

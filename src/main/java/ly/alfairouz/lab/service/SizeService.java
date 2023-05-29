@@ -1,6 +1,8 @@
 package ly.alfairouz.lab.service;
 
 import java.util.Optional;
+import java.util.List;
+
 import ly.alfairouz.lab.domain.Size;
 import ly.alfairouz.lab.repository.SizeRepository;
 import ly.alfairouz.lab.service.dto.SizeDTO;
@@ -86,6 +88,12 @@ public class SizeService {
     public Page<SizeDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Sizes");
         return sizeRepository.findAll(pageable).map(sizeMapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public List<SizeDTO> findAll() {
+        log.debug("Request to get all Sizes");
+        return sizeMapper.toDto(sizeRepository.findAll());
     }
 
     /**

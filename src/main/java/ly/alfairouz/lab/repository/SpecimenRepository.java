@@ -49,6 +49,7 @@ public interface SpecimenRepository extends JpaRepository<Specimen, Long>, JpaSp
     )
     Optional<Specimen> findOneWithToOneRelationships(@Param("id") Long id);
 
+    //TODO:: ignore case
     @Query(
         "select specimen from Specimen specimen left join fetch specimen.patient left join fetch specimen.biopsy left join fetch specimen.cytology left join fetch specimen.organ left join fetch specimen.specimenType left join fetch specimen.size left join fetch specimen.referringCenter left join fetch specimen.grossingDoctor left join fetch specimen.referringDoctor left join fetch specimen.pathologistDoctor left join fetch specimen.operatorEmployee left join fetch specimen.correctorEmployee where specimen.labQr =:labQr"
     )

@@ -4,6 +4,152 @@
       <h2 data-cy="referringCenterDetailsHeading">
         <span jhiTranslate="alfairouzApp.referringCenter.detail.title">Referring Center</span>
       </h2>
+      <br/>
+      <mat-tab-group animationDuration="0ms">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span jhiTranslate="alfairouzApp.referringCenter.detail.title">Referring Center</span>
+          </ng-template>
+          <div class="m-4 mt-4">
+            <br/>
+            <dl class="row-md jh-entity-details">
+              <dt><span jhiTranslate="global.field.id">ID</span></dt>
+              <dd>
+                <span>{{ referringCenter.id }}</span>
+              </dd>
+              <dt><span jhiTranslate="alfairouzApp.referringCenter.name">Name</span></dt>
+              <dd>
+                <span>{{ referringCenter.name }}</span>
+              </dd>
+              <dt><span jhiTranslate="alfairouzApp.referringCenter.nameAr">Name Ar</span></dt>
+              <dd>
+                <span>{{ referringCenter.nameAr }}</span>
+              </dd>
+              <dt><span jhiTranslate="alfairouzApp.referringCenter.mobileNumber">Mobile Number</span></dt>
+              <dd>
+                <span>{{ referringCenter.mobileNumber }}</span>
+              </dd>
+              <dt><span jhiTranslate="alfairouzApp.referringCenter.email">Email</span></dt>
+              <dd>
+                <span>{{ referringCenter.email }}</span>
+              </dd>
+              <dt><span jhiTranslate="alfairouzApp.referringCenter.onlineReport">Online Report</span></dt>
+              <dd>
+                <span>{{ referringCenter.onlineReport }}</span>
+              </dd>
+              <dt><span jhiTranslate="alfairouzApp.referringCenter.contractType">Contract Type</span></dt>
+              <dd>
+                <span
+                  jhiTranslate="{{ 'alfairouzApp.ContractType.' + referringCenter.contractType }}">{{ referringCenter.contractType }}</span>
+              </dd>
+              <dt><span jhiTranslate="alfairouzApp.referringCenter.discount">Discount</span></dt>
+              <dd>
+                <span>{{ referringCenter.discount }}</span>
+              </dd>
+              <dt><span jhiTranslate="alfairouzApp.referringCenter.internalUser">Internal User</span></dt>
+              <dd>
+                <span>{{ referringCenter.internalUser?.id }}</span>
+              </dd>
+            </dl>
+
+          </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span>Referring Center Prices</span>
+          </ng-template>
+          <div class="m-4 mt-4">
+            <br/>
+            <div class="table-responsive" *ngIf="referringCenterPrices && referringCenterPrices.length > 0">
+              <table class="table table-striped">
+                <thead>
+                <tr>
+                  <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+                  <th scope="col">
+                    <span jhiTranslate="alfairouzApp.referringCenterPrice.pricingType">Pricing Type</span>
+                    <fa-icon icon="sort"></fa-icon>
+                  </th>
+                  <th scope="col">
+                    <span jhiTranslate="alfairouzApp.referringCenterPrice.price">Price</span>
+                    <fa-icon icon="sort"></fa-icon>
+                  </th>
+                  <th scope="col">
+                    <span jhiTranslate="alfairouzApp.referringCenterPrice.specimenType">Specimen Type</span>
+                    <fa-icon icon="sort"></fa-icon>
+                  </th>
+                  <th scope="col">
+                    <span jhiTranslate="alfairouzApp.referringCenterPrice.size">Size</span>
+                    <fa-icon icon="sort"></fa-icon>
+                  </th>
+                  <th scope="col">
+                    <span jhiTranslate="alfairouzApp.referringCenterPrice.referringCenter">Referring Center</span>
+                    <fa-icon icon="sort"></fa-icon>
+                  </th>
+                  <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let referringCenterPrice of referringCenterPrices;" data-cy="entityTable">
+                  <td>
+                    <a
+                      [routerLink]="['/referring-center-price', referringCenterPrice.id, 'view']">{{ referringCenterPrice.id }}</a>
+                  </td>
+                  <td jhiTranslate="{{ 'alfairouzApp.ContractType.' + referringCenterPrice.pricingType }}">
+                    {{ referringCenterPrice.pricingType }}
+                  </td>
+                  <td>{{ referringCenterPrice.price }}</td>
+                  <td>
+                    <div *ngIf="referringCenterPrice.specimenType">
+                      <a [routerLink]="['/specimen-type', referringCenterPrice.specimenType?.id, 'view']">{{
+                        referringCenterPrice.specimenType?.name
+                        }}</a>
+                    </div>
+                  </td>
+                  <td>
+                    <div *ngIf="referringCenterPrice.size">
+                      <a
+                        [routerLink]="['/size', referringCenterPrice.size?.id, 'view']">{{ referringCenterPrice.size?.name }}</a>
+                    </div>
+                  </td>
+                  <td>
+                    <div *ngIf="referringCenterPrice.referringCenter">
+                      <a [routerLink]="['/referring-center', referringCenterPrice.referringCenter?.id, 'view']">{{
+                        referringCenterPrice.referringCenter?.name
+                        }}</a>
+                    </div>
+                  </td>
+                  <td class="text-end">
+                    <div class="btn-group">
+                      <button
+                        type="submit"
+                        [routerLink]="['/referring-center-price', referringCenterPrice.id, 'view']"
+                        class="btn btn-info btn-sm"
+                        data-cy="entityDetailsButton"
+                      >
+                        <fa-icon icon="eye"></fa-icon>
+                        <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                      </button>
+
+                      <button
+                        type="submit"
+                        [routerLink]="['/referring-center-price', referringCenterPrice.id, 'edit']"
+                        class="btn btn-primary btn-sm"
+                        data-cy="entityEditButton"
+                      >
+                        <fa-icon icon="pencil-alt"></fa-icon>
+                        <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                      </button>
+
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </mat-tab>
+      </mat-tab-group>
 
       <hr/>
 
@@ -11,44 +157,6 @@
 
       <jhi-alert></jhi-alert>
 
-      <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="global.field.id">ID</span></dt>
-        <dd>
-          <span>{{ referringCenter.id }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.referringCenter.name">Name</span></dt>
-        <dd>
-          <span>{{ referringCenter.name }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.referringCenter.nameAr">Name Ar</span></dt>
-        <dd>
-          <span>{{ referringCenter.nameAr }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.referringCenter.mobileNumber">Mobile Number</span></dt>
-        <dd>
-          <span>{{ referringCenter.mobileNumber }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.referringCenter.email">Email</span></dt>
-        <dd>
-          <span>{{ referringCenter.email }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.referringCenter.onlineReport">Online Report</span></dt>
-        <dd>
-          <span>{{ referringCenter.onlineReport }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.referringCenter.contractType">Contract Type</span></dt>
-        <dd>
-          <span jhiTranslate="{{ 'alfairouzApp.ContractType.' + referringCenter.contractType }}">{{ referringCenter.contractType }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.referringCenter.discount">Discount</span></dt>
-        <dd>
-          <span>{{ referringCenter.discount }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.referringCenter.internalUser">Internal User</span></dt>
-        <dd>
-          <span>{{ referringCenter.internalUser?.id }}</span>
-        </dd>
-      </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>

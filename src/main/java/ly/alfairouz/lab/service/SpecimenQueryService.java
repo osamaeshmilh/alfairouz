@@ -119,6 +119,9 @@ public class SpecimenQueryService extends QueryService<Specimen> {
                         );
                 }
 
+                if (criteria.getPaymentType() != null) {
+                    specification = specification.and(buildSpecification(criteria.getPaymentType(), Specimen_.paymentType));
+                }
                 if (criteria.getPatientId() != null) {
                     specification =
                         specification.and(

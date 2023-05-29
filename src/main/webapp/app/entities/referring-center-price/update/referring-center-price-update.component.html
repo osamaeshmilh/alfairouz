@@ -1,0 +1,118 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-referring-center-price-heading"
+        data-cy="ReferringCenterPriceCreateUpdateHeading"
+        jhiTranslate="alfairouzApp.referringCenterPrice.home.createOrEditLabel"
+      >
+        Create or edit a Referring Center Price
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id"
+                 [readonly]="true"/>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.referringCenterPrice.pricingType" for="field_pricingType"
+          >Pricing Type</label
+          >
+          <select class="form-control" name="pricingType" formControlName="pricingType" id="field_pricingType"
+                  data-cy="pricingType">
+            <option [ngValue]="null">{{ 'alfairouzApp.ContractType.null' | translate }}</option>
+            <option *ngFor="let contractType of contractTypeValues" [value]="contractType">
+              {{ 'alfairouzApp.ContractType.' + contractType | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.referringCenterPrice.price"
+                 for="field_price">Price</label>
+          <input type="number" class="form-control" name="price" id="field_price" data-cy="price"
+                 formControlName="price"/>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.referringCenterPrice.specimenType"
+                 for="field_specimenType"
+          >Specimen Type</label
+          >
+          <select class="form-control" id="field_specimenType" data-cy="specimenType" name="specimenType"
+                  formControlName="specimenType">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                specimenTypeOption.id === editForm.get('specimenType')!.value?.id ? editForm.get('specimenType')!.value : specimenTypeOption
+              "
+              *ngFor="let specimenTypeOption of specimenTypesSharedCollection; trackBy: trackSpecimenTypeById"
+            >
+              {{ specimenTypeOption.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.referringCenterPrice.size" for="field_size">Size</label>
+          <select class="form-control" id="field_size" data-cy="size" name="size" formControlName="size">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="sizeOption.id === editForm.get('size')!.value?.id ? editForm.get('size')!.value : sizeOption"
+              *ngFor="let sizeOption of sizesSharedCollection; trackBy: trackSizeById"
+            >
+              {{ sizeOption.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="alfairouzApp.referringCenterPrice.referringCenter"
+                 for="field_referringCenter"
+          >Referring Center</label
+          >
+          <select
+            class="form-control"
+            id="field_referringCenter"
+            data-cy="referringCenter"
+            name="referringCenter"
+            formControlName="referringCenter"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                referringCenterOption.id === editForm.get('referringCenter')!.value?.id
+                  ? editForm.get('referringCenter')!.value
+                  : referringCenterOption
+              "
+              *ngFor="let referringCenterOption of referringCentersSharedCollection; trackBy: trackReferringCenterById"
+            >
+              {{ referringCenterOption.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary"
+                (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

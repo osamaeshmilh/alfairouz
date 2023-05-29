@@ -84,13 +84,18 @@ import { RouterModule } from '@angular/router';
       },
       {
         path: 'expense',
-        data: { pageTitle: 'alfairouzApp.expense.home.title' },
+        data: {pageTitle: 'alfairouzApp.expense.home.title'},
         loadChildren: () => import('./expense/expense.module').then(m => m.ExpenseModule),
       },
       {
         path: 'receipt',
-        data: { pageTitle: 'alfairouzApp.receipt.home.title' },
+        data: {pageTitle: 'alfairouzApp.receipt.home.title'},
         loadChildren: () => import('./receipt/receipt.module').then(m => m.ReceiptModule),
+      },
+      {
+        path: 'referring-center-price',
+        data: {pageTitle: 'alfairouzApp.referringCenterPrice.home.title'},
+        loadChildren: () => import('./referring-center-price/referring-center-price.module').then(m => m.ReferringCenterPriceModule),
       },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),

@@ -1,0 +1,63 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="referringCenterPrice">
+      <h2 data-cy="referringCenterPriceDetailsHeading">
+        <span jhiTranslate="alfairouzApp.referringCenterPrice.detail.title">Referring Center Price</span>
+      </h2>
+
+      <hr/>
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ referringCenterPrice.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.referringCenterPrice.pricingType">Pricing Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'alfairouzApp.ContractType.' + referringCenterPrice.pricingType }}">{{
+            referringCenterPrice.pricingType
+            }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.referringCenterPrice.price">Price</span></dt>
+        <dd>
+          <span>{{ referringCenterPrice.price }}</span>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.referringCenterPrice.specimenType">Specimen Type</span></dt>
+        <dd>
+          <div *ngIf="referringCenterPrice.specimenType">
+            <a [routerLink]="['/specimen-type', referringCenterPrice.specimenType?.id, 'view']">{{
+              referringCenterPrice.specimenType?.name
+              }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.referringCenterPrice.size">Size</span></dt>
+        <dd>
+          <div *ngIf="referringCenterPrice.size">
+            <a [routerLink]="['/size', referringCenterPrice.size?.id, 'view']">{{ referringCenterPrice.size?.name }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="alfairouzApp.referringCenterPrice.referringCenter">Referring Center</span></dt>
+        <dd>
+          <div *ngIf="referringCenterPrice.referringCenter">
+            <a [routerLink]="['/referring-center', referringCenterPrice.referringCenter?.id, 'view']">{{
+              referringCenterPrice.referringCenter?.name
+              }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/referring-center-price', referringCenterPrice.id, 'edit']"
+              class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

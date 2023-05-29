@@ -1,0 +1,28 @@
+{
+  "alfairouzApp": {
+    "referringCenterPrice": {
+      "home": {
+        "title": "Referring Center Prices",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Referring Center Price",
+        "createOrEditLabel": "Create or edit a Referring Center Price",
+        "notFound": "No Referring Center Prices found"
+      },
+      "created": "A new Referring Center Price is created with identifier {{ param }}",
+      "updated": "A Referring Center Price is updated with identifier {{ param }}",
+      "deleted": "A Referring Center Price is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Referring Center Price {{ id }}?"
+      },
+      "detail": {
+        "title": "Referring Center Price"
+      },
+      "id": "ID",
+      "pricingType": "Pricing Type",
+      "price": "Price",
+      "specimenType": "Specimen Type",
+      "size": "Size",
+      "referringCenter": "Referring Center"
+    }
+  }
+}

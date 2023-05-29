@@ -1,6 +1,8 @@
 package ly.alfairouz.lab.service;
 
 import java.util.Optional;
+import java.util.List;
+
 import ly.alfairouz.lab.domain.SpecimenType;
 import ly.alfairouz.lab.repository.SpecimenTypeRepository;
 import ly.alfairouz.lab.service.dto.SpecimenTypeDTO;
@@ -86,6 +88,12 @@ public class SpecimenTypeService {
     public Page<SpecimenTypeDTO> findAll(Pageable pageable) {
         log.debug("Request to get all SpecimenTypes");
         return specimenTypeRepository.findAll(pageable).map(specimenTypeMapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public List<SpecimenTypeDTO> findAll() {
+        log.debug("Request to get all SpecimenTypes");
+        return specimenTypeMapper.toDto(specimenTypeRepository.findAll());
     }
 
     /**

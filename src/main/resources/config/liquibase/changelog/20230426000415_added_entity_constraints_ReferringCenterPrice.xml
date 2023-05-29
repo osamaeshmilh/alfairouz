@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <!--
+        Added the constraints for entity ReferringCenterPrice.
+    -->
+    <changeSet id="20230426000415-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="specimen_type_id"
+                                 baseTableName="referring_center_price"
+                                 constraintName="fk_referring_center_price__specimen_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="specimen_type"/>
+
+        <addForeignKeyConstraint baseColumnNames="size_id"
+                                 baseTableName="referring_center_price"
+                                 constraintName="fk_referring_center_price__size_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="size"/>
+
+        <addForeignKeyConstraint baseColumnNames="referring_center_id"
+                                 baseTableName="referring_center_price"
+                                 constraintName="fk_referring_center_price__referring_center_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="referring_center"/>
+    </changeSet>
+</databaseChangeLog>

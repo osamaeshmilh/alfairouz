@@ -191,6 +191,9 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
             </componentElement>
             <textField>
                 <reportElement x="9" y="60" width="129" height="25" uuid="b58675fe-f102-4add-abba-1994253d0b80"/>
+                <textElement>
+                    <font fontName="Times New Roman"/>
+                </textElement>
                 <textFieldExpression><![CDATA[$F{patientNameAr}]]></textFieldExpression>
             </textField>
             <textField>

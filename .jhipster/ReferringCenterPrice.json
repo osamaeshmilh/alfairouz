@@ -1,0 +1,47 @@
+{
+  "applications": "*",
+  "changelogDate": "20230426000415",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "referring_center_price",
+  "fields": [
+    {
+      "fieldName": "pricingType",
+      "fieldType": "ContractType",
+      "fieldValues": "SIZE,SPECIMEN"
+    },
+    {
+      "fieldName": "price",
+      "fieldType": "Float"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "ReferringCenterPrice",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "specimenType",
+      "otherEntityRelationshipName": "specimen",
+      "relationshipName": "specimenType",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "size",
+      "otherEntityRelationshipName": "specimen",
+      "relationshipName": "size",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "referringCenter",
+      "otherEntityRelationshipName": "specimen",
+      "relationshipName": "referringCenter",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

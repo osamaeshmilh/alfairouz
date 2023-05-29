@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.security.SecureRandom;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.zip.CRC32;
 
@@ -121,7 +122,7 @@ public class SpecimenService {
             crc.update(bbuffer.array());
             String enc = Long.toHexString(crc.getValue());
 
-            specimenDTO.setLabQr(enc);
+            specimenDTO.setLabQr(enc.toUpperCase(Locale.ROOT));
         }
 
         //if SpecimenStatus changing from status to the next one
@@ -263,7 +264,7 @@ public class SpecimenService {
             Long countIHSO = specimenRepository.countByLabRefNoStartingWith(year + "IHSO");
             count = Math.max(countH, Math.max(countHSO, countIHSO));
 
-            System.out.println(countH);
+            //System.out.println(countH);
 
         }
 
@@ -288,7 +289,7 @@ public class SpecimenService {
         crc.update(bbuffer.array());
         String enc = Long.toHexString(crc.getValue());
 
-        specimenDTO.setLabQr(enc);
+        specimenDTO.setLabQr(enc.toUpperCase(Locale.ROOT));
 
         if (specimenDTO.getPatient() == null) {
             //TODO:: Create Patient

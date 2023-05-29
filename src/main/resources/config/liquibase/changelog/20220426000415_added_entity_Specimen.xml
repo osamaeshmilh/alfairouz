@@ -68,6 +68,9 @@
             <column name="price" type="${floatType}">
                 <constraints nullable="true"/>
             </column>
+            <column name="discount_notes" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
             <column name="discount" type="${floatType}">
                 <constraints nullable="true"/>
             </column>
