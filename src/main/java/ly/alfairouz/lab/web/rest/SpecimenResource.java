@@ -204,7 +204,7 @@ public class SpecimenResource {
             page = specimenQueryService.findByCriteria(criteria, pageable);
         } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REFERRING_CENTER)) {
             SpecimenCriteria.PaymentTypeFilter paymentTypeFilter = new SpecimenCriteria.PaymentTypeFilter();
-            paymentTypeFilter.setEquals(PaymentType.MONTHLY);
+            paymentTypeFilter.setIn(Collections.singletonList(PaymentType.MONTHLY));
             criteria.setPaymentType(paymentTypeFilter);
             longFilter.setEquals(referringCenterService.findOneByUser().getId());
             criteria.setReferringCenterId(longFilter);
