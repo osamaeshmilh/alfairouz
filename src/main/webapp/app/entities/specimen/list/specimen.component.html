@@ -90,10 +90,15 @@
           <span jhiTranslate="alfairouzApp.specimen.patient">Patient</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
-        <th scope="col" jhiSortBy="specimenType.name"
+
+        <!--        <th scope="col" jhiSortBy="specimenType.name"-->
+        <!--            *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_REFERRING_CENTER','ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">-->
+        <!--          <span jhiTranslate="alfairouzApp.specimen.specimenType">Specimen Type</span>-->
+        <!--          <fa-icon icon="sort"></fa-icon>-->
+        <!--        </th>-->
+        <th scope="col"
             *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_REFERRING_CENTER','ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
-          <span jhiTranslate="alfairouzApp.specimen.specimenType">Specimen Type</span>
-          <fa-icon icon="sort"></fa-icon>
+          <span>Type / Size</span>
         </th>
 
         <th scope="col" jhiSortBy="price"
@@ -186,7 +191,11 @@
           <div *ngIf="specimen.specimenType">
             <a>{{ specimen.specimenType?.name }}</a>
           </div>
+          <div *ngIf="specimen.size">
+            <a>{{ specimen.size?.name }}</a>
+          </div>
         </td>
+
         <td *jhiHasAnyAuthority="['ROLE_REFERRING_CENTER']">{{ specimen.price }} LYD</td>
         <td
           *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_TYPING', 'ROLE_REFERRING_DOCTOR', 'ROLE_TECHNICIAN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
