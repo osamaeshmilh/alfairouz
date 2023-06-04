@@ -35,6 +35,8 @@ import {Results} from 'app/entities/enumerations/results.model';
 import {SpecimenStatus} from 'app/entities/enumerations/specimen-status.model';
 import {Gender} from "../../enumerations/gender.model";
 import dayjs from "dayjs/esm";
+import {IReferringCenterPrice} from "../../referring-center-price/referring-center-price.model";
+import {ReferringCenterPriceService} from "../../referring-center-price/service/referring-center-price.service";
 
 @Component({
   selector: 'jhi-specimen-update',
@@ -146,6 +148,7 @@ export class SpecimenUpdateComponent implements OnInit {
     protected doctorService: DoctorService,
     protected employeeService: EmployeeService,
     protected activatedRoute: ActivatedRoute,
+    protected referringCenterPriceService: ReferringCenterPriceService,
     protected fb: FormBuilder
   ) {}
 
@@ -252,12 +255,45 @@ export class SpecimenUpdateComponent implements OnInit {
   getPriceByType($event: any): void {
     /* eslint-disable no-console */
     console.log($event.target.value)
-    this.editForm.get('price')!.setValue(this.editForm.get('specimenType')!.value?.price)
+    if (this.paymentType === 'MONTHLY') {
+      const referringCenterId = this.editForm.get('referringCenter')!.value?.id;
+      const specimenTypeId = this.editForm.get('specimenType')!.value?.id;
+
+      if (referringCenterId && specimenTypeId) {
+        this.referringCenterPriceService.query({
+          'referringCenterId.equals': referringCenterId,
+          'specimenTypeId.equals': specimenTypeId,
+        })
+          .subscribe((response: HttpResponse<IReferringCenterPrice[]>) => {
+            const price = response.body?.[0]?.price ?? 0;
+            this.editForm.get('price')!.setValue(price);
+          });
+      }
+    } else {
+      this.editForm.get('price')!.setValue(this.editForm.get('specimenType')!.value?.price)
+    }
   }
 
   getPriceBySize($event: any): void {
     /* eslint-disable no-console */
-    this.editForm.get('price')!.setValue(this.editForm.get('size')!.value?.price)
+
+    if (this.paymentType === 'MONTHLY') {
+      const referringCenterId = this.editForm.get('referringCenter')!.value?.id;
+      const sizeId = this.editForm.get('size')!.value?.id;
+
+      if (referringCenterId && sizeId) {
+        this.referringCenterPriceService.query({
+          'referringCenterId.equals': referringCenterId,
+          'sizeId.equals': sizeId,
+        })
+          .subscribe((response: HttpResponse<IReferringCenterPrice[]>) => {
+            const price = response.body?.[0]?.price ?? 0;
+            this.editForm.get('price')!.setValue(price);
+          });
+      }
+    } else {
+      this.editForm.get('price')!.setValue(this.editForm.get('size')!.value?.price)
+    }
   }
 
   updatePayed(): void {
