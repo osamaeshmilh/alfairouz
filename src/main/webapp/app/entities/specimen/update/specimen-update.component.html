@@ -327,29 +327,33 @@
           </div>
           <br>
           <div class="row">
+
+            <!-- Monthly Payment Section -->
             <div class="col-lg col-sm" *ngIf="editForm.get('paymentType')!.value == 'MONTHLY'">
+
               <div>
                 <a>{{editForm.get('contractType')!.value}}</a>
               </div>
-            </div>
-            <div class="col-lg col-sm" *ngIf="editForm.get('contractType')!.value == 'SPECIMEN'">
-              <label class="form-label" jhiTranslate="alfairouzApp.specimen.specimenType" for="field_specimenType">Specimen
-                Type</label>
-              <select class="form-control" id="field_specimenType" data-cy="specimenType" name="specimenType"
-                      formControlName="specimenType" (change)="getPriceByType($event)">
-                <option [ngValue]="null"></option>
-                <option
-                  [ngValue]="
+
+              <!-- If contractType is SPECIMEN -->
+              <div *ngIf="editForm.get('contractType')!.value == 'SPECIMEN'">
+                <label class="form-label" jhiTranslate="alfairouzApp.specimen.specimenType" for="field_specimenType">Specimen
+                  Type</label>
+                <select class="form-control" id="field_specimenType" data-cy="specimenType" name="specimenType"
+                        formControlName="specimenType" (change)="getPriceByType($event)">
+                  <option [ngValue]="null"></option>
+                  <option
+                    [ngValue]="
                 specimenTypeOption.id === editForm.get('specimenType')!.value?.id ? editForm.get('specimenType')!.value : specimenTypeOption
               "
-                  *ngFor="let specimenTypeOption of specimenTypesSharedCollection; trackBy: trackSpecimenTypeById"
-                >
-                  {{ specimenTypeOption.name}} - {{specimenTypeOption.price }}
-                </option>
-              </select>
-            </div>
-            <div class="col-lg col-sm" *ngIf="editForm.get('contractType')!.value == 'SIZE'">
-              <div *ngIf="editForm.get('referringCenter')!.value">
+                    *ngFor="let specimenTypeOption of specimenTypesSharedCollection; trackBy: trackSpecimenTypeById"
+                  >
+                    {{ specimenTypeOption.name}} - {{specimenTypeOption.price }}
+                  </option>
+                </select>
+              </div>
+              <!-- If contractType is SIZE -->
+              <div *ngIf="editForm.get('contractType')!.value == 'SIZE' && editForm.get('referringCenter')!.value">
                 <label class="form-label" jhiTranslate="alfairouzApp.specimen.size" for="field_size">Size</label>
                 <select class="form-control" id="field_size" data-cy="size" name="size" formControlName="size"
                         (change)="getPriceBySize($event)">
@@ -363,6 +367,25 @@
                 </select>
               </div>
             </div>
+
+            <!-- Cash Payment Section -->
+            <div class="col-lg col-sm" *ngIf="editForm.get('paymentType')!.value == 'CASH'">
+              <label class="form-label" jhiTranslate="alfairouzApp.specimen.specimenType" for="field_specimenType">Specimen
+                Type</label>
+              <select class="form-control" id="field_specimenType" data-cy="specimenType" name="specimenType"
+                      formControlName="specimenType" (change)="getPriceByType($event)">
+                <option [ngValue]="null"></option>
+                <option
+                  [ngValue]="
+            specimenTypeOption.id === editForm.get('specimenType')!.value?.id ? editForm.get('specimenType')!.value : specimenTypeOption
+          "
+                  *ngFor="let specimenTypeOption of specimenTypesSharedCollection; trackBy: trackSpecimenTypeById"
+                >
+                  {{ specimenTypeOption.name}} - {{specimenTypeOption.price }}
+                </option>
+              </select>
+            </div>
+
             <div class="col-lg col-sm">
               <label class="form-label" jhiTranslate="alfairouzApp.specimen.pdfFile" for="field_pdfFile">Pdf
                 File</label>
@@ -402,8 +425,6 @@
                 id="field_pdfFileContentType"
                 formControlName="pdfFileContentType"
               />
-            </div>
-            <div class="col-lg col-sm" *ngIf="editForm.get('paymentType')!.value == 'CASH'">
             </div>
           </div>
           <br>
