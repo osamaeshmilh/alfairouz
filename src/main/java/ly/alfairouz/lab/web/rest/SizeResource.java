@@ -6,11 +6,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import ly.alfairouz.lab.repository.SizeRepository;
+import ly.alfairouz.lab.service.ReferringCenterPriceService;
 import ly.alfairouz.lab.service.ReferringCenterService;
 import ly.alfairouz.lab.service.SizeQueryService;
 import ly.alfairouz.lab.service.SizeService;
 import ly.alfairouz.lab.service.criteria.SizeCriteria;
 import ly.alfairouz.lab.service.dto.ReferringCenterDTO;
+import ly.alfairouz.lab.service.dto.ReferringCenterPriceDTO;
 import ly.alfairouz.lab.service.dto.SizeDTO;
 import ly.alfairouz.lab.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
@@ -48,11 +50,14 @@ public class SizeResource {
 
     private final ReferringCenterService referringCenterService;
 
-    public SizeResource(SizeService sizeService, SizeRepository sizeRepository, SizeQueryService sizeQueryService, ReferringCenterService referringCenterService) {
+    private final ReferringCenterPriceService referringCenterPriceService;
+
+    public SizeResource(SizeService sizeService, SizeRepository sizeRepository, SizeQueryService sizeQueryService, ReferringCenterService referringCenterService, ReferringCenterPriceService referringCenterPriceService) {
         this.sizeService = sizeService;
         this.sizeRepository = sizeRepository;
         this.sizeQueryService = sizeQueryService;
         this.referringCenterService = referringCenterService;
+        this.referringCenterPriceService = referringCenterPriceService;
     }
 
     /**

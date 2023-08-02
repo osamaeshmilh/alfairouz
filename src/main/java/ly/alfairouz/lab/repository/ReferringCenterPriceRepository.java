@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import ly.alfairouz.lab.domain.ReferringCenterPrice;
+import ly.alfairouz.lab.service.dto.ReferringCenterPriceDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
@@ -43,4 +44,6 @@ public interface ReferringCenterPriceRepository
         "select referringCenterPrice from ReferringCenterPrice referringCenterPrice left join fetch referringCenterPrice.specimenType left join fetch referringCenterPrice.size left join fetch referringCenterPrice.referringCenter where referringCenterPrice.id =:id"
     )
     Optional<ReferringCenterPrice> findOneWithToOneRelationships(@Param("id") Long id);
+
+    List<ReferringCenterPrice> findByReferringCenterId(Long centerId);
 }

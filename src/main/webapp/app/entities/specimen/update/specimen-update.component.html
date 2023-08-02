@@ -348,7 +348,8 @@
               "
                     *ngFor="let specimenTypeOption of specimenTypesSharedCollection; trackBy: trackSpecimenTypeById"
                   >
-                    {{ specimenTypeOption.name}} - {{specimenTypeOption.price }}
+                    {{ specimenTypeOption.name}}
+
                   </option>
                 </select>
               </div>
@@ -362,7 +363,7 @@
                     [ngValue]="sizeOption.id === editForm.get('size')!.value?.id ? editForm.get('size')!.value : sizeOption"
                     *ngFor="let sizeOption of sizesSharedCollection; trackBy: trackSizeById"
                   >
-                    {{ sizeOption.name }} - {{ sizeOption.price }}
+                    {{ sizeOption.name }}
                   </option>
                 </select>
               </div>

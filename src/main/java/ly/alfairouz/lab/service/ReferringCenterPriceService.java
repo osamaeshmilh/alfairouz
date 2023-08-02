@@ -1,5 +1,6 @@
 package ly.alfairouz.lab.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import ly.alfairouz.lab.domain.ReferringCenterPrice;
@@ -108,5 +109,9 @@ public class ReferringCenterPriceService {
     public void delete(Long id) {
         log.debug("Request to delete ReferringCenterPrice : {}", id);
         referringCenterPriceRepository.deleteById(id);
+    }
+
+    public List<ReferringCenterPriceDTO> findByReferringCenterId(Long centerId) {
+        return referringCenterPriceMapper.toDto(referringCenterPriceRepository.findByReferringCenterId(centerId));
     }
 }
