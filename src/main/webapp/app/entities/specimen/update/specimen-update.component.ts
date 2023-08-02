@@ -234,21 +234,23 @@ export class SpecimenUpdateComponent implements OnInit {
   getCenterPrices(): void {
     this.editForm.get('contractType')!.setValue(this.editForm.get('referringCenter')!.value?.contractType);
     if (this.paymentType === 'MONTHLY') {
-      this.specimenTypeService
-        .queryByCenter(this.editForm.get('referringCenter')!.value?.id)
-        .pipe(map((res: HttpResponse<ISpecimenType[]>) => res.body ?? []))
-        .pipe(
-          map((specimenTypes: ISpecimenType[]) =>
-            this.specimenTypeService.addSpecimenTypeToCollectionIfMissing(specimenTypes, this.editForm.get('specimenType')!.value)
-          )
-        )
-        .subscribe((specimenTypes: ISpecimenType[]) => (this.specimenTypesSharedCollection = specimenTypes));
-
-      this.sizeService
-        .queryByCenter(this.editForm.get('referringCenter')!.value?.id)
-        .pipe(map((res: HttpResponse<ISize[]>) => res.body ?? []))
-        .pipe(map((sizes: ISize[]) => this.sizeService.addSizeToCollectionIfMissing(sizes, this.editForm.get('size')!.value)))
-        .subscribe((sizes: ISize[]) => (this.sizesSharedCollection = sizes));
+      /* eslint-disable no-console */
+      console.log("")
+      // this.specimenTypeService
+      //   .queryByCenter(this.editForm.get('referringCenter')!.value?.id)
+      //   .pipe(map((res: HttpResponse<ISpecimenType[]>) => res.body ?? []))
+      //   .pipe(
+      //     map((specimenTypes: ISpecimenType[]) =>
+      //       this.specimenTypeService.addSpecimenTypeToCollectionIfMissing(specimenTypes, this.editForm.get('specimenType')!.value)
+      //     )
+      //   )
+      //   .subscribe((specimenTypes: ISpecimenType[]) => (this.specimenTypesSharedCollection = specimenTypes));
+      //
+      // this.sizeService
+      //   .queryByCenter(this.editForm.get('referringCenter')!.value?.id)
+      //   .pipe(map((res: HttpResponse<ISize[]>) => res.body ?? []))
+      //   .pipe(map((sizes: ISize[]) => this.sizeService.addSizeToCollectionIfMissing(sizes, this.editForm.get('size')!.value)))
+      //   .subscribe((sizes: ISize[]) => (this.sizesSharedCollection = sizes));
     }
   }
 
