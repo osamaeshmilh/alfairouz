@@ -37,6 +37,7 @@ import {Gender} from "../../enumerations/gender.model";
 import dayjs from "dayjs/esm";
 import {IReferringCenterPrice} from "../../referring-center-price/referring-center-price.model";
 import {ReferringCenterPriceService} from "../../referring-center-price/service/referring-center-price.service";
+import {AngularEditorConfig} from '@kolkov/angular-editor';
 
 @Component({
   selector: 'jhi-specimen-update',
@@ -133,6 +134,15 @@ export class SpecimenUpdateComponent implements OnInit {
   });
   paymentType: any;
   selectedOption = 0;
+
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '10rem',
+    minHeight: '5rem',
+    placeholder: 'تفاصيل العينة',
+    translate: 'no',
+  };
 
   constructor(
     protected dataUtils: DataUtils,
