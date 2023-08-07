@@ -37,7 +37,7 @@ import {Gender} from "../../enumerations/gender.model";
 import dayjs from "dayjs/esm";
 import {IReferringCenterPrice} from "../../referring-center-price/referring-center-price.model";
 import {ReferringCenterPriceService} from "../../referring-center-price/service/referring-center-price.service";
-import {AngularEditorConfig} from '@kolkov/angular-editor';
+import {Validators, Editor, Toolbar} from 'ngx-editor';
 
 @Component({
   selector: 'jhi-specimen-update',
@@ -135,14 +135,17 @@ export class SpecimenUpdateComponent implements OnInit {
   paymentType: any;
   selectedOption = 0;
 
-  editorConfig: AngularEditorConfig = {
-    editable: true,
-    spellcheck: true,
-    height: '10rem',
-    minHeight: '5rem',
-    placeholder: 'تفاصيل العينة',
-    translate: 'no',
-  };
+  editor: Editor | undefined;
+  toolbar: Toolbar = [
+    ['bold', 'italic'],
+    ['underline', 'strike'],
+    ['code', 'blockquote'],
+    ['ordered_list', 'bullet_list'],
+    [{heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']}],
+    ['link', 'image'],
+    ['text_color', 'background_color'],
+    ['align_left', 'align_center', 'align_right', 'align_justify'],
+  ];
 
   constructor(
     protected dataUtils: DataUtils,
@@ -163,7 +166,7 @@ export class SpecimenUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
+    this.editor = new Editor();
 
     this.activatedRoute.data.subscribe(({ specimen }) => {
       this.paymentType = this.activatedRoute.snapshot.queryParams['paymentType'] ? this.activatedRoute.snapshot.queryParams['paymentType'] : '';

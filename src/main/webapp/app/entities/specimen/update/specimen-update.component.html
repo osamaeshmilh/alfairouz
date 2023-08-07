@@ -614,10 +614,13 @@
 
         <div class="row mt-0"
              *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
-          <angular-editor class="col m-2" [config]="editorConfig" type="text" name="grossExamination"
-                          id="field_grossExamination"
-                          formControlName="grossExamination">
-          </angular-editor>
+
+
+          <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+          </ngx-editor-menu>
+          <ngx-editor [editor]="editor" formControlName="grossExamination">
+          </ngx-editor>
+
         </div>
 
         <div class="row mb-3"
