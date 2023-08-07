@@ -135,7 +135,7 @@ export class SpecimenUpdateComponent implements OnInit {
   paymentType: any;
   selectedOption = 0;
 
-  editor: Editor | undefined;
+  editor: Editor = new Editor();
   toolbar: Toolbar = [
     ['bold', 'italic'],
     ['underline', 'strike'],
