@@ -316,8 +316,8 @@ public class SpecimenResource {
             row.createCell(0).setCellValue(specimenDTO.getId());
             row.createCell(1).setCellValue(specimenDTO.getLabRefNo());
             row.createCell(2).setCellValue(specimenDTO.getLabQr());
-            row.createCell(3).setCellValue(specimenDTO.getSamplingDate().toString());
-            row.createCell(4).setCellValue(specimenDTO.getReceivingDate().toString());
+            row.createCell(3).setCellValue(specimenDTO.getSamplingDate() != null ? specimenDTO.getSamplingDate().toString() : "");
+            row.createCell(4).setCellValue(specimenDTO.getReceivingDate() != null ? specimenDTO.getReceivingDate().toString() : "");
             row.createCell(5).setCellValue(specimenDTO.getReportDate() != null ? specimenDTO.getReportDate().toString() : "");
             row.createCell(6).setCellValue(specimenDTO.getPaymentType().toString());
             row.createCell(7).setCellValue(specimenDTO.getPatient() != null ? specimenDTO.getPatient().getName() : "");
