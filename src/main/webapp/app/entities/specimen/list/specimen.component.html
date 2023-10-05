@@ -46,7 +46,9 @@
     <table class="col mat-table">
       <thead>
       <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
-        <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span>
+        <th
+          *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION', 'ROLE_TECHNICIAN','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR', 'ROLE_TYPING', 'ROLE_REVISION']"
+          scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
         <th scope="col" jhiSortBy="labRefNo"
@@ -163,7 +165,8 @@
       </thead>
       <tbody>
       <tr *ngFor="let specimen of specimen; trackBy: trackId" data-cy="entityTable">
-        <td>
+        <td
+          *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION', 'ROLE_TECHNICIAN','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR', 'ROLE_TYPING', 'ROLE_REVISION']">
           <a>{{ specimen.id }}</a>
         </td>
         <td

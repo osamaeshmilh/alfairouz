@@ -138,7 +138,10 @@ export class ReferringCenterPriceUpdateComponent implements OnInit {
       .subscribe((sizes: ISize[]) => (this.sizesSharedCollection = sizes));
 
     this.referringCenterService
-      .query()
+      .query({
+        size: 300,
+        sort: ['nameAr', 'asc']
+      })
       .pipe(map((res: HttpResponse<IReferringCenter[]>) => res.body ?? []))
       .pipe(
         map((referringCenters: IReferringCenter[]) =>

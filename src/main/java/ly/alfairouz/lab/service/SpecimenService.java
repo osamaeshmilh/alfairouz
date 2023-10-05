@@ -126,11 +126,13 @@ public class SpecimenService {
         }
 
         //if SpecimenStatus changing from status to the next one
-        if (specimenDTO.getSpecimenStatus() == SpecimenStatus.RECEIVED) {
-            specimenDTO.setSpecimenStatus(SpecimenStatus.GROSSING);
-        }
+
 
         if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.GROSSING_DOCTOR)) {
+            if (specimenDTO.getSpecimenStatus() == SpecimenStatus.RECEIVED) {
+                specimenDTO.setSpecimenStatus(SpecimenStatus.GROSSING);
+            }
+
             if (specimenDTO.getGrossingDoctor() == null) {
                 specimenDTO.setGrossingDoctor(doctorService.findOneDTOByUser());
             }

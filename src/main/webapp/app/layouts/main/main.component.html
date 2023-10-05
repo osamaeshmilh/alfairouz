@@ -103,67 +103,67 @@
 
       </div>
 
-      <div *jhiHasAnyAuthority="['ROLE_ADMIN']">
+      <div>
 
-        <mat-list-item routerLink="block-withdraw">
+        <mat-list-item routerLink="block-withdraw" *jhiHasAnyAuthority="['ROLE_ADMIN']">
           <mat-icon mat-list-icon>receipt_long</mat-icon>
           <span jhiTranslate="global.menu.entities.blockWithdraw">block-withdraw</span>
         </mat-list-item>
-        <mat-list-item routerLink="biopsy">
+        <mat-list-item routerLink="biopsy" *jhiHasAnyAuthority="['ROLE_ADMIN']">
           <mat-icon mat-list-icon>receipt_long</mat-icon>
           <span jhiTranslate="global.menu.entities.biopsy">biopsy</span>
         </mat-list-item>
-        <mat-list-item routerLink="cytology">
+        <mat-list-item routerLink="cytology" *jhiHasAnyAuthority="['ROLE_ADMIN']">
           <mat-icon mat-list-icon>receipt_long</mat-icon>
           <span jhiTranslate="global.menu.entities.cytology">cytology</span>
         </mat-list-item>
-        <mat-list-item routerLink="organ">
+        <mat-list-item routerLink="organ" *jhiHasAnyAuthority="['ROLE_ADMIN']">
           <mat-icon mat-list-icon>receipt_long</mat-icon>
           <span jhiTranslate="global.menu.entities.organ">organ</span>
         </mat-list-item>
-        <mat-list-item routerLink="doctor">
+        <mat-list-item routerLink="doctor" *jhiHasAnyAuthority="['ROLE_ADMIN']">
           <mat-icon mat-list-icon>receipt_long</mat-icon>
           <span jhiTranslate="global.menu.entities.doctor">doctor</span>
         </mat-list-item>
-        <mat-list-item routerLink="employee">
+        <mat-list-item routerLink="employee" *jhiHasAnyAuthority="['ROLE_ADMIN']">
           <mat-icon mat-list-icon>receipt_long</mat-icon>
           <span jhiTranslate="global.menu.entities.employee">employee</span>
         </mat-list-item>
-        <mat-list-item routerLink="expense">
+        <mat-list-item routerLink="expense" *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION']">
           <mat-icon mat-list-icon>receipt_long</mat-icon>
           <span jhiTranslate="global.menu.entities.expense">expense</span>
         </mat-list-item>
-        <mat-list-item routerLink="extra">
+        <mat-list-item routerLink="extra" *jhiHasAnyAuthority="['ROLE_ADMIN']">
           <mat-icon mat-list-icon>receipt_long</mat-icon>
           <span jhiTranslate="global.menu.entities.extra">extra</span>
         </mat-list-item>
 
-        <mat-list-item routerLink="pap-smear-sale">
+        <mat-list-item routerLink="pap-smear-sale" *jhiHasAnyAuthority="['ROLE_ADMIN']">
           <mat-icon mat-list-icon>receipt_long</mat-icon>
           <span jhiTranslate="global.menu.entities.papSmearSale">Pap Smear Sale</span>
         </mat-list-item>
-        <mat-list-item routerLink="patient">
+        <mat-list-item routerLink="patient" *jhiHasAnyAuthority="['ROLE_ADMIN']">
           <mat-icon mat-list-icon>receipt_long</mat-icon>
           <span jhiTranslate="global.menu.entities.patient">patient</span>
         </mat-list-item>
-        <mat-list-item routerLink="receipt">
+        <mat-list-item routerLink="receipt" *jhiHasAnyAuthority="['ROLE_ADMIN']">
           <mat-icon mat-list-icon>receipt_long</mat-icon>
           <span jhiTranslate="global.menu.entities.receipt">receipt</span>
         </mat-list-item>
-        <mat-list-item routerLink="referring-center">
+        <mat-list-item routerLink="referring-center" *jhiHasAnyAuthority="['ROLE_ADMIN']">
           <mat-icon mat-list-icon>receipt_long</mat-icon>
           <span jhiTranslate="global.menu.entities.referringCenter">referring center</span>
         </mat-list-item>
-        <mat-list-item routerLink="representative-delivery">
+        <mat-list-item routerLink="representative-delivery" *jhiHasAnyAuthority="['ROLE_ADMIN']">
           <mat-icon mat-list-icon>receipt_long</mat-icon>
           <span jhiTranslate="global.menu.entities.representativeDelivery">representative delivery</span>
         </mat-list-item>
-        <mat-list-item routerLink="size">
+        <mat-list-item routerLink="size" *jhiHasAnyAuthority="['ROLE_ADMIN']">
           <mat-icon mat-list-icon>receipt_long</mat-icon>
           <span jhiTranslate="global.menu.entities.size">size</span>
         </mat-list-item>
 
-        <mat-list-item routerLink="specimen-type">
+        <mat-list-item routerLink="specimen-type" *jhiHasAnyAuthority="['ROLE_ADMIN']">
           <mat-icon mat-list-icon>receipt_long</mat-icon>
           <span jhiTranslate="global.menu.entities.specimenType">specimen type</span>
         </mat-list-item>
@@ -173,7 +173,7 @@
 
         <mat-expansion-panel class="mat-elevation-z0">
           <mat-expansion-panel-header class="light-gray">
-            <mat-panel-title>
+            <mat-panel-title *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION']">
               <mat-icon class="ml-2">receipt_long</mat-icon>
               التقارير
             </mat-panel-title>

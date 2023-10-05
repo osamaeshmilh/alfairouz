@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import {HttpResponse} from '@angular/common/http';
+import {FormBuilder, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {debounceTime, distinctUntilChanged, Observable, Subject, switchMap} from 'rxjs';
+import {finalize, map} from 'rxjs/operators';
 
 import { ISpecimen, Specimen } from '../specimen.model';
 import { SpecimenService } from '../service/specimen.service';
@@ -122,8 +122,8 @@ export class SpecimenUpdateComponent implements OnInit {
 
     newPatient: [],
 
-    patientName: [],
-    patientNameAr: [],
+    patientName: ['', [Validators.pattern('[a-zA-Zs]*')]],
+    patientNameAr: ['', [Validators.pattern('[\u0600-\u06FFs]*')]],
     patientMobileNumber: [],
     patientNationality: [],
     patientMotherName: [],
@@ -147,6 +147,7 @@ export class SpecimenUpdateComponent implements OnInit {
   //   ['text_color', 'background_color'],
   //   ['align_left', 'align_center', 'align_right', 'align_justify'],
   // ];
+  private searchTerms = new Subject<string>();
 
   constructor(
     protected dataUtils: DataUtils,
@@ -317,6 +318,10 @@ export class SpecimenUpdateComponent implements OnInit {
     this.editForm.get('notPaid')!.setValue(Number(this.editForm.get('price')!.value ?? 0) - Number(this.editForm.get('paid')!.value ?? 0))
   }
 
+  onPatientSearch(term: string): void {
+    this.searchTerms.next(term);
+  }
+
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ISpecimen>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
       next: () => this.onSaveSuccess(),
@@ -439,13 +444,18 @@ export class SpecimenUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
-    this.patientService
-      .query({size: 200})
-      .pipe(map((res: HttpResponse<IPatient[]>) => res.body ?? []))
-      .pipe(
-        map((patients: IPatient[]) => this.patientService.addPatientToCollectionIfMissing(patients, this.editForm.get('patient')!.value))
-      )
-      .subscribe((patients: IPatient[]) => (this.patientsSharedCollection = patients));
+    //TODO
+    this.searchTerms.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((term: string) => this.patientService.query({
+        "nameAr.contains": term,
+        sort: ['nameAr', 'asc'],
+        size: 300
+      }))
+    ).subscribe((res: HttpResponse<IPatient[]>) => {
+      this.patientsSharedCollection = res.body ?? [];
+    });
 
     this.biopsyService
       .query({size: 200})
@@ -486,7 +496,10 @@ export class SpecimenUpdateComponent implements OnInit {
       .subscribe((sizes: ISize[]) => (this.sizesSharedCollection = sizes));
 
     this.referringCenterService
-      .query({size: 200})
+      .query({
+        size: 300,
+        sort: ['nameAr', 'asc']
+      })
       .pipe(map((res: HttpResponse<IReferringCenter[]>) => res.body ?? []))
       .pipe(
         map((referringCenters: IReferringCenter[]) =>
@@ -496,7 +509,10 @@ export class SpecimenUpdateComponent implements OnInit {
       .subscribe((referringCenters: IReferringCenter[]) => (this.referringCentersSharedCollection = referringCenters));
 
     this.doctorService
-      .query({size: 200, 'doctorType.equals': 'GROSSING'})
+      .query({
+        size: 300,
+        sort: ['nameAr', 'asc'], 'doctorType.equals': 'GROSSING'
+      })
       .pipe(map((res: HttpResponse<IDoctor[]>) => res.body ?? []))
       .pipe(
         map((doctors: IDoctor[]) =>
@@ -509,7 +525,10 @@ export class SpecimenUpdateComponent implements OnInit {
       .subscribe((doctors: IDoctor[]) => (this.gDoctorsSharedCollection = doctors));
 
     this.doctorService
-      .query({size: 200, 'doctorType.equals': 'REFERRING'})
+      .query({
+        size: 300,
+        sort: ['nameAr', 'asc'], 'doctorType.equals': 'REFERRING'
+      })
       .pipe(map((res: HttpResponse<IDoctor[]>) => res.body ?? []))
       .pipe(
         map((doctors: IDoctor[]) =>
@@ -522,7 +541,10 @@ export class SpecimenUpdateComponent implements OnInit {
       .subscribe((doctors: IDoctor[]) => (this.rDoctorsSharedCollection = doctors));
 
     this.doctorService
-      .query({size: 200, 'doctorType.equals': 'PATHOLOGIST'})
+      .query({
+        size: 300,
+        sort: ['nameAr', 'asc'], 'doctorType.equals': 'PATHOLOGIST'
+      })
       .pipe(map((res: HttpResponse<IDoctor[]>) => res.body ?? []))
       .pipe(
         map((doctors: IDoctor[]) =>

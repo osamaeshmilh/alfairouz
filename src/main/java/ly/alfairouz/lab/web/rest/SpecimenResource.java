@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 import liquibase.pro.packaged.P;
+import ly.alfairouz.lab.domain.enumeration.ContractType;
 import ly.alfairouz.lab.domain.enumeration.PaymentType;
 import ly.alfairouz.lab.repository.SpecimenRepository;
 import ly.alfairouz.lab.security.AuthoritiesConstants;
@@ -282,7 +283,7 @@ public class SpecimenResource {
         String[] columns = {
             "Id", "Lab Ref No", "Lab QR", "Sampling Date", "Receiving Date", "Report Date", "Payment type",
             "Patient", "Patient Ar", "Referring center", "Referring Doctor", "Grossing Doctor",
-            "Pathologist 1", "Pathologist 2", "Specimen State", "Specimen type", "Biopsy", "Cytology",
+            "Pathologist 1", "Pathologist 2", "Specimen State", "Specimen type / size", "Biopsy", "Cytology",
             "Organ", "Price", "Paid", "Not Paid"
         };
 
@@ -312,6 +313,15 @@ public class SpecimenResource {
         int rowNum = 1;
 
         for (SpecimenDTO specimenDTO : specimenDTOList) {
+
+            String cellValue = "";
+
+            if (specimenDTO.getContractType() == ContractType.SIZE && specimenDTO.getSize() != null) {
+                cellValue = String.valueOf(specimenDTO.getSize().getName());
+            } else if (specimenDTO.getContractType() == ContractType.SPECIMEN && specimenDTO.getSpecimenType() != null) {
+                cellValue = specimenDTO.getSpecimenType().getName();
+            }
+
             Row row = sheet.createRow(rowNum++);
             row.createCell(0).setCellValue(specimenDTO.getId());
             row.createCell(1).setCellValue(specimenDTO.getLabRefNo());
@@ -321,14 +331,14 @@ public class SpecimenResource {
             row.createCell(5).setCellValue(specimenDTO.getReportDate() != null ? specimenDTO.getReportDate().toString() : "");
             row.createCell(6).setCellValue(specimenDTO.getPaymentType().toString());
             row.createCell(7).setCellValue(specimenDTO.getPatient() != null ? specimenDTO.getPatient().getName() : "");
-            row.createCell(8).setCellValue(specimenDTO.getPatientNameAr());
+            row.createCell(8).setCellValue(specimenDTO.getPatient() != null ? specimenDTO.getPatient().getNameAr() : "");
             row.createCell(9).setCellValue(specimenDTO.getReferringCenter() != null ? specimenDTO.getReferringCenter().getName() : "");
             row.createCell(10).setCellValue(specimenDTO.getReferringDoctor() != null ? specimenDTO.getReferringDoctor().getName() : "");
             row.createCell(11).setCellValue(specimenDTO.getGrossingDoctor() != null ? specimenDTO.getGrossingDoctor().getName() : "");
             row.createCell(12).setCellValue(specimenDTO.getPathologistDoctor() != null ? specimenDTO.getPathologistDoctor().getName() : "");
             row.createCell(13).setCellValue(specimenDTO.getPathologistDoctorTwo() != null ? specimenDTO.getPathologistDoctorTwo().getName() : "");
             row.createCell(14).setCellValue(specimenDTO.getSpecimenStatus().toString());
-            row.createCell(15).setCellValue(specimenDTO.getSpecimenType() != null ? specimenDTO.getSpecimenType().getName() : "");
+            row.createCell(15).setCellValue(cellValue);
             row.createCell(16).setCellValue(specimenDTO.getBiopsy() != null ? specimenDTO.getBiopsy().getName() : "");
             row.createCell(17).setCellValue(specimenDTO.getCytology() != null ? specimenDTO.getCytology().getName() : "");
             row.createCell(18).setCellValue(specimenDTO.getOrgan() != null ? specimenDTO.getOrgan().getName() : "");

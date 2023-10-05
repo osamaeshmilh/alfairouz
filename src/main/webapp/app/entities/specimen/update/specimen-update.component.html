@@ -121,12 +121,14 @@
             <div class="row">
               <mat-form-field appearance="standard" class="col-lg col-sm">
                 <mat-label>اسم المريض عربي</mat-label>
-                <input formControlName="patientNameAr" matInput type="text" name="patientNameAr"/>
+                <input formControlName="patientNameAr" matInput type="text" name="patientNameAr"
+                       pattern="[\u0600-\u06FF\s]*"/>
               </mat-form-field>
               <mat-form-field appearance="standard" class="col-lg col-sm">
                 <mat-label>اسم المريض انجليزي</mat-label>
-                <input formControlName="patientName" matInput type="text" name="patientName"/>
+                <input formControlName="patientName" matInput type="text" name="patientName" pattern="[a-zA-Z\s]*"/>
               </mat-form-field>
+
               <mat-form-field appearance="standard" class="col-lg col-sm">
                 <mat-label>رقم الهاتف</mat-label>
                 <input formControlName="patientMobileNumber" matInput type="text" name="patientMobileNumber"/>
@@ -183,14 +185,23 @@
 
           </div>
           <div class="row mb-3" *ngIf="editForm.get('newPatient')!.value === 1">
+            <!-- Search Input and Button -->
+            <div class="col-lg col-sm">
+              <div class="input-group">
+                <input type="text" class="form-control" #searchInput placeholder="Search for a patient...">
+                <button mat-raised-button color="primary" (click)="onPatientSearch(searchInput.value)" type="button">
+                  Search
+                </button>
+              </div>
+            </div>
+
             <label class="form-label" jhiTranslate="alfairouzApp.specimen.patient" for="field_patient">Patient</label>
             <select class="form-control" id="field_patient" data-cy="patient" name="patient" formControlName="patient">
-              <option [ngValue]="null"></option>
               <option
                 [ngValue]="patientOption.id === editForm.get('patient')!.value?.id ? editForm.get('patient')!.value : patientOption"
                 *ngFor="let patientOption of patientsSharedCollection; trackBy: trackPatientById"
               >
-                {{ patientOption.name }}
+                {{ patientOption.nameAr }}
               </option>
             </select>
           </div>

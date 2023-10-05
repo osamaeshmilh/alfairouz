@@ -1,18 +1,36 @@
 <div class="entity-container">
   <div class="mat-elevation-z1 round-card white-bg p-4 mt-5">
-    <div *jhiHasAnyAuthority="['ROLE_ADMIN']">
+    <div>
       <div class="row">
         <div class="col">
           <mat-form-field class="mr-auto" appearance="standard">
             <mat-select [(ngModel)]="reportType" placeholder="نوع التقرير">
-              <mat-option value="ALL_SPECIMEN">All Specimen Report</mat-option>
-              <mat-option value="SPECIMEN_BY_GROSSING_DOCTOR">Grossing Doctor Report</mat-option>
-              <mat-option value="SPECIMEN_BY_PATHOLOGIST_DOCTOR">Pathologist Doctor Report</mat-option>
-              <mat-option value="SPECIMEN_BY_REFERRING_DOCTOR">Referring Doctor Report</mat-option>
-              <mat-option value="SPECIMEN_BY_REFERRING_CENTER">Referring Center Report</mat-option>
-              <mat-option value="REPRESENTATIVE_DELIVERY">Representative Deliveries Report</mat-option>
-              <mat-option value="PAP_SMEAR_SALES">Pap Smear Sales</mat-option>
-              <mat-option value="EXPENSES">Expenses</mat-option>
+              <mat-option value="ALL_SPECIMEN" *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION']">All Specimen
+                Report
+              </mat-option>
+              <mat-option value="CASH_SPECIMEN" *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION']">Cash Specimen
+                Report
+              </mat-option>
+              <mat-option value="MONTHLY_SPECIMEN" *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION']">Monthly
+                Specimen Report
+              </mat-option>
+              <mat-option value="SPECIMEN_BY_GROSSING_DOCTOR" *jhiHasAnyAuthority="['ROLE_ADMIN']">Grossing Doctor
+                Report
+              </mat-option>
+              <mat-option value="SPECIMEN_BY_PATHOLOGIST_DOCTOR" *jhiHasAnyAuthority="['ROLE_ADMIN']">Pathologist Doctor
+                Report
+              </mat-option>
+              <mat-option value="SPECIMEN_BY_REFERRING_DOCTOR" *jhiHasAnyAuthority="['ROLE_ADMIN']">Referring Doctor
+                Report
+              </mat-option>
+              <mat-option value="SPECIMEN_BY_REFERRING_CENTER" *jhiHasAnyAuthority="['ROLE_ADMIN']">Referring Center
+                Report
+              </mat-option>
+              <mat-option value="REPRESENTATIVE_DELIVERY" *jhiHasAnyAuthority="['ROLE_ADMIN']">Representative Deliveries
+                Report
+              </mat-option>
+              <mat-option value="PAP_SMEAR_SALES" *jhiHasAnyAuthority="['ROLE_ADMIN']">Pap Smear Sales</mat-option>
+              <mat-option value="EXPENSES" *jhiHasAnyAuthority="['ROLE_ADMIN']">Expenses</mat-option>
             </mat-select>
           </mat-form-field>
         </div>

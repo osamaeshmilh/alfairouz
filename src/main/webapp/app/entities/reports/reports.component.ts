@@ -35,6 +35,8 @@ export class ReportsComponent implements OnInit {
     this.doctorService
       .query({
         'doctorType.equals': 'GROSSING',
+        size: 300,
+        sort: ['nameAr', 'asc']
       })
       .subscribe((res: HttpResponse<IDoctor[]>) => {
         this.grossingDoctors = res.body ?? [];
@@ -43,6 +45,8 @@ export class ReportsComponent implements OnInit {
     this.doctorService
       .query({
         'doctorType.equals': 'REFERRING',
+        size: 300,
+        sort: ['nameAr', 'asc']
       })
       .subscribe((res: HttpResponse<IDoctor[]>) => {
         this.referringDoctors = res.body ?? [];
@@ -51,12 +55,17 @@ export class ReportsComponent implements OnInit {
     this.doctorService
       .query({
         'doctorType.equals': 'PATHOLOGIST',
+        size: 300,
+        sort: ['nameAr', 'asc']
       })
       .subscribe((res: HttpResponse<IDoctor[]>) => {
         this.pathologistDoctors = res.body ?? [];
       });
 
-    this.referringCenterService.query().subscribe((res: HttpResponse<IReferringCenter[]>) => (this.referringCenters = res.body ?? []));
+    this.referringCenterService.query({
+      size: 300,
+      sort: ['nameAr', 'asc']
+    }).subscribe((res: HttpResponse<IReferringCenter[]>) => (this.referringCenters = res.body ?? []));
 
   }
 
@@ -66,6 +75,10 @@ export class ReportsComponent implements OnInit {
     const formattedToDate = formatDate(this.to, this.format, this.locale);
     if (this.reportType === 'ALL_SPECIMEN') {
       window.open(`/api/public/specimen/xlsx/criteria/?receivingDate.greaterThanOrEqual=${formattedFromDate}&receivingDate.lessThanOrEqual=${formattedToDate}`, '_blank');
+    } else if (this.reportType === 'CASH_SPECIMEN') {
+      window.open(`/api/public/specimen/xlsx/criteria/?paymentType.equals=CASH&receivingDate.greaterThanOrEqual=${formattedFromDate}&receivingDate.lessThanOrEqual=${formattedToDate}`, '_blank');
+    } else if (this.reportType === 'MONTHLY_SPECIMEN') {
+      window.open(`/api/public/specimen/xlsx/criteria/?paymentType.equals=MONTHLY&receivingDate.greaterThanOrEqual=${formattedFromDate}&receivingDate.lessThanOrEqual=${formattedToDate}`, '_blank');
     } else if (this.reportType === 'SPECIMEN_BY_GROSSING_DOCTOR') {
       window.open(`/api/public/specimen/xlsx/criteria/?grossingDoctorId.equals=${this.selectedId}&receivingDate.greaterThanOrEqual=${formattedFromDate}&receivingDate.lessThanOrEqual=${formattedToDate}`, '_blank');
     } else if (this.reportType === 'SPECIMEN_BY_PATHOLOGIST_DOCTOR') {
