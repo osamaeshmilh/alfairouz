@@ -122,8 +122,8 @@ export class SpecimenUpdateComponent implements OnInit {
 
     newPatient: [],
 
-    patientName: ['', [Validators.pattern('[a-zA-Zs]*')]],
-    patientNameAr: ['', [Validators.pattern('[\u0600-\u06FFs]*')]],
+    patientName: [],
+    patientNameAr: [],
     patientMobileNumber: [],
     patientNationality: [],
     patientMotherName: [],

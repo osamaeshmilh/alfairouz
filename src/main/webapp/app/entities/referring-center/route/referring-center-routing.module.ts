@@ -12,7 +12,7 @@ const referringCenterRoute: Routes = [
     path: '',
     component: ReferringCenterComponent,
     data: {
-      defaultSort: 'id,asc',
+      defaultSort: 'id,desc',
     },
     canActivate: [UserRouteAccessService],
   },

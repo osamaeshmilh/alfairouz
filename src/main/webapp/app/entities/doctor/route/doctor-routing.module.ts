@@ -12,7 +12,7 @@ const doctorRoute: Routes = [
     path: '',
     component: DoctorComponent,
     data: {
-      defaultSort: 'id,asc',
+      defaultSort: 'id,desc',
     },
     canActivate: [UserRouteAccessService],
   },

@@ -13,7 +13,7 @@ const specimenRoute: Routes = [
     path: '',
     component: SpecimenComponent,
     data: {
-      defaultSort: 'id,asc',
+      defaultSort: 'id,desc',
     },
     canActivate: [UserRouteAccessService],
   },
