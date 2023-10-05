@@ -37,7 +37,7 @@ import {Gender} from "../../enumerations/gender.model";
 import dayjs from "dayjs/esm";
 import {IReferringCenterPrice} from "../../referring-center-price/referring-center-price.model";
 import {ReferringCenterPriceService} from "../../referring-center-price/service/referring-center-price.service";
-import {Validators, Editor, Toolbar} from 'ngx-editor';
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 @Component({
   selector: 'jhi-specimen-update',
@@ -134,18 +134,19 @@ export class SpecimenUpdateComponent implements OnInit {
   });
   paymentType: any;
   selectedOption = 0;
+  public Editor = ClassicEditor;
 
-  editor: Editor = new Editor();
-  toolbar: Toolbar = [
-    ['bold', 'italic'],
-    ['underline', 'strike'],
-    ['code', 'blockquote'],
-    ['ordered_list', 'bullet_list'],
-    [{heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']}],
-    ['link', 'image'],
-    ['text_color', 'background_color'],
-    ['align_left', 'align_center', 'align_right', 'align_justify'],
-  ];
+  // editor: Editor = new Editor();
+  // toolbar: Toolbar = [
+  //   ['bold', 'italic'],
+  //   ['underline', 'strike'],
+  //   ['code', 'blockquote'],
+  //   ['ordered_list', 'bullet_list'],
+  //   [{heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']}],
+  //   ['link', 'image'],
+  //   ['text_color', 'background_color'],
+  //   ['align_left', 'align_center', 'align_right', 'align_justify'],
+  // ];
 
   constructor(
     protected dataUtils: DataUtils,
@@ -166,7 +167,7 @@ export class SpecimenUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.editor = new Editor();
+    // this.editor = new Editor();
 
     this.activatedRoute.data.subscribe(({ specimen }) => {
       this.paymentType = this.activatedRoute.snapshot.queryParams['paymentType'] ? this.activatedRoute.snapshot.queryParams['paymentType'] : '';
@@ -577,7 +578,9 @@ export class SpecimenUpdateComponent implements OnInit {
       reportDate: this.editForm.get(['reportDate'])!.value,
       clinicalData: this.editForm.get(['clinicalData'])!.value,
       clinicalDate: this.editForm.get(['clinicalDate'])!.value,
-      grossExamination: this.editForm.get(['grossExamination'])!.value,
+      grossExamination: this.editForm.get(['grossExamination'])!.value
+        .replace(/<\/p>(?!<br>)/g, "</p><br>")
+        .replace(/<p>&nbsp;<\/p>/g, ""),
       grossDate: this.editForm.get(['grossDate'])!.value,
       microscopicData: this.editForm.get(['microscopicData'])!.value,
       microscopicDate: this.editForm.get(['microscopicDate'])!.value,

@@ -17,7 +17,8 @@ import {GetColorPipe, TranslateMePipe} from "./util/mapper.pip";
 
 @NgModule({
   imports: [SharedLibsModule,
-    SweetAlert2Module.forRoot(),],
+    SweetAlert2Module.forRoot()
+  ],
   declarations: [
     FindLanguageFromKeyPipe,
     TranslateDirective,

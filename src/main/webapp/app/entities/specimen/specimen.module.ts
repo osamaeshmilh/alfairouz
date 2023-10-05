@@ -7,10 +7,10 @@ import { SpecimenDeleteDialogComponent } from './delete/specimen-delete-dialog.c
 import {SpecimenRoutingModule} from './route/specimen-routing.module';
 import {SpecimenQueryComponent} from "./query/specimen-query.component";
 import {QRCodeModule} from "angularx-qrcode";
-import {NgxEditorModule} from "ngx-editor";
+import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 
 @NgModule({
-  imports: [SharedModule, SpecimenRoutingModule, QRCodeModule, NgxEditorModule],
+  imports: [SharedModule, SpecimenRoutingModule, QRCodeModule, CKEditorModule],
   declarations: [SpecimenComponent, SpecimenDetailComponent, SpecimenUpdateComponent, SpecimenDeleteDialogComponent, SpecimenQueryComponent],
   entryComponents: [SpecimenDeleteDialogComponent],
 })
