@@ -41,7 +41,7 @@
             <mat-select [(ngModel)]="selectedId" id="field_grossing_doctor">
               <mat-option [value]="null"></mat-option>
               <mat-option *ngFor="let grossingDoctorOption of grossingDoctors;"
-                          [value]="grossingDoctorOption.id">{{ grossingDoctorOption.name }}</mat-option>
+                          [value]="grossingDoctorOption.id">{{ grossingDoctorOption.nameAr }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
@@ -51,7 +51,7 @@
             <mat-select [(ngModel)]="selectedId" id="field_pathologist_doctor">
               <mat-option [value]="null"></mat-option>
               <mat-option *ngFor="let pathologistDoctorOption of pathologistDoctors;"
-                          [value]="pathologistDoctorOption.id">{{ pathologistDoctorOption.name }}</mat-option>
+                          [value]="pathologistDoctorOption.id">{{ pathologistDoctorOption.nameAr }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
@@ -61,7 +61,7 @@
             <mat-select [(ngModel)]="selectedId" id="field_referring_doctor">
               <mat-option [value]="null"></mat-option>
               <mat-option *ngFor="let referringDoctorOption of referringDoctors;"
-                          [value]="referringDoctorOption.id">{{ referringDoctorOption.name }}</mat-option>
+                          [value]="referringDoctorOption.id">{{ referringDoctorOption.nameAr }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
@@ -71,7 +71,7 @@
             <mat-select [(ngModel)]="selectedId" id="field_referring_center">
               <mat-option [value]="null"></mat-option>
               <mat-option *ngFor="let referringCenterOption of referringCenters;"
-                          [value]="referringCenterOption.id">{{ referringCenterOption.name }}</mat-option>
+                          [value]="referringCenterOption.id">{{ referringCenterOption.nameAr }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
