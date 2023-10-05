@@ -576,19 +576,26 @@
         </div>
 
 
+        <!--        <div class="row mb-3"-->
+        <!--             *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">-->
+        <!--          <label class="form-label" jhiTranslate="alfairouzApp.specimen.clinicalData" for="field_clinicalData">Clinical-->
+        <!--            Data</label>-->
+        <!--          <textarea-->
+        <!--            rows="6"-->
+        <!--            type="text"-->
+        <!--            class="form-control"-->
+        <!--            name="clinicalData"-->
+        <!--            id="field_clinicalData"-->
+        <!--            data-cy="clinicalData"-->
+        <!--            formControlName="clinicalData"-->
+        <!--          ></textarea>-->
+        <!--        </div>-->
         <div class="row mb-3"
              *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.clinicalData" for="field_clinicalData">Clinical
-            Data</label>
-          <textarea
-            rows="6"
-            type="text"
-            class="form-control"
-            name="clinicalData"
-            id="field_clinicalData"
-            data-cy="clinicalData"
-            formControlName="clinicalData"
-          ></textarea>
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.clinicalData">Clinical Data</label>
+
+          <ckeditor [editor]="Editor" formControlName="clinicalData" data-cy="clinicalData"></ckeditor>
+
         </div>
 
         <div class="row mb-3"
@@ -671,19 +678,26 @@
 
         <div class="row mb-3"
              *jhiHasAnyAuthority="['ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.microscopicData" for="field_microscopicData"
-          >Microscopic Data</label
-          >
-          <textarea
-            rows="6"
-            type="text"
-            class="form-control"
-            name="microscopicData"
-            id="field_microscopicData"
-            data-cy="microscopicData"
-            formControlName="microscopicData"
-          ></textarea>
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.microscopicData">Microscopic Data</label>
+
+          <ckeditor [editor]="Editor" formControlName="microscopicData" data-cy="microscopicData"></ckeditor>
+
         </div>
+        <!--        <div class="row mb-3"-->
+        <!--             *jhiHasAnyAuthority="['ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">-->
+        <!--          <label class="form-label" jhiTranslate="alfairouzApp.specimen.microscopicData" for="field_microscopicData"-->
+        <!--          >Microscopic Data</label-->
+        <!--          >-->
+        <!--          <textarea-->
+        <!--            rows="6"-->
+        <!--            type="text"-->
+        <!--            class="form-control"-->
+        <!--            name="microscopicData"-->
+        <!--            id="field_microscopicData"-->
+        <!--            data-cy="microscopicData"-->
+        <!--            formControlName="microscopicData"-->
+        <!--          ></textarea>-->
+        <!--        </div>-->
 
         <div class="row mb-3"
              *jhiHasAnyAuthority="['ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
@@ -717,19 +731,26 @@
           </select>
         </div>
 
+        <!--        <div class="row mb-3"-->
+        <!--             *jhiHasAnyAuthority="['ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">-->
+        <!--          <label class="form-label" jhiTranslate="alfairouzApp.specimen.conclusion"-->
+        <!--                 for="field_conclusion">Conclusion</label>-->
+        <!--          <textarea-->
+        <!--            rows="6"-->
+        <!--            type="text"-->
+        <!--            class="form-control"-->
+        <!--            name="conclusion"-->
+        <!--            id="field_conclusion"-->
+        <!--            data-cy="conclusion"-->
+        <!--            formControlName="conclusion"-->
+        <!--          ></textarea>-->
+        <!--        </div>-->
         <div class="row mb-3"
              *jhiHasAnyAuthority="['ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.conclusion"
-                 for="field_conclusion">Conclusion</label>
-          <textarea
-            rows="6"
-            type="text"
-            class="form-control"
-            name="conclusion"
-            id="field_conclusion"
-            data-cy="conclusion"
-            formControlName="conclusion"
-          ></textarea>
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.conclusion">Conclusion</label>
+
+          <ckeditor [editor]="Editor" formControlName="conclusion" data-cy="conclusion"></ckeditor>
+
         </div>
 
         <div class="row mb-3"
