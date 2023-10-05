@@ -576,18 +576,17 @@ export class SpecimenUpdateComponent implements OnInit {
       urgentSample: this.editForm.get(['urgentSample'])!.value,
       revisionDate: this.editForm.get(['revisionDate'])!.value,
       reportDate: this.editForm.get(['reportDate'])!.value,
-      clinicalData: this.editForm.get(['clinicalData'])!.value.replace(/<\/p>(?!<br>)/g, "</p><br>")
+      clinicalData: (this.editForm.get(['clinicalData'])!.value ?? "").replace(/<\/p>(?!<br>)/g, "</p><br>")
         .replace(/<p>&nbsp;<\/p>/g, ""),
       clinicalDate: this.editForm.get(['clinicalDate'])!.value,
-      grossExamination: this.editForm.get(['grossExamination'])!.value
-        .replace(/<\/p>(?!<br>)/g, "</p><br>")
+      grossExamination: (this.editForm.get(['grossExamination'])!.value ?? "").replace(/<\/p>(?!<br>)/g, "</p><br>")
         .replace(/<p>&nbsp;<\/p>/g, ""),
       grossDate: this.editForm.get(['grossDate'])!.value,
-      microscopicData: this.editForm.get(['microscopicData'])!.value.replace(/<\/p>(?!<br>)/g, "</p><br>")
+      microscopicData: (this.editForm.get(['microscopicData'])!.value ?? "").replace(/<\/p>(?!<br>)/g, "</p><br>")
         .replace(/<p>&nbsp;<\/p>/g, ""),
       microscopicDate: this.editForm.get(['microscopicDate'])!.value,
       results: this.editForm.get(['results'])!.value,
-      conclusion: this.editForm.get(['conclusion'])!.value.replace(/<\/p>(?!<br>)/g, "</p><br>")
+      conclusion: (this.editForm.get(['conclusion'])!.value ?? "").replace(/<\/p>(?!<br>)/g, "</p><br>")
         .replace(/<p>&nbsp;<\/p>/g, ""),
       conclusionDate: this.editForm.get(['conclusionDate'])!.value,
       notes: this.editForm.get(['notes'])!.value,
