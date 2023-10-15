@@ -37,7 +37,6 @@ import {Gender} from "../../enumerations/gender.model";
 import dayjs from "dayjs/esm";
 import {IReferringCenterPrice} from "../../referring-center-price/referring-center-price.model";
 import {ReferringCenterPriceService} from "../../referring-center-price/service/referring-center-price.service";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import {AngularEditorConfig} from '@kolkov/angular-editor';
 
 @Component({
@@ -135,7 +134,6 @@ export class SpecimenUpdateComponent implements OnInit {
   });
   paymentType: any;
   selectedOption = 0;
-  public Editor = ClassicEditor;
 
   editorConfig: AngularEditorConfig = {
     editable: true,
