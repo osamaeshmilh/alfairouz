@@ -604,8 +604,10 @@
              *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
           <label class="form-label" jhiTranslate="alfairouzApp.specimen.clinicalData">Clinical Data</label>
 
-          <ckeditor [editor]="Editor" formControlName="clinicalData" data-cy="clinicalData"></ckeditor>
-
+          <!--          <ckeditor [editor]="Editor" formControlName="clinicalData" data-cy="clinicalData"></ckeditor>-->
+          <angular-editor class="col m-2" [config]="editorConfig" type="text" name="clinicalData"
+                          formControlName="clinicalData">
+          </angular-editor>
         </div>
 
         <div class="row mb-3"
@@ -635,8 +637,11 @@
             Gross Examination
           </label>
 
-          <ckeditor [editor]="Editor" formControlName="grossExamination"></ckeditor>
-
+          <!--          <ckeditor [editor]="Editor" formControlName="grossExamination"></ckeditor>-->
+          <angular-editor class="col m-2" [config]="editorConfig" type="text" name="grossExamination"
+                          id="field_grossExamination"
+                          formControlName="grossExamination">
+          </angular-editor>
         </div>
 
 
@@ -690,8 +695,10 @@
              *jhiHasAnyAuthority="['ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
           <label class="form-label" jhiTranslate="alfairouzApp.specimen.microscopicData">Microscopic Data</label>
 
-          <ckeditor [editor]="Editor" formControlName="microscopicData" data-cy="microscopicData"></ckeditor>
-
+          <!--          <ckeditor [editor]="Editor" formControlName="microscopicData" data-cy="microscopicData"></ckeditor>-->
+          <angular-editor class="col m-2" [config]="editorConfig" type="text" name="microscopicData"
+                          formControlName="microscopicData">
+          </angular-editor>
         </div>
         <!--        <div class="row mb-3"-->
         <!--             *jhiHasAnyAuthority="['ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">-->
@@ -759,8 +766,10 @@
              *jhiHasAnyAuthority="['ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
           <label class="form-label" jhiTranslate="alfairouzApp.specimen.conclusion">Conclusion</label>
 
-          <ckeditor [editor]="Editor" formControlName="conclusion" data-cy="conclusion"></ckeditor>
-
+          <!--          <ckeditor [editor]="Editor" formControlName="conclusion" data-cy="conclusion"></ckeditor>-->
+          <angular-editor class="col m-2" [config]="editorConfig" type="text" name="conclusion"
+                          formControlName="conclusion">
+          </angular-editor>
         </div>
 
         <div class="row mb-3"

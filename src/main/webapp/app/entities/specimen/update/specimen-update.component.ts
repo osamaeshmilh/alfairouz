@@ -38,6 +38,7 @@ import dayjs from "dayjs/esm";
 import {IReferringCenterPrice} from "../../referring-center-price/referring-center-price.model";
 import {ReferringCenterPriceService} from "../../referring-center-price/service/referring-center-price.service";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import {AngularEditorConfig} from '@kolkov/angular-editor';
 
 @Component({
   selector: 'jhi-specimen-update',
@@ -136,17 +137,15 @@ export class SpecimenUpdateComponent implements OnInit {
   selectedOption = 0;
   public Editor = ClassicEditor;
 
-  // editor: Editor = new Editor();
-  // toolbar: Toolbar = [
-  //   ['bold', 'italic'],
-  //   ['underline', 'strike'],
-  //   ['code', 'blockquote'],
-  //   ['ordered_list', 'bullet_list'],
-  //   [{heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']}],
-  //   ['link', 'image'],
-  //   ['text_color', 'background_color'],
-  //   ['align_left', 'align_center', 'align_right', 'align_justify'],
-  // ];
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '10rem',
+    minHeight: '5rem',
+    placeholder: 'تفاصيل العينة',
+    translate: 'no',
+  };
+
   private searchTerms = new Subject<string>();
 
   constructor(
@@ -598,18 +597,24 @@ export class SpecimenUpdateComponent implements OnInit {
       urgentSample: this.editForm.get(['urgentSample'])!.value,
       revisionDate: this.editForm.get(['revisionDate'])!.value,
       reportDate: this.editForm.get(['reportDate'])!.value,
-      clinicalData: (this.editForm.get(['clinicalData'])!.value ?? "").replace(/<\/p>(?!<br>)/g, "</p><br>")
-        .replace(/<p>&nbsp;<\/p>/g, ""),
-      clinicalDate: this.editForm.get(['clinicalDate'])!.value,
-      grossExamination: (this.editForm.get(['grossExamination'])!.value ?? "").replace(/<\/p>(?!<br>)/g, "</p><br>")
-        .replace(/<p>&nbsp;<\/p>/g, ""),
-      grossDate: this.editForm.get(['grossDate'])!.value,
-      microscopicData: (this.editForm.get(['microscopicData'])!.value ?? "").replace(/<\/p>(?!<br>)/g, "</p><br>")
-        .replace(/<p>&nbsp;<\/p>/g, ""),
-      microscopicDate: this.editForm.get(['microscopicDate'])!.value,
       results: this.editForm.get(['results'])!.value,
-      conclusion: (this.editForm.get(['conclusion'])!.value ?? "").replace(/<\/p>(?!<br>)/g, "</p><br>")
-        .replace(/<p>&nbsp;<\/p>/g, ""),
+      clinicalDate: this.editForm.get(['clinicalDate'])!.value,
+      grossDate: this.editForm.get(['grossDate'])!.value,
+      microscopicDate: this.editForm.get(['microscopicDate'])!.value,
+
+      clinicalData: this.editForm.get(['clinicalData'])!.value,
+      microscopicData: this.editForm.get(['microscopicData'])!.value,
+      conclusion: this.editForm.get(['conclusion'])!.value,
+      grossExamination: this.editForm.get(['grossExamination'])!.value,
+
+      // grossExamination: (this.editForm.get(['grossExamination'])!.value ?? "").replace(/<p class="MsoNormal">\s*<span>&#160;<\/span>\s*<\/p>/g, "<br>"),
+      // clinicalData: (this.editForm.get(['clinicalData'])!.value ?? "").replace(/<\/p>(?!<br>)/g, "<br>")
+      //   .replace(/<p>&nbsp;<\/p>/g, ""),
+      // microscopicData: (this.editForm.get(['microscopicData'])!.value ?? "").replace(/<\/p>(?!<br>)/g, "</p><br>")
+      //   .replace(/<p>&nbsp;<\/p>/g, ""),
+      // conclusion: (this.editForm.get(['conclusion'])!.value ?? "").replace(/<\/p>(?!<br>)/g, "</p><br>")
+      //   .replace(/<p>&nbsp;<\/p>/g, ""),
+
       conclusionDate: this.editForm.get(['conclusionDate'])!.value,
       notes: this.editForm.get(['notes'])!.value,
       specimenStatus: this.editForm.get(['specimenStatus'])!.value,
