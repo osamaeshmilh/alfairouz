@@ -579,8 +579,8 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 <textElement textAlignment="Justified" verticalAlignment="Top" markup="html">
                     <font fontName="Times New Roman" size="10"/>
                 </textElement>
-                <textFieldExpression><![CDATA["<br><br><b><u> Clinical Data: </u></b><br><br>" + $F{clinical_data} +
-"<br><br><b><u> Gross Examination: </u></b><br><br>" + $F{gross_examination}]]></textFieldExpression>
+                <textFieldExpression><![CDATA["<br><br><b><u> Clinical Data: </u></b><br><br>" + $F{clinical_data}.replaceAll("</p>", "</p><br>").replaceAll("</div>", "</div><br>") +
+            "<br><br><b><u> Gross Examination: </u></b><br><br>" + $F{gross_examination}.replaceAll("</p>", "</p><br>").replaceAll("</div>", "</div><br>")]]></textFieldExpression>
             </textField>
         </band>
     </detail>
