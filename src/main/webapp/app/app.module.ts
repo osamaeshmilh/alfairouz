@@ -43,8 +43,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
   ],
   providers: [
     Title,
-    { provide: LOCALE_ID, useValue: 'en' },
-    { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
+    {provide: LOCALE_ID, useValue: 'ar-ly'},
+    {provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter},
     FindLanguageFromKeyPipe,
     httpInterceptorProviders,
   ],
