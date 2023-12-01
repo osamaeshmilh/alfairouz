@@ -35,7 +35,7 @@ export class ReportsComponent implements OnInit {
     this.doctorService
       .query({
         'doctorType.equals': 'GROSSING',
-        size: 300,
+        size: 1000,
         sort: ['nameAr', 'asc']
       })
       .subscribe((res: HttpResponse<IDoctor[]>) => {
@@ -45,7 +45,7 @@ export class ReportsComponent implements OnInit {
     this.doctorService
       .query({
         'doctorType.equals': 'REFERRING',
-        size: 300,
+        size: 1000,
         sort: ['nameAr', 'asc']
       })
       .subscribe((res: HttpResponse<IDoctor[]>) => {
@@ -55,7 +55,7 @@ export class ReportsComponent implements OnInit {
     this.doctorService
       .query({
         'doctorType.equals': 'PATHOLOGIST',
-        size: 300,
+        size: 1000,
         sort: ['nameAr', 'asc']
       })
       .subscribe((res: HttpResponse<IDoctor[]>) => {
@@ -63,7 +63,7 @@ export class ReportsComponent implements OnInit {
       });
 
     this.referringCenterService.query({
-      size: 300,
+      size: 1000,
       sort: ['nameAr', 'asc']
     }).subscribe((res: HttpResponse<IReferringCenter[]>) => (this.referringCenters = res.body ?? []));
 

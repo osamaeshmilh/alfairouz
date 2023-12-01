@@ -26,7 +26,7 @@ export class ReferringCenterDetailComponent implements OnInit {
 
     this.referringCenterPriceService
       .query({
-        size: 200,
+        size: 1000,
         'referringCenterId.equals': this.referringCenter?.id,
       })
       .subscribe((res: HttpResponse<IReferringCenterPrice[]>) => {

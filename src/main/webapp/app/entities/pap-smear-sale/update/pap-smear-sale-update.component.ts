@@ -103,7 +103,7 @@ export class PapSmearSaleUpdateComponent implements OnInit {
   protected loadRelationshipsOptions(): void {
     this.referringCenterService
       .query({
-        size: 300,
+        size: 1000,
         sort: ['nameAr', 'asc']
       })
       .pipe(map((res: HttpResponse<IReferringCenter[]>) => res.body ?? []))
