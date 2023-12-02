@@ -19,6 +19,8 @@ public class EmployeeDTO implements Serializable {
 
     private UserDTO internalUser;
 
+    private String newPassword;
+
     public Long getId() {
         return id;
     }
@@ -90,5 +92,13 @@ public class EmployeeDTO implements Serializable {
             ", salary=" + getSalary() +
             ", internalUser=" + getInternalUser() +
             "}";
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 }

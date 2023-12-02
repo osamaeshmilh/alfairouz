@@ -19,9 +19,10 @@
           <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
         </div>
 
-        <div class="row mb-3">
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value != null">
           <label class="form-label" jhiTranslate="alfairouzApp.employee.jobTitle" for="field_jobTitle">Job Title</label>
-          <select class="form-control" name="jobTitle" formControlName="jobTitle" id="field_jobTitle" data-cy="jobTitle">
+          <select class="form-control" name="jobTitle" formControlName="jobTitle" id="field_jobTitle"
+                  data-cy="jobTitle">
             <option [ngValue]="null">{{ 'alfairouzApp.JobTitle.null' | translate }}</option>
             <option *ngFor="let jobTitle of jobTitleValues" [value]="jobTitle">
               {{ 'alfairouzApp.JobTitle.' + jobTitle | translate }}
@@ -31,10 +32,17 @@
 
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="alfairouzApp.employee.salary" for="field_salary">Salary</label>
-          <input type="number" class="form-control" name="salary" id="field_salary" data-cy="salary" formControlName="salary" />
+          <input type="number" class="form-control" name="salary" id="field_salary" data-cy="salary"
+                 formControlName="salary"/>
         </div>
 
         <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" for="field_newPassword">New Password</label>
+          <input type="text" class="form-control" name="newPassword" id="field_newPassword" data-cy="newPassword"
+                 formControlName="newPassword"/>
+        </div>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value != null">
           <label class="form-label" jhiTranslate="alfairouzApp.employee.internalUser" for="field_internalUser">Internal
             User</label>
           <select class="form-control" id="field_internalUser" data-cy="internalUser" name="internalUser"

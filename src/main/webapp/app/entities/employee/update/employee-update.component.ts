@@ -27,6 +27,7 @@ export class EmployeeUpdateComponent implements OnInit {
     jobTitle: [],
     salary: [],
     internalUser: [],
+    newPassword: [],
   });
 
   constructor(
@@ -88,6 +89,7 @@ export class EmployeeUpdateComponent implements OnInit {
       jobTitle: employee.jobTitle,
       salary: employee.salary,
       internalUser: employee.internalUser,
+      newPassword: employee.newPassword,
     });
 
     this.usersSharedCollection = this.userService.addUserToCollectionIfMissing(this.usersSharedCollection, employee.internalUser);
@@ -109,6 +111,7 @@ export class EmployeeUpdateComponent implements OnInit {
       jobTitle: this.editForm.get(['jobTitle'])!.value,
       salary: this.editForm.get(['salary'])!.value,
       internalUser: this.editForm.get(['internalUser'])!.value,
+      newPassword: this.editForm.get(['newPassword'])!.value,
     };
   }
 }

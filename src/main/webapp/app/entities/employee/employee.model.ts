@@ -7,6 +7,7 @@ export interface IEmployee {
   jobTitle?: JobTitle | null;
   salary?: number | null;
   internalUser?: IUser | null;
+  newPassword?: string | null;
 }
 
 export class Employee implements IEmployee {
@@ -15,7 +16,8 @@ export class Employee implements IEmployee {
     public name?: string | null,
     public jobTitle?: JobTitle | null,
     public salary?: number | null,
-    public internalUser?: IUser | null
+    public internalUser?: IUser | null,
+    public newPassword?: string | null,
   ) {}
 }
 

@@ -8,6 +8,7 @@ import ly.alfairouz.lab.domain.User;
 import ly.alfairouz.lab.domain.enumeration.JobTitle;
 import ly.alfairouz.lab.repository.EmployeeRepository;
 import ly.alfairouz.lab.security.AuthoritiesConstants;
+import ly.alfairouz.lab.service.dto.AdminUserDTO;
 import ly.alfairouz.lab.service.dto.DoctorDTO;
 import ly.alfairouz.lab.service.dto.EmployeeDTO;
 import ly.alfairouz.lab.service.mapper.EmployeeMapper;
@@ -64,6 +65,12 @@ public class EmployeeService {
         log.debug("Request to save Employee : {}", employeeDTO);
         Employee employee = employeeMapper.toEntity(employeeDTO);
         employee = employeeRepository.save(employee);
+
+        AdminUserDTO user = userService.getUserWithAuthoritiesById(employee.getInternalUser().getId()).get();
+        if (employeeDTO.getNewPassword() != null)
+            user.setNewPassword(employeeDTO.getNewPassword());
+        userService.updateUser(user);
+
         return employeeMapper.toDto(employee);
     }
 
