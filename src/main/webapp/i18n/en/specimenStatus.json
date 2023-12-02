@@ -2,16 +2,16 @@
   "alfairouzApp": {
     "SpecimenStatus": {
       "null": "",
-      "RECEIVED": "RECEIVED",
-      "GROSSING": "GROSSING",
-      "PROCESSING": "PROCESSING",
-      "EMBEDDING": "EMBEDDING",
-      "CUTTING": "CUTTING",
-      "STAINING": "STAINING",
-      "DIAGNOSING": "DIAGNOSING",
-      "TYPING": "TYPING",
-      "REVISION": "REVISION",
-      "READY": "READY"
+      "RECEIVED": "Received",
+      "GROSSING": "Grossing",
+      "PROCESSING": "Processing",
+      "EMBEDDING": "Embedding",
+      "CUTTING": "Cutting",
+      "STAINING": "Staining",
+      "DIAGNOSING": "Diagnosing",
+      "TYPING": "Typing",
+      "REVISION": "Revision",
+      "READY": "Ready"
     }
   }
 }

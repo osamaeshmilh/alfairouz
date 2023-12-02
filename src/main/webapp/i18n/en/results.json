@@ -2,12 +2,12 @@
   "alfairouzApp": {
     "Results": {
       "null": "",
-      "BENIGN": "BENIGN",
-      "MALIGNANT": "MALIGNANT",
-      "MALIGNANT_MARGIN_FREE": "MALIGNANT_MARGIN_FREE",
-      "MALIGNANT_MARGIN_INVOLVED": "MALIGNANT_MARGIN_INVOLVED",
-      "INFLAMMATION": "INFLAMMATION",
-      "DESCRIPTIVE_REPORT": "DESCRIPTIVE_REPORT",
+      "BENIGN": "Benign",
+      "MALIGNANT": "Malignant",
+      "MALIGNANT_MARGIN_FREE": "Malignant Margin Free",
+      "MALIGNANT_MARGIN_INVOLVED": "Malignant Margin Involved",
+      "INFLAMMATION": "Inflammation",
+      "DESCRIPTIVE_REPORT": "Descriptive Report",
       "OTHER": "OTHER"
     }
   }
