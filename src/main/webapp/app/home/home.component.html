@@ -1,35 +1,117 @@
-<div class="wide-container">
-  <div style="min-height: 400px">
-    <div class="row d-flex p-5 align-items-center main-container mx-auto">
-      <div class="col-12 text-sm-right col-sm-6 text-center">
-        <h3 class="primary">مختبر الفيروز</h3>
+<div class="entity-container">
+  <div class="mat-elevation-z1 round-card white-bg p-4 mt-5">
+    <br/>
+    <br/>
+    <h3 class="text-center">الاستعلام عن عينة</h3>
+    <br/>
+    <br/>
+
+    <div class="row text-center">
+      <form class="col-4 col-center-block mt-5">
+        <mat-form-field appearance="outline" class="fill">
+          <button (click)="search()" class="mr-2" mat-icon-button matPrefix type="submit">
+            <mat-icon>search</mat-icon>
+          </button>
+          <input [(ngModel)]="currentSearch" matInput name="currentSearch" placeholder=" ادخل كود العينة QR"
+                 type="text"/>
+          <mat-hint align="start"> ادخل كود العينة QR وقم بالضغط على بحث لعرض حالة العينة</mat-hint>
+          <button (click)="clear()" *ngIf="currentSearch" class="ml-1" color="warn" mat-icon-button matSuffix>
+            <mat-icon>clear</mat-icon>
+          </button>
+        </mat-form-field>
+      </form>
+    </div>
+    <!--        <div class="row text-center">-->
+    <!--            <div class="col-4 col-center-block mt-5">-->
+    <!--                <zxing-scanner></zxing-scanner>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <div class="row text-center">
+      <div class="col-4 col-center-block mt-5">
+        <button (click)="search()" color="primary" mat-raised-button>
+          <mat-icon>search</mat-icon>
+          بحث
+        </button>
       </div>
     </div>
-
-    <div class="card-container m-5">
-      <jhi-specimen-query></jhi-specimen-query>
-      <!--      <mat-card class="example-ripple mat-elevation-z1 round-card d-flex flex-column" matRipple-->
-      <!--                routerLink="specimen/query">-->
-      <!--        <strong>استعلام عن نتيجة</strong>-->
-      <!--        <br/>-->
-      <!--        <p>استعلام عن نتيجة</p>-->
-      <!--        <div class="text-left">-->
-      <!--          <button mat-mini-fab class="mat-elevation-z0" color="primary" matRipple routerLink="specimen/query">-->
-      <!--            <mat-icon>chevron_left</mat-icon>-->
-      <!--          </button>-->
-      <!--        </div>-->
-      <!--      </mat-card>-->
-      <!--      <mat-card class="example-ripple mat-elevation-z1 round-card d-flex flex-column" matRipple routerLink="login">-->
-      <!--        <strong>الدخول الى النظام</strong>-->
-      <!--        <br/>-->
-      <!--        <p>الدخول الى النظام</p>-->
-      <!--        <div class="text-left">-->
-      <!--          <button mat-mini-fab class="mat-elevation-z0" color="primary" routerLink="login">-->
-      <!--            <mat-icon>chevron_left</mat-icon>-->
-      <!--          </button>-->
-      <!--        </div>-->
-      <!--      </mat-card>-->
-
+    <div class="row text-center">
+      <div class="col d-flex flex-column align-items-center pb-5 m-4">
+        <mat-spinner *ngIf="isLoading" class="mt-5" diameter="50"></mat-spinner>
+      </div>
     </div>
+    <div class="row text-center">
+      <div *ngIf="specimen">
+        <div class="col-10 col-center-block mt-5">
+          <div class="row detail-row mt-3">
+            <div class="col-4">
+              <div class="text-muted">رقم QR العينة</div>
+              <h6 matLine>{{ specimen.labQr }}</h6>
+            </div>
+            <div class="col-4">
+              <div class="text-muted">الاسم</div>
+              <h6 matLine *ngIf="specimen.patient">{{ specimen.patient?.nameAr }}</h6>
+            </div>
+            <div class="col-4">
+              <div class="text-muted">حالة العينة</div>
+              <div
+                jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.' + specimen.specimenStatus }}"
+                class="{{ specimen.specimenStatus | getColor }}"
+              >
+                {{ specimen.specimenStatus }}
+              </div>
+              <button *ngIf="isCompleted('READY') && specimen.notPaid == 0" class="m-2" color="primary"
+                      (click)="getPdf(specimen.id)"
+                      mat-raised-button>
+                <mat-icon>insert_drive_file</mat-icon>
+                <span class="d-none d-md-inline">Print Report</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+
+        <mat-stepper orientation="vertical" class="mat-step-header-no-click" [linear]="true">
+          <mat-step [completed]="isCompleted('RECEIVED')" [editable]="false">
+            <ng-template matStepLabel>
+              <span jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.RECEIVED' }}">RECEIVED</span>
+            </ng-template>
+          </mat-step>
+          <mat-step [completed]="isCompleted('GROSSING')" [editable]="false">
+            <ng-template matStepLabel>
+              <span jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.GROSSING' }}">GROSSING</span>
+            </ng-template>
+          </mat-step>
+          <mat-step [completed]="isCompleted('PROCESSING')" [editable]="false">
+            <ng-template matStepLabel>
+              <span jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.PROCESSING' }}">PROCESSING</span>
+            </ng-template>
+          </mat-step>
+          <mat-step [completed]="isCompleted('DIAGNOSING')" [editable]="false">
+            <ng-template matStepLabel>
+              <span jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.DIAGNOSING' }}">DIAGNOSING</span>
+            </ng-template>
+          </mat-step>
+          <mat-step [completed]="isCompleted('TYPING')" [editable]="false">
+            <ng-template matStepLabel>
+              <span jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.TYPING' }}">TYPING</span>
+            </ng-template>
+          </mat-step>
+          <mat-step [completed]="isCompleted('REVISION')" [editable]="false">
+            <ng-template matStepLabel>
+              <span jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.REVISION' }}">REVISION</span>
+            </ng-template>
+          </mat-step>
+          <mat-step [completed]="isCompleted('READY')" [editable]="false">
+            <ng-template matStepLabel>
+              <span jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.READY' }}">READY</span>
+            </ng-template>
+          </mat-step>
+        </mat-stepper>
+
+
+      </div>
+    </div>
+    <br/>
+    <br/>
   </div>
 </div>
