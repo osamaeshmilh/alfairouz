@@ -171,6 +171,8 @@ export class SpecimenUpdateComponent implements OnInit {
       this.paymentType = this.activatedRoute.snapshot.queryParams['paymentType'] ? this.activatedRoute.snapshot.queryParams['paymentType'] : '';
       if (this.activatedRoute.snapshot.queryParams['paymentType']) {
         specimen.paymentType = this.paymentType;
+      } else {
+        this.paymentType = specimen.paymentType;
       }
       this.updateForm(specimen);
 
@@ -244,10 +246,12 @@ export class SpecimenUpdateComponent implements OnInit {
   }
 
   getCenterPrices(): void {
-    this.editForm.get('contractType')!.setValue(this.editForm.get('referringCenter')!.value?.contractType);
+    // this.editForm.get('contractType')!.setValue(this.editForm.get('referringCenter')!.value?.contractType);
     if (this.paymentType === 'MONTHLY') {
       /* eslint-disable no-console */
       console.log("")
+      this.editForm.get('price')!.setValue(0);
+
       // this.specimenTypeService
       //   .queryByCenter(this.editForm.get('referringCenter')!.value?.id)
       //   .pipe(map((res: HttpResponse<ISpecimenType[]>) => res.body ?? []))
