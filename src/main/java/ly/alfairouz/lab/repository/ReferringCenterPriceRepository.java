@@ -46,4 +46,6 @@ public interface ReferringCenterPriceRepository
     Optional<ReferringCenterPrice> findOneWithToOneRelationships(@Param("id") Long id);
 
     List<ReferringCenterPrice> findByReferringCenterId(Long centerId);
+
+    void deleteAllByReferringCenterId(Long referringCenter_id);
 }

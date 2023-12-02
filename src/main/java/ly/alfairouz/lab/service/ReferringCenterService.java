@@ -182,6 +182,8 @@ public class ReferringCenterService {
     public ReferringCenterDTO resetPriceList(Long referringCenterId) {
         ReferringCenter referringCenter = referringCenterRepository.findById(referringCenterId).get();
 
+        referringCenterPriceService.deleteAllByReferringCenterId(referringCenter.getId());
+
         if (referringCenter.getContractType() == ContractType.SPECIMEN) {
             specimenTypeService.findAll().forEach(specimenTypeDTO -> {
 

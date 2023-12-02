@@ -114,4 +114,9 @@ public class ReferringCenterPriceService {
     public List<ReferringCenterPriceDTO> findByReferringCenterId(Long centerId) {
         return referringCenterPriceMapper.toDto(referringCenterPriceRepository.findByReferringCenterId(centerId));
     }
+
+    public void deleteAllByReferringCenterId(Long id) {
+        referringCenterPriceRepository.deleteAllByReferringCenterId(id);
+
+    }
 }
