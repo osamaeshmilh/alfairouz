@@ -246,8 +246,8 @@ export class SpecimenUpdateComponent implements OnInit {
   }
 
   getCenterPrices(): void {
-    // this.editForm.get('contractType')!.setValue(this.editForm.get('referringCenter')!.value?.contractType);
     if (this.paymentType === 'MONTHLY') {
+      this.editForm.get('contractType')!.setValue(this.editForm.get('referringCenter')!.value?.contractType);
       /* eslint-disable no-console */
       console.log("")
       this.editForm.get('price')!.setValue(0);
