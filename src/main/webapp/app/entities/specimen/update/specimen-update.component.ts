@@ -459,13 +459,19 @@ export class SpecimenUpdateComponent implements OnInit {
     });
 
     this.biopsyService
-      .query({size: 1000})
+      .query({
+        size: 1000,
+        sort: ['name', 'asc'],
+      })
       .pipe(map((res: HttpResponse<IBiopsy[]>) => res.body ?? []))
       .pipe(map((biopsies: IBiopsy[]) => this.biopsyService.addBiopsyToCollectionIfMissing(biopsies, this.editForm.get('biopsy')!.value)))
       .subscribe((biopsies: IBiopsy[]) => (this.biopsiesSharedCollection = biopsies));
 
     this.cytologyService
-      .query({size: 1000})
+      .query({
+        size: 1000,
+        sort: ['name', 'asc'],
+      })
       .pipe(map((res: HttpResponse<ICytology[]>) => res.body ?? []))
       .pipe(
         map((cytologies: ICytology[]) =>
@@ -475,7 +481,10 @@ export class SpecimenUpdateComponent implements OnInit {
       .subscribe((cytologies: ICytology[]) => (this.cytologiesSharedCollection = cytologies));
 
     this.organService
-      .query({size: 1000})
+      .query({
+        size: 1000,
+        sort: ['name', 'asc'],
+      })
       .pipe(map((res: HttpResponse<IOrgan[]>) => res.body ?? []))
       .pipe(map((organs: IOrgan[]) => this.organService.addOrganToCollectionIfMissing(organs, this.editForm.get('organ')!.value)))
       .subscribe((organs: IOrgan[]) => (this.organsSharedCollection = organs));
