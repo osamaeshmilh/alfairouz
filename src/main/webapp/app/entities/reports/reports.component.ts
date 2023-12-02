@@ -76,9 +76,9 @@ export class ReportsComponent implements OnInit {
     if (this.reportType === 'ALL_SPECIMEN') {
       window.open(`/api/public/specimen/xlsx/criteria/?receivingDate.greaterThanOrEqual=${formattedFromDate}&receivingDate.lessThanOrEqual=${formattedToDate}`, '_blank');
     } else if (this.reportType === 'CASH_SPECIMEN') {
-      window.open(`/api/public/specimen/xlsx/criteria/?paymentType.equals=CASH&receivingDate.greaterThanOrEqual=${formattedFromDate}&receivingDate.lessThanOrEqual=${formattedToDate}`, '_blank');
+      window.open(`/api/public/specimen/xlsx/criteria/?referringCenterId.equals=${this.selectedId}&paymentType.equals=CASH&receivingDate.greaterThanOrEqual=${formattedFromDate}&receivingDate.lessThanOrEqual=${formattedToDate}`, '_blank');
     } else if (this.reportType === 'MONTHLY_SPECIMEN') {
-      window.open(`/api/public/specimen/xlsx/criteria/?paymentType.equals=MONTHLY&receivingDate.greaterThanOrEqual=${formattedFromDate}&receivingDate.lessThanOrEqual=${formattedToDate}`, '_blank');
+      window.open(`/api/public/specimen/xlsx/criteria/?referringCenterId.equals=${this.selectedId}&paymentType.equals=MONTHLY&receivingDate.greaterThanOrEqual=${formattedFromDate}&receivingDate.lessThanOrEqual=${formattedToDate}`, '_blank');
     } else if (this.reportType === 'SPECIMEN_BY_GROSSING_DOCTOR') {
       window.open(`/api/public/specimen/xlsx/criteria/?grossingDoctorId.equals=${this.selectedId}&receivingDate.greaterThanOrEqual=${formattedFromDate}&receivingDate.lessThanOrEqual=${formattedToDate}`, '_blank');
     } else if (this.reportType === 'SPECIMEN_BY_PATHOLOGIST_DOCTOR') {

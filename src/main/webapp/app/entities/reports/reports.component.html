@@ -65,7 +65,9 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div *ngIf="reportType == 'SPECIMEN_BY_REFERRING_CENTER'" class="col">
+        <div *ngIf="reportType == 'SPECIMEN_BY_REFERRING_CENTER' ||
+                    reportType == 'CASH_SPECIMEN' ||
+                    reportType == 'MONTHLY_SPECIMEN'" class="col">
           <mat-form-field appearance="standard" class="col">
             <mat-label>Referring Center</mat-label>
             <mat-select [(ngModel)]="selectedId" id="field_referring_center">
