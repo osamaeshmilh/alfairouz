@@ -58,6 +58,14 @@
           <ng-template mat-tab-label>
             <span>Referring Center Prices</span>
           </ng-template>
+
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-info me-2" (click)="resetReferringCenterPrices(referringCenter.id)"
+                    [disabled]="isLoading">
+              <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+              <span jhiTranslate="alfairouzApp.referringCenter.home.refreshListLabel">Refresh List</span>
+            </button>
+          </div>
           <div class="m-4 mt-4">
             <br/>
             <div class="table-responsive" *ngIf="referringCenterPrices && referringCenterPrices.length > 0">

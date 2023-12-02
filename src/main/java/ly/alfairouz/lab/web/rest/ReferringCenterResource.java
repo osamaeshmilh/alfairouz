@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import ly.alfairouz.lab.repository.ReferringCenterRepository;
+import ly.alfairouz.lab.security.AuthoritiesConstants;
 import ly.alfairouz.lab.service.ReferringCenterQueryService;
 import ly.alfairouz.lab.service.ReferringCenterService;
 import ly.alfairouz.lab.service.criteria.ReferringCenterCriteria;
@@ -18,6 +19,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -69,6 +72,17 @@ public class ReferringCenterResource {
             throw new BadRequestAlertException("A new referringCenter cannot already have an ID", ENTITY_NAME, "idexists");
         }
         ReferringCenterDTO result = referringCenterService.create(referringCenterDTO);
+        return ResponseEntity
+            .created(new URI("/api/referring-centers/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    @PostMapping("/referring-centers/reset-price/{id}")
+    public ResponseEntity<ReferringCenterDTO> resetReferringCenterPrices(@PathVariable Long id)
+        throws URISyntaxException {
+        ReferringCenterDTO result = referringCenterService.resetPriceList(id);
         return ResponseEntity
             .created(new URI("/api/referring-centers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))

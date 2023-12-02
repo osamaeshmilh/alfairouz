@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IReferringCenter, getReferringCenterIdentifier } from '../referring-center.model';
+import {IReferringCenter, getReferringCenterIdentifier} from '../referring-center.model';
+import {IReferringCenterPrice} from "../../referring-center-price/referring-center-price.model";
 
 export type EntityResponseType = HttpResponse<IReferringCenter>;
 export type EntityArrayResponseType = HttpResponse<IReferringCenter[]>;
@@ -54,6 +55,10 @@ export class ReferringCenterService {
     return this.http.get<number>(this.resourceUrl + '/count', {params: options, observe: 'response'});
   }
 
+  resetPrices(referringCenterId: number): Observable<EntityResponseType> {
+    return this.http.get<IReferringCenterPrice>(`${this.resourceUrl}/reset-price/${referringCenterId}`, {observe: 'response'});
+  }
+
   addReferringCenterToCollectionIfMissing(
     referringCenterCollection: IReferringCenter[],
     ...referringCentersToCheck: (IReferringCenter | null | undefined)[]
@@ -75,6 +80,5 @@ export class ReferringCenterService {
     }
     return referringCenterCollection;
   }
-
 
 }

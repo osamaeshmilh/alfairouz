@@ -179,6 +179,36 @@ public class ReferringCenterService {
         return referringCenterMapper.toDto(referringCenter);
     }
 
+    public ReferringCenterDTO resetPriceList(Long referringCenterId) {
+        ReferringCenter referringCenter = referringCenterRepository.findById(referringCenterId).get();
+
+        if (referringCenter.getContractType() == ContractType.SPECIMEN) {
+            specimenTypeService.findAll().forEach(specimenTypeDTO -> {
+
+                ReferringCenterPriceDTO referringCenterPriceDTO = new ReferringCenterPriceDTO();
+                referringCenterPriceDTO.setReferringCenter(referringCenterMapper.toDto(referringCenter));
+                referringCenterPriceDTO.setPrice(specimenTypeDTO.getPrice());
+                referringCenterPriceDTO.setPricingType(ContractType.SPECIMEN);
+                referringCenterPriceDTO.setSpecimenType(specimenTypeDTO);
+
+                referringCenterPriceService.save(referringCenterPriceDTO);
+            });
+        } else if (referringCenter.getContractType() == ContractType.SIZE)
+            sizeService.findAll().forEach(sizeDTO -> {
+
+                ReferringCenterPriceDTO referringCenterPriceDTO = new ReferringCenterPriceDTO();
+                referringCenterPriceDTO.setReferringCenter(referringCenterMapper.toDto(referringCenter));
+                referringCenterPriceDTO.setPrice(sizeDTO.getPrice());
+                referringCenterPriceDTO.setPricingType(ContractType.SIZE);
+                referringCenterPriceDTO.setSize(sizeDTO);
+
+                referringCenterPriceService.save(referringCenterPriceDTO);
+            });
+
+        return referringCenterMapper.toDto(referringCenter);
+    }
+
+
     public ReferringCenter findOneByUser() {
         if (userService.getUserWithAuthorities().isPresent()) return referringCenterRepository.findByInternalUser(
             userService.getUserWithAuthorities().get()

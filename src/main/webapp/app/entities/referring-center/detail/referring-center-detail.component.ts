@@ -6,6 +6,7 @@ import {HttpResponse} from "@angular/common/http";
 import {IDoctor} from "../../doctor/doctor.model";
 import {ReferringCenterPriceService} from "../../referring-center-price/service/referring-center-price.service";
 import {IReferringCenterPrice} from "../../referring-center-price/referring-center-price.model";
+import {ReferringCenterService} from "../service/referring-center.service";
 
 @Component({
   selector: 'jhi-referring-center-detail',
@@ -14,8 +15,11 @@ import {IReferringCenterPrice} from "../../referring-center-price/referring-cent
 export class ReferringCenterDetailComponent implements OnInit {
   referringCenter: IReferringCenter | null = null;
   referringCenterPrices: IReferringCenterPrice[] = [];
+  isLoading = false;
+
 
   constructor(protected activatedRoute: ActivatedRoute,
+              protected referringCenterService: ReferringCenterService,
               protected referringCenterPriceService: ReferringCenterPriceService) {
   }
 
@@ -31,6 +35,26 @@ export class ReferringCenterDetailComponent implements OnInit {
       })
       .subscribe((res: HttpResponse<IReferringCenterPrice[]>) => {
         this.referringCenterPrices = res.body ?? [];
+      });
+  }
+
+  resetReferringCenterPrices(referringCenterId: any): void {
+    this.isLoading = true;
+    this.referringCenterService
+      .resetPrices(referringCenterId)
+      .subscribe((res: HttpResponse<IReferringCenterPrice>) => {
+
+        this.referringCenterPriceService
+          .query({
+            size: 1000,
+            'referringCenterId.equals': this.referringCenter?.id,
+          })
+          .subscribe((res2: HttpResponse<IReferringCenterPrice[]>) => {
+            this.referringCenterPrices = res2.body ?? [];
+            this.isLoading = false;
+          });
+        this.isLoading = false;
+
       });
   }
 
