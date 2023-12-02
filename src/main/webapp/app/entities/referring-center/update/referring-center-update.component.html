@@ -56,9 +56,11 @@
           />
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.referringCenter.contractType" for="field_contractType">Contract Type</label>
-          <select class="form-control" name="contractType" formControlName="contractType" id="field_contractType" data-cy="contractType">
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value != null">
+          <label class="form-label" jhiTranslate="alfairouzApp.referringCenter.contractType" for="field_contractType">Contract
+            Type</label>
+          <select class="form-control" name="contractType" formControlName="contractType" id="field_contractType"
+                  data-cy="contractType">
             <option [ngValue]="null">{{ 'alfairouzApp.ContractType.null' | translate }}</option>
             <option *ngFor="let contractType of contractTypeValues" [value]="contractType">
               {{ 'alfairouzApp.ContractType.' + contractType | translate }}
@@ -66,14 +68,24 @@
           </select>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.referringCenter.discount" for="field_discount">Discount</label>
-          <input type="number" class="form-control" name="discount" id="field_discount" data-cy="discount" formControlName="discount" />
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" for="field_newPassword">New Password</label>
+          <input type="text" class="form-control" name="newPassword" id="field_newPassword" data-cy="newPassword"
+                 formControlName="newPassword"/>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.referringCenter.internalUser" for="field_internalUser">Internal User</label>
-          <select class="form-control" id="field_internalUser" data-cy="internalUser" name="internalUser" formControlName="internalUser">
+        <div class="row mb-3" hidden>
+          <label class="form-label" jhiTranslate="alfairouzApp.referringCenter.discount"
+                 for="field_discount">Discount</label>
+          <input type="number" class="form-control" name="discount" id="field_discount" data-cy="discount"
+                 formControlName="discount"/>
+        </div>
+
+        <div class="row mb-3" hidden>
+          <label class="form-label" jhiTranslate="alfairouzApp.referringCenter.internalUser" for="field_internalUser">Internal
+            User</label>
+          <select class="form-control" id="field_internalUser" data-cy="internalUser" name="internalUser"
+                  formControlName="internalUser">
             <option [ngValue]="null"></option>
             <option
               [ngValue]="userOption.id === editForm.get('internalUser')!.value?.id ? editForm.get('internalUser')!.value : userOption"

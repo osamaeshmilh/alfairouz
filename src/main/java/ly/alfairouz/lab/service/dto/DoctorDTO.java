@@ -31,6 +31,8 @@ public class DoctorDTO implements Serializable {
 
     private UserDTO internalUser;
 
+    private String newPassword;
+
     public Long getId() {
         return id;
     }
@@ -156,5 +158,13 @@ public class DoctorDTO implements Serializable {
             ", doctorType='" + getDoctorType() + "'" +
             ", internalUser=" + getInternalUser() +
             "}";
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 }

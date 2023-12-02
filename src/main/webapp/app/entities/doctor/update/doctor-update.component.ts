@@ -33,6 +33,7 @@ export class DoctorUpdateComponent implements OnInit {
     percentage: [],
     doctorType: [],
     internalUser: [],
+    newPassword: []
   });
 
   constructor(
@@ -100,6 +101,7 @@ export class DoctorUpdateComponent implements OnInit {
       percentage: doctor.percentage,
       doctorType: doctor.doctorType,
       internalUser: doctor.internalUser,
+      newPassword: doctor.newPassword
     });
 
     this.usersSharedCollection = this.userService.addUserToCollectionIfMissing(this.usersSharedCollection, doctor.internalUser);
@@ -127,6 +129,7 @@ export class DoctorUpdateComponent implements OnInit {
       percentage: this.editForm.get(['percentage'])!.value,
       doctorType: this.editForm.get(['doctorType'])!.value,
       internalUser: this.editForm.get(['internalUser'])!.value,
+      newPassword: this.editForm.get(['newPassword'])!.value,
     };
   }
 }

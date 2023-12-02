@@ -11,6 +11,7 @@ export interface IDoctor {
   onlineReport?: boolean | null;
   emailReport?: boolean | null;
   percentage?: number | null;
+  newPassword?: string | null;
   doctorType?: DoctorType | null;
   internalUser?: IUser | null;
 }
@@ -26,6 +27,7 @@ export class Doctor implements IDoctor {
     public onlineReport?: boolean | null,
     public emailReport?: boolean | null,
     public percentage?: number | null,
+    public newPassword?: string | null,
     public doctorType?: DoctorType | null,
     public internalUser?: IUser | null
   ) {

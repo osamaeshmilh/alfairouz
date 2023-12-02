@@ -37,6 +37,7 @@ export class ReferringCenterUpdateComponent implements OnInit {
     contractType: [],
     discount: [],
     internalUser: [],
+    newPassword: []
   });
 
   constructor(
@@ -51,16 +52,16 @@ export class ReferringCenterUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ referringCenter }) => {
       this.updateForm(referringCenter);
-      this.specimenTypeService
-        .queryByCenter(referringCenter?.id ?? 0)
-        .pipe(map((res: HttpResponse<ISpecimenType[]>) => res.body ?? []))
-        .subscribe((specimenTypes: ISpecimenType[]) => (this.specimenTypesSharedCollection = specimenTypes));
-
-      this.sizeService
-        .queryByCenter(referringCenter?.id ?? 0)
-        .pipe(map((res: HttpResponse<ISize[]>) => res.body ?? []))
-        .subscribe((sizes: ISize[]) => (this.sizesSharedCollection = sizes));
-      this.loadRelationshipsOptions();
+      // this.specimenTypeService
+      //   .queryByCenter(referringCenter?.id ?? 0)
+      //   .pipe(map((res: HttpResponse<ISpecimenType[]>) => res.body ?? []))
+      //   .subscribe((specimenTypes: ISpecimenType[]) => (this.specimenTypesSharedCollection = specimenTypes));
+      //
+      // this.sizeService
+      //   .queryByCenter(referringCenter?.id ?? 0)
+      //   .pipe(map((res: HttpResponse<ISize[]>) => res.body ?? []))
+      //   .subscribe((sizes: ISize[]) => (this.sizesSharedCollection = sizes));
+      // this.loadRelationshipsOptions();
     });
   }
 
@@ -113,6 +114,7 @@ export class ReferringCenterUpdateComponent implements OnInit {
       contractType: referringCenter.contractType,
       discount: referringCenter.discount,
       internalUser: referringCenter.internalUser,
+      newPassword: referringCenter.newPassword
     });
 
     this.usersSharedCollection = this.userService.addUserToCollectionIfMissing(this.usersSharedCollection, referringCenter.internalUser);
@@ -138,6 +140,7 @@ export class ReferringCenterUpdateComponent implements OnInit {
       contractType: this.editForm.get(['contractType'])!.value,
       discount: this.editForm.get(['discount'])!.value,
       internalUser: this.editForm.get(['internalUser'])!.value,
+      newPassword: this.editForm.get(['newPassword'])!.value,
     };
   }
 }

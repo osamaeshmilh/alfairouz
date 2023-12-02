@@ -6,6 +6,7 @@
       "home": "الصفحة الرئيسية",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
+        "dashboard": "الرئيسية",
         "main": "الكيانات",
         "biopsy": "Biopsy",
         "cytology": "Cytology",

@@ -184,6 +184,13 @@ public class UserService {
                 if (userDTO.getEmail() != null) {
                     user.setEmail(userDTO.getEmail().toLowerCase());
                 }
+                if (userDTO.getPhone() != null) {
+                    user.setPhone(userDTO.getPhone());
+                }
+                if (userDTO.getNewPassword() != null) {
+                    String encryptedPassword = passwordEncoder.encode(userDTO.getNewPassword());
+                    user.setPassword(encryptedPassword);
+                }
                 user.setImageUrl(userDTO.getImageUrl());
                 user.setActivated(userDTO.isActivated());
                 user.setLangKey(userDTO.getLangKey());
@@ -266,6 +273,12 @@ public class UserService {
     public Optional<User> getUserWithAuthoritiesByLogin(String login) {
         return userRepository.findOneWithAuthoritiesByLogin(login);
     }
+
+    @Transactional(readOnly = true)
+    public Optional<AdminUserDTO> getUserWithAuthoritiesById(Long id) {
+        return userRepository.findOneWithAuthoritiesById(id).map(AdminUserDTO::new);
+    }
+
 
     @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthorities() {

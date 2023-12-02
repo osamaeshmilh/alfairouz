@@ -27,6 +27,8 @@ public class ReferringCenterDTO implements Serializable {
 
     private UserDTO internalUser;
 
+    private String newPassword;
+
     public Long getId() {
         return id;
     }
@@ -134,5 +136,13 @@ public class ReferringCenterDTO implements Serializable {
             ", discount=" + getDiscount() +
             ", internalUser=" + getInternalUser() +
             "}";
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 }

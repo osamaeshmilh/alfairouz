@@ -82,9 +82,11 @@
           />
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.doctor.doctorType" for="field_doctorType">Doctor Type</label>
-          <select class="form-control" name="doctorType" formControlName="doctorType" id="field_doctorType" data-cy="doctorType">
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value != null">
+          <label class="form-label" jhiTranslate="alfairouzApp.doctor.doctorType" for="field_doctorType">Doctor
+            Type</label>
+          <select class="form-control" name="doctorType" formControlName="doctorType" id="field_doctorType"
+                  data-cy="doctorType">
             <option [ngValue]="null">{{ 'alfairouzApp.DoctorType.null' | translate }}</option>
             <option *ngFor="let doctorType of doctorTypeValues" [value]="doctorType">
               {{ 'alfairouzApp.DoctorType.' + doctorType | translate }}
@@ -92,9 +94,17 @@
           </select>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.doctor.internalUser" for="field_internalUser">Internal User</label>
-          <select class="form-control" id="field_internalUser" data-cy="internalUser" name="internalUser" formControlName="internalUser">
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" for="field_newPassword">New Password</label>
+          <input type="text" class="form-control" name="newPassword" id="field_newPassword" data-cy="newPassword"
+                 formControlName="newPassword"/>
+        </div>
+
+        <div class="row mb-3" hidden>
+          <label class="form-label" jhiTranslate="alfairouzApp.doctor.internalUser" for="field_internalUser">Internal
+            User</label>
+          <select class="form-control" id="field_internalUser" data-cy="internalUser" name="internalUser"
+                  formControlName="internalUser">
             <option [ngValue]="null"></option>
             <option
               [ngValue]="userOption.id === editForm.get('internalUser')!.value?.id ? editForm.get('internalUser')!.value : userOption"

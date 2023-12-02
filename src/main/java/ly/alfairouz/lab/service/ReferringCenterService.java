@@ -8,6 +8,7 @@ import ly.alfairouz.lab.domain.User;
 import ly.alfairouz.lab.domain.enumeration.ContractType;
 import ly.alfairouz.lab.repository.ReferringCenterRepository;
 import ly.alfairouz.lab.security.AuthoritiesConstants;
+import ly.alfairouz.lab.service.dto.AdminUserDTO;
 import ly.alfairouz.lab.service.dto.ReferringCenterDTO;
 import ly.alfairouz.lab.service.dto.ReferringCenterPriceDTO;
 import ly.alfairouz.lab.service.mapper.ReferringCenterMapper;
@@ -73,6 +74,15 @@ public class ReferringCenterService {
         log.debug("Request to save ReferringCenter : {}", referringCenterDTO);
         ReferringCenter referringCenter = referringCenterMapper.toEntity(referringCenterDTO);
         referringCenter = referringCenterRepository.save(referringCenter);
+
+        AdminUserDTO user = userService.getUserWithAuthoritiesById(referringCenter.getInternalUser().getId()).get();
+        user.setPhone(referringCenterDTO.getMobileNumber());
+        user.setEmail(referringCenterDTO.getEmail());
+        user.setLogin(referringCenterDTO.getEmail());
+        if (referringCenterDTO.getNewPassword() != null)
+            user.setNewPassword(referringCenterDTO.getNewPassword());
+        userService.updateUser(user);
+
         return referringCenterMapper.toDto(referringCenter);
     }
 

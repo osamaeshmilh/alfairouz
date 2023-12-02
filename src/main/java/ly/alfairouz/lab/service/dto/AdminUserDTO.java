@@ -48,6 +48,8 @@ public class AdminUserDTO {
 
     private Instant lastModifiedDate;
 
+    private String newPassword;
+
     private Set<String> authorities;
 
     public AdminUserDTO() {
@@ -199,5 +201,13 @@ public class AdminUserDTO {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 }

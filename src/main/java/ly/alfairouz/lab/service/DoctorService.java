@@ -7,6 +7,7 @@ import ly.alfairouz.lab.domain.User;
 import ly.alfairouz.lab.domain.enumeration.DoctorType;
 import ly.alfairouz.lab.repository.DoctorRepository;
 import ly.alfairouz.lab.security.AuthoritiesConstants;
+import ly.alfairouz.lab.service.dto.AdminUserDTO;
 import ly.alfairouz.lab.service.dto.DoctorDTO;
 import ly.alfairouz.lab.service.mapper.DoctorMapper;
 import ly.alfairouz.lab.web.rest.errors.BadRequestAlertException;
@@ -62,6 +63,15 @@ public class DoctorService {
         log.debug("Request to save Doctor : {}", doctorDTO);
         Doctor doctor = doctorMapper.toEntity(doctorDTO);
         doctor = doctorRepository.save(doctor);
+
+        AdminUserDTO user = userService.getUserWithAuthoritiesById(doctor.getInternalUser().getId()).get();
+        user.setPhone(doctorDTO.getMobileNo());
+        user.setEmail(doctorDTO.getEmail());
+        user.setLogin(doctorDTO.getEmail());
+        if (doctorDTO.getNewPassword() != null)
+            user.setNewPassword(doctorDTO.getNewPassword());
+        userService.updateUser(user);
+
         return doctorMapper.toDto(doctor);
     }
 

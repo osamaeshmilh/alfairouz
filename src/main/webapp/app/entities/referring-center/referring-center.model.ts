@@ -11,6 +11,8 @@ export interface IReferringCenter {
   contractType?: ContractType | null;
   discount?: number | null;
   internalUser?: IUser | null;
+  newPassword?: string | null;
+
 }
 
 export class ReferringCenter implements IReferringCenter {
@@ -23,7 +25,8 @@ export class ReferringCenter implements IReferringCenter {
     public onlineReport?: boolean | null,
     public contractType?: ContractType | null,
     public discount?: number | null,
-    public internalUser?: IUser | null
+    public internalUser?: IUser | null,
+    public newPassword?: string | null,
   ) {
     this.onlineReport = this.onlineReport ?? false;
   }
