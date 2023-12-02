@@ -738,15 +738,7 @@
           </div>
         </div>
 
-        <div class="row mb-3"
-             *jhiHasAnyAuthority="['ROLE_REFERRING_DOCTOR', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.results" for="field_results">Results</label>
-          <select class="form-control" name="results" formControlName="results" id="field_results" data-cy="results">
-            <option [ngValue]="null">{{ 'alfairouzApp.Results.null' | translate }}</option>
-            <option *ngFor="let results of resultsValues"
-                    [value]="results">{{ 'alfairouzApp.Results.' + results | translate }}</option>
-          </select>
-        </div>
+
 
         <!--        <div class="row mb-3"-->
         <!--             *jhiHasAnyAuthority="['ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">-->
@@ -793,7 +785,18 @@
           </div>
         </div>
 
-        <div class="row mb-3" *jhiHasAnyAuthority="['ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
+        <div class="row mb-3"
+             *jhiHasAnyAuthority="['ROLE_REFERRING_DOCTOR', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.results" for="field_results">Results</label>
+          <select class="form-control" name="results" formControlName="results" id="field_results" data-cy="results">
+            <option [ngValue]="null">{{ 'alfairouzApp.Results.null' | translate }}</option>
+            <option *ngFor="let results of resultsValues"
+                    [value]="results">{{ 'alfairouzApp.Results.' + results | translate }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3"
+             *jhiHasAnyAuthority="['ROLE_TYPING', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_REVISION', 'ROLE_ADMIN']">
           <label class="form-label" jhiTranslate="alfairouzApp.specimen.pathologistDoctor"
                  for="field_pathologistDoctor"
           >Pathologist Doctor</label
@@ -817,7 +820,8 @@
           </select>
         </div>
 
-        <div class="row mb-3" *jhiHasAnyAuthority="['ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
+        <div class="row mb-3"
+             *jhiHasAnyAuthority="['ROLE_TYPING', 'ROLE_PATHOLOGIST_DOCTOR', 'ROLE_REVISION', 'ROLE_ADMIN']">
           <label class="form-label" jhiTranslate="alfairouzApp.specimen.pathologistDoctorTwo"
                  for="field_pathologistDoctorTwo"
           >Pathologist Doctor 2</label
@@ -841,7 +845,29 @@
           </select>
         </div>
 
-        <div class="row mb-3" *jhiHasAnyAuthority="['ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
+        <div class="row mb-3"
+             *jhiHasAnyAuthority="['ROLE_TYPING', 'ROLE_PATHOLOGIST_DOCTOR', 'ROLE_REVISION', 'ROLE_ADMIN']">
+          <label class="form-label" jhiTranslate="alfairouzApp.specimen.revisionDate" for="field_revisionDate">Revision
+            Date</label>
+          <div class="input-group">
+            <input
+              id="field_revisionDate"
+              data-cy="revisionDate"
+              type="text"
+              class="form-control"
+              name="revisionDate"
+              ngbDatepicker
+              #revisionDateDp="ngbDatepicker"
+              formControlName="revisionDate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="revisionDateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3"
+             *jhiHasAnyAuthority="['ROLE_TYPING','ROLE_PATHOLOGIST_DOCTOR', 'ROLE_REVISION', 'ROLE_ADMIN']">
           <label class="form-label" jhiTranslate="alfairouzApp.specimen.reportDate" for="field_reportDate">Report
             Date (Typing date)</label>
           <div class="input-group">
@@ -861,25 +887,6 @@
           </div>
         </div>
 
-        <div class="row mb-3" *jhiHasAnyAuthority="['ROLE_TYPING','ROLE_REVISION', 'ROLE_ADMIN']">
-          <label class="form-label" jhiTranslate="alfairouzApp.specimen.revisionDate" for="field_revisionDate">Revision
-            Date</label>
-          <div class="input-group">
-            <input
-              id="field_revisionDate"
-              data-cy="revisionDate"
-              type="text"
-              class="form-control"
-              name="revisionDate"
-              ngbDatepicker
-              #revisionDateDp="ngbDatepicker"
-              formControlName="revisionDate"
-            />
-            <button type="button" class="btn btn-secondary" (click)="revisionDateDp.toggle()">
-              <fa-icon icon="calendar-alt"></fa-icon>
-            </button>
-          </div>
-        </div>
 
       </div>
 
