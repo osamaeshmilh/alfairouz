@@ -59,11 +59,11 @@
             <span>Referring Center Prices</span>
           </ng-template>
 
-          <div class="d-flex justify-content-end">
+          <div class="d-flex justify-content-end m-2">
             <button class="btn btn-info me-2" (click)="resetReferringCenterPrices(referringCenter.id)"
                     [disabled]="isLoading">
               <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-              <span jhiTranslate="alfairouzApp.referringCenter.home.refreshListLabel">Refresh List</span>
+              <span>Reset Price List</span>
             </button>
           </div>
           <div class="m-4 mt-4">
