@@ -286,11 +286,19 @@
                 <span class="d-none d-md-inline">Print Sticker</span>
               </button>
               <button
-                *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_REFERRING_CENTER', 'ROLE_TECHNICIAN', 'ROLE_RECEPTION', 'ROLE_REFERRING_DOCTOR' ,'ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR', 'ROLE_TYPING', 'ROLE_REVISION']"
+                *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_TECHNICIAN', 'ROLE_RECEPTION', 'ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR', 'ROLE_TYPING', 'ROLE_REVISION']"
                 (click)="getPdfColored(specimen.id)" mat-menu-item>
                 <mat-icon>insert_drive_file</mat-icon>
                 <span class="d-none d-md-inline">Print Report Colored</span>
               </button>
+              <div *ngIf="specimen.specimenStatus == 'READY'">
+                <button
+                  *jhiHasAnyAuthority="['ROLE_REFERRING_CENTER',  'ROLE_REFERRING_DOCTOR']"
+                  (click)="getPdfColored(specimen.id)" mat-menu-item>
+                  <mat-icon>insert_drive_file</mat-icon>
+                  <span class="d-none d-md-inline">Print Report Colored</span>
+                </button>
+              </div>
               <button *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION']" (click)="getInvoice(specimen.id)"
                       mat-menu-item>
                 <mat-icon>insert_drive_file</mat-icon>
