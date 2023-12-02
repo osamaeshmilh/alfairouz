@@ -285,7 +285,7 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{urgent_sample}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{urgent_sample} ? "Yes" : "No"]]></textFieldExpression>
             </textField>
             <staticText>
                 <reportElement x="309" y="27" width="85" height="20" uuid="83650bce-aec2-4168-8bd0-2cffa06557d8"/>
@@ -456,7 +456,7 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{slides}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{slides} != null ? $F{slides} : "0"]]></textFieldExpression>
             </textField>
             <staticText>
                 <reportElement x="13" y="193" width="104" height="20" uuid="f211c610-8e88-4430-b313-c28c48f487ea"/>
@@ -507,7 +507,7 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{received_in_formalin}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{received_in_formalin} ? "Yes" : "No"]]></textFieldExpression>
             </textField>
             <staticText>
                 <reportElement x="13" y="233" width="104" height="20" uuid="6cbcb971-1311-4317-aeac-2b02c47d65af"/>
@@ -524,7 +524,7 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{reserve}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{reserve} ? "Positive (+)" : "Negative (-)"]]></textFieldExpression>
             </textField>
             <staticText>
                 <reportElement x="13" y="253" width="104" height="20" uuid="72184ad8-4ac2-47da-87aa-6dcbb26cf675"/>
@@ -558,7 +558,7 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 <textElement textAlignment="Left" verticalAlignment="Top">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{notes}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{notes} != null ? $F{notes} : " "]]></textFieldExpression>
             </textField>
             <staticText>
                 <reportElement x="309" y="253" width="85" height="20" uuid="9f81f5fd-a6ac-4253-863a-b60c1cee0d76"/>
