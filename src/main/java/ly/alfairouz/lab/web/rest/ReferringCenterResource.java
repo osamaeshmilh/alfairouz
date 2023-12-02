@@ -79,7 +79,7 @@ public class ReferringCenterResource {
     }
 
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
-    @PostMapping("/referring-centers/reset-price/{id}")
+    @GetMapping("/referring-centers/reset-price/{id}")
     public ResponseEntity<ReferringCenterDTO> resetReferringCenterPrices(@PathVariable Long id)
         throws URISyntaxException {
         ReferringCenterDTO result = referringCenterService.resetPriceList(id);
