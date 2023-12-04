@@ -36,7 +36,8 @@
       "Extra",
       "Expense",
       "Receipt",
-      "ReferringCenterPrice"
+      "ReferringCenterPrice",
+      "SpecimenEdit"
     ],
     "entitySuffix": "",
     "jhiPrefix": "jhi",

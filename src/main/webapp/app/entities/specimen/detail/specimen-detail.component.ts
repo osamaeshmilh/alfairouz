@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
-import { ISpecimen } from '../specimen.model';
-import { DataUtils } from 'app/core/util/data-util.service';
+import {ISpecimen} from '../specimen.model';
+import {DataUtils} from 'app/core/util/data-util.service';
+import {IReferringCenterPrice} from "../../referring-center-price/referring-center-price.model";
+import {ISpecimenEdit} from "../../specimen-edit/specimen-edit.model";
+import {HttpResponse} from "@angular/common/http";
+import {SpecimenEditService} from "../../specimen-edit/service/specimen-edit.service";
 
 @Component({
   selector: 'jhi-specimen-detail',
@@ -10,13 +14,26 @@ import { DataUtils } from 'app/core/util/data-util.service';
 })
 export class SpecimenDetailComponent implements OnInit {
   specimen: ISpecimen | null = null;
+  specimenEdits: ISpecimenEdit[] = [];
 
-  constructor(protected dataUtils: DataUtils, protected activatedRoute: ActivatedRoute) {}
+  constructor(protected dataUtils: DataUtils,
+              protected specimenEditService: SpecimenEditService,
+              protected activatedRoute: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ specimen }) => {
+    this.activatedRoute.data.subscribe(({specimen}) => {
       this.specimen = specimen;
     });
+
+    this.specimenEditService
+      .query({
+        size: 1000,
+        'specimenId.equals': this.specimen?.id,
+      })
+      .subscribe((res: HttpResponse<ISpecimenEdit[]>) => {
+        this.specimenEdits = res.body ?? [];
+      });
   }
 
   byteSize(base64String: string): string {

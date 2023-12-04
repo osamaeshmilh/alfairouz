@@ -2,7 +2,10 @@ package ly.alfairouz.lab.security;
 
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -96,5 +99,16 @@ public final class SecurityUtils {
 
     private static Stream<String> getAuthorities(Authentication authentication) {
         return authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority);
+    }
+
+    public static Set<String> getCurrentUserAuthorities() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return getAuthorities(authentication).collect(Collectors.toSet());
+    }
+
+    public static String getCurrentUserAuthoritiesAsString() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Set<String> authorities = getAuthorities(authentication).collect(Collectors.toSet());
+        return String.join(",", authorities);
     }
 }

@@ -1,0 +1,105 @@
+<div class="d-flex justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2
+                    id="jhi-specimen-edit-heading"
+                    data-cy="SpecimenEditCreateUpdateHeading"
+                    jhiTranslate="alfairouzApp.specimenEdit.home.createOrEditLabel"
+            >
+                Create or edit a Specimen Edit
+            </h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+                    <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+                    <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id"
+                           [readonly]="true"/>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="form-label" jhiTranslate="alfairouzApp.specimenEdit.specimenId"
+                           for="field_specimenId">Specimen Id</label>
+                    <input
+                            type="number"
+                            class="form-control"
+                            name="specimenId"
+                            id="field_specimenId"
+                            data-cy="specimenId"
+                            formControlName="specimenId"
+                    />
+                </div>
+
+                <div class="row mb-3">
+                    <label class="form-label" jhiTranslate="alfairouzApp.specimenEdit.labRefNo" for="field_labRefNo">Lab
+                        Ref No</label>
+                    <input type="text" class="form-control" name="labRefNo" id="field_labRefNo" data-cy="labRefNo"
+                           formControlName="labRefNo"/>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="form-label" jhiTranslate="alfairouzApp.specimenEdit.specimenStatusFrom"
+                           for="field_specimenStatusFrom"
+                    >Specimen Status From</label
+                    >
+                    <select
+                            class="form-control"
+                            name="specimenStatusFrom"
+                            formControlName="specimenStatusFrom"
+                            id="field_specimenStatusFrom"
+                            data-cy="specimenStatusFrom"
+                    >
+                        <option [ngValue]="null">{{ 'alfairouzApp.SpecimenStatus.null' | translate }}</option>
+                        <option *ngFor="let specimenStatus of specimenStatusValues" [value]="specimenStatus">
+                            {{ 'alfairouzApp.SpecimenStatus.' + specimenStatus | translate }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="form-label" jhiTranslate="alfairouzApp.specimenEdit.specimenStatusTo"
+                           for="field_specimenStatusTo"
+                    >Specimen Status To</label
+                    >
+                    <select
+                            class="form-control"
+                            name="specimenStatusTo"
+                            formControlName="specimenStatusTo"
+                            id="field_specimenStatusTo"
+                            data-cy="specimenStatusTo"
+                    >
+                        <option [ngValue]="null">{{ 'alfairouzApp.SpecimenStatus.null' | translate }}</option>
+                        <option *ngFor="let specimenStatus of specimenStatusValues" [value]="specimenStatus">
+                            {{ 'alfairouzApp.SpecimenStatus.' + specimenStatus | translate }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="form-label" jhiTranslate="alfairouzApp.specimenEdit.userType" for="field_userType">User
+                        Type</label>
+                    <input type="text" class="form-control" name="userType" id="field_userType" data-cy="userType"
+                           formControlName="userType"/>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary"
+                        (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button
+                        type="submit"
+                        id="save-entity"
+                        data-cy="entityCreateSaveButton"
+                        [disabled]="editForm.invalid || isSaving"
+                        class="btn btn-primary"
+                >
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

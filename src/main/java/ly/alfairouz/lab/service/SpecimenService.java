@@ -16,6 +16,7 @@ import ly.alfairouz.lab.security.AuthoritiesConstants;
 import ly.alfairouz.lab.security.SecurityUtils;
 import ly.alfairouz.lab.service.dto.PatientDTO;
 import ly.alfairouz.lab.service.dto.SpecimenDTO;
+import ly.alfairouz.lab.service.dto.SpecimenEditDTO;
 import ly.alfairouz.lab.service.mapper.SpecimenMapper;
 import ly.alfairouz.lab.service.util.FileTools;
 import org.slf4j.Logger;
@@ -43,11 +44,14 @@ public class SpecimenService {
 
     private final PatientService patientService;
 
-    public SpecimenService(SpecimenRepository specimenRepository, SpecimenMapper specimenMapper, DoctorService doctorService, PatientService patientService) {
+    private final SpecimenEditService specimenEditService;
+
+    public SpecimenService(SpecimenRepository specimenRepository, SpecimenMapper specimenMapper, DoctorService doctorService, PatientService patientService, SpecimenEditService specimenEditService) {
         this.specimenRepository = specimenRepository;
         this.specimenMapper = specimenMapper;
         this.doctorService = doctorService;
         this.patientService = patientService;
+        this.specimenEditService = specimenEditService;
     }
 
     /**
@@ -83,6 +87,8 @@ public class SpecimenService {
      */
     public SpecimenDTO update(SpecimenDTO specimenDTO) {
         log.debug("Request to save Specimen : {}", specimenDTO);
+
+        SpecimenStatus prevStatus = specimenDTO.getSpecimenStatus();
 
         String prevType = specimenRepository.getById(specimenDTO.getId()).getLabRef().toString();
         String newType = specimenDTO.getLabRef().toString();
@@ -169,6 +175,20 @@ public class SpecimenService {
 
         Specimen specimen = specimenMapper.toEntity(specimenDTO);
         specimen = specimenRepository.save(specimen);
+
+        System.out.println(prevStatus.toString());
+        System.out.println(prevStatus.toString());
+        System.out.println(specimen.getSpecimenStatus());
+        System.out.println(specimen.getSpecimenStatus());
+
+        SpecimenEditDTO specimenEditDTO = new SpecimenEditDTO();
+        specimenEditDTO.setSpecimenId(specimen.getId());
+        specimenEditDTO.setSpecimenStatusFrom(prevStatus);
+        specimenEditDTO.setSpecimenStatusTo(specimen.getSpecimenStatus());
+        specimenEditDTO.setLabRefNo(specimen.getLabRefNo());
+        specimenEditDTO.setUserType(SecurityUtils.getCurrentUserAuthoritiesAsString());
+        specimenEditService.save(specimenEditDTO);
+
         return specimenMapper.toDto(specimen);
     }
 

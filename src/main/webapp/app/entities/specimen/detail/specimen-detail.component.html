@@ -51,6 +51,292 @@
               </div>
             </div>
           </div>
+
+          <dl class="row-md jh-entity-details">
+            <dt><span jhiTranslate="global.field.id">ID</span></dt>
+            <dd>
+              <span>{{ specimen.id }}</span>
+            </dd>
+
+            <dt><span jhiTranslate="alfairouzApp.specimen.pdfFile">Pdf File</span></dt>
+            <dd>
+              <div *ngIf="specimen.pdfFile">
+                <a (click)="openFile(specimen.pdfFile, specimen.pdfFileContentType)" jhiTranslate="entity.action.open">open</a>
+                {{ specimen.pdfFileContentType }}, {{ byteSize(specimen.pdfFile) }}
+              </div>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.pdfFileUrl">Pdf File Url</span></dt>
+            <dd>
+              <span>{{ specimen.pdfFileUrl }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.samples">Samples</span></dt>
+            <dd>
+              <span>{{ specimen.samples }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.blocks">Blocks</span></dt>
+            <dd>
+              <span>{{ specimen.blocks }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.slides">Slides</span></dt>
+            <dd>
+              <span>{{ specimen.slides }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.samplingDate">Sampling Date</span></dt>
+            <dd>
+              <span>{{ specimen.samplingDate | formatMediumDate }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.receivingDate">Receiving Date</span></dt>
+            <dd>
+              <span>{{ specimen.receivingDate | formatMediumDate }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.contractType">Contract Type</span></dt>
+            <dd>
+              <span
+                jhiTranslate="{{ 'alfairouzApp.ContractType.' + specimen.contractType }}">{{ specimen.contractType }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.isWithdrawn">Is Withdrawn</span></dt>
+            <dd>
+              <span>{{ specimen.isWithdrawn }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.withdrawDate">Withdraw Date</span></dt>
+            <dd>
+              <span>{{ specimen.withdrawDate | formatMediumDate }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.fileNo">File No</span></dt>
+            <dd>
+              <span>{{ specimen.fileNo }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.paymentType">Payment Type</span></dt>
+            <dd>
+              <span
+                jhiTranslate="{{ 'alfairouzApp.PaymentType.' + specimen.paymentType }}">{{ specimen.paymentType }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.price">Price</span></dt>
+            <dd>
+              <span>{{ specimen.price }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.paid">Paid</span></dt>
+            <dd>
+              <span>{{ specimen.paid }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.notPaid">Not Paid</span></dt>
+            <dd>
+              <span>{{ specimen.notPaid }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.urgentSample">Urgent Sample</span></dt>
+            <dd>
+              <span>{{ specimen.urgentSample }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.revisionDate">Revision Date</span></dt>
+            <dd>
+              <span>{{ specimen.revisionDate | formatMediumDate }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.reportDate">Report Date</span></dt>
+            <dd>
+              <span>{{ specimen.reportDate | formatMediumDate }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.clinicalData">Clinical Data</span></dt>
+            <dd>
+              <span>{{ specimen.clinicalData }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.clinicalDate">Clinical Date</span></dt>
+            <dd>
+              <span>{{ specimen.clinicalDate | formatMediumDate }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.grossExamination">Gross Examination</span></dt>
+            <dd>
+              <span>{{ specimen.grossExamination }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.grossDate">Gross Date</span></dt>
+            <dd>
+              <span>{{ specimen.grossDate | formatMediumDate }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.microscopicData">Microscopic Data</span></dt>
+            <dd>
+              <span>{{ specimen.microscopicData }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.microscopicDate">Microscopic Date</span></dt>
+            <dd>
+              <span>{{ specimen.microscopicDate | formatMediumDate }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.results">Results</span></dt>
+            <dd>
+              <span jhiTranslate="{{ 'alfairouzApp.Results.' + specimen.results }}">{{ specimen.results }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.conclusion">Conclusion</span></dt>
+            <dd>
+              <span>{{ specimen.conclusion }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.conclusionDate">Conclusion Date</span></dt>
+            <dd>
+              <span>{{ specimen.conclusionDate | formatMediumDate }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.notes">Notes</span></dt>
+            <dd>
+              <span>{{ specimen.notes }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.specimenStatus">Specimen Status</span></dt>
+            <dd>
+          <span
+            jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.' + specimen.specimenStatus }}">{{ specimen.specimenStatus }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.newBlocksRequested">New Blocks Requested</span></dt>
+            <dd>
+              <span>{{ specimen.newBlocksRequested }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.receivedInFormalin">Received In Formalin</span></dt>
+            <dd>
+              <span>{{ specimen.receivedInFormalin }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.reserve">Reserve</span></dt>
+            <dd>
+              <span>{{ specimen.reserve }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.printedOut">Printed Out</span></dt>
+            <dd>
+              <span>{{ specimen.printedOut }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.smsSent">Sms Sent</span></dt>
+            <dd>
+              <span>{{ specimen.smsSent }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.onlineReport">Online Report</span></dt>
+            <dd>
+              <span>{{ specimen.onlineReport }}</span>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.patient">Patient</span></dt>
+            <dd>
+              <div *ngIf="specimen.patient">
+                <a [routerLink]="['/patient', specimen.patient?.id, 'view']">{{ specimen.patient?.name }}</a>
+              </div>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.biopsy">Biopsy</span></dt>
+            <dd>
+              <div *ngIf="specimen.biopsy">
+                <a [routerLink]="['/biopsy', specimen.biopsy?.id, 'view']">{{ specimen.biopsy?.name }}</a>
+              </div>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.cytology">Cytology</span></dt>
+            <dd>
+              <div *ngIf="specimen.cytology">
+                <a [routerLink]="['/cytology', specimen.cytology?.id, 'view']">{{ specimen.cytology?.name }}</a>
+              </div>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.organ">Organ</span></dt>
+            <dd>
+              <div *ngIf="specimen.organ">
+                <a [routerLink]="['/organ', specimen.organ?.id, 'view']">{{ specimen.organ?.name }}</a>
+              </div>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.specimenType">Specimen Type</span></dt>
+            <dd>
+              <div *ngIf="specimen.specimenType">
+                <a
+                  [routerLink]="['/specimen-type', specimen.specimenType?.id, 'view']">{{ specimen.specimenType?.name }}</a>
+              </div>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.size">Size</span></dt>
+            <dd>
+              <div *ngIf="specimen.size">
+                <a [routerLink]="['/size', specimen.size?.id, 'view']">{{ specimen.size?.name }}</a>
+              </div>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.referringCenter">Referring Center</span></dt>
+            <dd>
+              <div *ngIf="specimen.referringCenter">
+                <a
+                  [routerLink]="['/referring-center', specimen.referringCenter?.id, 'view']">{{ specimen.referringCenter?.name }}</a>
+              </div>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.grossingDoctor">Grossing Doctor</span></dt>
+            <dd>
+              <div *ngIf="specimen.grossingDoctor">
+                <a
+                  [routerLink]="['/doctor', specimen.grossingDoctor?.id, 'view']">{{ specimen.grossingDoctor?.name }}</a>
+              </div>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.referringDoctor">Referring Doctor</span></dt>
+            <dd>
+              <div *ngIf="specimen.referringDoctor">
+                <a
+                  [routerLink]="['/doctor', specimen.referringDoctor?.id, 'view']">{{ specimen.referringDoctor?.name }}</a>
+              </div>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.pathologistDoctor">Pathologist Doctor</span></dt>
+            <dd>
+              <div *ngIf="specimen.pathologistDoctor">
+                <a
+                  [routerLink]="['/doctor', specimen.pathologistDoctor?.id, 'view']">{{ specimen.pathologistDoctor?.name }}</a>
+              </div>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.operatorEmployee">Operator Employee</span></dt>
+            <dd>
+              <div *ngIf="specimen.operatorEmployee">
+                <a
+                  [routerLink]="['/employee', specimen.operatorEmployee?.id, 'view']">{{ specimen.operatorEmployee?.name }}</a>
+              </div>
+            </dd>
+            <dt><span jhiTranslate="alfairouzApp.specimen.correctorEmployee">Corrector Employee</span></dt>
+            <dd>
+              <div *ngIf="specimen.correctorEmployee">
+                <a
+                  [routerLink]="['/employee', specimen.correctorEmployee?.id, 'view']">{{ specimen.correctorEmployee?.name }}</a>
+              </div>
+            </dd>
+
+            <dt><span jhiTranslate="userManagement.createdBy">Created By</span></dt>
+            <dd>{{ specimen.createdBy }}</dd>
+
+            <dt><span jhiTranslate="userManagement.createdDate">Created Date</span></dt>
+            <dd>{{ specimen.createdDate | date: 'dd/MM/yy HH:mm' }}</dd>
+
+            <dt><span jhiTranslate="userManagement.lastModifiedBy">Last Modified By</span></dt>
+            <dd>{{ specimen.lastModifiedBy }}</dd>
+
+            <dt><span jhiTranslate="userManagement.lastModifiedDate">Last Modified Date</span></dt>
+            <dd>{{ specimen.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</dd>
+
+          </dl>
+
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span>سجلات التعديل</span>
+          </ng-template>
+          <div class="m-4 mt-4">
+            <br/>
+            <div class="table-responsive" *ngIf="specimenEdits && specimenEdits.length > 0">
+              <table class="table table-striped">
+                <thead>
+                <tr>
+                  <th scope="col"><span>#</span></th>
+                  <th scope="col"><span>Status From</span></th>
+                  <th scope="col"><span>Status To</span></th>
+                  <th scope="col"><span>User Type</span></th>
+                  <th scope="col"><span>Lab Ref No</span></th>
+                  <th scope="col"><span>Created By</span></th>
+                  <th scope="col"><span>Created At</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let specimenEdit of specimenEdits;" data-cy="entityTable">
+                  <td>
+                    <a>{{ specimenEdit.id }}</a>
+                  </td>
+                  <td>{{ specimenEdit.specimenStatusFrom }}</td>
+                  <td>{{ specimenEdit.specimenStatusTo }}</td>
+                  <td>{{ specimenEdit.userType }}</td>
+                  <td>{{ specimenEdit.labRefNo }}</td>
+                  <td>{{ specimenEdit.createdBy }}</td>
+                  <td>{{ specimenEdit.createdDate }}</td>
+
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
         </mat-tab>
       </mat-tab-group>
 
@@ -60,244 +346,6 @@
 
       <jhi-alert></jhi-alert>
 
-      <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="global.field.id">ID</span></dt>
-        <dd>
-          <span>{{ specimen.id }}</span>
-        </dd>
-
-        <dt><span jhiTranslate="alfairouzApp.specimen.pdfFile">Pdf File</span></dt>
-        <dd>
-          <div *ngIf="specimen.pdfFile">
-            <a (click)="openFile(specimen.pdfFile, specimen.pdfFileContentType)" jhiTranslate="entity.action.open">open</a>
-            {{ specimen.pdfFileContentType }}, {{ byteSize(specimen.pdfFile) }}
-          </div>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.pdfFileUrl">Pdf File Url</span></dt>
-        <dd>
-          <span>{{ specimen.pdfFileUrl }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.samples">Samples</span></dt>
-        <dd>
-          <span>{{ specimen.samples }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.blocks">Blocks</span></dt>
-        <dd>
-          <span>{{ specimen.blocks }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.slides">Slides</span></dt>
-        <dd>
-          <span>{{ specimen.slides }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.samplingDate">Sampling Date</span></dt>
-        <dd>
-          <span>{{ specimen.samplingDate | formatMediumDate }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.receivingDate">Receiving Date</span></dt>
-        <dd>
-          <span>{{ specimen.receivingDate | formatMediumDate }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.contractType">Contract Type</span></dt>
-        <dd>
-          <span jhiTranslate="{{ 'alfairouzApp.ContractType.' + specimen.contractType }}">{{ specimen.contractType }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.isWithdrawn">Is Withdrawn</span></dt>
-        <dd>
-          <span>{{ specimen.isWithdrawn }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.withdrawDate">Withdraw Date</span></dt>
-        <dd>
-          <span>{{ specimen.withdrawDate | formatMediumDate }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.fileNo">File No</span></dt>
-        <dd>
-          <span>{{ specimen.fileNo }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.paymentType">Payment Type</span></dt>
-        <dd>
-          <span jhiTranslate="{{ 'alfairouzApp.PaymentType.' + specimen.paymentType }}">{{ specimen.paymentType }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.price">Price</span></dt>
-        <dd>
-          <span>{{ specimen.price }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.paid">Paid</span></dt>
-        <dd>
-          <span>{{ specimen.paid }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.notPaid">Not Paid</span></dt>
-        <dd>
-          <span>{{ specimen.notPaid }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.urgentSample">Urgent Sample</span></dt>
-        <dd>
-          <span>{{ specimen.urgentSample }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.revisionDate">Revision Date</span></dt>
-        <dd>
-          <span>{{ specimen.revisionDate | formatMediumDate }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.reportDate">Report Date</span></dt>
-        <dd>
-          <span>{{ specimen.reportDate | formatMediumDate }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.clinicalData">Clinical Data</span></dt>
-        <dd>
-          <span>{{ specimen.clinicalData }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.clinicalDate">Clinical Date</span></dt>
-        <dd>
-          <span>{{ specimen.clinicalDate | formatMediumDate }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.grossExamination">Gross Examination</span></dt>
-        <dd>
-          <span>{{ specimen.grossExamination }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.grossDate">Gross Date</span></dt>
-        <dd>
-          <span>{{ specimen.grossDate | formatMediumDate }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.microscopicData">Microscopic Data</span></dt>
-        <dd>
-          <span>{{ specimen.microscopicData }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.microscopicDate">Microscopic Date</span></dt>
-        <dd>
-          <span>{{ specimen.microscopicDate | formatMediumDate }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.results">Results</span></dt>
-        <dd>
-          <span jhiTranslate="{{ 'alfairouzApp.Results.' + specimen.results }}">{{ specimen.results }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.conclusion">Conclusion</span></dt>
-        <dd>
-          <span>{{ specimen.conclusion }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.conclusionDate">Conclusion Date</span></dt>
-        <dd>
-          <span>{{ specimen.conclusionDate | formatMediumDate }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.notes">Notes</span></dt>
-        <dd>
-          <span>{{ specimen.notes }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.specimenStatus">Specimen Status</span></dt>
-        <dd>
-          <span
-            jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.' + specimen.specimenStatus }}">{{ specimen.specimenStatus }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.newBlocksRequested">New Blocks Requested</span></dt>
-        <dd>
-          <span>{{ specimen.newBlocksRequested }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.receivedInFormalin">Received In Formalin</span></dt>
-        <dd>
-          <span>{{ specimen.receivedInFormalin }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.reserve">Reserve</span></dt>
-        <dd>
-          <span>{{ specimen.reserve }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.printedOut">Printed Out</span></dt>
-        <dd>
-          <span>{{ specimen.printedOut }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.smsSent">Sms Sent</span></dt>
-        <dd>
-          <span>{{ specimen.smsSent }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.onlineReport">Online Report</span></dt>
-        <dd>
-          <span>{{ specimen.onlineReport }}</span>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.patient">Patient</span></dt>
-        <dd>
-          <div *ngIf="specimen.patient">
-            <a [routerLink]="['/patient', specimen.patient?.id, 'view']">{{ specimen.patient?.name }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.biopsy">Biopsy</span></dt>
-        <dd>
-          <div *ngIf="specimen.biopsy">
-            <a [routerLink]="['/biopsy', specimen.biopsy?.id, 'view']">{{ specimen.biopsy?.name }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.cytology">Cytology</span></dt>
-        <dd>
-          <div *ngIf="specimen.cytology">
-            <a [routerLink]="['/cytology', specimen.cytology?.id, 'view']">{{ specimen.cytology?.name }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.organ">Organ</span></dt>
-        <dd>
-          <div *ngIf="specimen.organ">
-            <a [routerLink]="['/organ', specimen.organ?.id, 'view']">{{ specimen.organ?.name }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.specimenType">Specimen Type</span></dt>
-        <dd>
-          <div *ngIf="specimen.specimenType">
-            <a [routerLink]="['/specimen-type', specimen.specimenType?.id, 'view']">{{ specimen.specimenType?.name }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.size">Size</span></dt>
-        <dd>
-          <div *ngIf="specimen.size">
-            <a [routerLink]="['/size', specimen.size?.id, 'view']">{{ specimen.size?.name }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.referringCenter">Referring Center</span></dt>
-        <dd>
-          <div *ngIf="specimen.referringCenter">
-            <a [routerLink]="['/referring-center', specimen.referringCenter?.id, 'view']">{{ specimen.referringCenter?.name }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.grossingDoctor">Grossing Doctor</span></dt>
-        <dd>
-          <div *ngIf="specimen.grossingDoctor">
-            <a [routerLink]="['/doctor', specimen.grossingDoctor?.id, 'view']">{{ specimen.grossingDoctor?.name }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.referringDoctor">Referring Doctor</span></dt>
-        <dd>
-          <div *ngIf="specimen.referringDoctor">
-            <a [routerLink]="['/doctor', specimen.referringDoctor?.id, 'view']">{{ specimen.referringDoctor?.name }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.pathologistDoctor">Pathologist Doctor</span></dt>
-        <dd>
-          <div *ngIf="specimen.pathologistDoctor">
-            <a [routerLink]="['/doctor', specimen.pathologistDoctor?.id, 'view']">{{ specimen.pathologistDoctor?.name }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.operatorEmployee">Operator Employee</span></dt>
-        <dd>
-          <div *ngIf="specimen.operatorEmployee">
-            <a
-              [routerLink]="['/employee', specimen.operatorEmployee?.id, 'view']">{{ specimen.operatorEmployee?.name }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="alfairouzApp.specimen.correctorEmployee">Corrector Employee</span></dt>
-        <dd>
-          <div *ngIf="specimen.correctorEmployee">
-            <a
-              [routerLink]="['/employee', specimen.correctorEmployee?.id, 'view']">{{ specimen.correctorEmployee?.name }}</a>
-          </div>
-        </dd>
-
-        <dt><span jhiTranslate="userManagement.createdBy">Created By</span></dt>
-        <dd>{{ specimen.createdBy }}</dd>
-
-        <dt><span jhiTranslate="userManagement.createdDate">Created Date</span></dt>
-        <dd>{{ specimen.createdDate | date: 'dd/MM/yy HH:mm' }}</dd>
-
-        <dt><span jhiTranslate="userManagement.lastModifiedBy">Last Modified By</span></dt>
-        <dd>{{ specimen.lastModifiedBy }}</dd>
-
-        <dt><span jhiTranslate="userManagement.lastModifiedDate">Last Modified Date</span></dt>
-        <dd>{{ specimen.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</dd>
-
-      </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>

@@ -1,0 +1,38 @@
+{
+  "applications": "*",
+  "changelogDate": "20230426000415",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "specimen_edit",
+  "fields": [
+    {
+      "fieldName": "specimenId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "labRefNo",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "specimenStatusFrom",
+      "fieldType": "SpecimenStatus",
+      "fieldValues": "RECEIVED,GROSSING,PROCESSING,EMBEDDING,CUTTING,STAINING,DIAGNOSING,TYPING,REVISION,READY"
+    },
+    {
+      "fieldName": "specimenStatusTo",
+      "fieldType": "SpecimenStatus",
+      "fieldValues": "RECEIVED,GROSSING,PROCESSING,EMBEDDING,CUTTING,STAINING,DIAGNOSING,TYPING,REVISION,READY"
+    },
+    {
+      "fieldName": "userType",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "SpecimenEdit",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceClass"
+}

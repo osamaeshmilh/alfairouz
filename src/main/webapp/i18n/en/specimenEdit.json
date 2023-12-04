@@ -1,0 +1,28 @@
+{
+  "alfairouzApp": {
+    "specimenEdit": {
+      "home": {
+        "title": "Specimen Edits",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Specimen Edit",
+        "createOrEditLabel": "Create or edit a Specimen Edit",
+        "notFound": "No Specimen Edits found"
+      },
+      "created": "A new Specimen Edit is created with identifier {{ param }}",
+      "updated": "A Specimen Edit is updated with identifier {{ param }}",
+      "deleted": "A Specimen Edit is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Specimen Edit {{ id }}?"
+      },
+      "detail": {
+        "title": "Specimen Edit"
+      },
+      "id": "ID",
+      "specimenId": "Specimen Id",
+      "labRefNo": "Lab Ref No",
+      "specimenStatusFrom": "Specimen Status From",
+      "specimenStatusTo": "Specimen Status To",
+      "userType": "User Type"
+    }
+  }
+}

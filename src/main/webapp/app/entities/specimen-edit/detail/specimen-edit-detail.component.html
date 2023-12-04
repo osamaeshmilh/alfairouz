@@ -1,0 +1,53 @@
+<div class="d-flex justify-content-center">
+    <div class="col-8">
+        <div *ngIf="specimenEdit">
+            <h2 data-cy="specimenEditDetailsHeading"><span jhiTranslate="alfairouzApp.specimenEdit.detail.title">Specimen Edit</span>
+            </h2>
+
+            <hr/>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <jhi-alert></jhi-alert>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="global.field.id">ID</span></dt>
+                <dd>
+                    <span>{{ specimenEdit.id }}</span>
+                </dd>
+                <dt><span jhiTranslate="alfairouzApp.specimenEdit.specimenId">Specimen Id</span></dt>
+                <dd>
+                    <span>{{ specimenEdit.specimenId }}</span>
+                </dd>
+                <dt><span jhiTranslate="alfairouzApp.specimenEdit.labRefNo">Lab Ref No</span></dt>
+                <dd>
+                    <span>{{ specimenEdit.labRefNo }}</span>
+                </dd>
+                <dt><span jhiTranslate="alfairouzApp.specimenEdit.specimenStatusFrom">Specimen Status From</span></dt>
+                <dd>
+          <span jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.' + specimenEdit.specimenStatusFrom }}">{{
+              specimenEdit.specimenStatusFrom
+              }}</span>
+                </dd>
+                <dt><span jhiTranslate="alfairouzApp.specimenEdit.specimenStatusTo">Specimen Status To</span></dt>
+                <dd>
+          <span jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.' + specimenEdit.specimenStatusTo }}">{{
+              specimenEdit.specimenStatusTo
+              }}</span>
+                </dd>
+                <dt><span jhiTranslate="alfairouzApp.specimenEdit.userType">User Type</span></dt>
+                <dd>
+                    <span>{{ specimenEdit.userType }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button" [routerLink]="['/specimen-edit', specimenEdit.id, 'edit']" class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
