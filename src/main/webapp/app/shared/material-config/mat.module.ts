@@ -131,10 +131,10 @@ export const MOMENT_DATE_FORMATS: MatDateFormats = {
   declarations: [EmptyContentComponent],
   providers: [
     MatDatepickerModule,
-    { provide: MAT_DIALOG_DATA, useValue: {} },
-    { provide: MatPaginatorIntl, useValue: new CMatPaginatorIntl() },
-    { provide: MAT_DATE_LOCALE, useValue: 'ar-ly' },
-    { provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS },
+    {provide: MAT_DIALOG_DATA, useValue: {}},
+    {provide: MatPaginatorIntl, useValue: new CMatPaginatorIntl()},
+    {provide: MAT_DATE_LOCALE, useValue: 'en'},
+    {provide: MAT_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS},
   ],
 })
 export class MatModule {

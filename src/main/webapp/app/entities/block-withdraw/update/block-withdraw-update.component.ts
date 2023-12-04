@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import {ActivatedRoute} from '@angular/router';
+import {debounceTime, distinctUntilChanged, Observable, Subject, switchMap} from 'rxjs';
+import {finalize, map} from 'rxjs/operators';
 
 import { IBlockWithdraw, BlockWithdraw } from '../block-withdraw.model';
 import { BlockWithdrawService } from '../service/block-withdraw.service';
@@ -12,7 +12,8 @@ import { EventManager, EventWithContent } from 'app/core/util/event-manager.serv
 import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
 import { ISpecimen } from 'app/entities/specimen/specimen.model';
 import { SpecimenService } from 'app/entities/specimen/service/specimen.service';
-import { WithdrawType } from 'app/entities/enumerations/withdraw-type.model';
+import {WithdrawType} from 'app/entities/enumerations/withdraw-type.model';
+import {IPatient} from "../../patient/patient.model";
 
 @Component({
   selector: 'jhi-block-withdraw-update',
@@ -37,6 +38,8 @@ export class BlockWithdrawUpdateComponent implements OnInit {
     specimen: [],
   });
 
+  private searchTerms = new Subject<string>();
+
   constructor(
     protected dataUtils: DataUtils,
     protected eventManager: EventManager,
@@ -44,7 +47,8 @@ export class BlockWithdrawUpdateComponent implements OnInit {
     protected specimenService: SpecimenService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ blockWithdraw }) => {
@@ -87,6 +91,11 @@ export class BlockWithdrawUpdateComponent implements OnInit {
     return item.id!;
   }
 
+
+  onSpecimenSearch(term: string): void {
+    this.searchTerms.next(term);
+  }
+
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IBlockWithdraw>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
       next: () => this.onSaveSuccess(),
@@ -127,6 +136,18 @@ export class BlockWithdrawUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
+    this.searchTerms.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((term: string) => this.specimenService.query({
+        "labRefNo.contains": term,
+        sort: ['labRefNo', 'asc'],
+        size: 1000
+      }))
+    ).subscribe((res: HttpResponse<ISpecimen[]>) => {
+      this.specimenSharedCollection = res.body ?? [];
+    });
+
     this.specimenService
       .query()
       .pipe(map((res: HttpResponse<ISpecimen[]>) => res.body ?? []))
@@ -153,4 +174,5 @@ export class BlockWithdrawUpdateComponent implements OnInit {
       specimen: this.editForm.get(['specimen'])!.value,
     };
   }
+
 }

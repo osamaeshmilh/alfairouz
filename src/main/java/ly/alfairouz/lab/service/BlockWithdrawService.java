@@ -5,6 +5,7 @@ import ly.alfairouz.lab.domain.BlockWithdraw;
 import ly.alfairouz.lab.repository.BlockWithdrawRepository;
 import ly.alfairouz.lab.service.dto.BlockWithdrawDTO;
 import ly.alfairouz.lab.service.mapper.BlockWithdrawMapper;
+import ly.alfairouz.lab.service.util.FileTools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -39,6 +40,18 @@ public class BlockWithdrawService {
     public BlockWithdrawDTO save(BlockWithdrawDTO blockWithdrawDTO) {
         log.debug("Request to save BlockWithdraw : {}", blockWithdrawDTO);
         BlockWithdraw blockWithdraw = blockWithdrawMapper.toEntity(blockWithdrawDTO);
+
+        if (blockWithdrawDTO.getPdfFile() != null) {
+            String filePath = FileTools.upload(
+                blockWithdraw.getPdfFile(),
+                blockWithdraw.getPdfFileContentType(),
+                "block_"
+            );
+            blockWithdraw.setPdfFile(null);
+            blockWithdraw.setPdfFileContentType(blockWithdrawDTO.getPdfFileContentType());
+            blockWithdraw.setPdfFileUrl(filePath);
+        }
+
         blockWithdraw = blockWithdrawRepository.save(blockWithdraw);
         return blockWithdrawMapper.toDto(blockWithdraw);
     }

@@ -108,7 +108,8 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.blockWithdraw.pdfFileUrl" for="field_pdfFileUrl">Pdf File Url</label>
+          <label class="form-label" jhiTranslate="alfairouzApp.blockWithdraw.pdfFileUrl" for="field_pdfFileUrl">Pdf File
+            Url</label>
           <input
             type="text"
             class="form-control"
@@ -119,19 +120,36 @@
           />
         </div>
 
+
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="alfairouzApp.blockWithdraw.specimen" for="field_specimen">Specimen</label>
-          <select class="form-control" id="field_specimen" data-cy="specimen" name="specimen" formControlName="specimen">
+          <!-- Search Input and Button -->
+          <div class="col-lg col-sm">
+            <div class="input-group">
+              <input type="text" class="form-control" #searchInput placeholder="Search for a Specimen...">
+              <button mat-raised-button color="primary" (click)="onSpecimenSearch(searchInput.value)" type="button">
+                Search
+              </button>
+            </div>
+          </div>
+
+          <label class="form-label" jhiTranslate="alfairouzApp.blockWithdraw.specimen"
+                 for="field_specimen">Specimen</label>
+          <select class="form-control" id="field_specimen" data-cy="specimen" name="specimen"
+                  formControlName="specimen">
             <option [ngValue]="null"></option>
             <option
               [ngValue]="specimenOption.id === editForm.get('specimen')!.value?.id ? editForm.get('specimen')!.value : specimenOption"
               *ngFor="let specimenOption of specimenSharedCollection; trackBy: trackSpecimenById"
             >
-              {{ specimenOption.labRefNo }}
+              {{ specimenOption.labRefNo }} - {{specimenOption.id}}
             </option>
           </select>
         </div>
       </div>
+
+        <div class="row mb-3">
+
+        </div>
 
       <div>
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
