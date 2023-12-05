@@ -7,7 +7,7 @@
     <br/>
 
     <div class="row text-center">
-      <form class="col-4 col-center-block mt-5">
+      <form class="col-12 col-md-6 col-center-block mt-5">
         <mat-form-field appearance="outline" class="fill">
           <button (click)="search()" class="mr-2" mat-icon-button matPrefix type="submit">
             <mat-icon>search</mat-icon>
@@ -27,7 +27,7 @@
     <!--            </div>-->
     <!--        </div>-->
     <div class="row text-center">
-      <div class="col-4 col-center-block mt-5">
+      <div class="col-12 col-md-6 col-center-block mt-5">
         <button (click)="search()" color="primary" mat-raised-button>
           <mat-icon>search</mat-icon>
           بحث
@@ -43,15 +43,15 @@
       <div *ngIf="specimen">
         <div class="col-10 col-center-block mt-5">
           <div class="row detail-row mt-3">
-            <div class="col-4">
+            <div class="col-12 col-md-4">
               <div class="text-muted">رقم QR العينة</div>
               <h6 matLine>{{ specimen.labQr }}</h6>
             </div>
-            <div class="col-4">
+            <div class="col-12 col-md-4">
               <div class="text-muted">الاسم</div>
               <h6 matLine *ngIf="specimen.patient">{{ specimen.patient?.nameAr }}</h6>
             </div>
-            <div class="col-4">
+            <div class="col-12 col-md-4">
               <div class="text-muted">حالة العينة</div>
               <div
                 jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.' + specimen.specimenStatus }}"
