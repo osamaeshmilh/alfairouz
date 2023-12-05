@@ -62,7 +62,7 @@
         </th>
 
         <th scope="col" jhiSortBy="receivingDate">
-          <span jhiTranslate="alfairouzApp.specimen.receivingDate">Receiving Date</span>
+          <span jhiTranslate="alfairouzApp.specimen.receivingDate">Receive Date</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
         <th scope="col" jhiSortBy="samplingDate"
@@ -84,7 +84,7 @@
 
         <th scope="col" jhiSortBy="paymentType"
             *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
-          <span jhiTranslate="alfairouzApp.specimen.paymentType">Payment Type</span>
+          <span jhiTranslate="alfairouzApp.specimen.paymentType">Payment</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
 
@@ -111,22 +111,22 @@
 
         <th scope="col" jhiSortBy="referringCenter.name"
             *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_TYPING', 'ROLE_REFERRING_DOCTOR', 'ROLE_TECHNICIAN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
-          <span jhiTranslate="alfairouzApp.specimen.referringCenter">Referring Center</span>
+          <span jhiTranslate="alfairouzApp.specimen.referringCenter">Ref Center</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
         <th scope="col" jhiSortBy="referringDoctor.name"
             *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_TYPING', 'ROLE_REFERRING_CENTER', 'ROLE_TECHNICIAN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
-          <span jhiTranslate="alfairouzApp.specimen.referringDoctor">Referring Doctor</span>
+          <span jhiTranslate="alfairouzApp.specimen.referringDoctor">Ref Doc</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
         <th scope="col" jhiSortBy="grossingDoctor.name"
             *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_TECHNICIAN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
-          <span jhiTranslate="alfairouzApp.specimen.grossingDoctor">Grossing Doctor</span>
+          <span>Gross Doc</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
         <th scope="col" jhiSortBy="isWithdrawn"
             *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
-          <span jhiTranslate="alfairouzApp.specimen.isWithdrawn">Is Withdrawn</span>
+          <span>Withdrawn</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
         <th scope="col" jhiSortBy="organ.name" *jhiHasAnyAuthority="['ROLE_REFERRING_DOCTOR', 'ROLE_REFERRING_CENTER']">
@@ -153,7 +153,7 @@
         </th>
 
         <th scope="col" jhiSortBy="specimenStatus">
-          <span jhiTranslate="alfairouzApp.specimen.specimenStatus">Specimen Status</span>
+          <span jhiTranslate="alfairouzApp.specimen.specimenStatus">Status</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
         <th scope="col" jhiSortBy="results">
