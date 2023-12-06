@@ -172,10 +172,10 @@
         <mat-divider class="mx-2 light-gray"></mat-divider>
 
 
-        <mat-expansion-panel class="mat-elevation-z0">
+        <mat-expansion-panel class="mat-elevation-z0"
+                             *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_REFERRING_DOCTOR','ROLE_REFERRING_CENTER', 'ROLE_RECEPTION']">
           <mat-expansion-panel-header class="light-gray">
-            <mat-panel-title
-              *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_REFERRING_DOCTOR','ROLE_REFERRING_CENTER', 'ROLE_RECEPTION']">
+            <mat-panel-title>
               <mat-icon class="ml-2">receipt_long</mat-icon>
               التقارير
             </mat-panel-title>

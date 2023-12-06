@@ -434,7 +434,7 @@ public class SpecimenResource {
                 row.createCell(10).setCellValue(specimenDTO.getCytology() != null ? specimenDTO.getCytology().getName() : "");
                 row.createCell(11).setCellValue(specimenDTO.getOrgan() != null ? specimenDTO.getOrgan().getName() : "");
                 row.createCell(12).setCellValue(specimenDTO.getSpecimenStatus().toString());
-                row.createCell(13).setCellValue(specimenDTO.getResults().toString());
+                row.createCell(13).setCellValue(specimenDTO.getResults() != null ? specimenDTO.getResults().toString() : "");
 
             } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REFERRING_DOCTOR)) {
 
@@ -451,7 +451,7 @@ public class SpecimenResource {
                 row.createCell(10).setCellValue(specimenDTO.getCytology() != null ? specimenDTO.getCytology().getName() : "");
                 row.createCell(11).setCellValue(specimenDTO.getOrgan() != null ? specimenDTO.getOrgan().getName() : "");
                 row.createCell(12).setCellValue(specimenDTO.getSpecimenStatus().toString());
-                row.createCell(13).setCellValue(specimenDTO.getResults().toString());
+                row.createCell(13).setCellValue(specimenDTO.getResults() != null ? specimenDTO.getResults().toString() : "");
             }
 
         }
