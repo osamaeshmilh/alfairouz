@@ -490,7 +490,10 @@ export class SpecimenUpdateComponent implements OnInit {
       .subscribe((organs: IOrgan[]) => (this.organsSharedCollection = organs));
 
     this.specimenTypeService
-      .query({size: 1000})
+      .query({
+        size: 1000,
+        sort: ['category', 'asc'],
+      })
       .pipe(map((res: HttpResponse<ISpecimenType[]>) => res.body ?? []))
       .pipe(
         map((specimenTypes: ISpecimenType[]) =>

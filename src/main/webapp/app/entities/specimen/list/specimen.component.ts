@@ -14,6 +14,7 @@ import { DataUtils } from 'app/core/util/data-util.service';
 @Component({
   selector: 'jhi-specimen',
   templateUrl: './specimen.component.html',
+  styleUrls: ['./specimen.component.css']
 })
 export class SpecimenComponent implements OnInit {
   specimen?: ISpecimen[];
