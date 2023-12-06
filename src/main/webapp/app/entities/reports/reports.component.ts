@@ -5,6 +5,7 @@ import {IDoctor} from "../doctor/doctor.model";
 import {ReferringCenterService} from "../referring-center/service/referring-center.service";
 import {HttpResponse} from "@angular/common/http";
 import {DoctorService} from "../doctor/service/doctor.service";
+import {ReportsService} from "./reports.service";
 
 @Component({
   selector: 'jhi-reports',
@@ -25,6 +26,7 @@ export class ReportsComponent implements OnInit {
   selectedId = "";
 
   constructor(
+    protected reportsService: ReportsService,
     protected referringCenterService: ReferringCenterService,
     protected doctorService: DoctorService,
   ) {
@@ -74,7 +76,8 @@ export class ReportsComponent implements OnInit {
     const formattedFromDate = formatDate(this.from, this.format, this.locale);
     const formattedToDate = formatDate(this.to, this.format, this.locale);
     if (this.reportType === 'ALL_SPECIMEN') {
-      window.open(`/api/public/specimen/xlsx/criteria/?receivingDate.greaterThanOrEqual=${formattedFromDate}&receivingDate.lessThanOrEqual=${formattedToDate}`, '_blank');
+      this.reportsService.downloadFileWithToken(this.from, this.to);
+      // window.open(`/api/public/specimen/xlsx/criteria/?receivingDate.greaterThanOrEqual=${formattedFromDate}&receivingDate.lessThanOrEqual=${formattedToDate}`, '_blank');
     } else if (this.reportType === 'CASH_SPECIMEN') {
       window.open(`/api/public/specimen/xlsx/criteria/?referringCenterId.equals=${this.selectedId}&paymentType.equals=CASH&receivingDate.greaterThanOrEqual=${formattedFromDate}&receivingDate.lessThanOrEqual=${formattedToDate}`, '_blank');
     } else if (this.reportType === 'MONTHLY_SPECIMEN') {
