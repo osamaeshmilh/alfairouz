@@ -492,7 +492,7 @@ export class SpecimenUpdateComponent implements OnInit {
     this.specimenTypeService
       .query({
         size: 1000,
-        sort: ['category', 'asc'],
+        sort: ['category', 'asc', 'name', 'asc'],
       })
       .pipe(map((res: HttpResponse<ISpecimenType[]>) => res.body ?? []))
       .pipe(
