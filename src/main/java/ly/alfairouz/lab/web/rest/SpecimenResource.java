@@ -231,7 +231,26 @@ public class SpecimenResource {
     @GetMapping("/specimen/count")
     public ResponseEntity<Long> countSpecimen(SpecimenCriteria criteria) {
         log.debug("REST request to count Specimen by criteria: {}", criteria);
-        return ResponseEntity.ok().body(specimenQueryService.countByCriteria(criteria));
+
+        Long count = 0L;
+        LongFilter longFilter = new LongFilter();
+
+        if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.ADMIN)) {
+            count = specimenQueryService.countByCriteria(criteria);
+        } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REFERRING_CENTER)) {
+            SpecimenCriteria.PaymentTypeFilter paymentTypeFilter = new SpecimenCriteria.PaymentTypeFilter();
+            paymentTypeFilter.setEquals(PaymentType.MONTHLY);
+            criteria.setPaymentType(paymentTypeFilter);
+            longFilter.setEquals(referringCenterService.findOneByUser().getId());
+            criteria.setReferringCenterId(longFilter);
+            count = specimenQueryService.countByCriteria(criteria);
+        } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REFERRING_DOCTOR)) {
+            longFilter.setEquals(doctorService.findOneByUser().getId());
+            criteria.setReferringDoctorId(longFilter);
+            count = specimenQueryService.countByCriteria(criteria);
+        }
+
+        return ResponseEntity.ok().body(count);
     }
 
     /**

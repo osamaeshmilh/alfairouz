@@ -1,5 +1,5 @@
 <div class="entity-container">
-  <div *jhiHasAnyAuthority="'ROLE_ADMIN'">
+  <div *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_REFERRING_DOCTOR','ROLE_REFERRING_CENTER']">
     <div class="row white-bg">
       <div class="mat-elevation-z1 p-3 round-card col-6">
         <p>التقارير حسب</p>
@@ -29,7 +29,7 @@
 
       <span class="mx-2"></span>
 
-      <div class="mat-elevation-z1 px-4 py-3 d-flex round-card col-3 white-bg">
+      <div *jhiHasAnyAuthority="['ROLE_ADMIN']" class="mat-elevation-z1 px-4 py-3 d-flex round-card col-3 white-bg">
         <div class="d-flex flex-column">
           <h3 class="m-0">{{ doctorCount }}</h3>
           <p class="m-0">عدد الاطباء</p>
@@ -37,7 +37,7 @@
         <mat-icon class="big-icon mr-auto" color="primary">account_circle</mat-icon>
       </div>
 
-      <span class="mx-2"></span>
+      <span *jhiHasAnyAuthority="['ROLE_ADMIN']" class="mx-2"></span>
       <div class="mat-elevation-z1 px-4 py-3 d-flex round-card col-3 white-bg">
         <div class="d-flex flex-column">
           <h3 class="m-0">{{ referringCenterCount }}</h3>
