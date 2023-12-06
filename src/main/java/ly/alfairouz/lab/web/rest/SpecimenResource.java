@@ -299,14 +299,31 @@ public class SpecimenResource {
     public ResponseEntity<byte[]> getSpecimensAsXSLXByCriteria(SpecimenCriteria criteria) {
         log.debug("REST request to get xslx");
 
+        LongFilter longFilter = new LongFilter();
+
+        List<SpecimenDTO> specimenDTOList = null;
+
+        if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.ADMIN)) {
+            specimenDTOList = specimenQueryService.findByCriteria(criteria);
+        } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REFERRING_CENTER)) {
+            SpecimenCriteria.PaymentTypeFilter paymentTypeFilter = new SpecimenCriteria.PaymentTypeFilter();
+            paymentTypeFilter.setEquals(PaymentType.MONTHLY);
+            criteria.setPaymentType(paymentTypeFilter);
+            longFilter.setEquals(referringCenterService.findOneByUser().getId());
+            criteria.setReferringCenterId(longFilter);
+            specimenDTOList = specimenQueryService.findByCriteria(criteria);
+        } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REFERRING_DOCTOR)) {
+            longFilter.setEquals(doctorService.findOneByUser().getId());
+            criteria.setReferringDoctorId(longFilter);
+            specimenDTOList = specimenQueryService.findByCriteria(criteria);
+        }
+
         String[] columns = {
             "Id", "Lab Ref No", "Lab QR", "Sampling Date", "Receiving Date", "Report Date", "Payment type",
             "Patient", "Patient Ar", "Referring center", "Referring Doctor", "Grossing Doctor",
             "Pathologist 1", "Pathologist 2", "Specimen State", "Specimen type / size", "Biopsy", "Cytology",
             "Organ", "Price", "Paid", "Not Paid"
         };
-
-        List<SpecimenDTO> specimenDTOList = specimenQueryService.findByCriteria(criteria);
 
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("specimen");

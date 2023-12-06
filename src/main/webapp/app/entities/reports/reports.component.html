@@ -5,7 +5,9 @@
         <div class="col">
           <mat-form-field class="mr-auto" appearance="standard">
             <mat-select [(ngModel)]="reportType" placeholder="نوع التقرير">
-              <mat-option value="ALL_SPECIMEN" *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION']">All Specimen
+              <mat-option value="ALL_SPECIMEN"
+                          *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_REFERRING_DOCTOR','ROLE_REFERRING_CENTER', 'ROLE_RECEPTION']">
+                All Specimen
                 Report
               </mat-option>
               <mat-option value="CASH_SPECIMEN" *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION']">Cash Specimen
