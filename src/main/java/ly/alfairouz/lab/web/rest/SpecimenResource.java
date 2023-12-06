@@ -416,8 +416,8 @@ public class SpecimenResource {
                 row.createCell(17).setCellValue(specimenDTO.getCytology() != null ? specimenDTO.getCytology().getName() : "");
                 row.createCell(18).setCellValue(specimenDTO.getOrgan() != null ? specimenDTO.getOrgan().getName() : "");
                 row.createCell(19).setCellValue(specimenDTO.getPrice() != null ? specimenDTO.getPrice() : 0);
-                row.createCell(19).setCellValue(specimenDTO.getPaid() != null ? specimenDTO.getPaid() : 0);
-                row.createCell(19).setCellValue(specimenDTO.getNotPaid() != null ? specimenDTO.getNotPaid() : 0);
+                row.createCell(20).setCellValue(specimenDTO.getPaid() != null ? specimenDTO.getPaid() : 0);
+                row.createCell(21).setCellValue(specimenDTO.getNotPaid() != null ? specimenDTO.getNotPaid() : 0);
 
             } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REFERRING_CENTER)) {
 
