@@ -27,7 +27,9 @@ alfairouz.specimen.conclusion,
 alfairouz.referring_center.name AS referringCenterName,
 alfairouz.doctor.name AS referringDoctorName,
 pathologistDoctors.name AS pathologistDoctorName,
+pathologistDoctors.description AS pathologistDoctorDescription,
 pathologistDoctorTwo.name AS pathologistDoctorTwoName,
+pathologistDoctorTwo.description AS pathologistDoctorTwoDescription,
 alfairouz.patient.name_ar AS patientNameAr,
 alfairouz.patient.name AS patientName,
 alfairouz.patient.gender AS patientGender,
@@ -100,8 +102,16 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
         <property name="com.jaspersoft.studio.field.label" value="referringDoctorName"/>
         <property name="com.jaspersoft.studio.field.tree.path" value="doctor"/>
     </field>
+    <field name="pathologistDoctorDescription" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="pathologistDoctorDescription"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="doctor"/>
+    </field>
     <field name="pathologistDoctorName" class="java.lang.String">
         <property name="com.jaspersoft.studio.field.label" value="pathologistDoctorName"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="doctor"/>
+    </field>
+    <field name="pathologistDoctorTwoDescription" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="pathologistDoctorTwoDescription"/>
         <property name="com.jaspersoft.studio.field.tree.path" value="doctor"/>
     </field>
     <field name="pathologistDoctorTwoName" class="java.lang.String">
@@ -353,21 +363,8 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
     </detail>
     <pageFooter>
         <band height="139" splitType="Stretch">
-            <staticText>
-                <reportElement x="138" y="0" width="102" height="20" uuid="86e91751-42d3-4117-9c82-1444c87a365a"/>
-                <textElement textAlignment="Left" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="10" isBold="true" isItalic="false" isUnderline="false"/>
-                </textElement>
-                <text><![CDATA[Consultant Pathologist]]></text>
-            </staticText>
-            <staticText>
-                <reportElement x="340" y="0" width="85" height="20" uuid="51a7544b-9d98-4a6f-b84e-d55b68057ce1"/>
-                <textElement textAlignment="Left" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="10" isBold="true" isItalic="false" isUnderline="false"/>
-                </textElement>
-                <text><![CDATA[Pathologist MD]]></text>
-            </staticText>
-            <textField textAdjust="StretchHeight">
+
+            <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement x="113" y="25" width="150" height="20" uuid="50376019-f7d8-4fa8-92bc-a2e9629acf9c">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
@@ -392,7 +389,7 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                     <jr:codeExpression><![CDATA[$F{lab_qr}]]></jr:codeExpression>
                 </jr:QRCode>
             </componentElement>
-            <textField textAdjust="StretchHeight">
+            <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement x="302" y="25" width="150" height="20" uuid="bf061dd7-a318-4963-9693-5bb6292e1a96">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
@@ -401,6 +398,26 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
                 <textFieldExpression><![CDATA[$F{pathologistDoctorTwoName}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight" isBlankWhenNull="true">
+                <reportElement x="113" y="5" width="150" height="20" uuid="0f798a2f-21ec-4b9c-9732-da6ad171cdab">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{pathologistDoctorDescription}]]></textFieldExpression>
+            </textField>
+            <textField textAdjust="StretchHeight" isBlankWhenNull="true">
+                <reportElement x="302" y="5" width="150" height="20" uuid="06b2ff4c-ddfd-423d-8624-268f9ef9e53d">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID"
+                              value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
+                </reportElement>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{pathologistDoctorTwoDescription}]]></textFieldExpression>
             </textField>
         </band>
     </pageFooter>
