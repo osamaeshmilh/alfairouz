@@ -18,7 +18,8 @@
       </div>
     </div>
 
-    <div class="detail-row align-items-center mt-3">
+    <div *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_REFERRING_DOCTOR','ROLE_REFERRING_CENTER']"
+         class="detail-row align-items-center mt-3">
       <div class="mat-elevation-z1 px-4 py-3 d-flex round-card col-3 white-bg">
         <div class="d-flex flex-column">
           <h3 class="m-0">{{ specimenCount }}</h3>
@@ -37,8 +38,8 @@
         <mat-icon class="big-icon mr-auto" color="primary">account_circle</mat-icon>
       </div>
 
-      <span *jhiHasAnyAuthority="['ROLE_ADMIN']" class="mx-2"></span>
-      <div class="mat-elevation-z1 px-4 py-3 d-flex round-card col-3 white-bg">
+      <span class="mx-2"></span>
+      <div *jhiHasAnyAuthority="['ROLE_ADMIN']" class="mat-elevation-z1 px-4 py-3 d-flex round-card col-3 white-bg">
         <div class="d-flex flex-column">
           <h3 class="m-0">{{ referringCenterCount }}</h3>
           <p class="m-0">عدد المراكز</p>

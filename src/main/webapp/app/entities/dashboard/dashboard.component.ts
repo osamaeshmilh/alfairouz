@@ -9,7 +9,7 @@ import {forkJoin} from "rxjs";
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent {
-  public specimenStatusDoughnutChartLabels = ['RECEIVED', 'GROSSING', 'PROCESSING', 'EMBEDDING', 'CUTTING', 'STAINING', 'DIAGNOSING', 'TYPING', 'REVISION', 'READY'];
+  public specimenStatusDoughnutChartLabels = ['RECEIVED', 'GROSSING', 'PROCESSING', 'DIAGNOSING', 'TYPING', 'REVISION', 'READY'];
   public specimenStatusDoughnutChartData: any;
   public specimenStatusData: Array<any> = [];
 
@@ -42,9 +42,7 @@ export class DashboardComponent {
       this.specimenService.count({'specimenStatus.equals': 'RECEIVED'}),
       this.specimenService.count({'specimenStatus.equals': 'GROSSING'}),
       this.specimenService.count({'specimenStatus.equals': 'PROCESSING'}),
-      this.specimenService.count({'specimenStatus.equals': 'EMBEDDING'}),
-      this.specimenService.count({'specimenStatus.equals': 'CUTTING'}),
-      this.specimenService.count({'specimenStatus.equals': 'STAINING'}),
+
       this.specimenService.count({'specimenStatus.equals': 'DIAGNOSING'}),
       this.specimenService.count({'specimenStatus.equals': 'TYPING'}),
       this.specimenService.count({'specimenStatus.equals': 'REVISION'}),
@@ -57,9 +55,6 @@ export class DashboardComponent {
       this.specimenStatusData.push(data[4].body);
       this.specimenStatusData.push(data[5].body);
       this.specimenStatusData.push(data[6].body);
-      this.specimenStatusData.push(data[7].body);
-      this.specimenStatusData.push(data[8].body);
-      this.specimenStatusData.push(data[9].body);
       this.specimenStatusDoughnutChartData = this.specimenStatusData;
     });
   }
