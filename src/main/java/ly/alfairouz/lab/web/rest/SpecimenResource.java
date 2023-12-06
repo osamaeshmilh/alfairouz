@@ -305,15 +305,8 @@ public class SpecimenResource {
 
         String[] columns = new String[0];
 
-        if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.ADMIN)) {
-            specimenDTOList = specimenQueryService.findByCriteria(criteria);
-            columns = new String[]{
-                "Id", "Lab Ref No", "Lab QR", "Sampling Date", "Receiving Date", "Report Date", "Payment type",
-                "Patient", "Patient Ar", "Referring center", "Referring Doctor", "Grossing Doctor",
-                "Pathologist 1", "Pathologist 2", "Specimen State", "Specimen type / size", "Biopsy", "Cytology",
-                "Organ", "Price", "Paid", "Not Paid"
-            };
-        } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REFERRING_CENTER)) {
+
+        if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REFERRING_CENTER)) {
             SpecimenCriteria.PaymentTypeFilter paymentTypeFilter = new SpecimenCriteria.PaymentTypeFilter();
             paymentTypeFilter.setEquals(PaymentType.MONTHLY);
             criteria.setPaymentType(paymentTypeFilter);
@@ -357,6 +350,14 @@ public class SpecimenResource {
                 "Organ",
                 "Specimen State",
                 "Results"
+            };
+        } else {
+            specimenDTOList = specimenQueryService.findByCriteria(criteria);
+            columns = new String[]{
+                "Id", "Lab Ref No", "Lab QR", "Sampling Date", "Receiving Date", "Report Date", "Payment type",
+                "Patient", "Patient Ar", "Referring center", "Referring Doctor", "Grossing Doctor",
+                "Pathologist 1", "Pathologist 2", "Specimen State", "Specimen type / size", "Biopsy", "Cytology",
+                "Organ", "Price", "Paid", "Not Paid"
             };
         }
 
