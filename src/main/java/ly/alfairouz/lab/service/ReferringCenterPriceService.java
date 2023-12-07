@@ -115,6 +115,14 @@ public class ReferringCenterPriceService {
         return referringCenterPriceMapper.toDto(referringCenterPriceRepository.findByReferringCenterId(centerId));
     }
 
+    public ReferringCenterPriceDTO findByReferringCenterIdAndSizeId(Long centerId, Long sizeId) {
+        return referringCenterPriceMapper.toDto(referringCenterPriceRepository.findOneByReferringCenterIdAndSizeId(centerId, sizeId));
+    }
+
+    public ReferringCenterPriceDTO findByReferringCenterIdAndTypeId(Long centerId, Long typeId) {
+        return referringCenterPriceMapper.toDto(referringCenterPriceRepository.findOneByReferringCenterIdAndSpecimenTypeId(centerId, typeId));
+    }
+
     public void deleteAllByReferringCenterId(Long id) {
         referringCenterPriceRepository.deleteAllByReferringCenterId(id);
 

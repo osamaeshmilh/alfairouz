@@ -9,14 +9,14 @@ import java.util.Optional;
 import java.util.zip.CRC32;
 
 import ly.alfairouz.lab.domain.Specimen;
+import ly.alfairouz.lab.domain.enumeration.ContractType;
 import ly.alfairouz.lab.domain.enumeration.LabRef;
+import ly.alfairouz.lab.domain.enumeration.PaymentType;
 import ly.alfairouz.lab.domain.enumeration.SpecimenStatus;
 import ly.alfairouz.lab.repository.SpecimenRepository;
 import ly.alfairouz.lab.security.AuthoritiesConstants;
 import ly.alfairouz.lab.security.SecurityUtils;
-import ly.alfairouz.lab.service.dto.PatientDTO;
-import ly.alfairouz.lab.service.dto.SpecimenDTO;
-import ly.alfairouz.lab.service.dto.SpecimenEditDTO;
+import ly.alfairouz.lab.service.dto.*;
 import ly.alfairouz.lab.service.mapper.SpecimenMapper;
 import ly.alfairouz.lab.service.util.FileTools;
 import ly.alfairouz.lab.service.util.SpecimenHandler;
@@ -47,12 +47,21 @@ public class SpecimenService {
 
     private final SpecimenEditService specimenEditService;
 
-    public SpecimenService(SpecimenRepository specimenRepository, SpecimenMapper specimenMapper, DoctorService doctorService, PatientService patientService, SpecimenEditService specimenEditService) {
+    private final SpecimenTypeService specimenTypeService;
+
+    private final ReferringCenterService referringCenterService;
+
+    private final ReferringCenterPriceService referringCenterPriceService;
+
+    public SpecimenService(SpecimenRepository specimenRepository, SpecimenMapper specimenMapper, DoctorService doctorService, PatientService patientService, SpecimenEditService specimenEditService, SpecimenTypeService specimenTypeService, ReferringCenterService referringCenterService, ReferringCenterPriceService referringCenterPriceService) {
         this.specimenRepository = specimenRepository;
         this.specimenMapper = specimenMapper;
         this.doctorService = doctorService;
         this.patientService = patientService;
         this.specimenEditService = specimenEditService;
+        this.specimenTypeService = specimenTypeService;
+        this.referringCenterService = referringCenterService;
+        this.referringCenterPriceService = referringCenterPriceService;
     }
 
     /**
@@ -326,6 +335,31 @@ public class SpecimenService {
 
             PatientDTO result = patientService.save(patientDTO);
             specimenDTO.setPatient(result);
+        }
+
+        if (specimenDTO.getPaymentType() == PaymentType.CASH) {
+            SpecimenTypeDTO specimenTypeDTO = specimenTypeService.findOne(specimenDTO.getSpecimenType().getId()).get();
+            specimenDTO.setContractType(ContractType.SPECIMEN);
+            specimenDTO.setPrice(specimenTypeDTO.getPrice());
+        } else if (specimenDTO.getPaymentType() == PaymentType.MONTHLY) {
+
+            ReferringCenterDTO referringCenterDTO = referringCenterService.findOne(specimenDTO.getReferringCenter().getId()).get();
+            ReferringCenterPriceDTO referringCenterPriceDTO;
+
+            if (referringCenterDTO.getContractType() == ContractType.SIZE) {
+                referringCenterPriceDTO = referringCenterPriceService.findByReferringCenterIdAndSizeId(specimenDTO.getReferringCenter().getId(), specimenDTO.getSize().getId());
+
+                specimenDTO.setContractType(ContractType.SIZE);
+                specimenDTO.setPrice(referringCenterPriceDTO.getPrice());
+
+            } else if (referringCenterDTO.getContractType() == ContractType.SPECIMEN) {
+                referringCenterPriceDTO = referringCenterPriceService.findByReferringCenterIdAndTypeId(specimenDTO.getReferringCenter().getId(), specimenDTO.getSpecimenType().getId());
+
+                specimenDTO.setContractType(ContractType.SPECIMEN);
+                specimenDTO.setPrice(referringCenterPriceDTO.getPrice());
+
+            }
+
         }
 
         specimenDTO.setSpecimenStatus(SpecimenStatus.RECEIVED);

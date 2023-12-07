@@ -47,5 +47,9 @@ public interface ReferringCenterPriceRepository
 
     List<ReferringCenterPrice> findByReferringCenterId(Long centerId);
 
+    ReferringCenterPrice findOneByReferringCenterIdAndSizeId(Long referringCenter_id, Long size_id);
+
+    ReferringCenterPrice findOneByReferringCenterIdAndSpecimenTypeId(Long referringCenter_id, Long specimenType_id);
+
     void deleteAllByReferringCenterId(Long referringCenter_id);
 }
