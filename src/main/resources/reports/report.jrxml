@@ -377,7 +377,7 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
             <staticText>
                 <reportElement x="181" y="170" width="200" height="15" uuid="05f92b72-e711-457d-b303-bb18a9aa5863"/>
                 <textElement textAlignment="Center" verticalAlignment="Justified">
-                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                    <font fontName="Times New Roman" size="12" isBold="true"/>
                 </textElement>
                 <text><![CDATA[Histopathology Report]]></text>
             </staticText>
@@ -394,9 +394,9 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                     <font fontName="Times New Roman" size="10"/>
                 </textElement>
                 <textFieldExpression><![CDATA["<b><u> Clinical Data: </u></b><br>" + $F{clinical_data}.replaceAll("</p>", "</p><br>").replaceAll("</div>", "</div><br>") +
-            "<b><u> Gross Examination: </u></b><br>" + $F{gross_examination}.replaceAll("</p>", "</p><br>").replaceAll("</div>", "</div><br>") +
-            "<b><u> Microscopically: </u></b><br>" + $F{microscopic_data}.replaceAll("</p>", "</p><br>").replaceAll("</div>", "</div><br>") +
-            "<b><u> Conclusion: </u></b><br>" + $F{conclusion}.replaceAll("</p>", "</p><br>").replaceAll("</div>", "</div><br>")]]></textFieldExpression>
+            "<br><br><b><u> Gross Examination: </u></b><br>" + $F{gross_examination}.replaceAll("</p>", "</p><br>").replaceAll("</div>", "</div><br>") +
+            "<br><br><b><u> Microscopically: </u></b><br>" + $F{microscopic_data}.replaceAll("</p>", "</p><br>").replaceAll("</div>", "</div><br>") +
+            "<br><br><b><u> Conclusion: </u></b><br>" + $F{conclusion}.replaceAll("</p>", "</p><br>").replaceAll("</div>", "</div><br>")]]></textFieldExpression>
             </textField>
         </band>
     </detail>
