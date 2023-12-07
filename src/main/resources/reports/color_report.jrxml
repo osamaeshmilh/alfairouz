@@ -383,9 +383,9 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 <text><![CDATA[No. of Samples:]]></text>
             </staticText>
             <staticText>
-                <reportElement x="181" y="170" width="200" height="15" uuid="05f92b72-e711-457d-b303-bb18a9aa5863"/>
+                <reportElement x="181" y="164" width="200" height="15" uuid="05f92b72-e711-457d-b303-bb18a9aa5863"/>
                 <textElement textAlignment="Center" verticalAlignment="Justified">
-                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                    <font fontName="Times New Roman" size="13" isBold="true"/>
                 </textElement>
                 <text><![CDATA[Histopathology Report]]></text>
             </staticText>
