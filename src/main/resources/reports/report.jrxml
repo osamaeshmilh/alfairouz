@@ -155,7 +155,7 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                     <property name="com.jaspersoft.studio.unit.height" value="px"/>
                 </reportElement>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
-                    <font fontName="Times New Roman" size="10" isBold="false"/>
+                    <font fontName="Times New Roman" size="9" isBold="false"/>
                 </textElement>
                 <textFieldExpression><![CDATA[$F{patientName}]]></textFieldExpression>
             </textField>
