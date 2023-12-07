@@ -12,7 +12,7 @@ const representativeDeliveryRoute: Routes = [
     path: '',
     component: RepresentativeDeliveryComponent,
     data: {
-      defaultSort: 'id,asc',
+      defaultSort: 'id,desc',
     },
     canActivate: [UserRouteAccessService],
   },

@@ -12,7 +12,7 @@ const expenseRoute: Routes = [
     path: '',
     component: ExpenseComponent,
     data: {
-      defaultSort: 'id,asc',
+      defaultSort: 'id,desc',
     },
     canActivate: [UserRouteAccessService],
   },

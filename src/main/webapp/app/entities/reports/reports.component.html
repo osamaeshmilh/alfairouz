@@ -47,6 +47,8 @@
             </mat-select>
           </mat-form-field>
         </div>
+
+
         <div *ngIf="reportType == 'SPECIMEN_BY_PATHOLOGIST_DOCTOR'" class="col">
           <mat-form-field appearance="standard" class="col">
             <mat-label>Pathologist Doctor</mat-label>
@@ -80,20 +82,54 @@
           </mat-form-field>
         </div>
         <div class="col">
-          <mat-form-field class="mr-auto" appearance="standard">
-            <mat-label>اختر بداية التقرير</mat-label>
-            <input matInput [matDatepicker]="picker" [(ngModel)]="from"/>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
+          <!--          <mat-form-field class="mr-auto" appearance="standard">-->
+          <!--            <mat-label>اختر بداية التقرير</mat-label>-->
+          <!--            <input matInput [matDatepicker]="picker" />-->
+          <!--            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
+          <!--            <mat-datepicker #picker></mat-datepicker>-->
+          <!--          </mat-form-field>-->
+
+          <div class="row mb-3">
+            <label class="form-label" for="startDate">اختر بداية التقرير</label>
+            <div class="input-group">
+              <input
+                [(ngModel)]="from"
+                id="startDate"
+                type="text"
+                class="form-control"
+                ngbDatepicker
+                #picker="ngbDatepicker"
+              />
+              <button type="button" class="btn btn-secondary" (click)="picker.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </div>
+          </div>
         </div>
         <div class="col">
-          <mat-form-field class="mr-auto" appearance="standard">
-            <mat-label>اختر نهاية التقرير</mat-label>
-            <input matInput [matDatepicker]="picker2" [(ngModel)]="to"/>
-            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-            <mat-datepicker #picker2></mat-datepicker>
-          </mat-form-field>
+          <!--          <mat-form-field class="mr-auto" appearance="standard">-->
+          <!--            <mat-label>اختر نهاية التقرير</mat-label>-->
+          <!--            <input matInput [matDatepicker]="picker2" [(ngModel)]="to"/>-->
+          <!--            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>-->
+          <!--            <mat-datepicker #picker2></mat-datepicker>-->
+          <!--          </mat-form-field>-->
+
+          <div class="row mb-3">
+            <label class="form-label" for="endDate">اختر نهاية التقرير</label>
+            <div class="input-group">
+              <input
+                [(ngModel)]="to"
+                id="endDate"
+                type="text"
+                class="form-control"
+                ngbDatepicker
+                #picker2="ngbDatepicker"
+              />
+              <button type="button" class="btn btn-secondary" (click)="picker2.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </div>
+          </div>
         </div>
         <div class="col">
           <button class="mr-auto mt-4" mat-raised-button color="primary" [disabled]="!to || !from || !reportType"

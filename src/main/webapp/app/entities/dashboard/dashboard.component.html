@@ -2,12 +2,12 @@
   <div *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_REFERRING_DOCTOR','ROLE_REFERRING_CENTER']">
     <div class="row white-bg">
       <div class="mat-elevation-z1 p-3 round-card col-6">
-        <p>التقارير حسب</p>
+<!--        <p>التقارير حسب</p>-->
         <canvas hidden [data]="pieChartData" [labels]="pieChartLabels" baseChart chartType="pie"></canvas>
       </div>
 
       <div class="mat-elevation-z1 p-3 round-card col-6">
-        <p>العينات حسب الحالة</p>
+        <p class="text-center">العينات حسب الحالة</p>
         <canvas
           *ngIf="specimenStatusDoughnutChartData && specimenStatusDoughnutChartLabels"
           [data]="specimenStatusDoughnutChartData"
