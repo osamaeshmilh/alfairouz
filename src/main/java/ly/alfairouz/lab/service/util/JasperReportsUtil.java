@@ -3,6 +3,8 @@ package ly.alfairouz.lab.service.util;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
+import net.sf.jasperreports.engine.export.ooxml.JRDocxExporterParameter;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
@@ -77,6 +79,36 @@ public class JasperReportsUtil {
             jrXlsExporter.exportReport();
             reportBytes = byteArrayOutputStream.toByteArray();
         } catch (JRException | IOException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JdbcUtils.closeConnection(connection);
+        }
+        return reportBytes;
+    }
+
+    public byte[] getReportAsDocx(Map<String, Object> parameters, String japerFileName) {
+        log.debug("JasperReportsUtil.getReportAsDocx parameters={} , fileName={} ", parameters, japerFileName);
+        Connection connection = null;
+        byte[] reportBytes = null;
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try {
+            connection = dataSource.getConnection();
+
+            JasperDesign design = JRXmlLoader.load(
+                new File("").getAbsolutePath() + "/src/main/resources/reports/" + japerFileName + ".jrxml"
+            );
+
+            JasperReport report = JasperCompileManager.compileReport(design);
+
+            JasperPrint print = JasperFillManager.fillReport(report, parameters, connection);
+
+            JRDocxExporter docxExporter = new JRDocxExporter();
+            docxExporter.setParameter(JRDocxExporterParameter.JASPER_PRINT, print);
+            docxExporter.setParameter(JRDocxExporterParameter.OUTPUT_STREAM, byteArrayOutputStream);
+            docxExporter.exportReport();
+
+            reportBytes = byteArrayOutputStream.toByteArray();
+        } catch (JRException | SQLException e) {
             e.printStackTrace();
         } finally {
             JdbcUtils.closeConnection(connection);

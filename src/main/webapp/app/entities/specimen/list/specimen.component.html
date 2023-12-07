@@ -291,6 +291,12 @@
                 <mat-icon>insert_drive_file</mat-icon>
                 <span class="d-none d-md-inline">Print Report Colored</span>
               </button>
+              <button
+                *jhiHasAnyAuthority="['ROLE_ADMIN']"
+                (click)="getDocx(specimen.id)" mat-menu-item>
+                <mat-icon>insert_drive_file</mat-icon>
+                <span class="d-none d-md-inline">Print Report DOCX</span>
+              </button>
               <div *ngIf="specimen.specimenStatus == 'READY'">
                 <button
                   *jhiHasAnyAuthority="['ROLE_REFERRING_CENTER',  'ROLE_REFERRING_DOCTOR']"

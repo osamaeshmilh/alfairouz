@@ -131,6 +131,11 @@ export class SpecimenComponent implements OnInit {
     window.open(url, '_blank');
   }
 
+  getDocx(id: any): void {
+    const url = '/api/public/specimen/report/docx/' + String(id);
+    window.open(url, '_blank');
+  }
+
   getInvoice(id: any): void {
     const url = '/api/public/specimen/invoice/' + String(id);
     window.open(url, '_blank');
@@ -195,6 +200,5 @@ export class SpecimenComponent implements OnInit {
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 0;
   }
-
 
 }

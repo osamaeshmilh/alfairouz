@@ -586,6 +586,20 @@ public class SpecimenResource {
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(fileBytes), header);
     }
 
+    @GetMapping(value = "/public/specimen/report/docx/{specimenId}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public ResponseEntity<byte[]> printReportDOCX(@PathVariable Long specimenId) {
+        log.debug("REST request to get report");
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("specimen_id", specimenId);
+        byte[] fileBytes = jasperReportsUtil.getReportAsDocx(parameters, "report");
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        header.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=report_" + System.currentTimeMillis() + ".docx");
+        header.setContentLength(fileBytes.length);
+        return ResponseEntity.ok().headers(header).body(fileBytes);
+    }
+
+
     @GetMapping(value = "/public/specimen/invoice/{specimenId}", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<byte[]> printInvoicePDF(@PathVariable Long specimenId) {
         log.debug("REST request to get report");
