@@ -394,9 +394,9 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                     <font fontName="Times New Roman" size="10"/>
                 </textElement>
                 <textFieldExpression><![CDATA["<b><u> Clinical Data: </u></b><br>" + $F{clinical_data}.replaceAll("</p>", "</p><br>").replaceAll("</div>", "</div><br>") +
-            "<br><b><u> Gross Examination: </u></b><br>" + $F{gross_examination}.replaceAll("</p>", "</p><br>").replaceAll("</div>", "</div><br>") +
-            "<br><b><u> Microscopically: </u></b><br>" + $F{microscopic_data}.replaceAll("</p>", "</p><br>").replaceAll("</div>", "</div><br>") +
-            "<br><b><u> Conclusion: </u></b><br>" + $F{conclusion}.replaceAll("</p>", "</p><br>").replaceAll("</div>", "</div><br>")]]></textFieldExpression>
+            "<b><u> Gross Examination: </u></b><br>" + $F{gross_examination}.replaceAll("</p>", "</p><br>").replaceAll("</div>", "</div><br>") +
+            "<b><u> Microscopically: </u></b><br>" + $F{microscopic_data}.replaceAll("</p>", "</p><br>").replaceAll("</div>", "</div><br>") +
+            "<b><u> Conclusion: </u></b><br>" + $F{conclusion}.replaceAll("</p>", "</p><br>").replaceAll("</div>", "</div><br>")]]></textFieldExpression>
             </textField>
         </band>
     </detail>
