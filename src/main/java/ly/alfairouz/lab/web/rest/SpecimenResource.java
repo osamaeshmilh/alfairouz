@@ -447,12 +447,11 @@ public class SpecimenResource {
                 row.createCell(5).setCellValue(specimenDTO.getPatient() != null ? specimenDTO.getPatient().getName() : "");
                 row.createCell(6).setCellValue(specimenDTO.getPatient() != null ? specimenDTO.getPatient().getNameAr() : "");
                 row.createCell(7).setCellValue(specimenDTO.getReferringCenter() != null ? specimenDTO.getReferringCenter().getName() : "");
-                row.createCell(8).setCellValue(specimenDTO.getReferringDoctor() != null ? specimenDTO.getReferringDoctor().getName() : "");
-                row.createCell(9).setCellValue(specimenDTO.getBiopsy() != null ? specimenDTO.getBiopsy().getName() : "");
-                row.createCell(10).setCellValue(specimenDTO.getCytology() != null ? specimenDTO.getCytology().getName() : "");
-                row.createCell(11).setCellValue(specimenDTO.getOrgan() != null ? specimenDTO.getOrgan().getName() : "");
-                row.createCell(12).setCellValue(specimenDTO.getSpecimenStatus().toString());
-                row.createCell(13).setCellValue(specimenDTO.getResults() != null ? specimenDTO.getResults().toString() : "");
+                row.createCell(8).setCellValue(specimenDTO.getBiopsy() != null ? specimenDTO.getBiopsy().getName() : "");
+                row.createCell(9).setCellValue(specimenDTO.getCytology() != null ? specimenDTO.getCytology().getName() : "");
+                row.createCell(10).setCellValue(specimenDTO.getOrgan() != null ? specimenDTO.getOrgan().getName() : "");
+                row.createCell(11).setCellValue(specimenDTO.getSpecimenStatus().toString());
+                row.createCell(12).setCellValue(specimenDTO.getResults() != null ? specimenDTO.getResults().toString() : "");
             }
 
         }
