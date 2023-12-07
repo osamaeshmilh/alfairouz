@@ -268,7 +268,7 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 </textElement>
                 <text><![CDATA[File No:]]></text>
             </staticText>
-            <textField textAdjust="StretchHeight" isBlankWhenNull="true">
+            <textField textAdjust="StretchHeight">
                 <reportElement x="394" y="230" width="146" height="20" uuid="3205af43-35b2-4081-8979-11a64c80ea57">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
@@ -339,12 +339,19 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 </textElement>
                 <text><![CDATA[No. of Samples:]]></text>
             </staticText>
+            <staticText>
+                <reportElement x="181" y="170" width="200" height="15" uuid="05f92b72-e711-457d-b303-bb18a9aa5863"/>
+                <textElement textAlignment="Center" verticalAlignment="Justified">
+                    <font fontName="Times New Roman" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Histopathology Report]]></text>
+            </staticText>
         </band>
     </pageHeader>
     <detail>
         <band height="49" splitType="Stretch">
             <textField textAdjust="StretchHeight" isBlankWhenNull="true">
-                <reportElement x="13" y="17" width="527" height="30" uuid="7cabce35-79a1-44bc-926e-b191f57e7a87">
+                <reportElement x="13" y="11" width="527" height="30" uuid="7cabce35-79a1-44bc-926e-b191f57e7a87">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID"
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
@@ -356,13 +363,6 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
             "<br><br><b><u> Microscopically: </u></b><br><br>" + $F{microscopic_data}.replaceAll("</p>", "</p><br>").replaceAll("</div>", "</div><br>") +
             "<br><br><b><u> Conclusion: </u></b><br><br>" + $F{conclusion}.replaceAll("</p>", "</p><br>").replaceAll("</div>", "</div><br>")]]></textFieldExpression>
             </textField>
-            <staticText>
-                <reportElement x="180" y="0" width="200" height="15" uuid="6cd7f657-bf6b-4bec-aaf2-09603358dcab"/>
-                <textElement textAlignment="Center" verticalAlignment="Justified">
-                    <font fontName="Times New Roman" size="10" isBold="true"/>
-                </textElement>
-                <text><![CDATA[Histopathology Report]]></text>
-            </staticText>
         </band>
     </detail>
     <pageFooter>

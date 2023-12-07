@@ -359,7 +359,6 @@ public class SpecimenService {
                 specimenDTO.setPrice(referringCenterPriceDTO.getPrice());
 
             }
-
         }
 
         specimenDTO.setSpecimenStatus(SpecimenStatus.RECEIVED);
