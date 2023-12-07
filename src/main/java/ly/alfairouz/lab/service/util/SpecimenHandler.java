@@ -3,6 +3,8 @@ package ly.alfairouz.lab.service.util;
 import ly.alfairouz.lab.domain.enumeration.SpecimenStatus;
 import ly.alfairouz.lab.service.dto.SpecimenDTO;
 
+import java.util.Arrays;
+
 public class SpecimenHandler {
 
     private static final SpecimenStatus[] STATUS_ORDER = {
@@ -16,17 +18,20 @@ public class SpecimenHandler {
     };
 
     public static boolean isCompleted(SpecimenDTO specimen, SpecimenStatus status) {
-        int currentStatusIndex = getIndex(specimen.getSpecimenStatus());
-        int statusIndex = getIndex(status);
+        int currentStatusIndex = Arrays.asList(STATUS_ORDER).indexOf(specimen.getSpecimenStatus());
+        int statusIndex = Arrays.asList(STATUS_ORDER).indexOf(status);
         return statusIndex <= currentStatusIndex;
     }
 
-    private static int getIndex(SpecimenStatus status) {
-        for (int i = 0; i < STATUS_ORDER.length; i++) {
-            if (STATUS_ORDER[i] == status) {
-                return i;
-            }
-        }
-        return -1; // Status not found in order
+    public static boolean isBefore(SpecimenDTO specimen, SpecimenStatus status2) {
+        int index1 = Arrays.asList(STATUS_ORDER).indexOf(specimen.getSpecimenStatus());
+        int index2 = Arrays.asList(STATUS_ORDER).indexOf(status2);
+        return index1 < index2;
+    }
+
+    public static boolean isAfter(SpecimenDTO specimen, SpecimenStatus status2) {
+        int index1 = Arrays.asList(STATUS_ORDER).indexOf(specimen.getSpecimenStatus());
+        int index2 = Arrays.asList(STATUS_ORDER).indexOf(status2);
+        return index1 > index2;
     }
 }

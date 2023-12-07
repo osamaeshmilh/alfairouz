@@ -19,6 +19,7 @@ import ly.alfairouz.lab.service.dto.SpecimenDTO;
 import ly.alfairouz.lab.service.dto.SpecimenEditDTO;
 import ly.alfairouz.lab.service.mapper.SpecimenMapper;
 import ly.alfairouz.lab.service.util.FileTools;
+import ly.alfairouz.lab.service.util.SpecimenHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -149,26 +150,27 @@ public class SpecimenService {
 
         if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.TECHNICIAN)) {
             if (specimenDTO.getSlides() != null) {
-                if (specimenDTO.getSpecimenStatus() == SpecimenStatus.GROSSING) {
+                if (SpecimenHandler.isBefore(specimenDTO, SpecimenStatus.GROSSING)) {
                     specimenDTO.setSpecimenStatus(SpecimenStatus.PROCESSING);
                 }
             }
         }
 
-        if (specimenDTO.getSpecimenStatus() == SpecimenStatus.PROCESSING && specimenDTO.getMicroscopicDate() != null) {
+
+        if (SpecimenHandler.isBefore(specimenDTO, SpecimenStatus.PROCESSING) && specimenDTO.getMicroscopicDate() != null) {
             specimenDTO.setSpecimenStatus(SpecimenStatus.DIAGNOSING);
         }
 
-        if (specimenDTO.getSpecimenStatus() == SpecimenStatus.DIAGNOSING && specimenDTO.getConclusionDate() != null) {
+        if (SpecimenHandler.isBefore(specimenDTO, SpecimenStatus.DIAGNOSING) && specimenDTO.getConclusionDate() != null) {
             specimenDTO.setSpecimenStatus(SpecimenStatus.TYPING);
         }
 
-        if (specimenDTO.getSpecimenStatus() == SpecimenStatus.TYPING && specimenDTO.getRevisionDate() != null) {
+        if (SpecimenHandler.isBefore(specimenDTO, SpecimenStatus.TYPING) && specimenDTO.getRevisionDate() != null) {
             specimenDTO.setSpecimenStatus(SpecimenStatus.REVISION);
         }
 
         if (specimenDTO.getReportDate() != null) {
-            if (specimenDTO.getSpecimenStatus() == SpecimenStatus.TYPING || specimenDTO.getSpecimenStatus() == SpecimenStatus.REVISION) {
+            if (SpecimenHandler.isBefore(specimenDTO, SpecimenStatus.READY)) {
                 specimenDTO.setSpecimenStatus(SpecimenStatus.READY);
             }
         }
@@ -176,10 +178,7 @@ public class SpecimenService {
         Specimen specimen = specimenMapper.toEntity(specimenDTO);
         specimen = specimenRepository.save(specimen);
 
-        System.out.println(prevStatus.toString());
-        System.out.println(prevStatus.toString());
-        System.out.println(specimen.getSpecimenStatus());
-        System.out.println(specimen.getSpecimenStatus());
+        System.out.println(prevStatus.toString() + "->" + specimen.getSpecimenStatus());
 
         SpecimenEditDTO specimenEditDTO = new SpecimenEditDTO();
         specimenEditDTO.setSpecimenId(specimen.getId());
