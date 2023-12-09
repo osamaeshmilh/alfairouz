@@ -340,7 +340,8 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
                 <textFieldExpression>
-                    <![CDATA[new SimpleDateFormat("yyyy-MM-dd").format($F{sampling_date})]]></textFieldExpression>
+                    <![CDATA[$F{sampling_date} == null ? "Not mentioned" : new SimpleDateFormat("yyyy-MM-dd").format($F{sampling_date})]]>
+                </textFieldExpression>
             </textField>
             <staticText>
                 <reportElement x="309" y="87" width="85" height="20" uuid="9b553782-4c23-493a-8eb3-94c4dfd538a1"/>

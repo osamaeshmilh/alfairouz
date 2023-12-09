@@ -312,7 +312,8 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
                 <textFieldExpression>
-                    <![CDATA[new SimpleDateFormat("yyyy-MM-dd").format($F{sampling_date})]]></textFieldExpression>
+                    <![CDATA[$F{sampling_date} == null ? "Not mentioned" : new SimpleDateFormat("yyyy-MM-dd").format($F{sampling_date})]]>
+                </textFieldExpression>
             </textField>
             <staticText>
                 <reportElement x="309" y="231" width="85" height="14" uuid="9b553782-4c23-493a-8eb3-94c4dfd538a1">
@@ -363,7 +364,8 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
                 <textFieldExpression>
-                    <![CDATA[new SimpleDateFormat("yyyy-MM-dd").format($F{report_date})]]></textFieldExpression>
+                    <![CDATA[$F{report_date} == null ? "Not mentioned" : new SimpleDateFormat("yyyy-MM-dd").format($F{report_date})]]>
+                </textFieldExpression>
             </textField>
             <staticText>
                 <reportElement x="309" y="201" width="85" height="14" uuid="3dcea5d2-31bd-4946-8d20-7a595b3a19f5">
