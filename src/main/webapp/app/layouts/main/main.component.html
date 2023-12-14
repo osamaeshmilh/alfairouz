@@ -40,7 +40,8 @@
     </mat-menu>
     <button *ngIf="!isAuthenticated()" (click)="login()" mat-stroked-button>
       <mat-icon class="white">account_circle</mat-icon>
-      دخول
+      <span jhiTranslate="global.field.login">دخول</span>
+
     </button>
     <button *ngIf="isAuthenticated()" [matMenuTriggerFor]="appMenu" class="ml-2" mat-button>
       <span class="white"> مرحباً! {{ getFirstName() }}</span>

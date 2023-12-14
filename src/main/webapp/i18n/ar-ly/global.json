@@ -97,7 +97,11 @@
       }
     },
     "field": {
-      "id": "ID"
+      "id": "ID",
+      "login": "دخول",
+      "search": "بحث",
+      "querySpecimen": "استعلام عن عينة",
+      "viewReport": "عرض التقرير"
     },
     "ribbon": {
       "dev": "تطوير"

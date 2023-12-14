@@ -2,7 +2,7 @@
   <div class="mat-elevation-z1 round-card white-bg p-4 mt-5">
     <br/>
     <br/>
-    <h3 class="text-center">الاستعلام عن عينة</h3>
+    <h3 class="text-center" jhiTranslate="global.field.querySpecimen">الاستعلام عن عينة</h3>
     <br/>
     <br/>
 
@@ -30,7 +30,7 @@
       <div class="col-12 col-md-6 col-center-block mt-5">
         <button (click)="search()" color="primary" mat-raised-button>
           <mat-icon>search</mat-icon>
-          بحث
+          <span jhiTranslate="global.field.search">Search</span>
         </button>
       </div>
     </div>
@@ -63,7 +63,7 @@
                       (click)="getPdf(specimen.id)"
                       mat-raised-button>
                 <mat-icon>insert_drive_file</mat-icon>
-                <span class="d-none d-md-inline">Print Report</span>
+                <span class="d-none d-md-inline" jhiTranslate="global.field.viewReport">View the Report</span>
               </button>
             </div>
           </div>

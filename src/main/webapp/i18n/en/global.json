@@ -97,7 +97,11 @@
       }
     },
     "field": {
-      "id": "ID"
+      "id": "ID",
+      "login": "Login",
+      "search": "Search",
+      "querySpecimen": "Query Specimen",
+      "viewReport": "View the Report"
     },
     "ribbon": {
       "dev": "Development"
