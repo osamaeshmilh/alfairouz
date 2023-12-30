@@ -354,10 +354,12 @@ public class SpecimenResource {
         } else {
             specimenDTOList = specimenQueryService.findByCriteria(criteria);
             columns = new String[]{
-                "Id", "Lab Ref No", "Lab QR", "Sampling Date", "Receiving Date", "Report Date", "Payment type",
-                "Patient", "Patient Ar", "Referring center", "Referring Doctor", "Grossing Doctor",
-                "Pathologist 1", "Pathologist 2", "Specimen State", "Specimen type / size", "Biopsy", "Cytology",
-                "Organ", "Price", "Paid", "Not Paid"
+                "Id",
+                "Lab Ref No",
+                "Sampling Date", "Receiving Date", "Report Date", "Payment type",
+                "Patient Ar", "Referring center", "Referring Doctor", "Grossing Doctor",
+                "Pathologist 1", "Pathologist 2", "Specimen State", "Specimen type / size",
+                "Price", "Paid", "Not Paid"
             };
         }
 
@@ -432,29 +434,22 @@ public class SpecimenResource {
 
                 row.createCell(0).setCellValue(specimenDTO.getId());
                 row.createCell(1).setCellValue(specimenDTO.getLabRefNo());
-                row.createCell(2).setCellValue(specimenDTO.getLabQr());
-                row.createCell(3).setCellValue(specimenDTO.getSamplingDate() != null ? specimenDTO.getSamplingDate().toString() : "");
-                row.createCell(4).setCellValue(specimenDTO.getReceivingDate() != null ? specimenDTO.getReceivingDate().toString() : "");
-                row.createCell(5).setCellValue(specimenDTO.getReportDate() != null ? specimenDTO.getReportDate().toString() : "");
-                row.createCell(6).setCellValue(specimenDTO.getPaymentType().toString());
-                row.createCell(7).setCellValue(specimenDTO.getPatient() != null ? specimenDTO.getPatient().getName() : "");
-                row.createCell(8).setCellValue(specimenDTO.getPatient() != null ? specimenDTO.getPatient().getNameAr() : "");
-                row.createCell(9).setCellValue(specimenDTO.getReferringCenter() != null ? specimenDTO.getReferringCenter().getName() : "");
-                row.createCell(10).setCellValue(specimenDTO.getReferringDoctor() != null ? specimenDTO.getReferringDoctor().getName() : "");
-                row.createCell(11).setCellValue(specimenDTO.getGrossingDoctor() != null ? specimenDTO.getGrossingDoctor().getName() : "");
-                row.createCell(12).setCellValue(specimenDTO.getPathologistDoctor() != null ? specimenDTO.getPathologistDoctor().getName() : "");
-                row.createCell(13).setCellValue(specimenDTO.getPathologistDoctorTwo() != null ? specimenDTO.getPathologistDoctorTwo().getName() : "");
-                row.createCell(14).setCellValue(specimenDTO.getSpecimenStatus().toString());
-                row.createCell(15).setCellValue(cellValue);
-                row.createCell(16).setCellValue(specimenDTO.getBiopsy() != null ? specimenDTO.getBiopsy().getName() : "");
-                row.createCell(17).setCellValue(specimenDTO.getCytology() != null ? specimenDTO.getCytology().getName() : "");
-                row.createCell(18).setCellValue(specimenDTO.getOrgan() != null ? specimenDTO.getOrgan().getName() : "");
-                row.createCell(19).setCellValue(specimenDTO.getPrice() != null ? specimenDTO.getPrice() : 0);
-                row.createCell(20).setCellValue(specimenDTO.getPaid() != null ? specimenDTO.getPaid() : 0);
-                row.createCell(21).setCellValue(specimenDTO.getNotPaid() != null ? specimenDTO.getNotPaid() : 0);
-
+                row.createCell(2).setCellValue(specimenDTO.getSamplingDate() != null ? specimenDTO.getSamplingDate().toString() : "");
+                row.createCell(3).setCellValue(specimenDTO.getReceivingDate() != null ? specimenDTO.getReceivingDate().toString() : "");
+                row.createCell(4).setCellValue(specimenDTO.getReportDate() != null ? specimenDTO.getReportDate().toString() : "");
+                row.createCell(5).setCellValue(specimenDTO.getPaymentType().toString());
+                row.createCell(6).setCellValue(specimenDTO.getPatient() != null ? specimenDTO.getPatient().getNameAr() : "");
+                row.createCell(7).setCellValue(specimenDTO.getReferringCenter() != null ? specimenDTO.getReferringCenter().getName() : "");
+                row.createCell(8).setCellValue(specimenDTO.getReferringDoctor() != null ? specimenDTO.getReferringDoctor().getName() : "");
+                row.createCell(9).setCellValue(specimenDTO.getGrossingDoctor() != null ? specimenDTO.getGrossingDoctor().getName() : "");
+                row.createCell(10).setCellValue(specimenDTO.getPathologistDoctor() != null ? specimenDTO.getPathologistDoctor().getName() : "");
+                row.createCell(11).setCellValue(specimenDTO.getPathologistDoctorTwo() != null ? specimenDTO.getPathologistDoctorTwo().getName() : "");
+                row.createCell(12).setCellValue(specimenDTO.getSpecimenStatus().toString());
+                row.createCell(13).setCellValue(cellValue);
+                row.createCell(14).setCellValue(specimenDTO.getPrice() != null ? specimenDTO.getPrice() : 0);
+                row.createCell(15).setCellValue(specimenDTO.getPaid() != null ? specimenDTO.getPaid() : 0);
+                row.createCell(16).setCellValue(specimenDTO.getNotPaid() != null ? specimenDTO.getNotPaid() : 0);
             }
-
         }
 
         //Resize all columns to fit the content size
