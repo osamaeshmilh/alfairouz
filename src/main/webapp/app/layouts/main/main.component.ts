@@ -37,7 +37,7 @@ export class MainComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
     this.router.events.subscribe(event => {
       if (event instanceof NavigationError && event.error.status === 404) {
-        this.router.navigate(['/404']);
+        this.router.navigate(['/']);
       }
     });
   }
