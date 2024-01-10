@@ -295,11 +295,11 @@ public class SpecimenService {
             count = Math.max(countH, Math.max(countHSO, countIHSO));
 
             //System.out.println(countH);
-
         }
 
         count++;
-        String all = year + specimenDTO.getLabRef().toString() + String.format("%05d", count);
+        String all = specimenDTO.getLabRef().toString() + String.format("%05d", count) + "-" + year;
+        //String all = year + specimenDTO.getLabRef().toString() + String.format("%05d", count);
 
         specimenDTO.setLabRefOrder(count.toString());  // this is the overall order
         specimenDTO.setLabRefNo(all);

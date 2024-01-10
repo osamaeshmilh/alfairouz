@@ -155,13 +155,14 @@ public class EmployeeService {
         Long count = employeeRepository.countByJobTitleEquals(employeeDTO.getJobTitle());
         count++;
 
-        String username = employeeDTO.getJobTitle().toString().toLowerCase() + "_" + count.toString();
+        //String username = employeeDTO.getJobTitle().toString().toLowerCase() + "_" + count.toString();
+        String username = employeeDTO.getName().toLowerCase();
 
         ManagedUserVM managedUserVM = new ManagedUserVM();
         managedUserVM.setFirstName(employeeDTO.getName());
         managedUserVM.setEmail(username + "@alfairouz.ly");
-        managedUserVM.setLogin(username);
-        managedUserVM.setPhone(username);
+        managedUserVM.setLogin(employeeDTO.getName().toLowerCase());
+        managedUserVM.setPhone("0");
         User user = userService.createAndAssignUser(managedUserVM, role);
 
 
