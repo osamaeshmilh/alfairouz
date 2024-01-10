@@ -32,6 +32,13 @@ public interface SpecimenRepository extends JpaRepository<Specimen, Long>, JpaSp
         nativeQuery = true)
     long countByLabRefNoStartingWith(@Param("prefix") String prefix);
 
+    @Query(value = "SELECT COUNT(id) " +
+        "FROM specimen " +
+        "WHERE SUBSTRING(specimen.lab_ref_no, 1, LENGTH(:prefix)) = :prefix " +
+        "AND SUBSTRING(specimen.lab_ref_no, LENGTH(specimen.lab_ref_no) - LENGTH(:suffix) + 1) = :suffix",
+        nativeQuery = true)
+    long countByLabRefNoStartingWithAndEndingWith(@Param("prefix") String prefix, @Param("suffix") String suffix);
+
 
     @Query(
         value = "select distinct specimen from Specimen specimen left join fetch specimen.patient left join fetch specimen.biopsy left join fetch specimen.cytology left join fetch specimen.organ left join fetch specimen.specimenType left join fetch specimen.size left join fetch specimen.referringCenter left join fetch specimen.grossingDoctor left join fetch specimen.referringDoctor left join fetch specimen.pathologistDoctor left join fetch specimen.operatorEmployee left join fetch specimen.correctorEmployee",

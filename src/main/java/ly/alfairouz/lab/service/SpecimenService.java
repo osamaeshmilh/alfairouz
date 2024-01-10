@@ -105,22 +105,22 @@ public class SpecimenService {
         if (!prevType.equals(newType)) {
             String year = Year.now().format(DateTimeFormatter.ofPattern("uu"));
 
-            // Recalculate count (LabRefOrder)
+            String counterPrefix = null;
             Long count;
             if (specimenDTO.getLabRef() == LabRef.C) {
-                count = specimenRepository.countByLabRefNoStartingWith(year + "C");
+                count = specimenRepository.countByLabRefNoStartingWithAndEndingWith("C", year);
             } else if (specimenDTO.getLabRef() == LabRef.IH) {
-                count = specimenRepository.countByLabRefNoStartingWith(year + "IH");
+                count = specimenRepository.countByLabRefNoStartingWithAndEndingWith("IH", year);
             } else {
-                Long countH = specimenRepository.countByLabRefNoStartingWith(year + "H");
-                Long countHSO = specimenRepository.countByLabRefNoStartingWith(year + "HSO");
-                Long countIHSO = specimenRepository.countByLabRefNoStartingWith(year + "IHSO");
+                // for H, HSO, and IHSO, get the max count
+                Long countH = specimenRepository.countByLabRefNoStartingWithAndEndingWith("H", year);
+                Long countHSO = specimenRepository.countByLabRefNoStartingWithAndEndingWith("HSO", year);
+                Long countIHSO = specimenRepository.countByLabRefNoStartingWithAndEndingWith("IHSO", year);
                 count = Math.max(countH, Math.max(countHSO, countIHSO));
+                //System.out.println(countH);
             }
             count++;
-            specimenDTO.setLabRefOrder(count.toString()); // Set the updated LabRefOrder
-
-            String all = year + specimenDTO.getLabRef().toString() + String.format("%05d", count);
+            String all = specimenDTO.getLabRef().toString() + String.format("%05d", count) + "-" + year;
             specimenDTO.setLabRefNo(all);
 
             int mySaltSizeInBytes = 32;
@@ -185,6 +185,18 @@ public class SpecimenService {
         }
 
         Specimen specimen = specimenMapper.toEntity(specimenDTO);
+
+        if (specimenDTO.getPdfFile() != null) {
+            String filePath = FileTools.upload(
+                specimen.getPdfFile(),
+                specimen.getPdfFileContentType(),
+                "attachment_" + specimen.getLabQr()
+            );
+            specimen.setPdfFile(null);
+            specimen.setPdfFileContentType(specimenDTO.getPdfFileContentType());
+            specimen.setPdfFileUrl(filePath);
+        }
+
         specimen = specimenRepository.save(specimen);
 
         System.out.println(prevStatus.toString() + "->" + specimen.getSpecimenStatus());
@@ -284,16 +296,15 @@ public class SpecimenService {
         String counterPrefix = null;
         Long count;
         if (specimenDTO.getLabRef() == LabRef.C) {
-            count = specimenRepository.countByLabRefNoStartingWith(year + "C");
+            count = specimenRepository.countByLabRefNoStartingWithAndEndingWith("C", year);
         } else if (specimenDTO.getLabRef() == LabRef.IH) {
-            count = specimenRepository.countByLabRefNoStartingWith(year + "IH");
+            count = specimenRepository.countByLabRefNoStartingWithAndEndingWith("IH", year);
         } else {
             // for H, HSO, and IHSO, get the max count
-            Long countH = specimenRepository.countByLabRefNoStartingWith(year + "H");
-            Long countHSO = specimenRepository.countByLabRefNoStartingWith(year + "HSO");
-            Long countIHSO = specimenRepository.countByLabRefNoStartingWith(year + "IHSO");
+            Long countH = specimenRepository.countByLabRefNoStartingWithAndEndingWith("H", year);
+            Long countHSO = specimenRepository.countByLabRefNoStartingWithAndEndingWith("HSO", year);
+            Long countIHSO = specimenRepository.countByLabRefNoStartingWithAndEndingWith("IHSO", year);
             count = Math.max(countH, Math.max(countHSO, countIHSO));
-
             //System.out.println(countH);
         }
 
@@ -360,6 +371,7 @@ public class SpecimenService {
 
             }
         }
+
 
         specimenDTO.setSpecimenStatus(SpecimenStatus.RECEIVED);
 
