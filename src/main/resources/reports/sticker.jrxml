@@ -198,7 +198,7 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
             </textField>
             <textField>
                 <reportElement x="9" y="28" width="60" height="25" uuid="496e26b7-c1bc-4370-be7e-dd8d99bcd7d3"/>
-                <textFieldExpression><![CDATA[$F{lab_qr}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{lab_ref_no}]]></textFieldExpression>
             </textField>
         </band>
     </detail>
