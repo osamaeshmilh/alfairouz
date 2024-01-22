@@ -23,6 +23,7 @@ import ly.alfairouz.lab.service.util.SpecimenHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -103,25 +104,14 @@ public class SpecimenService {
         String prevType = specimenRepository.getById(specimenDTO.getId()).getLabRef().toString();
         String newType = specimenDTO.getLabRef().toString();
         if (!prevType.equals(newType)) {
-            String year = Year.now().format(DateTimeFormatter.ofPattern("uu"));
 
-            String counterPrefix = null;
-            Long count;
-            if (specimenDTO.getLabRef() == LabRef.C) {
-                count = specimenRepository.countByLabRefNoStartingWithAndEndingWith("C", year);
-            } else if (specimenDTO.getLabRef() == LabRef.IH) {
-                count = specimenRepository.countByLabRefNoStartingWithAndEndingWith("IH", year);
-            } else {
-                // for H, HSO, and IHSO, get the max count
-                Long countH = specimenRepository.countByLabRefNoStartingWithAndEndingWith("H", year);
-                Long countHSO = specimenRepository.countByLabRefNoStartingWithAndEndingWith("HSO", year);
-                Long countIHSO = specimenRepository.countByLabRefNoStartingWithAndEndingWith("IHSO", year);
-                count = Math.max(countH, Math.max(countHSO, countIHSO));
-                //System.out.println(countH);
-            }
-            count++;
-            String all = specimenDTO.getLabRef().toString() + String.format("%05d", count) + "-" + year;
-            specimenDTO.setLabRefNo(all);
+            String uniqueLabRefNo = generateUniqueLabRefNo(specimenDTO.getLabRef());
+            specimenDTO.setLabRefNo(uniqueLabRefNo);
+
+            // Update labRefOrder based on your business logic
+            // Assuming labRefOrder is the numeric part of labRefNo, extract and set it
+            String labRefOrder = uniqueLabRefNo.split("-")[0].replaceAll("[^0-9]", "");
+            specimenDTO.setLabRefOrder(labRefOrder);
 
             int mySaltSizeInBytes = 32;
             SecureRandom random = new SecureRandom();
@@ -130,9 +120,9 @@ public class SpecimenService {
 
             random.nextBytes(salt);
 
-            ByteBuffer bbuffer = ByteBuffer.allocate(mySaltSizeInBytes + all.length());
+            ByteBuffer bbuffer = ByteBuffer.allocate(mySaltSizeInBytes + uniqueLabRefNo.length());
             bbuffer.put(salt);
-            bbuffer.put(all.getBytes());
+            bbuffer.put(uniqueLabRefNo.getBytes());
 
             CRC32 crc = new CRC32();
             crc.update(bbuffer.array());
@@ -159,9 +149,7 @@ public class SpecimenService {
 
         if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.TECHNICIAN)) {
             if (specimenDTO.getSlides() != null) {
-                if (SpecimenHandler.isBefore(specimenDTO, SpecimenStatus.GROSSING)) {
-                    specimenDTO.setSpecimenStatus(SpecimenStatus.PROCESSING);
-                }
+                specimenDTO.setSpecimenStatus(SpecimenStatus.PROCESSING);
             }
         }
 
@@ -288,6 +276,21 @@ public class SpecimenService {
         specimenRepository.deleteById(id);
     }
 
+    private String generateUniqueLabRefNo(LabRef labRef) {
+        String year = Year.now().format(DateTimeFormatter.ofPattern("uu"));
+        String prefix = labRef.toString() + "%-" + year;
+        List<String> maxLabRefNo = specimenRepository.findMaxLabRefNoStartingWith(prefix, PageRequest.of(0, 1));
+
+        Long maxNumber = 0L;
+        if (!maxLabRefNo.isEmpty()) {
+            // Extract the numeric part and increment it
+            String maxNo = maxLabRefNo.get(0).split("-")[0].substring(labRef.toString().length());
+            maxNumber = Long.parseLong(maxNo);
+        }
+
+        return labRef.toString() + String.format("%05d", maxNumber + 1) + "-" + year;
+    }
+
     public SpecimenDTO create(SpecimenDTO specimenDTO) {
 
         String year = Year.now().format(DateTimeFormatter.ofPattern("uu"));
@@ -312,8 +315,13 @@ public class SpecimenService {
         String all = specimenDTO.getLabRef().toString() + String.format("%05d", count) + "-" + year;
         //String all = year + specimenDTO.getLabRef().toString() + String.format("%05d", count);
 
-        specimenDTO.setLabRefOrder(count.toString());  // this is the overall order
-        specimenDTO.setLabRefNo(all);
+        // Generate a unique lab reference number
+        String uniqueLabRefNo = generateUniqueLabRefNo(specimenDTO.getLabRef());
+        specimenDTO.setLabRefNo(uniqueLabRefNo);
+
+        // Set labRefOrder based on the uniqueLabRefNo
+        String labRefOrder = uniqueLabRefNo.split("-")[0].replaceAll("[^0-9]", "");
+        specimenDTO.setLabRefOrder(labRefOrder);
 
         int mySaltSizeInBytes = 32;
         SecureRandom random = new SecureRandom();
