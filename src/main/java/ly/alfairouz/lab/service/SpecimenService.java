@@ -278,16 +278,32 @@ public class SpecimenService {
 
     private String generateUniqueLabRefNo(LabRef labRef) {
         String year = Year.now().format(DateTimeFormatter.ofPattern("uu"));
-        String prefix = year + labRef.toString();
-        List<String> maxLabRefNo = specimenRepository.findMaxLabRefNoStartingWith(prefix + "%", PageRequest.of(0, 1));
+        List<String> maxLabRefNo;
+
+        if (labRef == LabRef.H || labRef == LabRef.HSO || labRef == LabRef.IHSO) {
+            // Shared sequence for H, HSO, and IHSO
+            maxLabRefNo = specimenRepository.findMaxLabRefNoForSharedTypes(
+                year + "H", year + "HSO", year + "IHSO", PageRequest.of(0, 1));
+        } else {
+            // Individual sequence for C and IH
+            String prefix = year + labRef.toString();
+            maxLabRefNo = specimenRepository.findMaxLabRefNoStartingWith(prefix, PageRequest.of(0, 1));
+        }
 
         Long maxNumber = 0L;
         if (!maxLabRefNo.isEmpty()) {
-            String maxNo = maxLabRefNo.get(0).split("-")[0].substring(prefix.length());
-            maxNumber = Long.parseLong(maxNo);
+            String[] parts = maxLabRefNo.get(0).split("-");
+            if (parts.length > 1) {
+                String numberPart = parts[0].replaceAll("[^0-9]", ""); // Remove all non-numeric characters
+                try {
+                    maxNumber = Long.parseLong(numberPart);
+                } catch (NumberFormatException e) {
+                    // Log error or handle exception
+                }
+            }
         }
 
-        return prefix + String.format("%05d", maxNumber + 1) + "-" + year;
+        return labRef.toString() + String.format("%05d", maxNumber + 1) + "-" + year;
     }
 
     public SpecimenDTO create(SpecimenDTO specimenDTO) {
