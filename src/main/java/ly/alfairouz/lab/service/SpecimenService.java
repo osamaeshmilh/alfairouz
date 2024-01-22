@@ -278,17 +278,16 @@ public class SpecimenService {
 
     private String generateUniqueLabRefNo(LabRef labRef) {
         String year = Year.now().format(DateTimeFormatter.ofPattern("uu"));
-        String prefix = labRef.toString() + "%-" + year;
-        List<String> maxLabRefNo = specimenRepository.findMaxLabRefNoStartingWith(prefix, PageRequest.of(0, 1));
+        String prefix = year + labRef.toString();
+        List<String> maxLabRefNo = specimenRepository.findMaxLabRefNoStartingWith(prefix + "%", PageRequest.of(0, 1));
 
         Long maxNumber = 0L;
         if (!maxLabRefNo.isEmpty()) {
-            // Extract the numeric part and increment it
-            String maxNo = maxLabRefNo.get(0).split("-")[0].substring(labRef.toString().length());
+            String maxNo = maxLabRefNo.get(0).split("-")[0].substring(prefix.length());
             maxNumber = Long.parseLong(maxNo);
         }
 
-        return labRef.toString() + String.format("%05d", maxNumber + 1) + "-" + year;
+        return prefix + String.format("%05d", maxNumber + 1) + "-" + year;
     }
 
     public SpecimenDTO create(SpecimenDTO specimenDTO) {
