@@ -39,6 +39,9 @@ public interface SpecimenRepository extends JpaRepository<Specimen, Long>, JpaSp
         nativeQuery = true)
     long countByLabRefNoStartingWithAndEndingWith(@Param("prefix") String prefix, @Param("suffix") String suffix);
 
+    @Query("SELECT s.labRefNo FROM Specimen s WHERE s.labRefNo LIKE :prefix% ORDER BY s.labRefNo DESC")
+    List<String> findMaxLabRefNoStartingWith(@Param("prefix") String prefix, Pageable pageable);
+
 
     @Query(
         value = "select distinct specimen from Specimen specimen left join fetch specimen.patient left join fetch specimen.biopsy left join fetch specimen.cytology left join fetch specimen.organ left join fetch specimen.specimenType left join fetch specimen.size left join fetch specimen.referringCenter left join fetch specimen.grossingDoctor left join fetch specimen.referringDoctor left join fetch specimen.pathologistDoctor left join fetch specimen.operatorEmployee left join fetch specimen.correctorEmployee",
