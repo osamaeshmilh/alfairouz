@@ -168,7 +168,7 @@
           <span jhiTranslate="alfairouzApp.specimen.results">Results</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
-        <th scope="col" jhiSortBy="notes">
+        <th scope="col" jhiSortBy="notes" *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION']">
           <span jhiTranslate="alfairouzApp.specimen.notes">Notes</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
@@ -261,7 +261,7 @@
         <td
           jhiTranslate="{{ 'alfairouzApp.Results.' + specimen.results }}">{{ specimen.results }}</td>
 
-        <td>
+        <td *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION']">
             <span
               matTooltip="{{ specimen.notes }}"
               style="display: block; text-overflow: ellipsis; width: 100px; overflow: hidden; white-space: nowrap"
