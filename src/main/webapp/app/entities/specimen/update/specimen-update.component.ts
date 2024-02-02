@@ -647,7 +647,7 @@ export class SpecimenUpdateComponent implements OnInit {
       referringCenter: this.editForm.get(['referringCenter'])!.value,
       grossingDoctor: this.editForm.get(['grossingDoctor'])!.value,
       referringDoctor: this.editForm.get(['referringDoctor'])!.value,
-      pathologistDoctor: this.editForm.get(['pathologistDoctor'])!.value,
+      pathologistDoctor: this.editForm.get('pathologistDoctor')!.value || this.pDoctorsSharedCollection[0],
       pathologistDoctorTwo: this.editForm.get(['pathologistDoctorTwo'])!.value,
       operatorEmployee: this.editForm.get(['operatorEmployee'])!.value,
       correctorEmployee: this.editForm.get(['correctorEmployee'])!.value,

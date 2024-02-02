@@ -165,7 +165,8 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="9" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{patientName}]]></textFieldExpression>
+                <textFieldExpression>
+                    <![CDATA[$F{patientName} != null ? $F{patientName} : "Not Mentioned"]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight">
                 <reportElement x="100" y="201" width="180" height="14" uuid="07e84190-2fef-4598-b5bf-b1c904b87e69">
@@ -176,7 +177,8 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{patientNameAr}]]></textFieldExpression>
+                <textFieldExpression>
+                    <![CDATA[$F{patientNameAr} != null ? $F{patientNameAr} : "Not Mentioned"]]></textFieldExpression>
             </textField>
             <staticText>
                 <reportElement x="13" y="216" width="87" height="14" uuid="70711d9e-3dcc-4140-9ad9-9dd75c832372">
@@ -197,7 +199,8 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{age}+"   "+$F{patientGender}]]></textFieldExpression>
+                <textFieldExpression>
+                    <![CDATA[($F{age} != null ? $F{age}.toString() : "") + "   " + ($F{patientGender} != null ? $F{patientGender} : "")]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight">
                 <reportElement x="100" y="231" width="180" height="14" uuid="7f7634c9-ffc7-463e-9678-10f954c4295f">
@@ -208,7 +211,8 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{patientMobileNumber}]]></textFieldExpression>
+                <textFieldExpression>
+                    <![CDATA[$F{patientMobileNumber} != null ? $F{patientMobileNumber} : "Not Mentioned"]]></textFieldExpression>
             </textField>
             <staticText>
                 <reportElement x="13" y="231" width="87" height="14" uuid="73801508-12ab-4ce0-a073-1186a25796f3">
@@ -228,7 +232,8 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{referringCenterName}]]></textFieldExpression>
+                <textFieldExpression>
+                    <![CDATA[$F{referringCenterName} != null ? $F{referringCenterName} : "Not Mentioned"]]></textFieldExpression>
             </textField>
             <staticText>
                 <reportElement x="13" y="245" width="87" height="14" uuid="30d7cb07-7ee8-4fa8-a653-bea5f366862c">
@@ -257,7 +262,8 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{referringDoctorName}]]></textFieldExpression>
+                <textFieldExpression>
+                    <![CDATA[$F{referringDoctorName} != null ? $F{referringDoctorName} : "Not Mentioned"]]></textFieldExpression>
             </textField>
             <staticText>
                 <reportElement x="309" y="187" width="85" height="14" uuid="83650bce-aec2-4168-8bd0-2cffa06557d8">
@@ -288,7 +294,8 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{samples}]]></textFieldExpression>
+                <textFieldExpression>
+                    <![CDATA[$F{samples} != null ? $F{samples} : "Not Mentioned"]]></textFieldExpression>
             </textField>
             <staticText>
                 <reportElement x="309" y="216" width="85" height="14" uuid="9232e730-7fba-4960-a86d-bb75f3596ab0">
@@ -308,7 +315,8 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{file_no}]]></textFieldExpression>
+                <textFieldExpression>
+                    <![CDATA[$F{file_no} != null ? $F{file_no} : "Not Mentioned"]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight">
                 <reportElement x="394" y="231" width="146" height="14" uuid="b2e37269-b029-43cd-8265-cf9ee6678b7e">
@@ -401,7 +409,7 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                               value="ddc454e1-415e-4619-a5b7-c7f300236ed1"/>
                 </reportElement>
                 <textElement textAlignment="Justified" verticalAlignment="Top" markup="html">
-                    <font fontName="Times New Roman" size="10"/>
+                    <font fontName="Times New Roman" size="12"/>
                 </textElement>
                 <textFieldExpression><![CDATA["<b><u> Clinical Data: </u></b><br>" + $F{clinical_data}.replaceAll("</p>", "</p><br>").replaceAll("</div>", "</div><br>") +
             "<br><br><b><u> Gross Examination: </u></b><br>" + $F{gross_examination}.replaceAll("</p>", "</p><br>").replaceAll("</div>", "</div><br>") +
@@ -420,7 +428,8 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{pathologistDoctorName}]]></textFieldExpression>
+                <textFieldExpression>
+                    <![CDATA[$F{pathologistDoctorName} != null ? $F{pathologistDoctorName} : "Not Mentioned"]]></textFieldExpression>
             </textField>
             <staticText>
                 <reportElement x="5" y="46" width="520" height="20" uuid="bea44d1c-e411-4961-832d-df48466ad15d"/>
@@ -445,7 +454,8 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{pathologistDoctorTwoName}]]></textFieldExpression>
+                <textFieldExpression>
+                    <![CDATA[$F{pathologistDoctorTwoName} != null ? $F{pathologistDoctorTwoName} : "Not Mentioned"]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement x="113" y="5" width="150" height="20" uuid="0f798a2f-21ec-4b9c-9732-da6ad171cdab">
@@ -455,7 +465,8 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{pathologistDoctorDescription}]]></textFieldExpression>
+                <textFieldExpression>
+                    <![CDATA[$F{pathologistDoctorDescription} != null ? $F{pathologistDoctorDescription} : "Not Mentioned"]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement x="302" y="5" width="150" height="20" uuid="06b2ff4c-ddfd-423d-8624-268f9ef9e53d">
@@ -465,7 +476,8 @@ WHERE alfairouz.specimen.id = $P{specimen_id};]]>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{pathologistDoctorTwoDescription}]]></textFieldExpression>
+                <textFieldExpression>
+                    <![CDATA[$F{pathologistDoctorTwoDescription} != null ? $F{pathologistDoctorTwoDescription} : "Not Mentioned"]]></textFieldExpression>
             </textField>
         </band>
     </pageFooter>

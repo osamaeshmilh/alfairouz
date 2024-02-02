@@ -490,7 +490,18 @@
                 </button>
               </div>
             </div>
-            <div class="col-lg col-sm"></div>
+            <div class="col-lg col-sm">
+              <label class="form-label" jhiTranslate="alfairouzApp.specimen.isPrintedOut" for="field_isPrintedOut">Is
+                Printed Out</label>
+              <input
+                type="checkbox"
+                class="form-check"
+                name="printedOut"
+                id="field_isPrintedOut"
+                data-cy="isPrintedOut"
+                formControlName="printedOut"
+              />
+            </div>
           </div>
         </div>
         <br>
@@ -795,6 +806,7 @@
           </select>
         </div>
 
+        // todo 
         <div class="row mb-3"
              *jhiHasAnyAuthority="['ROLE_TYPING', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_REVISION', 'ROLE_ADMIN']">
           <label class="form-label" jhiTranslate="alfairouzApp.specimen.pathologistDoctor"
