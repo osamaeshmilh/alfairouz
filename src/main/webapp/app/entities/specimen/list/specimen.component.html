@@ -172,6 +172,12 @@
           <span jhiTranslate="alfairouzApp.specimen.notes">Notes</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
+        <th scope="col" jhiSortBy="printedOut"
+            *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION','ROLE_PATHOLOGIST_DOCTOR','ROLE_TECHNICIAN', 'ROLE_TYPING']">
+          <span jhiTranslate="alfairouzApp.specimen.printedOut">Printed</span>
+          <fa-icon icon="sort"></fa-icon>
+        </th>
+
         <th scope="col"></th>
       </tr>
       </thead>
@@ -267,6 +273,15 @@
               style="display: block; text-overflow: ellipsis; width: 100px; overflow: hidden; white-space: nowrap"
             >{{ specimen.notes }}</span
             >
+        </td>
+        <td
+          *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION','ROLE_PATHOLOGIST_DOCTOR','ROLE_TECHNICIAN', 'ROLE_TYPING']">
+          <div *ngIf="specimen.printedOut" matTooltip="طبعت" style="font-size: 30px">
+            <mat-icon [inline]="true" class="text-success">check_circle_outline</mat-icon>
+          </div>
+          <div *ngIf="!specimen.printedOut" matTooltip="لم تطبع" style="font-size: 30px">
+            <mat-icon [inline]="true" class="text-grey">highlight_off</mat-icon>
+          </div>
         </td>
         <td class="text-left">
           <div class="btn-group flex-btn-group-container">
