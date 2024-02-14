@@ -95,6 +95,7 @@ export class SpecimenComponent implements OnInit {
     this.currentSearch = currentSearch;
     this.specimenService
       .query({
+        //todo add organ list filter
         'labRefNo.contains': this.currentSearch,
         'labQr.contains': this.currentSearch,
         'fileNo.contains': this.currentSearch,

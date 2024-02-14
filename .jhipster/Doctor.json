@@ -42,6 +42,8 @@
       "fieldType": "DoctorType",
       "fieldValues": "GROSSING,REFERRING,PATHOLOGIST"
     }
+    // todo
+    // add doctor signture
   ],
   "fluentMethods": true,
   "jpaMetamodelFiltering": true,

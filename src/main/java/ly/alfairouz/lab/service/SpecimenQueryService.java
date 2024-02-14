@@ -197,6 +197,15 @@ public class SpecimenQueryService extends QueryService<Specimen> {
                             )
                         );
                 }
+                if (criteria.getPathologistDoctorTwoId() != null) {
+                    specification =
+                        specification.and(
+                            buildSpecification(
+                                criteria.getPathologistDoctorTwoId(),
+                                root -> root.join(Specimen_.pathologistDoctorTwo, JoinType.LEFT).get(Doctor_.id)
+                            )
+                        );
+                }
                 if (criteria.getOperatorEmployeeId() != null) {
                     specification =
                         specification.and(
@@ -403,12 +412,12 @@ public class SpecimenQueryService extends QueryService<Specimen> {
                             )
                         );
                 }
-                if (criteria.getPathologistDoctorId() != null) {
+                if (criteria.getPathologistDoctorTwoId() != null) {
                     specification =
                         specification.and(
                             buildSpecification(
-                                criteria.getPathologistDoctorId(),
-                                root -> root.join(Specimen_.pathologistDoctor, JoinType.LEFT).get(Doctor_.id)
+                                criteria.getPathologistDoctorTwoId(),
+                                root -> root.join(Specimen_.pathologistDoctorTwo, JoinType.LEFT).get(Doctor_.id)
                             )
                         );
                 }

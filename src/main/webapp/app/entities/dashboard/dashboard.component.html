@@ -1,5 +1,5 @@
 <div class="entity-container">
-  <div *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_REFERRING_DOCTOR','ROLE_REFERRING_CENTER']">
+  <div *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_TYPING','ROLE_REFERRING_DOCTOR','ROLE_REFERRING_CENTER']">
     <div class="row white-bg">
       <div class="mat-elevation-z1 p-3 round-card col-6">
 <!--        <p>التقارير حسب</p>-->
@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <div *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_REFERRING_DOCTOR','ROLE_REFERRING_CENTER']"
+    <div *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_TYPING','ROLE_REFERRING_DOCTOR','ROLE_REFERRING_CENTER']"
          class="detail-row align-items-center mt-3">
       <div class="mat-elevation-z1 px-4 py-3 d-flex round-card col-3 white-bg">
         <div class="d-flex flex-column">

@@ -86,6 +86,8 @@ export class ReportsComponent implements OnInit {
       window.open(`/api/public/specimen/xlsx/criteria/?grossingDoctorId.equals=${this.selectedId}&receivingDate.greaterThanOrEqual=${formattedFromDate}&receivingDate.lessThanOrEqual=${formattedToDate}`, '_blank');
     } else if (this.reportType === 'SPECIMEN_BY_PATHOLOGIST_DOCTOR') {
       window.open(`/api/public/specimen/xlsx/criteria/?pathologistDoctorId.equals=${this.selectedId}&receivingDate.greaterThanOrEqual=${formattedFromDate}&receivingDate.lessThanOrEqual=${formattedToDate}`, '_blank');
+    } else if (this.reportType === 'SPECIMEN_BY_PATHOLOGIST_TWO_DOCTOR') {
+      window.open(`/api/public/specimen/xlsx/criteria/?pathologistDoctorTwoId.equals=${this.selectedId}&receivingDate.greaterThanOrEqual=${formattedFromDate}&receivingDate.lessThanOrEqual=${formattedToDate}`, '_blank');
     } else if (this.reportType === 'SPECIMEN_BY_REFERRING_DOCTOR') {
       window.open(`/api/public/specimen/xlsx/criteria/?referringDoctorId.equals=${this.selectedId}&receivingDate.greaterThanOrEqual=${formattedFromDate}&receivingDate.lessThanOrEqual=${formattedToDate}`, '_blank');
     } else if (this.reportType === 'SPECIMEN_BY_REFERRING_CENTER') {

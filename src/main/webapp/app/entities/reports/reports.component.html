@@ -59,6 +59,19 @@
             </mat-select>
           </mat-form-field>
         </div>
+
+        <div *ngIf="reportType == 'SPECIMEN_BY_PATHOLOGIST_TWO_DOCTOR'" class="col">
+          <mat-form-field appearance="standard" class="col">
+            <mat-label>Pathologist Two Doctor</mat-label>
+            <mat-select [(ngModel)]="selectedId" id="field_pathologist_tow_doctor">
+              <mat-option [value]="null"></mat-option>
+              <mat-option *ngFor="let pathologistDoctorOption of pathologistDoctors;"
+                          [value]="pathologistDoctorOption.id">{{ pathologistDoctorOption.nameAr }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
         <div *ngIf="reportType == 'SPECIMEN_BY_REFERRING_DOCTOR'" class="col">
           <mat-form-field appearance="standard" class="col">
             <mat-label>Referring Doctor</mat-label>

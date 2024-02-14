@@ -46,6 +46,14 @@ public class SpecimenCriteria implements Serializable, Criteria {
         this.patientNameAr = patientNameAr;
     }
 
+    public LongFilter getPathologistDoctorTwoId() {
+        return pathologistDoctorTwoId;
+    }
+
+    public void setPathologistDoctorTwoId(LongFilter pathologistDoctorTwoId) {
+        this.pathologistDoctorTwoId = pathologistDoctorTwoId;
+    }
+
     /**
      * Class for filtering LabRef
      */
@@ -234,6 +242,9 @@ public class SpecimenCriteria implements Serializable, Criteria {
     private LongFilter referringDoctorId;
 
     private LongFilter pathologistDoctorId;
+
+    private LongFilter pathologistDoctorTwoId;
+
 
     private LongFilter operatorEmployeeId;
 
