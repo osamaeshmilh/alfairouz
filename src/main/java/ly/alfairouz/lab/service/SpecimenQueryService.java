@@ -412,6 +412,15 @@ public class SpecimenQueryService extends QueryService<Specimen> {
                             )
                         );
                 }
+                if (criteria.getPathologistDoctorId() != null) {
+                    specification =
+                        specification.and(
+                            buildSpecification(
+                                criteria.getPathologistDoctorId(),
+                                root -> root.join(Specimen_.pathologistDoctor, JoinType.LEFT).get(Doctor_.id)
+                            )
+                        );
+                }
                 if (criteria.getPathologistDoctorTwoId() != null) {
                     specification =
                         specification.and(
