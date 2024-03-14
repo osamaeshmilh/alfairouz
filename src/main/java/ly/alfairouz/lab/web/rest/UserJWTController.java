@@ -37,6 +37,10 @@ public class UserJWTController {
             loginVM.getPassword()
         );
 
+        System.out.println();
+        System.out.println("firebase: " + loginVM.getFirebaseToken() + " user " + loginVM.getUsername());
+        System.out.println();
+
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = tokenProvider.createToken(authentication, loginVM.isRememberMe());

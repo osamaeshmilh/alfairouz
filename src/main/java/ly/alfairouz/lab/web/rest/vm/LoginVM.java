@@ -1,5 +1,7 @@
 package ly.alfairouz.lab.web.rest.vm;
 
+import liquibase.pro.packaged.S;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -15,6 +17,8 @@ public class LoginVM {
     @NotNull
     @Size(min = 4, max = 100)
     private String password;
+
+    private String firebaseToken;
 
     private boolean rememberMe;
 
@@ -49,5 +53,13 @@ public class LoginVM {
             "username='" + username + '\'' +
             ", rememberMe=" + rememberMe +
             '}';
+    }
+
+    public String getFirebaseToken() {
+        return firebaseToken;
+    }
+
+    public void setFirebaseToken(String firebaseToken) {
+        this.firebaseToken = firebaseToken;
     }
 }

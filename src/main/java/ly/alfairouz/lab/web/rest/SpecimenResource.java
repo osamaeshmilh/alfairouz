@@ -276,6 +276,9 @@ public class SpecimenResource {
     @PostMapping("/public/specimen/by-qr-mobile")
     public ResponseEntity<SpecimenDTO> getSpecimenByQrMobile(@RequestParam String labQr, @RequestParam String firebaseToken) {
         log.debug("REST request to get Specimen by QR for mobile: {}, with token: {}", labQr, firebaseToken);
+        System.out.println();
+        System.out.println("firebase: " + firebaseToken + " qr " + labQr);
+        System.out.println();
         Optional<SpecimenDTO> specimenDTO = specimenService.findOneByLabQr(labQr);
         return ResponseUtil.wrapOrNotFound(specimenDTO);
     }
