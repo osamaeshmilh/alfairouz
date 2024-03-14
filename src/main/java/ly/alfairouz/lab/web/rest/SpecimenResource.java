@@ -273,6 +273,13 @@ public class SpecimenResource {
         return ResponseUtil.wrapOrNotFound(specimenDTO);
     }
 
+    @PostMapping("/public/specimen/by-qr-mobile")
+    public ResponseEntity<SpecimenDTO> getSpecimenByQrMobile(@RequestParam String labQr, @RequestParam String firebaseToken) {
+        log.debug("REST request to get Specimen by QR for mobile: {}, with token: {}", labQr, firebaseToken);
+        Optional<SpecimenDTO> specimenDTO = specimenService.findOneByLabQr(labQr);
+        return ResponseUtil.wrapOrNotFound(specimenDTO);
+    }
+
     /**
      * {@code DELETE  /specimen/:id} : delete the "id" specimen.
      *

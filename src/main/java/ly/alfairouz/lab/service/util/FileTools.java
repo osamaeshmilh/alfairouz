@@ -16,16 +16,16 @@ public class FileTools {
 
         if (imageBytes != null) {
             try {
-                if (fileContentType.equals(MediaType.IMAGE_PNG_VALUE)) generatedName =
-                    name + "_" + System.currentTimeMillis() + new Random().nextInt(100) + ".png";
-                else if (
-                    fileContentType.equals(MediaType.IMAGE_JPEG_VALUE)
-                ) generatedName = name + "_" + System.currentTimeMillis() + new Random().nextInt(100) + ".jpeg";
-                else if (
-                    fileContentType.equals(MediaType.IMAGE_GIF_VALUE)
-                ) generatedName = name + "_" + System.currentTimeMillis() + new Random().nextInt(100) + ".gif";
-                else generatedName =
-                        name + "_" + System.currentTimeMillis() + new Random().nextInt(100) + ".jpeg";
+                if (fileContentType.equals(MediaType.IMAGE_PNG_VALUE))
+                    generatedName = name + "_" + System.currentTimeMillis() + new Random().nextInt(100) + ".png";
+                else if (fileContentType.equals(MediaType.IMAGE_JPEG_VALUE))
+                    generatedName = name + "_" + System.currentTimeMillis() + new Random().nextInt(100) + ".jpeg";
+                else if (fileContentType.equals(MediaType.IMAGE_GIF_VALUE))
+                    generatedName = name + "_" + System.currentTimeMillis() + new Random().nextInt(100) + ".gif";
+                else if (fileContentType.equals(MediaType.APPLICATION_PDF_VALUE))
+                    generatedName = name + "_" + System.currentTimeMillis() + new Random().nextInt(100) + ".pdf";
+                else
+                    generatedName = name + "_" + System.currentTimeMillis() + new Random().nextInt(100) + ".jpeg";
 
                 String path = uploadsDir + generatedName;
                 FileUtils.writeByteArrayToFile(new File(path), imageBytes);
