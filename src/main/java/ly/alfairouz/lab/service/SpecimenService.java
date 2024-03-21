@@ -54,7 +54,9 @@ public class SpecimenService {
 
     private final ReferringCenterPriceService referringCenterPriceService;
 
-    public SpecimenService(SpecimenRepository specimenRepository, SpecimenMapper specimenMapper, DoctorService doctorService, PatientService patientService, SpecimenEditService specimenEditService, SpecimenTypeService specimenTypeService, ReferringCenterService referringCenterService, ReferringCenterPriceService referringCenterPriceService) {
+    private final SMSService smsService;
+
+    public SpecimenService(SpecimenRepository specimenRepository, SpecimenMapper specimenMapper, DoctorService doctorService, PatientService patientService, SpecimenEditService specimenEditService, SpecimenTypeService specimenTypeService, ReferringCenterService referringCenterService, ReferringCenterPriceService referringCenterPriceService, SMSService smsService) {
         this.specimenRepository = specimenRepository;
         this.specimenMapper = specimenMapper;
         this.doctorService = doctorService;
@@ -63,6 +65,7 @@ public class SpecimenService {
         this.specimenTypeService = specimenTypeService;
         this.referringCenterService = referringCenterService;
         this.referringCenterPriceService = referringCenterPriceService;
+        this.smsService = smsService;
     }
 
     /**
@@ -169,6 +172,8 @@ public class SpecimenService {
         if (specimenDTO.getReportDate() != null) {
             if (SpecimenHandler.isBefore(specimenDTO, SpecimenStatus.READY)) {
                 specimenDTO.setSpecimenStatus(SpecimenStatus.READY);
+                smsService.sendSMS(specimenDTO.getPatientMobileNumber(), specimenDTO.getLabQr());
+
             }
         }
 

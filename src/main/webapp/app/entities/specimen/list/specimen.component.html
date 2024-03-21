@@ -35,7 +35,16 @@
 
     <!--    // add notes-->
 
-
+    <mat-form-field appearance="standard">
+      <mat-label>Organ</mat-label>
+      <mat-select (selectionChange)="filterByOrgan($event.value)">
+        <mat-option value="">الكل</mat-option>
+        <mat-option *ngFor="let organOption of organs" [value]="organOption.id">{{
+            organOption.name
+          }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     <button *jhiHasAnyAuthority="'ROLE_ADMIN'" class="mr-auto" mat-stroked-button color="primary" (click)="getXslx()">
       <mat-icon>insert_drive_file</mat-icon>
       تقرير لكل العينات

@@ -10,6 +10,9 @@ import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/config/pagination.constants
 import { SpecimenService } from '../service/specimen.service';
 import { SpecimenDeleteDialogComponent } from '../delete/specimen-delete-dialog.component';
 import { DataUtils } from 'app/core/util/data-util.service';
+import {IOrgan} from "../../organ/organ.model";
+import {map} from "rxjs/operators";
+import {OrganService} from "../../organ/service/organ.service";
 
 @Component({
   selector: 'jhi-specimen',
@@ -18,6 +21,7 @@ import { DataUtils } from 'app/core/util/data-util.service';
 })
 export class SpecimenComponent implements OnInit {
   specimen?: ISpecimen[];
+  organs?: IOrgan[];
   isLoading = false;
   totalItems = 0;
   itemsPerPage = ITEMS_PER_PAGE;
@@ -26,8 +30,10 @@ export class SpecimenComponent implements OnInit {
   ascending!: boolean;
   ngbPaginationPage = 0;
   currentSearch: any = '';
+  organId: any;
 
   constructor(
+    protected organService: OrganService,
     protected specimenService: SpecimenService,
     protected activatedRoute: ActivatedRoute,
     protected dataUtils: DataUtils,
@@ -65,7 +71,18 @@ export class SpecimenComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.organService
+      .query({
+        size: 1000,
+        sort: ['name', 'asc'],
+      }).subscribe((res: HttpResponse<IOrgan[]>) => (this.organs = res.body || []));
+
     this.handleNavigation();
+  }
+
+  filterByOrgan(minister: any): void {
+    this.organId = minister;
+    this.loadPage(0);
   }
 
   trackId(_index: number, item: ISpecimen): number {
