@@ -58,16 +58,19 @@
               <span>{{ specimen.id }}</span>
             </dd>
 
-            <dt><span jhiTranslate="alfairouzApp.specimen.pdfFile">Pdf File</span></dt>
+            <!--            <dt><span jhiTranslate="alfairouzApp.specimen.pdfFile">Pdf File</span></dt>-->
+            <!--            <dd>-->
+            <!--              <div *ngIf="specimen.pdfFile">-->
+            <!--                <a (click)="openFile(specimen.pdfFile, specimen.pdfFileContentType)" jhiTranslate="entity.action.open">open</a>-->
+            <!--                {{ specimen.pdfFileContentType }}, {{ byteSize(specimen.pdfFile) }}-->
+            <!--              </div>-->
+            <!--            </dd>-->
+            <dt><span jhiTranslate="alfairouzApp.specimen.pdfFileUrl">Pdf File</span></dt>
             <dd>
-              <div *ngIf="specimen.pdfFile">
-                <a (click)="openFile(specimen.pdfFile, specimen.pdfFileContentType)" jhiTranslate="entity.action.open">open</a>
-                {{ specimen.pdfFileContentType }}, {{ byteSize(specimen.pdfFile) }}
-              </div>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.pdfFileUrl">Pdf File Url</span></dt>
-            <dd>
-              <span>{{ specimen.pdfFileUrl }}</span>
+              <button [disabled]="!specimen.pdfFileUrl" (click)="openFileFromUrl(specimen.pdfFileUrl)" color="primary"
+                      mat-raised-button type="button">
+                <mat-icon class="ml-2">picture_as_pdf</mat-icon>
+              </button>
             </dd>
             <dt><span jhiTranslate="alfairouzApp.specimen.samples">Samples</span></dt>
             <dd>
