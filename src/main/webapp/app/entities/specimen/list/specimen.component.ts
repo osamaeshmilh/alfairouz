@@ -30,7 +30,7 @@ export class SpecimenComponent implements OnInit {
   ascending!: boolean;
   ngbPaginationPage = 0;
   currentSearch: any = '';
-  organId: any;
+  organId: any = '';
 
   constructor(
     protected organService: OrganService,
