@@ -222,4 +222,8 @@ export class SpecimenComponent implements OnInit {
     this.ngbPaginationPage = this.page ?? 0;
   }
 
+  openFileFromUrl(fileUrl: any): void {
+    window.open('/api/public/file/download/' + String(fileUrl) + '#zoom=85&scrollbar=0&toolbar=0&navpanes=0', '_blank');
+  }
+
 }

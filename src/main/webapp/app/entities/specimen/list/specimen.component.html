@@ -353,6 +353,11 @@
                 <mat-icon>insert_drive_file</mat-icon>
                 <span class="d-none d-md-inline">Print Invoice</span>
               </button>
+              <button (click)="openFileFromUrl(specimen.pdfFileUrl)"
+                      mat-menu-item>
+                <mat-icon>insert_drive_file</mat-icon>
+                <span class="d-none d-md-inline">Archive</span>
+              </button>
 
               <button (click)="delete(specimen)" *jhiHasAnyAuthority="['ROLE_ADMIN']" mat-menu-item>
                 <mat-icon>delete</mat-icon>
