@@ -76,7 +76,7 @@ export class SpecimenComponent implements OnInit {
       .query({
         size: 1000,
         sort: ['name', 'asc'],
-      }).subscribe((res: HttpResponse<IOrgan[]>) => (this.organs = res.body || []));
+      }).subscribe((res: HttpResponse<IOrgan[]>) => (this.organs = res.body ?? []));
 
     this.handleNavigation();
   }
@@ -171,6 +171,9 @@ export class SpecimenComponent implements OnInit {
     window.open(url, '_blank');
   }
 
+  openFileFromUrl(fileUrl: any): void {
+    window.open(`/api/public/file/download/${String(fileUrl)}#zoom=85&scrollbar=0&toolbar=0&navpanes=0`, '_blank');
+  }
 
   protected sort(): string[] {
     const result = [this.predicate + ',' + (this.ascending ? ASC : DESC)];
@@ -220,10 +223,6 @@ export class SpecimenComponent implements OnInit {
 
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 0;
-  }
-
-  openFileFromUrl(fileUrl: any): void {
-    window.open('/api/public/file/download/' + String(fileUrl) + '#zoom=85&scrollbar=0&toolbar=0&navpanes=0', '_blank');
   }
 
 }
