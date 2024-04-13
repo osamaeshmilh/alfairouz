@@ -9,6 +9,10 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
       },
       {
+        path: 'privacy-policy',
+        loadChildren: () => import('./privacy-policy/privacy-policy.module').then(m => m.PrivacyPolicyModule),
+      },
+      {
         path: 'reports',
         loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule),
       },
