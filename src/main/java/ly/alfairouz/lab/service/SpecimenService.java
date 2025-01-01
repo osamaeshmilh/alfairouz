@@ -288,16 +288,17 @@ public class SpecimenService {
         if (labRef == LabRef.H || labRef == LabRef.HSO || labRef == LabRef.IHSO) {
             // Shared sequence for H, HSO, and IHSO
             maxLabRefNo = specimenRepository.findMaxLabRefNoForSharedTypes(
-                year + "H",
-                year + "HSO",
-                year + "IHSO",
+                labRef.toString(),  // Changed from year + "H"
+                labRef.toString(),  // Changed from year + "HSO"
+                labRef.toString(),  // Changed from year + "IHSO"
+                year,              // Added year parameter
                 PageRequest.of(0, 1)
             );
         } else {
             // Individual sequence for C and IH
-            String prefix = year + labRef.toString();
             maxLabRefNo = specimenRepository.findMaxLabRefNoStartingWith(
-                prefix,
+                labRef.toString(),  // Changed from year + labRef.toString()
+                year,              // Added year parameter
                 PageRequest.of(0, 1)
             );
         }
@@ -306,17 +307,16 @@ public class SpecimenService {
         if (!maxLabRefNo.isEmpty()) {
             String[] parts = maxLabRefNo.get(0).split("-");
             if (parts.length > 1) {
-                String numberPart = parts[0].replaceAll("[^0-9]", ""); // Remove all non-numeric characters
+                String numberPart = parts[0].replaceAll("[^0-9]", "");
                 try {
                     maxNumber = Long.parseLong(numberPart);
                 } catch (NumberFormatException e) {
-                    // Log error or handle exception
                     log.error("Error parsing number from lab ref no: " + maxLabRefNo.get(0), e);
                 }
             }
         }
 
-        // For new year, start from 1
+        // For new year, start from 1 if no records found
         return labRef.toString() + String.format("%05d", maxNumber + 1) + "-" + year;
     }
 

@@ -41,18 +41,25 @@ public interface SpecimenRepository extends JpaRepository<Specimen, Long>, JpaSp
 
     @Query("SELECT s.labRefNo FROM Specimen s " +
         "WHERE s.labRefNo LIKE CONCAT(:prefix, '%') " +
+        "AND s.labRefNo LIKE CONCAT('%-', :year) " +
         "ORDER BY s.labRefNo DESC")
-    List<String> findMaxLabRefNoStartingWith(@Param("prefix") String prefix, Pageable pageable);
+    List<String> findMaxLabRefNoStartingWith(
+        @Param("prefix") String prefix,
+        @Param("year") String year,
+        Pageable pageable
+    );
 
     @Query("SELECT s.labRefNo FROM Specimen s " +
         "WHERE (s.labRefNo LIKE CONCAT(:yearH, '%') " +
         "OR s.labRefNo LIKE CONCAT(:yearHSO, '%') " +
         "OR s.labRefNo LIKE CONCAT(:yearIHSO, '%')) " +
+        "AND s.labRefNo LIKE CONCAT('%-', :year) " +
         "ORDER BY s.labRefNo DESC")
     List<String> findMaxLabRefNoForSharedTypes(
         @Param("yearH") String yearH,
         @Param("yearHSO") String yearHSO,
         @Param("yearIHSO") String yearIHSO,
+        @Param("year") String year,
         Pageable pageable
     );
     @Query(
