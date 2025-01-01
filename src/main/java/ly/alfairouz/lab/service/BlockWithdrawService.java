@@ -65,6 +65,16 @@ public class BlockWithdrawService {
     public BlockWithdrawDTO update(BlockWithdrawDTO blockWithdrawDTO) {
         log.debug("Request to save BlockWithdraw : {}", blockWithdrawDTO);
         BlockWithdraw blockWithdraw = blockWithdrawMapper.toEntity(blockWithdrawDTO);
+        if (blockWithdrawDTO.getPdfFile() != null) {
+            String filePath = FileTools.upload(
+                blockWithdraw.getPdfFile(),
+                blockWithdraw.getPdfFileContentType(),
+                "block_"
+            );
+            blockWithdraw.setPdfFile(null);
+            blockWithdraw.setPdfFileContentType(blockWithdrawDTO.getPdfFileContentType());
+            blockWithdraw.setPdfFileUrl(filePath);
+        }
         blockWithdraw = blockWithdrawRepository.save(blockWithdraw);
         return blockWithdrawMapper.toDto(blockWithdraw);
     }
@@ -82,6 +92,16 @@ public class BlockWithdrawService {
             .findById(blockWithdrawDTO.getId())
             .map(existingBlockWithdraw -> {
                 blockWithdrawMapper.partialUpdate(existingBlockWithdraw, blockWithdrawDTO);
+                if (blockWithdrawDTO.getPdfFile() != null) {
+                    String filePath = FileTools.upload(
+                        existingBlockWithdraw.getPdfFile(),
+                        existingBlockWithdraw.getPdfFileContentType(),
+                        "block_"
+                    );
+                    existingBlockWithdraw.setPdfFile(null);
+                    existingBlockWithdraw.setPdfFileContentType(blockWithdrawDTO.getPdfFileContentType());
+                    existingBlockWithdraw.setPdfFileUrl(filePath);
+                }
 
                 return existingBlockWithdraw;
             })
