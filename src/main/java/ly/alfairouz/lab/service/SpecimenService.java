@@ -288,11 +288,18 @@ public class SpecimenService {
         if (labRef == LabRef.H || labRef == LabRef.HSO || labRef == LabRef.IHSO) {
             // Shared sequence for H, HSO, and IHSO
             maxLabRefNo = specimenRepository.findMaxLabRefNoForSharedTypes(
-                year + "H", year + "HSO", year + "IHSO", PageRequest.of(0, 1));
+                year + "H",
+                year + "HSO",
+                year + "IHSO",
+                PageRequest.of(0, 1)
+            );
         } else {
             // Individual sequence for C and IH
             String prefix = year + labRef.toString();
-            maxLabRefNo = specimenRepository.findMaxLabRefNoStartingWith(prefix, PageRequest.of(0, 1));
+            maxLabRefNo = specimenRepository.findMaxLabRefNoStartingWith(
+                prefix,
+                PageRequest.of(0, 1)
+            );
         }
 
         Long maxNumber = 0L;
@@ -304,40 +311,23 @@ public class SpecimenService {
                     maxNumber = Long.parseLong(numberPart);
                 } catch (NumberFormatException e) {
                     // Log error or handle exception
+                    log.error("Error parsing number from lab ref no: " + maxLabRefNo.get(0), e);
                 }
             }
         }
 
+        // For new year, start from 1
         return labRef.toString() + String.format("%05d", maxNumber + 1) + "-" + year;
     }
 
-
     public SpecimenDTO create(SpecimenDTO specimenDTO) {
-        String year = Year.now().format(DateTimeFormatter.ofPattern("uu"));
+        String uniqueLabRefNo = generateUniqueLabRefNo(specimenDTO.getLabRef());
+        specimenDTO.setLabRefNo(uniqueLabRefNo);
 
-        // Count only specimens for the current year
-        Long count;
-        if (specimenDTO.getLabRef() == LabRef.C) {
-            count = specimenRepository.countByLabRefNoStartingWithAndEndingWith("C", year);
-        } else if (specimenDTO.getLabRef() == LabRef.IH) {
-            count = specimenRepository.countByLabRefNoStartingWithAndEndingWith("IH", year);
-        } else {
-            // for H, HSO, and IHSO, get the max count for the current year
-            Long countH = specimenRepository.countByLabRefNoStartingWithAndEndingWith("H", year);
-            Long countHSO = specimenRepository.countByLabRefNoStartingWithAndEndingWith("HSO", year);
-            Long countIHSO = specimenRepository.countByLabRefNoStartingWithAndEndingWith("IHSO", year);
-            count = Math.max(countH, Math.max(countHSO, countIHSO));
-        }
-
-        // Start from 1 for each new year
-        count = count + 1;
-
-        // Format: [LabRef][5-digit-number]-[2-digit-year]
-        // Example: H00001-25 for first specimen of 2025
-        String labRefNo = specimenDTO.getLabRef().toString() + String.format("%05d", count) + "-" + year;
-
-        specimenDTO.setLabRefOrder(count.toString());
-        specimenDTO.setLabRefNo(labRefNo);
+        // Extract the numeric part for labRefOrder
+        String[] parts = uniqueLabRefNo.split("-");
+        String numberPart = parts[0].replaceAll("[^0-9]", "");
+        specimenDTO.setLabRefOrder(numberPart);
 
         // Generate QR code
         int mySaltSizeInBytes = 32;
@@ -345,9 +335,9 @@ public class SpecimenService {
         byte[] salt = new byte[mySaltSizeInBytes];
         random.nextBytes(salt);
 
-        ByteBuffer bbuffer = ByteBuffer.allocate(mySaltSizeInBytes + labRefNo.length());
+        ByteBuffer bbuffer = ByteBuffer.allocate(mySaltSizeInBytes + uniqueLabRefNo.length());
         bbuffer.put(salt);
-        bbuffer.put(labRefNo.getBytes());
+        bbuffer.put(uniqueLabRefNo.getBytes());
 
         CRC32 crc = new CRC32();
         crc.update(bbuffer.array());
