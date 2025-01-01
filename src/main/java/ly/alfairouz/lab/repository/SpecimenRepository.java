@@ -35,16 +35,27 @@ public interface SpecimenRepository extends JpaRepository<Specimen, Long>, JpaSp
     @Query(value = "SELECT COUNT(id) " +
         "FROM specimen " +
         "WHERE SUBSTRING(specimen.lab_ref_no, 1, LENGTH(:prefix)) = :prefix " +
-        "AND SUBSTRING(specimen.lab_ref_no, LENGTH(specimen.lab_ref_no) - LENGTH(:suffix) + 1) = :suffix",
+        "AND SUBSTRING(specimen.lab_ref_no, -2) = :suffix",
         nativeQuery = true)
     long countByLabRefNoStartingWithAndEndingWith(@Param("prefix") String prefix, @Param("suffix") String suffix);
 
-    @Query("SELECT s.labRefNo FROM Specimen s WHERE s.labRefNo LIKE :prefix% ORDER BY s.labRefNo DESC")
-    List<String> findMaxLabRefNoStartingWith(@Param("prefix") String prefix, Pageable pageable);
+    @Query("SELECT s.labRefNo FROM Specimen s " +
+        "WHERE s.labRefNo LIKE :prefix% " +
+        "AND s.labRefNo LIKE :%-year% " +
+        "ORDER BY s.labRefNo DESC")
+    List<String> findMaxLabRefNoStartingWith(@Param("prefix") String prefix, @Param("year") String year, Pageable pageable);
 
-    @Query("SELECT s.labRefNo FROM Specimen s WHERE (s.labRefNo LIKE :yearH% OR s.labRefNo LIKE :yearHSO% OR s.labRefNo LIKE :yearIHSO%) ORDER BY s.labRefNo DESC")
-    List<String> findMaxLabRefNoForSharedTypes(@Param("yearH") String yearH, @Param("yearHSO") String yearHSO, @Param("yearIHSO") String yearIHSO, Pageable pageable);
-
+    @Query("SELECT s.labRefNo FROM Specimen s " +
+        "WHERE (s.labRefNo LIKE :yearH% OR s.labRefNo LIKE :yearHSO% OR s.labRefNo LIKE :yearIHSO%) " +
+        "AND s.labRefNo LIKE :%-year% " +
+        "ORDER BY s.labRefNo DESC")
+    List<String> findMaxLabRefNoForSharedTypes(
+        @Param("yearH") String yearH,
+        @Param("yearHSO") String yearHSO,
+        @Param("yearIHSO") String yearIHSO,
+        @Param("year") String year,
+        Pageable pageable
+    );
     @Query(
         value = "select distinct specimen from Specimen specimen left join fetch specimen.patient left join fetch specimen.biopsy left join fetch specimen.cytology left join fetch specimen.organ left join fetch specimen.specimenType left join fetch specimen.size left join fetch specimen.referringCenter left join fetch specimen.grossingDoctor left join fetch specimen.referringDoctor left join fetch specimen.pathologistDoctor left join fetch specimen.operatorEmployee left join fetch specimen.correctorEmployee",
         countQuery = "select count(distinct specimen) from Specimen specimen"

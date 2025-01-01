@@ -313,47 +313,45 @@ public class SpecimenService {
 
 
     public SpecimenDTO create(SpecimenDTO specimenDTO) {
-
         String year = Year.now().format(DateTimeFormatter.ofPattern("uu"));
 
-        // determine the counter to use based on the LabRef type
-        String counterPrefix = null;
+        // Count only specimens for the current year
         Long count;
         if (specimenDTO.getLabRef() == LabRef.C) {
             count = specimenRepository.countByLabRefNoStartingWithAndEndingWith("C", year);
         } else if (specimenDTO.getLabRef() == LabRef.IH) {
             count = specimenRepository.countByLabRefNoStartingWithAndEndingWith("IH", year);
         } else {
-            // for H, HSO, and IHSO, get the max count
+            // for H, HSO, and IHSO, get the max count for the current year
             Long countH = specimenRepository.countByLabRefNoStartingWithAndEndingWith("H", year);
             Long countHSO = specimenRepository.countByLabRefNoStartingWithAndEndingWith("HSO", year);
             Long countIHSO = specimenRepository.countByLabRefNoStartingWithAndEndingWith("IHSO", year);
             count = Math.max(countH, Math.max(countHSO, countIHSO));
-            //System.out.println(countH);
         }
 
-        count++;
-        String all = specimenDTO.getLabRef().toString() + String.format("%05d", count) + "-" + year;
-        //String all = year + specimenDTO.getLabRef().toString() + String.format("%05d", count);
+        // Start from 1 for each new year
+        count = count + 1;
 
-        specimenDTO.setLabRefOrder(count.toString());  // this is the overall order
-        specimenDTO.setLabRefNo(all);
+        // Format: [LabRef][5-digit-number]-[2-digit-year]
+        // Example: H00001-25 for first specimen of 2025
+        String labRefNo = specimenDTO.getLabRef().toString() + String.format("%05d", count) + "-" + year;
 
+        specimenDTO.setLabRefOrder(count.toString());
+        specimenDTO.setLabRefNo(labRefNo);
+
+        // Generate QR code
         int mySaltSizeInBytes = 32;
         SecureRandom random = new SecureRandom();
-
-        byte salt[] = new byte[mySaltSizeInBytes];
-
+        byte[] salt = new byte[mySaltSizeInBytes];
         random.nextBytes(salt);
 
-        ByteBuffer bbuffer = ByteBuffer.allocate(mySaltSizeInBytes + all.length());
+        ByteBuffer bbuffer = ByteBuffer.allocate(mySaltSizeInBytes + labRefNo.length());
         bbuffer.put(salt);
-        bbuffer.put(all.getBytes());
+        bbuffer.put(labRefNo.getBytes());
 
         CRC32 crc = new CRC32();
         crc.update(bbuffer.array());
         String enc = Long.toHexString(crc.getValue());
-
         specimenDTO.setLabQr(enc.toUpperCase(Locale.ROOT));
 
         if (specimenDTO.getPatient() == null) {
