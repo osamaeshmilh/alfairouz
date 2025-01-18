@@ -1,0 +1,9 @@
+{
+  "alfairouzApp": {
+    "PaymentWith": {
+      "null": "",
+      "CASH": "CASH",
+      "ATM": "ATM"
+    }
+  }
+}

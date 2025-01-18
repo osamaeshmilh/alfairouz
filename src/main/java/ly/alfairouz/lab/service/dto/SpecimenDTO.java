@@ -22,6 +22,8 @@ public class SpecimenDTO extends AbstractAuditingDTO implements Serializable {
 
     private LabRef labRef;
 
+    private PaymentWith payedWith;
+
     @Lob
     private byte[] pdfFile;
 
@@ -116,6 +118,8 @@ public class SpecimenDTO extends AbstractAuditingDTO implements Serializable {
 
     private DoctorDTO referringDoctor;
 
+    private DoctorDTO pathologistDoctorAssineged;
+
     private DoctorDTO pathologistDoctor;
 
     private DoctorDTO pathologistDoctorTwo;
@@ -180,6 +184,14 @@ public class SpecimenDTO extends AbstractAuditingDTO implements Serializable {
 
     public void setLabRef(LabRef labRef) {
         this.labRef = labRef;
+    }
+
+    public PaymentWith getPayedWith() {
+        return payedWith;
+    }
+
+    public void setPayedWith(PaymentWith payedWith) {
+        this.payedWith = payedWith;
     }
 
     public byte[] getPdfFile() {
@@ -558,6 +570,14 @@ public class SpecimenDTO extends AbstractAuditingDTO implements Serializable {
         this.referringDoctor = referringDoctor;
     }
 
+    public DoctorDTO getPathologistDoctorAssineged() {
+        return pathologistDoctorAssineged;
+    }
+
+    public void setPathologistDoctorAssineged(DoctorDTO pathologistDoctorAssineged) {
+        this.pathologistDoctorAssineged = pathologistDoctorAssineged;
+    }
+
     public DoctorDTO getPathologistDoctor() {
         return pathologistDoctor;
     }
@@ -684,6 +704,7 @@ public class SpecimenDTO extends AbstractAuditingDTO implements Serializable {
             ", labRefOrder='" + getLabRefOrder() + "'" +
             ", labQr='" + getLabQr() + "'" +
             ", labRef='" + getLabRef() + "'" +
+            ", payedWith='" + getPayedWith() + "'" +
             ", pdfFile='" + getPdfFile() + "'" +
             ", pdfFileUrl='" + getPdfFileUrl() + "'" +
             ", samples=" + getSamples() +
@@ -730,6 +751,7 @@ public class SpecimenDTO extends AbstractAuditingDTO implements Serializable {
             ", referringCenter=" + getReferringCenter() +
             ", grossingDoctor=" + getGrossingDoctor() +
             ", referringDoctor=" + getReferringDoctor() +
+            ", pathologistDoctorAssineged=" + getPathologistDoctorAssineged() +
             ", pathologistDoctor=" + getPathologistDoctor() +
             ", pathologistDoctorTwo=" + getPathologistDoctorTwo() +
             ", operatorEmployee=" + getOperatorEmployee() +

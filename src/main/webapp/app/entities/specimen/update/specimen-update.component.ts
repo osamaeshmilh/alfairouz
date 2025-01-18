@@ -38,6 +38,7 @@ import dayjs from "dayjs/esm";
 import {IReferringCenterPrice} from "../../referring-center-price/referring-center-price.model";
 import {ReferringCenterPriceService} from "../../referring-center-price/service/referring-center-price.service";
 import {AngularEditorConfig} from '@kolkov/angular-editor';
+import {PaymentWith} from "../../enumerations/payment-with.model";
 
 @Component({
   selector: 'jhi-specimen-update',
@@ -48,6 +49,7 @@ export class SpecimenUpdateComponent implements OnInit {
   labRefValues = Object.keys(LabRef);
   contractTypeValues = Object.keys(ContractType);
   paymentTypeValues = Object.keys(PaymentType);
+  payedWithValues = Object.keys(PaymentWith);
   resultsValues = Object.keys(Results);
   specimenStatusValues = Object.keys(SpecimenStatus);
 
@@ -130,6 +132,8 @@ export class SpecimenUpdateComponent implements OnInit {
     patientAddress: [],
     patientGender: [],
     patientBirthDate: [],
+
+    payedWith: [],
 
   });
   paymentType: any;
@@ -398,6 +402,7 @@ export class SpecimenUpdateComponent implements OnInit {
       pathologistDoctorTwo: specimen.pathologistDoctorTwo,
       operatorEmployee: specimen.operatorEmployee,
       correctorEmployee: specimen.correctorEmployee,
+      payedWith: specimen.payedWith,
 
       patientName: specimen.patientName,
       patientNameAr: specimen.patientNameAr,
@@ -660,6 +665,8 @@ export class SpecimenUpdateComponent implements OnInit {
       patientAddress: this.editForm.get(['patientAddress'])!.value,
       patientGender: this.editForm.get(['patientGender'])!.value,
       patientBirthDate: this.editForm.get(['patientBirthDate'])!.value,
+
+      payedWith: this.editForm.get(['payedWith'])!.value,
     };
   }
 

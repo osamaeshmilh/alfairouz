@@ -14,6 +14,7 @@ import { PaymentType } from 'app/entities/enumerations/payment-type.model';
 import {Results} from 'app/entities/enumerations/results.model';
 import {SpecimenStatus} from 'app/entities/enumerations/specimen-status.model';
 import {Gender} from '../enumerations/gender.model';
+import {PaymentWith} from "../enumerations/payment-with.model";
 
 export interface ISpecimen {
   id?: number;
@@ -21,6 +22,7 @@ export interface ISpecimen {
   labRefOrder?: string | null;
   labQr?: string | null;
   labRef?: LabRef | null;
+  payedWith?: PaymentWith | null;
   pdfFileContentType?: string | null;
   pdfFile?: string | null;
   pdfFileUrl?: string | null;
@@ -94,6 +96,7 @@ export class Specimen implements ISpecimen {
     public labRefOrder?: string | null,
     public labQr?: string | null,
     public labRef?: LabRef | null,
+    public payedWith?: PaymentWith | null,
     public pdfFileContentType?: string | null,
     public pdfFile?: string | null,
     public pdfFileUrl?: string | null,

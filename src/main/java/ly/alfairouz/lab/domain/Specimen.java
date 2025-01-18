@@ -7,6 +7,7 @@ import javax.persistence.*;
 import ly.alfairouz.lab.domain.enumeration.ContractType;
 import ly.alfairouz.lab.domain.enumeration.LabRef;
 import ly.alfairouz.lab.domain.enumeration.PaymentType;
+import ly.alfairouz.lab.domain.enumeration.PaymentWith;
 import ly.alfairouz.lab.domain.enumeration.Results;
 import ly.alfairouz.lab.domain.enumeration.SpecimenStatus;
 
@@ -15,7 +16,7 @@ import ly.alfairouz.lab.domain.enumeration.SpecimenStatus;
  */
 @Entity
 @Table(name = "specimen")
-public class Specimen extends AbstractAuditingEntity implements Serializable {
+public class Specimen implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -36,6 +37,10 @@ public class Specimen extends AbstractAuditingEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "lab_ref")
     private LabRef labRef;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payed_with")
+    private PaymentWith payedWith;
 
     @Lob
     @Column(name = "pdf_file")
@@ -267,6 +272,19 @@ public class Specimen extends AbstractAuditingEntity implements Serializable {
 
     public void setLabRef(LabRef labRef) {
         this.labRef = labRef;
+    }
+
+    public PaymentWith getPayedWith() {
+        return this.payedWith;
+    }
+
+    public Specimen payedWith(PaymentWith payedWith) {
+        this.setPayedWith(payedWith);
+        return this;
+    }
+
+    public void setPayedWith(PaymentWith payedWith) {
+        this.payedWith = payedWith;
     }
 
     public byte[] getPdfFile() {
@@ -960,6 +978,7 @@ public class Specimen extends AbstractAuditingEntity implements Serializable {
             ", labRefOrder='" + getLabRefOrder() + "'" +
             ", labQr='" + getLabQr() + "'" +
             ", labRef='" + getLabRef() + "'" +
+            ", payedWith='" + getPayedWith() + "'" +
             ", pdfFile='" + getPdfFile() + "'" +
             ", pdfFileContentType='" + getPdfFileContentType() + "'" +
             ", pdfFileUrl='" + getPdfFileUrl() + "'" +

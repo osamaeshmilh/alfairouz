@@ -23,6 +23,11 @@
       "fieldValues": "H,C,HSO,IH,IHSO"
     },
     {
+      "fieldName": "payedWith",
+      "fieldType": "PaymentWith",
+      "fieldValues": "CASH,ATM"
+    },
+    {
       "fieldName": "pdfFile",
       "fieldType": "byte[]",
       "fieldTypeBlobContent": "any"
@@ -174,11 +179,6 @@
     {
       "fieldName": "onlineReport",
       "fieldType": "Boolean"
-    },
-    {
-      //edited by ,pathalogist, gross, typing
-      "fieldName": "IHC",
-      "fieldType": "Boolean"
     }
   ],
   "fluentMethods": true,
@@ -250,8 +250,6 @@
       "relationshipName": "referringDoctor",
       "relationshipType": "many-to-one"
     },
-    //todo
-    //show in data report
     {
       "otherEntityField": "name",
       "otherEntityName": "doctor",
@@ -259,7 +257,6 @@
       "relationshipName": "pathologistDoctorAssineged",
       "relationshipType": "many-to-one"
     },
-
     {
       "otherEntityField": "name",
       "otherEntityName": "doctor",
