@@ -14,6 +14,9 @@ public class SMSService {
 
     @Async
     public void sendSMS(String phone, String message) {
+        if(phone == null) {
+            return;
+        }
         try {
             System.out.println(phone + " " + message);
             String uri = buildUri(phone, message);
