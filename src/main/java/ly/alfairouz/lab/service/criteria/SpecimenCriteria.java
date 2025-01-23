@@ -5,6 +5,7 @@ import java.util.Objects;
 import ly.alfairouz.lab.domain.enumeration.ContractType;
 import ly.alfairouz.lab.domain.enumeration.LabRef;
 import ly.alfairouz.lab.domain.enumeration.PaymentType;
+import ly.alfairouz.lab.domain.enumeration.PaymentWith;
 import ly.alfairouz.lab.domain.enumeration.Results;
 import ly.alfairouz.lab.domain.enumeration.SpecimenStatus;
 import org.springdoc.api.annotations.ParameterObject;
@@ -46,14 +47,6 @@ public class SpecimenCriteria implements Serializable, Criteria {
         this.patientNameAr = patientNameAr;
     }
 
-    public LongFilter getPathologistDoctorTwoId() {
-        return pathologistDoctorTwoId;
-    }
-
-    public void setPathologistDoctorTwoId(LongFilter pathologistDoctorTwoId) {
-        this.pathologistDoctorTwoId = pathologistDoctorTwoId;
-    }
-
     /**
      * Class for filtering LabRef
      */
@@ -69,6 +62,24 @@ public class SpecimenCriteria implements Serializable, Criteria {
         @Override
         public LabRefFilter copy() {
             return new LabRefFilter(this);
+        }
+    }
+
+    /**
+     * Class for filtering PaymentWith
+     */
+    public static class PaymentWithFilter extends Filter<PaymentWith> {
+
+        public PaymentWithFilter() {
+        }
+
+        public PaymentWithFilter(PaymentWithFilter filter) {
+            super(filter);
+        }
+
+        @Override
+        public PaymentWithFilter copy() {
+            return new PaymentWithFilter(this);
         }
     }
 
@@ -153,6 +164,8 @@ public class SpecimenCriteria implements Serializable, Criteria {
 
     private LabRefFilter labRef;
 
+    private PaymentWithFilter payedWith;
+
     private StringFilter pdfFileUrl;
 
     private IntegerFilter samples;
@@ -176,6 +189,8 @@ public class SpecimenCriteria implements Serializable, Criteria {
     private PaymentTypeFilter paymentType;
 
     private FloatFilter price;
+
+    private FloatFilter discount;
 
     private FloatFilter paid;
 
@@ -204,6 +219,8 @@ public class SpecimenCriteria implements Serializable, Criteria {
     private StringFilter conclusion;
 
     private LocalDateFilter conclusionDate;
+
+    private StringFilter discountNotes;
 
     private StringFilter notes;
 
@@ -241,10 +258,11 @@ public class SpecimenCriteria implements Serializable, Criteria {
 
     private LongFilter referringDoctorId;
 
+    private LongFilter pathologistDoctorAssinegedId;
+
     private LongFilter pathologistDoctorId;
 
     private LongFilter pathologistDoctorTwoId;
-
 
     private LongFilter operatorEmployeeId;
 
@@ -263,6 +281,7 @@ public class SpecimenCriteria implements Serializable, Criteria {
         this.labRefOrder = other.labRefOrder == null ? null : other.labRefOrder.copy();
         this.labQr = other.labQr == null ? null : other.labQr.copy();
         this.labRef = other.labRef == null ? null : other.labRef.copy();
+        this.payedWith = other.payedWith == null ? null : other.payedWith.copy();
         this.pdfFileUrl = other.pdfFileUrl == null ? null : other.pdfFileUrl.copy();
         this.samples = other.samples == null ? null : other.samples.copy();
         this.blocks = other.blocks == null ? null : other.blocks.copy();
@@ -275,6 +294,7 @@ public class SpecimenCriteria implements Serializable, Criteria {
         this.fileNo = other.fileNo == null ? null : other.fileNo.copy();
         this.paymentType = other.paymentType == null ? null : other.paymentType.copy();
         this.price = other.price == null ? null : other.price.copy();
+        this.discount = other.discount == null ? null : other.discount.copy();
         this.paid = other.paid == null ? null : other.paid.copy();
         this.notPaid = other.notPaid == null ? null : other.notPaid.copy();
         this.urgentSample = other.urgentSample == null ? null : other.urgentSample.copy();
@@ -289,6 +309,7 @@ public class SpecimenCriteria implements Serializable, Criteria {
         this.results = other.results == null ? null : other.results.copy();
         this.conclusion = other.conclusion == null ? null : other.conclusion.copy();
         this.conclusionDate = other.conclusionDate == null ? null : other.conclusionDate.copy();
+        this.discountNotes = other.discountNotes == null ? null : other.discountNotes.copy();
         this.notes = other.notes == null ? null : other.notes.copy();
         this.specimenStatus = other.specimenStatus == null ? null : other.specimenStatus.copy();
         this.newBlocksRequested = other.newBlocksRequested == null ? null : other.newBlocksRequested.copy();
@@ -306,7 +327,9 @@ public class SpecimenCriteria implements Serializable, Criteria {
         this.referringCenterId = other.referringCenterId == null ? null : other.referringCenterId.copy();
         this.grossingDoctorId = other.grossingDoctorId == null ? null : other.grossingDoctorId.copy();
         this.referringDoctorId = other.referringDoctorId == null ? null : other.referringDoctorId.copy();
+        this.pathologistDoctorAssinegedId = other.pathologistDoctorAssinegedId == null ? null : other.pathologistDoctorAssinegedId.copy();
         this.pathologistDoctorId = other.pathologistDoctorId == null ? null : other.pathologistDoctorId.copy();
+        this.pathologistDoctorTwoId = other.pathologistDoctorTwoId == null ? null : other.pathologistDoctorTwoId.copy();
         this.operatorEmployeeId = other.operatorEmployeeId == null ? null : other.operatorEmployeeId.copy();
         this.correctorEmployeeId = other.correctorEmployeeId == null ? null : other.correctorEmployeeId.copy();
         this.distinct = other.distinct;
@@ -392,6 +415,21 @@ public class SpecimenCriteria implements Serializable, Criteria {
 
     public void setLabRef(LabRefFilter labRef) {
         this.labRef = labRef;
+    }
+
+    public PaymentWithFilter getPayedWith() {
+        return payedWith;
+    }
+
+    public PaymentWithFilter payedWith() {
+        if (payedWith == null) {
+            payedWith = new PaymentWithFilter();
+        }
+        return payedWith;
+    }
+
+    public void setPayedWith(PaymentWithFilter payedWith) {
+        this.payedWith = payedWith;
     }
 
     public StringFilter getPdfFileUrl() {
@@ -572,6 +610,21 @@ public class SpecimenCriteria implements Serializable, Criteria {
 
     public void setPrice(FloatFilter price) {
         this.price = price;
+    }
+
+    public FloatFilter getDiscount() {
+        return discount;
+    }
+
+    public FloatFilter discount() {
+        if (discount == null) {
+            discount = new FloatFilter();
+        }
+        return discount;
+    }
+
+    public void setDiscount(FloatFilter discount) {
+        this.discount = discount;
     }
 
     public FloatFilter getPaid() {
@@ -782,6 +835,21 @@ public class SpecimenCriteria implements Serializable, Criteria {
 
     public void setConclusionDate(LocalDateFilter conclusionDate) {
         this.conclusionDate = conclusionDate;
+    }
+
+    public StringFilter getDiscountNotes() {
+        return discountNotes;
+    }
+
+    public StringFilter discountNotes() {
+        if (discountNotes == null) {
+            discountNotes = new StringFilter();
+        }
+        return discountNotes;
+    }
+
+    public void setDiscountNotes(StringFilter discountNotes) {
+        this.discountNotes = discountNotes;
     }
 
     public StringFilter getNotes() {
@@ -1039,6 +1107,21 @@ public class SpecimenCriteria implements Serializable, Criteria {
         this.referringDoctorId = referringDoctorId;
     }
 
+    public LongFilter getPathologistDoctorAssinegedId() {
+        return pathologistDoctorAssinegedId;
+    }
+
+    public LongFilter pathologistDoctorAssinegedId() {
+        if (pathologistDoctorAssinegedId == null) {
+            pathologistDoctorAssinegedId = new LongFilter();
+        }
+        return pathologistDoctorAssinegedId;
+    }
+
+    public void setPathologistDoctorAssinegedId(LongFilter pathologistDoctorAssinegedId) {
+        this.pathologistDoctorAssinegedId = pathologistDoctorAssinegedId;
+    }
+
     public LongFilter getPathologistDoctorId() {
         return pathologistDoctorId;
     }
@@ -1052,6 +1135,21 @@ public class SpecimenCriteria implements Serializable, Criteria {
 
     public void setPathologistDoctorId(LongFilter pathologistDoctorId) {
         this.pathologistDoctorId = pathologistDoctorId;
+    }
+
+    public LongFilter getPathologistDoctorTwoId() {
+        return pathologistDoctorTwoId;
+    }
+
+    public LongFilter pathologistDoctorTwoId() {
+        if (pathologistDoctorTwoId == null) {
+            pathologistDoctorTwoId = new LongFilter();
+        }
+        return pathologistDoctorTwoId;
+    }
+
+    public void setPathologistDoctorTwoId(LongFilter pathologistDoctorTwoId) {
+        this.pathologistDoctorTwoId = pathologistDoctorTwoId;
     }
 
     public LongFilter getOperatorEmployeeId() {
@@ -1107,6 +1205,7 @@ public class SpecimenCriteria implements Serializable, Criteria {
                 Objects.equals(labRefOrder, that.labRefOrder) &&
                 Objects.equals(labQr, that.labQr) &&
                 Objects.equals(labRef, that.labRef) &&
+                Objects.equals(payedWith, that.payedWith) &&
                 Objects.equals(pdfFileUrl, that.pdfFileUrl) &&
                 Objects.equals(samples, that.samples) &&
                 Objects.equals(blocks, that.blocks) &&
@@ -1119,6 +1218,7 @@ public class SpecimenCriteria implements Serializable, Criteria {
             Objects.equals(fileNo, that.fileNo) &&
             Objects.equals(paymentType, that.paymentType) &&
             Objects.equals(price, that.price) &&
+                Objects.equals(discount, that.discount) &&
             Objects.equals(paid, that.paid) &&
             Objects.equals(notPaid, that.notPaid) &&
             Objects.equals(urgentSample, that.urgentSample) &&
@@ -1133,6 +1233,7 @@ public class SpecimenCriteria implements Serializable, Criteria {
                 Objects.equals(results, that.results) &&
                 Objects.equals(conclusion, that.conclusion) &&
                 Objects.equals(conclusionDate, that.conclusionDate) &&
+                Objects.equals(discountNotes, that.discountNotes) &&
                 Objects.equals(notes, that.notes) &&
                 Objects.equals(specimenStatus, that.specimenStatus) &&
                 Objects.equals(newBlocksRequested, that.newBlocksRequested) &&
@@ -1150,11 +1251,11 @@ public class SpecimenCriteria implements Serializable, Criteria {
                 Objects.equals(referringCenterId, that.referringCenterId) &&
                 Objects.equals(grossingDoctorId, that.grossingDoctorId) &&
                 Objects.equals(referringDoctorId, that.referringDoctorId) &&
+                Objects.equals(pathologistDoctorAssinegedId, that.pathologistDoctorAssinegedId) &&
                 Objects.equals(pathologistDoctorId, that.pathologistDoctorId) &&
+                Objects.equals(pathologistDoctorTwoId, that.pathologistDoctorTwoId) &&
                 Objects.equals(operatorEmployeeId, that.operatorEmployeeId) &&
                 Objects.equals(correctorEmployeeId, that.correctorEmployeeId) &&
-                Objects.equals(patientNameAr, that.patientNameAr) &&
-                Objects.equals(isOr, that.isOr) &&
                 Objects.equals(distinct, that.distinct)
         );
     }
@@ -1167,6 +1268,7 @@ public class SpecimenCriteria implements Serializable, Criteria {
             labRefOrder,
             labQr,
             labRef,
+            payedWith,
             pdfFileUrl,
             samples,
             blocks,
@@ -1179,6 +1281,7 @@ public class SpecimenCriteria implements Serializable, Criteria {
             fileNo,
             paymentType,
             price,
+            discount,
             paid,
             notPaid,
             urgentSample,
@@ -1193,6 +1296,7 @@ public class SpecimenCriteria implements Serializable, Criteria {
             results,
             conclusion,
             conclusionDate,
+            discountNotes,
             notes,
             specimenStatus,
             newBlocksRequested,
@@ -1210,7 +1314,9 @@ public class SpecimenCriteria implements Serializable, Criteria {
             referringCenterId,
             grossingDoctorId,
             referringDoctorId,
+            pathologistDoctorAssinegedId,
             pathologistDoctorId,
+            pathologistDoctorTwoId,
             operatorEmployeeId,
             correctorEmployeeId,
             patientNameAr,
@@ -1228,6 +1334,7 @@ public class SpecimenCriteria implements Serializable, Criteria {
             (labRefOrder != null ? "labRefOrder=" + labRefOrder + ", " : "") +
             (labQr != null ? "labQr=" + labQr + ", " : "") +
             (labRef != null ? "labRef=" + labRef + ", " : "") +
+            (payedWith != null ? "payedWith=" + payedWith + ", " : "") +
             (pdfFileUrl != null ? "pdfFileUrl=" + pdfFileUrl + ", " : "") +
             (samples != null ? "samples=" + samples + ", " : "") +
             (blocks != null ? "blocks=" + blocks + ", " : "") +
@@ -1240,6 +1347,7 @@ public class SpecimenCriteria implements Serializable, Criteria {
             (fileNo != null ? "fileNo=" + fileNo + ", " : "") +
             (paymentType != null ? "paymentType=" + paymentType + ", " : "") +
             (price != null ? "price=" + price + ", " : "") +
+            (discount != null ? "discount=" + discount + ", " : "") +
             (paid != null ? "paid=" + paid + ", " : "") +
             (notPaid != null ? "notPaid=" + notPaid + ", " : "") +
             (urgentSample != null ? "urgentSample=" + urgentSample + ", " : "") +
@@ -1254,6 +1362,7 @@ public class SpecimenCriteria implements Serializable, Criteria {
             (results != null ? "results=" + results + ", " : "") +
             (conclusion != null ? "conclusion=" + conclusion + ", " : "") +
             (conclusionDate != null ? "conclusionDate=" + conclusionDate + ", " : "") +
+            (discountNotes != null ? "discountNotes=" + discountNotes + ", " : "") +
             (notes != null ? "notes=" + notes + ", " : "") +
             (specimenStatus != null ? "specimenStatus=" + specimenStatus + ", " : "") +
             (newBlocksRequested != null ? "newBlocksRequested=" + newBlocksRequested + ", " : "") +
@@ -1271,7 +1380,9 @@ public class SpecimenCriteria implements Serializable, Criteria {
             (referringCenterId != null ? "referringCenterId=" + referringCenterId + ", " : "") +
             (grossingDoctorId != null ? "grossingDoctorId=" + grossingDoctorId + ", " : "") +
             (referringDoctorId != null ? "referringDoctorId=" + referringDoctorId + ", " : "") +
+            (pathologistDoctorAssinegedId != null ? "pathologistDoctorAssinegedId=" + pathologistDoctorAssinegedId + ", " : "") +
             (pathologistDoctorId != null ? "pathologistDoctorId=" + pathologistDoctorId + ", " : "") +
+            (pathologistDoctorTwoId != null ? "pathologistDoctorTwoId=" + pathologistDoctorTwoId + ", " : "") +
             (operatorEmployeeId != null ? "operatorEmployeeId=" + operatorEmployeeId + ", " : "") +
             (correctorEmployeeId != null ? "correctorEmployeeId=" + correctorEmployeeId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +

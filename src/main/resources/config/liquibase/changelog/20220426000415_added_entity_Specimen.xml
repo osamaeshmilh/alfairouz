@@ -26,6 +26,9 @@
             <column name="lab_ref" type="varchar(255)">
                 <constraints nullable="true"/>
             </column>
+            <column name="payed_with" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
             <column name="pdf_file" type="longblob">
                 <constraints nullable="true"/>
             </column>
@@ -66,9 +69,6 @@
                 <constraints nullable="true"/>
             </column>
             <column name="price" type="${floatType}">
-                <constraints nullable="true"/>
-            </column>
-            <column name="discount_notes" type="varchar(255)">
                 <constraints nullable="true"/>
             </column>
             <column name="discount" type="${floatType}">
@@ -114,6 +114,9 @@
                 <constraints nullable="true"/>
             </column>
             <column name="conclusion_date" type="date">
+                <constraints nullable="true"/>
+            </column>
+            <column name="discount_notes" type="varchar(255)">
                 <constraints nullable="true"/>
             </column>
             <column name="notes" type="longtext">
@@ -213,6 +216,7 @@
             <column name="lab_ref_order" type="string"/>
             <column name="lab_qr" type="string"/>
             <column name="lab_ref" type="string"/>
+            <column name="payed_with" type="string"/>
             <column name="pdf_file" type="blob"/>
             <column name="pdf_file_content_type" type="string"/>
             <column name="pdf_file_url" type="string"/>

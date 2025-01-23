@@ -1,13 +1,9 @@
 <div class="entity-container">
-  <div class="mat-elevation-z1 round-card white-bg p-4 mt-5">
-    <br/>
+  <div class="mat-elevation-z1 round-card white-bg p-2 mt-2">
     <br/>
     <h3 class="text-center" jhiTranslate="global.field.querySpecimen">الاستعلام عن عينة</h3>
-    <br/>
-    <br/>
-
     <div class="row text-center">
-      <form class="col-12 col-md-6 col-center-block mt-5">
+      <form class="col-12 col-md-6 col-center-block mt-2">
         <mat-form-field appearance="outline" class="fill">
           <button (click)="search()" class="mr-2" mat-icon-button matPrefix type="submit">
             <mat-icon>search</mat-icon>
@@ -41,7 +37,7 @@
     </div>
     <div class="row text-center">
       <div *ngIf="specimen">
-        <div class="col-10 col-center-block mt-5">
+        <div class="col-10 col-center-block">
           <div class="row detail-row mt-3">
             <div class="col-12 col-md-4">
               <div class="text-muted">رقم QR العينة</div>
@@ -107,11 +103,7 @@
             </ng-template>
           </mat-step>
         </mat-stepper>
-
-
       </div>
     </div>
-    <br/>
-    <br/>
   </div>
 </div>
