@@ -84,4 +84,5 @@ public interface SpecimenRepository extends JpaRepository<Specimen, Long>, JpaSp
     )
     Optional<Specimen> findOneByLabQrWithToOneRelationships(@Param("labQr") String labQr);
 
+    Optional<Specimen> findByLabRefNo(String labRefNo);
 }
