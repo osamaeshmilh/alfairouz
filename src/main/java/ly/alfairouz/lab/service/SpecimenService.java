@@ -286,6 +286,79 @@ public class SpecimenService {
         return specimenRepository.findByLabRefNo(labRefNo).isPresent();
     }
 
+    public SpecimenDTO create(SpecimenDTO specimenDTO) {
+        String uniqueLabRefNo = generateUniqueLabRefNo(specimenDTO.getLabRef());
+        specimenDTO.setLabRefNo(uniqueLabRefNo);
+
+        // Extract just the numeric part for the shared sequence
+        String[] parts = uniqueLabRefNo.split("-");
+        String numberPart = parts[0].replaceAll("[^0-9]", "");
+
+        // Store the full reference as the order to maintain uniqueness
+        String labRefOrder = specimenDTO.getLabRef().toString() + numberPart;
+        specimenDTO.setLabRefOrder(labRefOrder);
+
+        // Generate QR code
+        int mySaltSizeInBytes = 32;
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[mySaltSizeInBytes];
+        random.nextBytes(salt);
+
+        ByteBuffer bbuffer = ByteBuffer.allocate(mySaltSizeInBytes + uniqueLabRefNo.length());
+        bbuffer.put(salt);
+        bbuffer.put(uniqueLabRefNo.getBytes());
+
+        CRC32 crc = new CRC32();
+        crc.update(bbuffer.array());
+        String enc = Long.toHexString(crc.getValue());
+        specimenDTO.setLabQr(enc.toUpperCase(Locale.ROOT));
+
+        // Rest of the patient and payment logic remains the same
+        if (specimenDTO.getPatient() == null) {
+            PatientDTO patientDTO = new PatientDTO();
+            patientDTO.setName(specimenDTO.getPatientName());
+            patientDTO.setNameAr(specimenDTO.getPatientNameAr());
+            patientDTO.setNationality(specimenDTO.getPatientNationality());
+            patientDTO.setAddress(specimenDTO.getPatientAddress());
+            patientDTO.setBirthDate(specimenDTO.getPatientBirthDate());
+            patientDTO.setGender(specimenDTO.getPatientGender());
+            patientDTO.setMobileNumber(specimenDTO.getPatientMobileNumber());
+            patientDTO.setMotherName(specimenDTO.getPatientMotherName());
+
+            PatientDTO result = patientService.save(patientDTO);
+            specimenDTO.setPatient(result);
+        }
+
+        // Payment type handling
+        if (specimenDTO.getPaymentType() == PaymentType.CASH) {
+            SpecimenTypeDTO specimenTypeDTO = specimenTypeService.findOne(specimenDTO.getSpecimenType().getId()).get();
+            specimenDTO.setContractType(ContractType.SPECIMEN);
+            specimenDTO.setPrice(specimenTypeDTO.getPrice());
+        } else if (specimenDTO.getPaymentType() == PaymentType.MONTHLY) {
+            ReferringCenterDTO referringCenterDTO = referringCenterService.findOne(specimenDTO.getReferringCenter().getId()).get();
+            ReferringCenterPriceDTO referringCenterPriceDTO;
+
+            if (referringCenterDTO.getContractType() == ContractType.SIZE) {
+                referringCenterPriceDTO = referringCenterPriceService.findByReferringCenterIdAndSizeId(
+                    specimenDTO.getReferringCenter().getId(),
+                    specimenDTO.getSize().getId()
+                );
+                specimenDTO.setContractType(ContractType.SIZE);
+                specimenDTO.setPrice(referringCenterPriceDTO.getPrice());
+            } else if (referringCenterDTO.getContractType() == ContractType.SPECIMEN) {
+                referringCenterPriceDTO = referringCenterPriceService.findByReferringCenterIdAndTypeId(
+                    specimenDTO.getReferringCenter().getId(),
+                    specimenDTO.getSpecimenType().getId()
+                );
+                specimenDTO.setContractType(ContractType.SPECIMEN);
+                specimenDTO.setPrice(referringCenterPriceDTO.getPrice());
+            }
+        }
+
+        specimenDTO.setSpecimenStatus(SpecimenStatus.RECEIVED);
+        return save(specimenDTO);
+    }
+
     private String generateUniqueLabRefNo(LabRef labRef) {
         String year = Year.now().format(DateTimeFormatter.ofPattern("uu"));
         String labRefNo;
@@ -294,11 +367,12 @@ public class SpecimenService {
         do {
             List<String> maxLabRefNo;
 
+            // Group H, HSO, IHSO to share the same sequence
             if (labRef == LabRef.H || labRef == LabRef.HSO || labRef == LabRef.IHSO) {
                 maxLabRefNo = specimenRepository.findMaxLabRefNoForSharedTypes(
-                    labRef.toString(),
-                    labRef.toString(),
-                    labRef.toString(),
+                    LabRef.H.toString(),
+                    LabRef.HSO.toString(),
+                    LabRef.IHSO.toString(),
                     year,
                     PageRequest.of(0, 1)
                 );
@@ -324,79 +398,10 @@ public class SpecimenService {
             }
 
             labRefNo = labRef.toString() + String.format("%05d", maxNumber + 1) + "-" + year;
-            maxNumber++;
+
         } while (specimenRepository.findByLabRefNo(labRefNo).isPresent());
 
         return labRefNo;
-    }
-
-    public SpecimenDTO create(SpecimenDTO specimenDTO) {
-        String uniqueLabRefNo = generateUniqueLabRefNo(specimenDTO.getLabRef());
-        specimenDTO.setLabRefNo(uniqueLabRefNo);
-
-        // Extract the numeric part for labRefOrder
-        String[] parts = uniqueLabRefNo.split("-");
-        String numberPart = parts[0].replaceAll("[^0-9]", "");
-        specimenDTO.setLabRefOrder(numberPart);
-
-        // Generate QR code
-        int mySaltSizeInBytes = 32;
-        SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[mySaltSizeInBytes];
-        random.nextBytes(salt);
-
-        ByteBuffer bbuffer = ByteBuffer.allocate(mySaltSizeInBytes + uniqueLabRefNo.length());
-        bbuffer.put(salt);
-        bbuffer.put(uniqueLabRefNo.getBytes());
-
-        CRC32 crc = new CRC32();
-        crc.update(bbuffer.array());
-        String enc = Long.toHexString(crc.getValue());
-        specimenDTO.setLabQr(enc.toUpperCase(Locale.ROOT));
-
-        if (specimenDTO.getPatient() == null) {
-            //TODO:: Create Patient
-            PatientDTO patientDTO = new PatientDTO();
-            patientDTO.setName(specimenDTO.getPatientName());
-            patientDTO.setNameAr(specimenDTO.getPatientNameAr());
-            patientDTO.setNationality(specimenDTO.getPatientNationality());
-            patientDTO.setAddress(specimenDTO.getPatientAddress());
-            patientDTO.setBirthDate(specimenDTO.getPatientBirthDate());
-            patientDTO.setGender(specimenDTO.getPatientGender());
-            patientDTO.setMobileNumber(specimenDTO.getPatientMobileNumber());
-            patientDTO.setMotherName(specimenDTO.getPatientMotherName());
-
-            PatientDTO result = patientService.save(patientDTO);
-            specimenDTO.setPatient(result);
-        }
-
-        if (specimenDTO.getPaymentType() == PaymentType.CASH) {
-            SpecimenTypeDTO specimenTypeDTO = specimenTypeService.findOne(specimenDTO.getSpecimenType().getId()).get();
-            specimenDTO.setContractType(ContractType.SPECIMEN);
-            specimenDTO.setPrice(specimenTypeDTO.getPrice());
-        } else if (specimenDTO.getPaymentType() == PaymentType.MONTHLY) {
-
-            ReferringCenterDTO referringCenterDTO = referringCenterService.findOne(specimenDTO.getReferringCenter().getId()).get();
-            ReferringCenterPriceDTO referringCenterPriceDTO;
-
-            if (referringCenterDTO.getContractType() == ContractType.SIZE) {
-                referringCenterPriceDTO = referringCenterPriceService.findByReferringCenterIdAndSizeId(specimenDTO.getReferringCenter().getId(), specimenDTO.getSize().getId());
-
-                specimenDTO.setContractType(ContractType.SIZE);
-                specimenDTO.setPrice(referringCenterPriceDTO.getPrice());
-
-            } else if (referringCenterDTO.getContractType() == ContractType.SPECIMEN) {
-                referringCenterPriceDTO = referringCenterPriceService.findByReferringCenterIdAndTypeId(specimenDTO.getReferringCenter().getId(), specimenDTO.getSpecimenType().getId());
-
-                specimenDTO.setContractType(ContractType.SPECIMEN);
-                specimenDTO.setPrice(referringCenterPriceDTO.getPrice());
-
-            }
-        }
-
-        specimenDTO.setSpecimenStatus(SpecimenStatus.RECEIVED);
-
-        return save(specimenDTO);
     }
 
 
