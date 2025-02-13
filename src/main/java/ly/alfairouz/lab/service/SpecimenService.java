@@ -361,48 +361,45 @@ public class SpecimenService {
 
     private String generateUniqueLabRefNo(LabRef labRef) {
         String year = Year.now().format(DateTimeFormatter.ofPattern("uu"));
-        String labRefNo;
-        Long maxNumber;
+        long nextNumber;
 
-        do {
-            List<String> maxLabRefNo;
+        log.info("Generating lab ref no for type: {} and year: {}", labRef, year);
 
-            // Group H, HSO, IHSO to share the same sequence
-            if (labRef == LabRef.H || labRef == LabRef.HSO || labRef == LabRef.IHSO) {
-                maxLabRefNo = specimenRepository.findMaxLabRefNoForSharedTypes(
-                    LabRef.H.toString(),
-                    LabRef.HSO.toString(),
-                    LabRef.IHSO.toString(),
-                    year,
-                    PageRequest.of(0, 1)
-                );
+        try {
+            if (labRef == LabRef.C) {
+                long maxC = specimenRepository.getMaxNumberByTypeAndYear("C", year);
+                log.info("Max number for C: {}", maxC);
+                nextNumber = maxC + 1;
+            } else if (labRef == LabRef.IH) {
+                long maxIH = specimenRepository.getMaxNumberByTypeAndYear("IH", year);
+                log.info("Max number for IH: {}", maxIH);
+                nextNumber = maxIH + 1;
             } else {
-                maxLabRefNo = specimenRepository.findMaxLabRefNoStartingWith(
-                    labRef.toString(),
-                    year,
-                    PageRequest.of(0, 1)
-                );
+                // Get max number among H, HSO, and IHSO
+                long maxH = specimenRepository.getMaxNumberByTypeAndYear("H", year);
+                long maxHSO = specimenRepository.getMaxNumberByTypeAndYear("HSO", year);
+                long maxIHSO = specimenRepository.getMaxNumberByTypeAndYear("IHSO", year);
+
+                log.info("Max numbers - H: {}, HSO: {}, IHSO: {}", maxH, maxHSO, maxIHSO);
+                nextNumber = Math.max(Math.max(maxH, maxHSO), maxIHSO) + 1;
             }
 
-            maxNumber = 0L;
-            if (!maxLabRefNo.isEmpty()) {
-                String[] parts = maxLabRefNo.get(0).split("-");
-                if (parts.length > 1) {
-                    String numberPart = parts[0].replaceAll("[^0-9]", "");
-                    try {
-                        maxNumber = Long.parseLong(numberPart);
-                    } catch (NumberFormatException e) {
-                        log.error("Error parsing number from lab ref no: " + maxLabRefNo.get(0), e);
-                    }
-                }
+            String labRefNo = String.format("%s%05d-%s", labRef.toString(), nextNumber, year);
+            log.info("Generated lab ref no: {}", labRefNo);
+
+            // Double check if this number already exists
+            Optional<Specimen> existing = specimenRepository.findByLabRefNo(labRefNo);
+            if (existing.isPresent()) {
+                log.error("DUPLICATE DETECTED! Lab ref no already exists: {}, trying next number", labRefNo);
+                // Try with next number explicitly
+                return generateUniqueLabRefNo(labRef);
             }
 
-            labRefNo = labRef.toString() + String.format("%05d", maxNumber + 1) + "-" + year;
-
-        } while (specimenRepository.findByLabRefNo(labRefNo).isPresent());
-
-        return labRefNo;
+            return labRefNo;
+        } catch (Exception e) {
+            log.error("Error generating lab ref no: {}", e.getMessage(), e);
+            throw new RuntimeException("Failed to generate unique lab ref no", e);
+        }
     }
-
 
 }

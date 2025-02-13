@@ -84,5 +84,13 @@ public interface SpecimenRepository extends JpaRepository<Specimen, Long>, JpaSp
     )
     Optional<Specimen> findOneByLabQrWithToOneRelationships(@Param("labQr") String labQr);
 
+    @Query(value = "SELECT COALESCE(MAX(CAST(SUBSTRING(lab_ref_no, LENGTH(:prefix) + 1, 5) AS UNSIGNED)), 0) " +
+        "FROM specimen " +
+        "WHERE lab_ref_no LIKE CONCAT(:prefix, '%') " +
+        "AND lab_ref_no LIKE CONCAT('%-', :year)",
+        nativeQuery = true)
+    long getMaxNumberByTypeAndYear(@Param("prefix") String prefix, @Param("year") String year);
+
     Optional<Specimen> findByLabRefNo(String labRefNo);
+
 }
