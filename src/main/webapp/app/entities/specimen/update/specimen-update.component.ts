@@ -457,7 +457,7 @@ export class SpecimenUpdateComponent implements OnInit {
       switchMap((term: string) => this.patientService.query({
         "nameAr.contains": term,
         sort: ['nameAr', 'asc'],
-        size: 1000
+        size: 2000
       }))
     ).subscribe((res: HttpResponse<IPatient[]>) => {
       this.patientsSharedCollection = res.body ?? [];
@@ -465,7 +465,7 @@ export class SpecimenUpdateComponent implements OnInit {
 
     this.biopsyService
       .query({
-        size: 1000,
+        size: 2000,
         sort: ['name', 'asc'],
       })
       .pipe(map((res: HttpResponse<IBiopsy[]>) => res.body ?? []))
@@ -474,7 +474,7 @@ export class SpecimenUpdateComponent implements OnInit {
 
     this.cytologyService
       .query({
-        size: 1000,
+        size: 2000,
         sort: ['name', 'asc'],
       })
       .pipe(map((res: HttpResponse<ICytology[]>) => res.body ?? []))
@@ -487,7 +487,7 @@ export class SpecimenUpdateComponent implements OnInit {
 
     this.organService
       .query({
-        size: 1000,
+        size: 2000,
         sort: ['name', 'asc'],
       })
       .pipe(map((res: HttpResponse<IOrgan[]>) => res.body ?? []))
@@ -496,7 +496,7 @@ export class SpecimenUpdateComponent implements OnInit {
 
     this.specimenTypeService
       .query({
-        size: 1000,
+        size: 2000,
         sort: ['category', 'asc', 'name', 'asc'],
       })
       .pipe(map((res: HttpResponse<ISpecimenType[]>) => res.body ?? []))
@@ -508,14 +508,14 @@ export class SpecimenUpdateComponent implements OnInit {
       .subscribe((specimenTypes: ISpecimenType[]) => (this.specimenTypesSharedCollection = specimenTypes));
 
     this.sizeService
-      .query({size: 1000})
+      .query({size: 2000})
       .pipe(map((res: HttpResponse<ISize[]>) => res.body ?? []))
       .pipe(map((sizes: ISize[]) => this.sizeService.addSizeToCollectionIfMissing(sizes, this.editForm.get('size')!.value)))
       .subscribe((sizes: ISize[]) => (this.sizesSharedCollection = sizes));
 
     this.referringCenterService
       .query({
-        size: 1000,
+        size: 2000,
         sort: ['nameAr', 'asc']
       })
       .pipe(map((res: HttpResponse<IReferringCenter[]>) => res.body ?? []))
@@ -528,7 +528,7 @@ export class SpecimenUpdateComponent implements OnInit {
 
     this.doctorService
       .query({
-        size: 1000,
+        size: 2000,
         sort: ['nameAr', 'asc'], 'doctorType.equals': 'GROSSING'
       })
       .pipe(map((res: HttpResponse<IDoctor[]>) => res.body ?? []))
@@ -544,7 +544,7 @@ export class SpecimenUpdateComponent implements OnInit {
 
     this.doctorService
       .query({
-        size: 1000,
+        size: 2000,
         sort: ['nameAr', 'asc'], 'doctorType.equals': 'REFERRING'
       })
       .pipe(map((res: HttpResponse<IDoctor[]>) => res.body ?? []))
@@ -560,7 +560,7 @@ export class SpecimenUpdateComponent implements OnInit {
 
     this.doctorService
       .query({
-        size: 1000,
+        size: 2000,
         sort: ['nameAr', 'asc'], 'doctorType.equals': 'PATHOLOGIST'
       })
       .pipe(map((res: HttpResponse<IDoctor[]>) => res.body ?? []))
@@ -575,7 +575,7 @@ export class SpecimenUpdateComponent implements OnInit {
       .subscribe((doctors: IDoctor[]) => (this.pDoctorsSharedCollection = doctors));
 
     this.employeeService
-      .query({size: 1000})
+      .query({size: 2000})
       .pipe(map((res: HttpResponse<IEmployee[]>) => res.body ?? []))
       .pipe(
         map((employees: IEmployee[]) =>
