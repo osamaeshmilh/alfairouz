@@ -133,7 +133,7 @@ export class SpecimenUpdateComponent implements OnInit {
     patientGender: [],
     patientBirthDate: [],
 
-    payedWith: [],
+    payedWith: [Validators.required],
 
   });
   paymentType: any;

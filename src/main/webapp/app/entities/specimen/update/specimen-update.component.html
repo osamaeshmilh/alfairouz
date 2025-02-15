@@ -401,11 +401,10 @@
               <label class="form-label" jhiTranslate="alfairouzApp.specimen.payedWith" for="field_payedWith">Payed
                 With</label>
               <select class="form-control" name="payedWith" formControlName="payedWith" id="field_payedWith"
-                      data-cy="payedWith">
-                <option [ngValue]="null"></option>
-                <option *ngFor="let payedWith of payedWithValues"
-                        [value]="payedWith">{{ payedWith }}
-                </option>
+                      data-cy="payedWith" required>
+                <option value="CASH">نقدي (Cash)</option>
+                <option value="ATM">بطاقة (ِATM)</option>
+                <option value="CREDIT">آجل - شركات او مصحات (Credit)</option>
               </select>
             </div>
 

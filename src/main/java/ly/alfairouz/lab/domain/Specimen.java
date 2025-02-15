@@ -16,7 +16,7 @@ import ly.alfairouz.lab.domain.enumeration.SpecimenStatus;
  */
 @Entity
 @Table(name = "specimen")
-public class Specimen implements Serializable {
+public class Specimen extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

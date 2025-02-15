@@ -13,7 +13,6 @@ public abstract class AbstractAuditingDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ReadOnlyProperty
     private String createdBy;
 
     @ReadOnlyProperty

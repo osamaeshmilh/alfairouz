@@ -6,4 +6,5 @@ package ly.alfairouz.lab.domain.enumeration;
 public enum PaymentWith {
     CASH,
     ATM,
+    CREDIT
 }
