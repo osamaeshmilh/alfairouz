@@ -13,6 +13,7 @@
     </parameter>
     <queryString language="SQL">
         <![CDATA[select  alfairouz.specimen.id as specimenId,
+alfairouz.specimen.lab_ref,
 alfairouz.specimen.lab_ref_no,
 alfairouz.specimen.lab_qr ,
 alfairouz.specimen.samples ,
@@ -41,6 +42,10 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
     </queryString>
     <field name="specimenId" class="java.lang.Long">
         <property name="com.jaspersoft.studio.field.label" value="specimenId"/>
+        <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
+    </field>
+    <field name="lab_ref" class="java.lang.String">
+        <property name="com.jaspersoft.studio.field.label" value="lab_ref"/>
         <property name="com.jaspersoft.studio.field.tree.path" value="specimen"/>
     </field>
     <field name="lab_ref_no" class="java.lang.String">
@@ -269,7 +274,7 @@ where alfairouz.specimen.id = $P{specimen_id}]]>
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{lab_qr}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{lab_qr} + " - " + $F{lab_ref}]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight">
                 <reportElement x="125" y="160" width="190" height="20" uuid="6db78e2f-c853-4a17-a66f-66d5638058ab">
