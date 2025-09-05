@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpResponse} from '@angular/common/http';
 import {FormBuilder, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {debounceTime, distinctUntilChanged, Observable, Subject, switchMap} from 'rxjs';
+import {debounceTime, distinctUntilChanged, Observable, of, Subject, switchMap} from 'rxjs';
 import {finalize, map} from 'rxjs/operators';
 
 import { ISpecimen, Specimen } from '../specimen.model';
@@ -43,6 +43,7 @@ import {PaymentWith} from "../../enumerations/payment-with.model";
 @Component({
   selector: 'jhi-specimen-update',
   templateUrl: './specimen-update.component.html',
+  styleUrls: ['./specimen-update.component.scss']  // Add this line
 })
 export class SpecimenUpdateComponent implements OnInit {
   isSaving = false;
@@ -79,7 +80,7 @@ export class SpecimenUpdateComponent implements OnInit {
     blocks: [],
     slides: [],
     samplingDate: [],
-    receivingDate: [],
+    receivingDate: [dayjs()], // Default to today
     contractType: [],
     isWithdrawn: [],
     withdrawDate: [],
@@ -177,6 +178,10 @@ export class SpecimenUpdateComponent implements OnInit {
         specimen.paymentType = this.paymentType;
       } else {
         this.paymentType = specimen.paymentType;
+      }
+
+      if (!specimen.id) {
+        specimen.receivingDate = dayjs();
       }
       this.updateForm(specimen);
 
@@ -324,7 +329,27 @@ export class SpecimenUpdateComponent implements OnInit {
   }
 
   onPatientSearch(term: string): void {
-    this.searchTerms.next(term);
+    if (term.length >= 2) {
+      this.searchTerms.next(term);
+    } else {
+      this.patientsSharedCollection = [];
+    }
+  }
+  selectPatient(patient: IPatient, checked: boolean): void {
+    if (checked) {
+      // Clear any previously selected patient and select this one
+      this.editForm.patchValue({ patient });
+    } else {
+      // Clear selection if unchecked
+      this.editForm.patchValue({ patient: null });
+    }
+
+    // Ensure only one checkbox is checked at a time
+    this.patientsSharedCollection.forEach(p => {
+      if (p.id !== patient.id) {
+        // This will trigger change detection to update other checkboxes
+      }
+    });
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ISpecimen>>): void {
@@ -454,11 +479,16 @@ export class SpecimenUpdateComponent implements OnInit {
     this.searchTerms.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap((term: string) => this.patientService.query({
-        "nameAr.contains": term,
-        sort: ['nameAr', 'asc'],
-        size: 2000
-      }))
+      switchMap((term: string) => {
+        if (term.length < 2) {
+          return of(new HttpResponse<IPatient[]>({ body: [] }));
+        }
+        return this.patientService.query({
+          "nameAr.contains": term,
+          sort: ['nameAr', 'asc'],
+          size: 50
+        });
+      })
     ).subscribe((res: HttpResponse<IPatient[]>) => {
       this.patientsSharedCollection = res.body ?? [];
     });
@@ -669,6 +699,7 @@ export class SpecimenUpdateComponent implements OnInit {
       payedWith: this.editForm.get(['payedWith'])!.value,
     };
   }
+
 
 
 }

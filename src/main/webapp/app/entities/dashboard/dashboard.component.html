@@ -19,33 +19,32 @@
     </div>
 
     <div *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_TYPING','ROLE_REFERRING_DOCTOR','ROLE_REFERRING_CENTER']"
-         class="detail-row align-items-center mt-3">
-      <div class="mat-elevation-z1 px-4 py-3 d-flex round-card col-3 white-bg">
+         class="detail-row d-flex align-items-center mt-3">
+
+      <div class="mat-elevation-z1 px-4 py-3 d-flex round-card white-bg mx-2 flex-fill">
         <div class="d-flex flex-column">
           <h3 class="m-0">{{ specimenCount }}</h3>
           <p class="m-0">عدد العينات</p>
         </div>
-        <mat-icon class="big-icon mr-auto" color="primary">payment</mat-icon>
+        <mat-icon class="big-icon ml-auto" color="primary">payment</mat-icon>
       </div>
 
-      <span class="mx-2"></span>
-
-      <div *jhiHasAnyAuthority="['ROLE_ADMIN']" class="mat-elevation-z1 px-4 py-3 d-flex round-card col-3 white-bg">
+      <div *jhiHasAnyAuthority="['ROLE_ADMIN']" class="mat-elevation-z1 px-4 py-3 d-flex round-card white-bg mx-2 flex-fill">
         <div class="d-flex flex-column">
           <h3 class="m-0">{{ doctorCount }}</h3>
           <p class="m-0">عدد الاطباء</p>
         </div>
-        <mat-icon class="big-icon mr-auto" color="primary">account_circle</mat-icon>
+        <mat-icon class="big-icon ml-auto" color="primary">account_circle</mat-icon>
       </div>
 
-      <span class="mx-2"></span>
-      <div *jhiHasAnyAuthority="['ROLE_ADMIN']" class="mat-elevation-z1 px-4 py-3 d-flex round-card col-3 white-bg">
+      <div *jhiHasAnyAuthority="['ROLE_ADMIN']" class="mat-elevation-z1 px-4 py-3 d-flex round-card white-bg mx-2 flex-fill">
         <div class="d-flex flex-column">
           <h3 class="m-0">{{ referringCenterCount }}</h3>
           <p class="m-0">عدد المراكز</p>
         </div>
-        <mat-icon class="big-icon mr-auto" color="primary">business</mat-icon>
+        <mat-icon class="big-icon ml-auto" color="primary">business</mat-icon>
       </div>
+
     </div>
   </div>
 

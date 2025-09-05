@@ -6,7 +6,8 @@
       "C": "C - Cytology",
       "HSO": "HSO - 2nd Opinion/Block",
       "IH": "IH - Immune Stain",
-      "IHSO": "IHSO - 2nd opinion Immune Stain (2)"
+      "IHSO": "IHSO - 2nd opinion Immune Stain (2)",
+      "M": "Molecular"
     }
   }
 }

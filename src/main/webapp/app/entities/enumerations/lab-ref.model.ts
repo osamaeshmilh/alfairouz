@@ -8,4 +8,6 @@ export enum LabRef {
   IH = 'IH',
 
   IHSO = 'IHSO',
+
+  M = 'M',
 }

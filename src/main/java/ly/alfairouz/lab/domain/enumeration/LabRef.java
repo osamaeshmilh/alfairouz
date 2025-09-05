@@ -14,4 +14,5 @@ public enum LabRef {
     H,
     HSO,
     IHSO,
+    M,
 }

@@ -34,274 +34,326 @@
           </ng-template>
           <div class="m-4 mt-4">
             <br/>
-            <div class="row detail-row mt-3">
-              <div class="col">
+            <div class="row detail-row mt-3 mb-4">
+              <div class="col-4">
                 <div class="text-muted" jhiTranslate="alfairouzApp.specimen.labQr">Lab Qr</div>
                 <qrcode [qrdata]="getLabQr()" [width]="60"></qrcode>
                 <h6 matLine>{{ specimen.labQr }}</h6>
               </div>
-              <div class="col">
+              <div class="col-4">
                 <div class="text-muted">رقم العينة</div>
                 <h6 matLine>{{ specimen.labRefNo }}</h6>
               </div>
-              <div class="col">
+              <div class="col-4">
                 <div class="text-muted">حالة العينة</div>
-                <h6 matLine
-                    jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.' + specimen.specimenStatus }}">{{ specimen.specimenStatus }}</h6>
+                <h6 matLine jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.' + specimen.specimenStatus }}">{{ specimen.specimenStatus }}</h6>
+              </div>
+            </div>
+
+            <!-- Basic Information -->
+            <div class="row mb-3">
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small">ID</div>
+                  <div class="fw-bold">{{ specimen.id }}</div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.samples">Samples</div>
+                  <div class="fw-bold">{{ specimen.samples }}</div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.blocks">Blocks</div>
+                  <div class="fw-bold">{{ specimen.blocks }}</div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.slides">Slides</div>
+                  <div class="fw-bold">{{ specimen.slides }}</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dates -->
+            <div class="row mb-3">
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.samplingDate">Sampling Date</div>
+                  <div class="fw-bold">{{ specimen.samplingDate | formatMediumDate }}</div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.receivingDate">Receiving Date</div>
+                  <div class="fw-bold">{{ specimen.receivingDate | formatMediumDate }}</div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.reportDate">Report Date</div>
+                  <div class="fw-bold">{{ specimen.reportDate | formatMediumDate }}</div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.revisionDate">Revision Date</div>
+                  <div class="fw-bold">{{ specimen.revisionDate | formatMediumDate }}</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contract and Payment -->
+            <div class="row mb-3">
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.contractType">Contract Type</div>
+                  <div class="fw-bold" jhiTranslate="{{ 'alfairouzApp.ContractType.' + specimen.contractType }}">{{ specimen.contractType }}</div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.paymentType">Payment Type</div>
+                  <div class="fw-bold" jhiTranslate="{{ 'alfairouzApp.PaymentType.' + specimen.paymentType }}">{{ specimen.paymentType }}</div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.price">Price</div>
+                  <div class="fw-bold">{{ specimen.price }}</div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.paid">Paid</div>
+                  <div class="fw-bold">{{ specimen.paid }}</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- File and Status -->
+            <div class="row mb-3">
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.fileNo">File No</div>
+                  <div class="fw-bold">{{ specimen.fileNo }}</div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.results">Results</div>
+                  <div class="fw-bold" jhiTranslate="{{ 'alfairouzApp.Results.' + specimen.results }}">{{ specimen.results }}</div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.urgentSample">Urgent Sample</div>
+                  <div class="fw-bold">{{ specimen.urgentSample }}</div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.pdfFileUrl">PDF File</div>
+                  <button [disabled]="!specimen.pdfFileUrl" (click)="openFileFromUrl(specimen.pdfFileUrl)"
+                          color="primary" mat-raised-button type="button" class="btn-sm">
+                    <mat-icon>picture_as_pdf</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Boolean Flags -->
+            <div class="row mb-3">
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.isWithdrawn">Is Withdrawn</div>
+                  <div class="fw-bold">
+                    <mat-icon *ngIf="specimen.isWithdrawn" color="warn">check_circle</mat-icon>
+                    <mat-icon *ngIf="!specimen.isWithdrawn" color="primary">cancel</mat-icon>
+                  </div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.receivedInFormalin">Received In Formalin</div>
+                  <div class="fw-bold">
+                    <mat-icon *ngIf="specimen.receivedInFormalin" color="primary">check_circle</mat-icon>
+                    <mat-icon *ngIf="!specimen.receivedInFormalin">cancel</mat-icon>
+                  </div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.printedOut">Printed Out</div>
+                  <div class="fw-bold">
+                    <mat-icon *ngIf="specimen.printedOut" color="primary">check_circle</mat-icon>
+                    <mat-icon *ngIf="!specimen.printedOut">cancel</mat-icon>
+                  </div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.smsSent">SMS Sent</div>
+                  <div class="fw-bold">
+                    <mat-icon *ngIf="specimen.smsSent" color="primary">check_circle</mat-icon>
+                    <mat-icon *ngIf="!specimen.smsSent">cancel</mat-icon>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Related Entities -->
+            <div class="row mb-3">
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.patient">Patient</div>
+                  <div class="fw-bold">
+                    <a *ngIf="specimen.patient" [routerLink]="['/patient', specimen.patient?.id, 'view']">
+                      {{ specimen.patient?.name }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.organ">Organ</div>
+                  <div class="fw-bold">
+                    <a *ngIf="specimen.organ" [routerLink]="['/organ', specimen.organ?.id, 'view']">
+                      {{ specimen.organ?.name }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.specimenType">Specimen Type</div>
+                  <div class="fw-bold">
+                    <a *ngIf="specimen.specimenType" [routerLink]="['/specimen-type', specimen.specimenType?.id, 'view']">
+                      {{ specimen.specimenType?.name }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.size">Size</div>
+                  <div class="fw-bold">
+                    <a *ngIf="specimen.size" [routerLink]="['/size', specimen.size?.id, 'view']">
+                      {{ specimen.size?.name }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Medical Staff -->
+            <div class="row mb-3">
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.pathologistDoctor">Pathologist Doctor</div>
+                  <div class="fw-bold">
+                    <a *ngIf="specimen.pathologistDoctor" [routerLink]="['/doctor', specimen.pathologistDoctor?.id, 'view']">
+                      {{ specimen.pathologistDoctor?.name }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.referringDoctor">Referring Doctor</div>
+                  <div class="fw-bold">
+                    <a *ngIf="specimen.referringDoctor" [routerLink]="['/doctor', specimen.referringDoctor?.id, 'view']">
+                      {{ specimen.referringDoctor?.name }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.grossingDoctor">Grossing Doctor</div>
+                  <div class="fw-bold">
+                    <a *ngIf="specimen.grossingDoctor" [routerLink]="['/doctor', specimen.grossingDoctor?.id, 'view']">
+                      {{ specimen.grossingDoctor?.name }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.referringCenter">Referring Center</div>
+                  <div class="fw-bold">
+                    <a *ngIf="specimen.referringCenter" [routerLink]="['/referring-center', specimen.referringCenter?.id, 'view']">
+                      {{ specimen.referringCenter?.name }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Text Areas -->
+            <div class="row mb-3">
+              <div class="col-6">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.clinicalData">Clinical Data</div>
+                  <div class="fw-bold">{{ specimen.clinicalData }}</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.grossExamination">Gross Examination</div>
+                  <div class="fw-bold">{{ specimen.grossExamination }}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-6">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.microscopicData">Microscopic Data</div>
+                  <div class="fw-bold">{{ specimen.microscopicData }}</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="alfairouzApp.specimen.conclusion">Conclusion</div>
+                  <div class="fw-bold">{{ specimen.conclusion }}</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Audit Information -->
+            <div class="row mb-3">
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="userManagement.createdBy">Created By</div>
+                  <div class="fw-bold">{{ specimen.createdBy }}</div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="userManagement.createdDate">Created Date</div>
+                  <div class="fw-bold">{{ specimen.createdDate | date: 'dd/MM/yy HH:mm' }}</div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="userManagement.lastModifiedBy">Last Modified By</div>
+                  <div class="fw-bold">{{ specimen.lastModifiedBy }}</div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="detail-card p-3">
+                  <div class="text-muted small" jhiTranslate="userManagement.lastModifiedDate">Last Modified Date</div>
+                  <div class="fw-bold">{{ specimen.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</div>
+                </div>
               </div>
             </div>
           </div>
-
-          <dl class="row-md jh-entity-details">
-            <dt><span jhiTranslate="global.field.id">ID</span></dt>
-            <dd>
-              <span>{{ specimen.id }}</span>
-            </dd>
-
-            <!--            <dt><span jhiTranslate="alfairouzApp.specimen.pdfFile">Pdf File</span></dt>-->
-            <!--            <dd>-->
-            <!--              <div *ngIf="specimen.pdfFile">-->
-            <!--                <a (click)="openFile(specimen.pdfFile, specimen.pdfFileContentType)" jhiTranslate="entity.action.open">open</a>-->
-            <!--                {{ specimen.pdfFileContentType }}, {{ byteSize(specimen.pdfFile) }}-->
-            <!--              </div>-->
-            <!--            </dd>-->
-            <dt><span jhiTranslate="alfairouzApp.specimen.pdfFileUrl">Pdf File</span></dt>
-            <dd>
-              <button [disabled]="!specimen.pdfFileUrl" (click)="openFileFromUrl(specimen.pdfFileUrl)" color="primary"
-                      mat-raised-button type="button">
-                <mat-icon class="ml-2">picture_as_pdf</mat-icon>
-              </button>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.samples">Samples</span></dt>
-            <dd>
-              <span>{{ specimen.samples }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.blocks">Blocks</span></dt>
-            <dd>
-              <span>{{ specimen.blocks }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.slides">Slides</span></dt>
-            <dd>
-              <span>{{ specimen.slides }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.samplingDate">Sampling Date</span></dt>
-            <dd>
-              <span>{{ specimen.samplingDate | formatMediumDate }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.receivingDate">Receiving Date</span></dt>
-            <dd>
-              <span>{{ specimen.receivingDate | formatMediumDate }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.contractType">Contract Type</span></dt>
-            <dd>
-              <span
-                jhiTranslate="{{ 'alfairouzApp.ContractType.' + specimen.contractType }}">{{ specimen.contractType }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.isWithdrawn">Is Withdrawn</span></dt>
-            <dd>
-              <span>{{ specimen.isWithdrawn }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.withdrawDate">Withdraw Date</span></dt>
-            <dd>
-              <span>{{ specimen.withdrawDate | formatMediumDate }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.fileNo">File No</span></dt>
-            <dd>
-              <span>{{ specimen.fileNo }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.paymentType">Payment Type</span></dt>
-            <dd>
-              <span
-                jhiTranslate="{{ 'alfairouzApp.PaymentType.' + specimen.paymentType }}">{{ specimen.paymentType }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.price">Price</span></dt>
-            <dd>
-              <span>{{ specimen.price }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.paid">Paid</span></dt>
-            <dd>
-              <span>{{ specimen.paid }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.notPaid">Not Paid</span></dt>
-            <dd>
-              <span>{{ specimen.notPaid }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.urgentSample">Urgent Sample</span></dt>
-            <dd>
-              <span>{{ specimen.urgentSample }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.revisionDate">Revision Date</span></dt>
-            <dd>
-              <span>{{ specimen.revisionDate | formatMediumDate }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.reportDate">Report Date</span></dt>
-            <dd>
-              <span>{{ specimen.reportDate | formatMediumDate }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.clinicalData">Clinical Data</span></dt>
-            <dd>
-              <span>{{ specimen.clinicalData }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.clinicalDate">Clinical Date</span></dt>
-            <dd>
-              <span>{{ specimen.clinicalDate | formatMediumDate }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.grossExamination">Gross Examination</span></dt>
-            <dd>
-              <span>{{ specimen.grossExamination }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.grossDate">Gross Date</span></dt>
-            <dd>
-              <span>{{ specimen.grossDate | formatMediumDate }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.microscopicData">Microscopic Data</span></dt>
-            <dd>
-              <span>{{ specimen.microscopicData }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.microscopicDate">Microscopic Date</span></dt>
-            <dd>
-              <span>{{ specimen.microscopicDate | formatMediumDate }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.results">Results</span></dt>
-            <dd>
-              <span jhiTranslate="{{ 'alfairouzApp.Results.' + specimen.results }}">{{ specimen.results }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.conclusion">Conclusion</span></dt>
-            <dd>
-              <span>{{ specimen.conclusion }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.conclusionDate">Conclusion Date</span></dt>
-            <dd>
-              <span>{{ specimen.conclusionDate | formatMediumDate }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.notes">Notes</span></dt>
-            <dd>
-              <span>{{ specimen.notes }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.specimenStatus">Specimen Status</span></dt>
-            <dd>
-          <span
-            jhiTranslate="{{ 'alfairouzApp.SpecimenStatus.' + specimen.specimenStatus }}">{{ specimen.specimenStatus }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.newBlocksRequested">New Blocks Requested</span></dt>
-            <dd>
-              <span>{{ specimen.newBlocksRequested }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.receivedInFormalin">Received In Formalin</span></dt>
-            <dd>
-              <span>{{ specimen.receivedInFormalin }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.reserve">Reserve</span></dt>
-            <dd>
-              <span>{{ specimen.reserve }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.printedOut">Printed Out</span></dt>
-            <dd>
-              <span>{{ specimen.printedOut }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.smsSent">Sms Sent</span></dt>
-            <dd>
-              <span>{{ specimen.smsSent }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.onlineReport">Online Report</span></dt>
-            <dd>
-              <span>{{ specimen.onlineReport }}</span>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.patient">Patient</span></dt>
-            <dd>
-              <div *ngIf="specimen.patient">
-                <a [routerLink]="['/patient', specimen.patient?.id, 'view']">{{ specimen.patient?.name }}</a>
-              </div>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.biopsy">Biopsy</span></dt>
-            <dd>
-              <div *ngIf="specimen.biopsy">
-                <a [routerLink]="['/biopsy', specimen.biopsy?.id, 'view']">{{ specimen.biopsy?.name }}</a>
-              </div>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.cytology">Cytology</span></dt>
-            <dd>
-              <div *ngIf="specimen.cytology">
-                <a [routerLink]="['/cytology', specimen.cytology?.id, 'view']">{{ specimen.cytology?.name }}</a>
-              </div>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.organ">Organ</span></dt>
-            <dd>
-              <div *ngIf="specimen.organ">
-                <a [routerLink]="['/organ', specimen.organ?.id, 'view']">{{ specimen.organ?.name }}</a>
-              </div>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.specimenType">Specimen Type</span></dt>
-            <dd>
-              <div *ngIf="specimen.specimenType">
-                <a
-                  [routerLink]="['/specimen-type', specimen.specimenType?.id, 'view']">{{ specimen.specimenType?.name }}</a>
-              </div>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.size">Size</span></dt>
-            <dd>
-              <div *ngIf="specimen.size">
-                <a [routerLink]="['/size', specimen.size?.id, 'view']">{{ specimen.size?.name }}</a>
-              </div>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.referringCenter">Referring Center</span></dt>
-            <dd>
-              <div *ngIf="specimen.referringCenter">
-                <a
-                  [routerLink]="['/referring-center', specimen.referringCenter?.id, 'view']">{{ specimen.referringCenter?.name }}</a>
-              </div>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.grossingDoctor">Grossing Doctor</span></dt>
-            <dd>
-              <div *ngIf="specimen.grossingDoctor">
-                <a
-                  [routerLink]="['/doctor', specimen.grossingDoctor?.id, 'view']">{{ specimen.grossingDoctor?.name }}</a>
-              </div>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.referringDoctor">Referring Doctor</span></dt>
-            <dd>
-              <div *ngIf="specimen.referringDoctor">
-                <a
-                  [routerLink]="['/doctor', specimen.referringDoctor?.id, 'view']">{{ specimen.referringDoctor?.name }}</a>
-              </div>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.pathologistDoctor">Pathologist Doctor</span></dt>
-            <dd>
-              <div *ngIf="specimen.pathologistDoctor">
-                <a
-                  [routerLink]="['/doctor', specimen.pathologistDoctor?.id, 'view']">{{ specimen.pathologistDoctor?.name }}</a>
-              </div>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.operatorEmployee">Operator Employee</span></dt>
-            <dd>
-              <div *ngIf="specimen.operatorEmployee">
-                <a
-                  [routerLink]="['/employee', specimen.operatorEmployee?.id, 'view']">{{ specimen.operatorEmployee?.name }}</a>
-              </div>
-            </dd>
-            <dt><span jhiTranslate="alfairouzApp.specimen.correctorEmployee">Corrector Employee</span></dt>
-            <dd>
-              <div *ngIf="specimen.correctorEmployee">
-                <a
-                  [routerLink]="['/employee', specimen.correctorEmployee?.id, 'view']">{{ specimen.correctorEmployee?.name }}</a>
-              </div>
-            </dd>
-
-            <dt><span jhiTranslate="userManagement.createdBy">Created By</span></dt>
-            <dd>{{ specimen.createdBy }}</dd>
-
-            <dt><span jhiTranslate="userManagement.createdDate">Created Date</span></dt>
-            <dd>{{ specimen.createdDate | date: 'dd/MM/yy HH:mm' }}</dd>
-
-            <dt><span jhiTranslate="userManagement.lastModifiedBy">Last Modified By</span></dt>
-            <dd>{{ specimen.lastModifiedBy }}</dd>
-
-            <dt><span jhiTranslate="userManagement.lastModifiedDate">Last Modified Date</span></dt>
-            <dd>{{ specimen.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</dd>
-
-          </dl>
-
         </mat-tab>
+
         <mat-tab>
           <ng-template mat-tab-label>
             <span>سجلات التعديل</span>
@@ -323,32 +375,24 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let specimenEdit of specimenEdits;" data-cy="entityTable">
-                  <td>
-                    <a>{{ specimenEdit.id }}</a>
-                  </td>
+                  <td><a>{{ specimenEdit.id }}</a></td>
                   <td>{{ specimenEdit.specimenStatusFrom }}</td>
                   <td>{{ specimenEdit.specimenStatusTo }}</td>
                   <td>{{ specimenEdit.userType }}</td>
                   <td>{{ specimenEdit.labRefNo }}</td>
                   <td>{{ specimenEdit.createdBy }}</td>
                   <td>{{ specimenEdit.createdDate }}</td>
-
                 </tr>
                 </tbody>
               </table>
             </div>
-
           </div>
-
         </mat-tab>
       </mat-tab-group>
 
       <hr/>
-
       <jhi-alert-error></jhi-alert-error>
-
       <jhi-alert></jhi-alert>
-
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>

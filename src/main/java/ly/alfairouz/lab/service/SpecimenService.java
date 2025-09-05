@@ -374,6 +374,10 @@ public class SpecimenService {
                 long maxIH = specimenRepository.getMaxNumberByTypeAndYear("IH", year);
                 log.info("Max number for IH: {}", maxIH);
                 nextNumber = maxIH + 1;
+            } else if (labRef == LabRef.M) {
+                long maxM = specimenRepository.getMaxNumberByTypeAndYear("M", year);
+                log.info("Max number for M: {}", maxM);
+                nextNumber = maxM + 1;
             } else {
                 // Get max number among H, HSO, and IHSO
                 long maxH = specimenRepository.getMaxNumberByTypeAndYear("H", year);

@@ -1,0 +1,100 @@
+mat-button-toggle-group {
+  width: 100% !important;
+  display: flex !important;
+
+  mat-button-toggle {
+    flex: 1 !important;
+  }
+}
+
+.w-100 {
+  width: 100% !important;
+}
+
+.w-50 {
+  width: 50% !important;
+}
+
+mat-form-field {
+  margin-bottom: 16px !important;
+}
+
+.patient-option {
+  padding: 8px 0;
+}
+
+.patient-name {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.patient-details {
+  font-size: 0.875rem;
+  color: #666;
+}
+.patient-list-container {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  max-height: 300px;
+  overflow-y: auto;
+  background: white;
+}
+
+.patient-item {
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+
+  &.selected {
+    background-color: #e3f2fd;
+    border-left: 4px solid #2196f3;
+  }
+}
+
+.patient-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  width: 100%;
+
+  mat-checkbox {
+    flex: 1;
+    margin: 0;
+
+    ::ng-deep .mat-checkbox-layout {
+      width: 100%;
+      white-space: nowrap;
+    }
+
+    ::ng-deep .mat-checkbox-label {
+      width: 100%;
+    }
+  }
+
+  a[mat-icon-button] {
+    flex-shrink: 0;
+    margin-left: 12px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+  }
+}
+
+.patient-info {
+  margin-left: 32px;
+  width: 100%;
+
+  .patient-main {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+}
