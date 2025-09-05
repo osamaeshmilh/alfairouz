@@ -2,7 +2,9 @@ package ly.alfairouz.lab.service;
 
 import java.util.Optional;
 import ly.alfairouz.lab.domain.Receipt;
+import ly.alfairouz.lab.domain.Specimen;
 import ly.alfairouz.lab.repository.ReceiptRepository;
+import ly.alfairouz.lab.repository.SpecimenRepository;
 import ly.alfairouz.lab.service.dto.ReceiptDTO;
 import ly.alfairouz.lab.service.mapper.ReceiptMapper;
 import org.slf4j.Logger;
@@ -25,55 +27,98 @@ public class ReceiptService {
 
     private final ReceiptMapper receiptMapper;
 
-    public ReceiptService(ReceiptRepository receiptRepository, ReceiptMapper receiptMapper) {
+    private final SpecimenRepository specimenRepository; // Add this
+
+
+    public ReceiptService(ReceiptRepository receiptRepository, ReceiptMapper receiptMapper, SpecimenRepository specimenRepository) {
         this.receiptRepository = receiptRepository;
         this.receiptMapper = receiptMapper;
+        this.specimenRepository = specimenRepository;
     }
 
-    /**
-     * Save a receipt.
-     *
-     * @param receiptDTO the entity to save.
-     * @return the persisted entity.
-     */
     public ReceiptDTO save(ReceiptDTO receiptDTO) {
         log.debug("Request to save Receipt : {}", receiptDTO);
         Receipt receipt = receiptMapper.toEntity(receiptDTO);
         receipt = receiptRepository.save(receipt);
+
+        // Update specimen paid amounts
+        updateSpecimenPaidAmounts(receipt.getSpecimen().getId());
+
         return receiptMapper.toDto(receipt);
     }
 
-    /**
-     * Update a receipt.
-     *
-     * @param receiptDTO the entity to save.
-     * @return the persisted entity.
-     */
     public ReceiptDTO update(ReceiptDTO receiptDTO) {
-        log.debug("Request to save Receipt : {}", receiptDTO);
+        log.debug("Request to update Receipt : {}", receiptDTO);
         Receipt receipt = receiptMapper.toEntity(receiptDTO);
         receipt = receiptRepository.save(receipt);
+
+        // Update specimen paid amounts
+        updateSpecimenPaidAmounts(receipt.getSpecimen().getId());
+
         return receiptMapper.toDto(receipt);
     }
 
-    /**
-     * Partially update a receipt.
-     *
-     * @param receiptDTO the entity to update partially.
-     * @return the persisted entity.
-     */
     public Optional<ReceiptDTO> partialUpdate(ReceiptDTO receiptDTO) {
         log.debug("Request to partially update Receipt : {}", receiptDTO);
 
         return receiptRepository
             .findById(receiptDTO.getId())
             .map(existingReceipt -> {
+                Long specimenId = existingReceipt.getSpecimen().getId();
                 receiptMapper.partialUpdate(existingReceipt, receiptDTO);
 
-                return existingReceipt;
+                Receipt saved = receiptRepository.save(existingReceipt);
+                // Update specimen paid amounts
+                updateSpecimenPaidAmounts(specimenId);
+
+                return saved;
             })
-            .map(receiptRepository::save)
             .map(receiptMapper::toDto);
+    }
+
+    public void delete(Long id) {
+        log.debug("Request to delete Receipt : {}", id);
+
+        // Get specimen ID before deleting receipt
+        Optional<Receipt> receipt = receiptRepository.findById(id);
+        if (receipt.isPresent()) {
+            Long specimenId = receipt.get().getSpecimen().getId();
+            receiptRepository.deleteById(id);
+
+            // Update specimen paid amounts after deletion
+            updateSpecimenPaidAmounts(specimenId);
+        }
+    }
+
+    /**
+     * Recalculates and updates the specimen's paid and notPaid amounts based on all receipts
+     */
+    private void updateSpecimenPaidAmounts(Long specimenId) {
+        log.debug("Updating specimen paid amounts for specimen ID: {}", specimenId);
+
+        Optional<Specimen> specimenOpt = specimenRepository.findById(specimenId);
+        if (specimenOpt.isPresent()) {
+            Specimen specimen = specimenOpt.get();
+
+            // Calculate total paid from all receipts (including refunds as negative amounts)
+            Double totalPaid = receiptRepository.findBySpecimenId(specimenId)
+                .stream()
+                .mapToDouble(receipt -> receipt.getPaid() != null ? receipt.getPaid() : 0.0)
+                .sum();
+
+            // Calculate notPaid (remaining balance)
+            Double price = specimen.getPrice() != null ? specimen.getPrice() : 0.0;
+            Double notPaid = price - totalPaid;
+
+            // Update specimen
+            specimen.setPaid(totalPaid.floatValue());
+            specimen.setNotPaid(notPaid.floatValue());
+
+            specimenRepository.save(specimen);
+
+            log.debug("Updated specimen {} - Price: {}, Paid: {}, NotPaid: {}",
+                specimenId, price, totalPaid, notPaid);
+        }
     }
 
     /**
@@ -109,13 +154,4 @@ public class ReceiptService {
         return receiptRepository.findOneWithEagerRelationships(id).map(receiptMapper::toDto);
     }
 
-    /**
-     * Delete the receipt by id.
-     *
-     * @param id the id of the entity.
-     */
-    public void delete(Long id) {
-        log.debug("Request to delete Receipt : {}", id);
-        receiptRepository.deleteById(id);
-    }
 }

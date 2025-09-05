@@ -488,7 +488,7 @@
             <div class="col-lg col-sm">
               <label class="form-label" jhiTranslate="alfairouzApp.specimen.paid" for="field_paid">Paid</label>
               <input type="number" class="form-control" name="paid" id="field_paid" data-cy="paid"
-                     formControlName="paid" (change)="updatePayed()"/>
+                     formControlName="paid" [readonly]="true"/>
             </div>
             <div class="col-lg col-sm">
               <label class="form-label" jhiTranslate="alfairouzApp.specimen.notPaid" for="field_notPaid">Not

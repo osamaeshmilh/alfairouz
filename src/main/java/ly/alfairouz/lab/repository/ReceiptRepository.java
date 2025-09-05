@@ -37,4 +37,6 @@ public interface ReceiptRepository extends JpaRepository<Receipt, Long>, JpaSpec
 
     @Query("select receipt from Receipt receipt left join fetch receipt.specimen left join fetch receipt.patient where receipt.id =:id")
     Optional<Receipt> findOneWithToOneRelationships(@Param("id") Long id);
+
+    List<Receipt> findBySpecimenId(Long specimenId);
 }

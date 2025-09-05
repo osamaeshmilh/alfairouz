@@ -76,13 +76,13 @@ export class ReceiptService {
 
   protected convertDateFromClient(receipt: IReceipt): IReceipt {
     return Object.assign({}, receipt, {
-      dateAt: receipt.dateAt?.isValid() ? receipt.dateAt.format(DATE_FORMAT) : undefined,
+      // dateAt: receipt.dateAt?.isValid() ? receipt.dateAt.format(DATE_FORMAT) : undefined,
     });
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.dateAt = res.body.dateAt ? dayjs(res.body.dateAt) : undefined;
+      // res.body.dateAt = res.body.dateAt ? dayjs(res.body.dateAt) : undefined;
     }
     return res;
   }
@@ -90,7 +90,7 @@ export class ReceiptService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((receipt: IReceipt) => {
-        receipt.dateAt = receipt.dateAt ? dayjs(receipt.dateAt) : undefined;
+        // receipt.dateAt = receipt.dateAt ? dayjs(receipt.dateAt) : undefined;
       });
     }
     return res;
