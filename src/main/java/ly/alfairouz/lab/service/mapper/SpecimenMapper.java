@@ -83,12 +83,14 @@ public interface SpecimenMapper extends EntityMapper<SpecimenDTO, Specimen> {
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     @Mapping(target = "name", source = "name")
+    @Mapping(target = "nameAr", source = "nameAr")
     ReferringCenterDTO toDtoReferringCenterName(ReferringCenter referringCenter);
 
     @Named("doctorName")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     @Mapping(target = "name", source = "name")
+    @Mapping(target = "nameAr", source = "nameAr")
     DoctorDTO toDtoDoctorName(Doctor doctor);
 
     @Named("employeeName")
