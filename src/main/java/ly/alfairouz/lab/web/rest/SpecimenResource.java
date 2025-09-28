@@ -420,7 +420,7 @@ public class SpecimenResource {
                 row.createCell(5).setCellValue(specimenDTO.getPatient() != null ? specimenDTO.getPatient().getNameAr() : "");
                 row.createCell(6).setCellValue(cellValue);
                 row.createCell(7).setCellValue(specimenDTO.getPrice() != null ? specimenDTO.getPrice() : 0);
-                row.createCell(8).setCellValue(specimenDTO.getReferringDoctor() != null ? specimenDTO.getReferringDoctor().getName() : "");
+                row.createCell(8).setCellValue(specimenDTO.getReferringDoctor() != null ? specimenDTO.getReferringDoctor().getNameAr() : "");
                 row.createCell(9).setCellValue(specimenDTO.getBiopsy() != null ? specimenDTO.getBiopsy().getName() : "");
                 row.createCell(10).setCellValue(specimenDTO.getCytology() != null ? specimenDTO.getCytology().getName() : "");
                 row.createCell(11).setCellValue(specimenDTO.getOrgan() != null ? specimenDTO.getOrgan().getName() : "");
@@ -436,7 +436,7 @@ public class SpecimenResource {
                 row.createCell(4).setCellValue(specimenDTO.getReportDate() != null ? specimenDTO.getReportDate().toString() : "");
                 row.createCell(5).setCellValue(specimenDTO.getPatient() != null ? specimenDTO.getPatient().getName() : "");
                 row.createCell(6).setCellValue(specimenDTO.getPatient() != null ? specimenDTO.getPatient().getNameAr() : "");
-                row.createCell(7).setCellValue(specimenDTO.getReferringCenter() != null ? specimenDTO.getReferringCenter().getName() : "");
+                row.createCell(7).setCellValue(specimenDTO.getReferringCenter() != null ? specimenDTO.getReferringCenter().getNameAr() : "");
                 row.createCell(8).setCellValue(specimenDTO.getBiopsy() != null ? specimenDTO.getBiopsy().getName() : "");
                 row.createCell(9).setCellValue(specimenDTO.getCytology() != null ? specimenDTO.getCytology().getName() : "");
                 row.createCell(10).setCellValue(specimenDTO.getOrgan() != null ? specimenDTO.getOrgan().getName() : "");
@@ -451,8 +451,8 @@ public class SpecimenResource {
                 row.createCell(3).setCellValue(specimenDTO.getReceivingDate() != null ? specimenDTO.getReceivingDate().toString() : "");
                 row.createCell(4).setCellValue(specimenDTO.getPaymentType().toString());
                 row.createCell(5).setCellValue(specimenDTO.getPatient() != null ? specimenDTO.getPatient().getNameAr() : "");
-                row.createCell(6).setCellValue(specimenDTO.getReferringCenter() != null ? specimenDTO.getReferringCenter().getName() : "");
-                row.createCell(7).setCellValue(specimenDTO.getReferringDoctor() != null ? specimenDTO.getReferringDoctor().getName() : "");
+                row.createCell(6).setCellValue(specimenDTO.getReferringCenter() != null ? specimenDTO.getReferringCenter().getNameAr() : "");
+                row.createCell(7).setCellValue(specimenDTO.getReferringDoctor() != null ? specimenDTO.getReferringDoctor().getNameAr() : "");
                 row.createCell(8).setCellValue(specimenDTO.getSpecimenStatus().toString());
                 row.createCell(9).setCellValue(cellValue);
                 row.createCell(10).setCellValue(specimenDTO.getPrice() != null ? specimenDTO.getPrice() : 0);

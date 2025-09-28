@@ -315,51 +315,40 @@
           <br>
           <div class="row">
             <div class="col-lg col-sm">
-              <label class="form-label" jhiTranslate="alfairouzApp.specimen.referringCenter" for="field_referringCenter"
-              >Referring Center</label
-              >
-              <select
-                class="form-control"
-                id="field_referringCenter"
-                data-cy="referringCenter"
-                name="referringCenter"
-                formControlName="referringCenter"
-                (change)="getCenterPrices()"
-              >
-                <option [ngValue]="null"></option>
-                <option
-                  [ngValue]="
-                referringCenterOption.id === editForm.get('referringCenter')!.value?.id
-                  ? editForm.get('referringCenter')!.value
-                  : referringCenterOption
-              "
-                  *ngFor="let referringCenterOption of referringCentersSharedCollection; trackBy: trackReferringCenterById"
-                >
-                  {{ referringCenterOption.nameAr }}
-                </option>
-              </select>
+              <label class="form-label">Referring Center</label>
+              <mat-form-field appearance="standard" class="w-100">
+                <mat-label>اختر مركز الإحالة</mat-label>
+                <input matInput
+                       [formControl]="referringCenterControl"
+                       [matAutocomplete]="centerAuto"
+                       placeholder="ابحث واختر مركز الإحالة...">
+                <mat-icon matSuffix>search</mat-icon>
+                <mat-autocomplete #centerAuto="matAutocomplete"
+                                  [displayWith]="displayReferringCenter"
+                                  (optionSelected)="onReferringCenterSelected($event)">
+                  <mat-option *ngFor="let center of filteredReferringCenters$ | async" [value]="center">
+                    {{ center.nameAr }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
             </div>
             <div class="col-lg col-sm">
-              <label class="form-label" jhiTranslate="alfairouzApp.specimen.referringDoctor" for="field_referringDoctor"
-              >Referring Doctor</label
-              >
-              <select
-                class="form-control"
-                id="field_referringDoctor"
-                data-cy="referringDoctor"
-                name="referringDoctor"
-                formControlName="referringDoctor"
-              >
-                <option [ngValue]="null"></option>
-                <option
-                  [ngValue]="
-                doctorOption.id === editForm.get('referringDoctor')!.value?.id ? editForm.get('referringDoctor')!.value : doctorOption
-              "
-                  *ngFor="let doctorOption of rDoctorsSharedCollection; trackBy: trackDoctorById"
-                >
-                  {{ doctorOption.nameAr }}
-                </option>
-              </select>
+              <label class="form-label">Referring Doctor</label>
+              <mat-form-field appearance="standard" class="w-100">
+                <mat-label>اختر طبيب الإحالة</mat-label>
+                <input matInput
+                       [formControl]="referringDoctorControl"
+                       [matAutocomplete]="doctorAuto"
+                       placeholder="ابحث واختر طبيب الإحالة...">
+                <mat-icon matSuffix>search</mat-icon>
+                <mat-autocomplete #doctorAuto="matAutocomplete"
+                                  [displayWith]="displayReferringDoctor"
+                                  (optionSelected)="onReferringDoctorSelected($event)">
+                  <mat-option *ngFor="let doctor of filteredReferringDoctors$ | async" [value]="doctor">
+                    {{ doctor.nameAr }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
             </div>
             <div class="col-lg col-sm">
 
@@ -411,22 +400,26 @@
 
             <!-- Cash Payment Section -->
             <div class="col-lg col-sm" *ngIf="editForm.get('paymentType')!.value == 'CASH'">
-              <label class="form-label" jhiTranslate="alfairouzApp.specimen.specimenType" for="field_specimenType">Specimen
-                Type</label>
-              <select class="form-control" id="field_specimenType" data-cy="specimenType" name="specimenType"
-                      formControlName="specimenType" (change)="getPriceByType($event)">
-                <option [ngValue]="null"></option>
-                <option
-                  [ngValue]="
-            specimenTypeOption.id === editForm.get('specimenType')!.value?.id ? editForm.get('specimenType')!.value : specimenTypeOption
-          "
-                  *ngFor="let specimenTypeOption of specimenTypesSharedCollection; trackBy: trackSpecimenTypeById"
-                >
-                  {{ specimenTypeOption.category}} - {{ specimenTypeOption.name}} - {{specimenTypeOption.price }}
-                </option>
-              </select>
+              <label class="form-label">Specimen Type</label>
+              <mat-form-field appearance="standard" class="w-100">
+                <mat-label>اختر نوع العينة</mat-label>
+                <input matInput
+                       [formControl]="specimenTypeControl"
+                       [matAutocomplete]="specimenTypeAuto"
+                       placeholder="ابحث واختر نوع العينة...">
+                <mat-icon matSuffix>search</mat-icon>
+                <mat-autocomplete #specimenTypeAuto="matAutocomplete"
+                                  [displayWith]="displaySpecimenType"
+                                  (optionSelected)="onSpecimenTypeSelected($event)">
+                  <mat-option *ngFor="let type of filteredSpecimenTypes$ | async" [value]="type">
+                    <div class="d-flex justify-content-between align-items-center w-100">
+                      <small>{{ type.category }} - {{ type.name }}</small>
+                      <small class="text-muted ms-2">{{ type.price }} LYD</small>
+                    </div>
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
             </div>
-
             <div class="col-lg col-sm">
               <label class="form-label" for="field_payedWith">طريقة الدفع</label>
               <select class="form-control" name="payedWith" formControlName="payedWith" id="field_payedWith"

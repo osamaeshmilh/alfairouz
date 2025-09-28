@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpResponse} from '@angular/common/http';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {debounceTime, distinctUntilChanged, Observable, of, Subject, switchMap} from 'rxjs';
+import {debounceTime, distinctUntilChanged, Observable, of, startWith, Subject, switchMap} from 'rxjs';
 import {finalize, map} from 'rxjs/operators';
 
 import { ISpecimen, Specimen } from '../specimen.model';
@@ -66,6 +66,16 @@ export class SpecimenUpdateComponent implements OnInit {
   gDoctorsSharedCollection: IDoctor[] = [];
   rDoctorsSharedCollection: IDoctor[] = [];
   pDoctorsSharedCollection: IDoctor[] = [];
+
+  // Form Controls for autocomplete
+  specimenTypeControl = new FormControl();
+  referringCenterControl = new FormControl();
+  referringDoctorControl = new FormControl();
+
+  // Filtered Observables
+  filteredSpecimenTypes$!: Observable<ISpecimenType[]>;
+  filteredReferringCenters$!: Observable<IReferringCenter[]>;
+  filteredReferringDoctors$!: Observable<IDoctor[]>;
 
   editForm = this.fb.group({
     id: [],
@@ -187,6 +197,104 @@ export class SpecimenUpdateComponent implements OnInit {
 
       this.loadRelationshipsOptions();
     });
+  }
+
+  setupSpecimenTypeAutocomplete(): void {
+    this.filteredSpecimenTypes$ = this.specimenTypeControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this.filterSpecimenTypes(value || ''))
+    );
+  }
+
+  setupReferringCenterAutocomplete(): void {
+    this.filteredReferringCenters$ = this.referringCenterControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this.filterReferringCenters(value || ''))
+    );
+  }
+
+  setupReferringDoctorAutocomplete(): void {
+    this.filteredReferringDoctors$ = this.referringDoctorControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this.filterReferringDoctors(value || ''))
+    );
+  }
+
+  filterSpecimenTypes(value: string | ISpecimenType): ISpecimenType[] {
+
+
+    if (!value) {
+      return this.specimenTypesSharedCollection;
+    }
+
+    const filterValue = typeof value === 'string'
+      ? value.toLowerCase()
+      : `${String(value.category)} ${String(value.name)}`.toLowerCase();
+
+    return this.specimenTypesSharedCollection.filter(type =>
+      `${String(type.category)} ${String(type.name)}`.toLowerCase().includes(filterValue)
+    );
+  }
+
+  filterReferringCenters(value: string | IReferringCenter): IReferringCenter[] {
+
+    if (!value) {
+      return this.referringCentersSharedCollection;
+    }
+
+    const filterValue = typeof value === 'string'
+      ? value.toLowerCase()
+      : (value.nameAr ?? value.name ?? '').toLowerCase();
+
+    return this.referringCentersSharedCollection.filter(center =>
+      (center.nameAr?.toLowerCase().includes(filterValue)) ??
+      (center.name?.toLowerCase().includes(filterValue))
+    );
+  }
+
+  filterReferringDoctors(value: string | IDoctor): IDoctor[] {
+
+    if (!value) {
+      return this.rDoctorsSharedCollection;
+    }
+
+    const filterValue = typeof value === 'string'
+      ? value.toLowerCase()
+      : (value.nameAr ?? value.name ?? '').toLowerCase();
+
+    return this.rDoctorsSharedCollection.filter(doctor =>
+      (doctor.nameAr?.toLowerCase().includes(filterValue)) ??
+      (doctor.name?.toLowerCase().includes(filterValue))
+    );
+  }
+
+  displaySpecimenType(type: ISpecimenType | null): string {
+    return type ? `${String(type.category)} - ${String(type.name)}` : '';
+  }
+
+  displayReferringCenter(center: IReferringCenter | null): string {
+    return center ? (center.nameAr ?? center.name ?? '') : '';
+  }
+
+  displayReferringDoctor(doctor: IDoctor | null): string {
+    return doctor ? (doctor.nameAr ?? doctor.name ?? '') : '';
+  }
+
+  onSpecimenTypeSelected(event: any): void {
+    const selectedType = event.option.value;
+    this.editForm.patchValue({ specimenType: selectedType });
+    this.getPriceByType({ target: { value: selectedType } });
+  }
+
+  onReferringCenterSelected(event: any): void {
+    const selectedCenter = event.option.value;
+    this.editForm.patchValue({ referringCenter: selectedCenter });
+    this.getCenterPrices();
+  }
+
+  onReferringDoctorSelected(event: any): void {
+    const selectedDoctor = event.option.value;
+    this.editForm.patchValue({ referringDoctor: selectedDoctor });
   }
 
   byteSize(base64String: string): string {
@@ -535,8 +643,11 @@ export class SpecimenUpdateComponent implements OnInit {
           this.specimenTypeService.addSpecimenTypeToCollectionIfMissing(specimenTypes, this.editForm.get('specimenType')!.value)
         )
       )
-      .subscribe((specimenTypes: ISpecimenType[]) => (this.specimenTypesSharedCollection = specimenTypes));
-
+      .subscribe((specimenTypes: ISpecimenType[]) => {
+        this.specimenTypesSharedCollection = specimenTypes;
+        // Initialize autocomplete AFTER data is loaded
+        this.setupSpecimenTypeAutocomplete();
+      });
     this.sizeService
       .query({size: 2000})
       .pipe(map((res: HttpResponse<ISize[]>) => res.body ?? []))
@@ -554,7 +665,11 @@ export class SpecimenUpdateComponent implements OnInit {
           this.referringCenterService.addReferringCenterToCollectionIfMissing(referringCenters, this.editForm.get('referringCenter')!.value)
         )
       )
-      .subscribe((referringCenters: IReferringCenter[]) => (this.referringCentersSharedCollection = referringCenters));
+      .subscribe((referringCenters: IReferringCenter[]) => {
+        this.referringCentersSharedCollection = referringCenters;
+        // Initialize autocomplete AFTER data is loaded
+        this.setupReferringCenterAutocomplete();
+      });
 
     this.doctorService
       .query({
@@ -586,7 +701,11 @@ export class SpecimenUpdateComponent implements OnInit {
           )
         )
       )
-      .subscribe((doctors: IDoctor[]) => (this.rDoctorsSharedCollection = doctors));
+      .subscribe((doctors: IDoctor[]) => {
+        this.rDoctorsSharedCollection = doctors;
+        // Initialize autocomplete AFTER data is loaded
+        this.setupReferringDoctorAutocomplete();
+      });
 
     this.doctorService
       .query({
@@ -682,7 +801,7 @@ export class SpecimenUpdateComponent implements OnInit {
       referringCenter: this.editForm.get(['referringCenter'])!.value,
       grossingDoctor: this.editForm.get(['grossingDoctor'])!.value,
       referringDoctor: this.editForm.get(['referringDoctor'])!.value,
-      pathologistDoctor: this.editForm.get('pathologistDoctor')!.value || this.pDoctorsSharedCollection[0],
+      pathologistDoctor: this.editForm.get('pathologistDoctor')!.value ?? this.pDoctorsSharedCollection[0],
       pathologistDoctorTwo: this.editForm.get(['pathologistDoctorTwo'])!.value,
       operatorEmployee: this.editForm.get(['operatorEmployee'])!.value,
       correctorEmployee: this.editForm.get(['correctorEmployee'])!.value,
