@@ -296,7 +296,7 @@
           <div class="btn-group flex-btn-group-container">
             <mat-menu #appMenu="matMenu">
               <button
-                *jhiHasAnyAuthority="['ROLE_ADMIN']"
+                *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION']"
                 [routerLink]="['./', specimen.id, 'view']" mat-menu-item>
                 <mat-icon>remove_red_eye</mat-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>

@@ -109,7 +109,7 @@
 
         <div *jhiHasAnyAuthority="['ROLE_RECEPTION','ROLE_ADMIN']">
           <br>
-          <div *jhiHasAnyAuthority="['ROLE_RECEPTION','ROLE_ADMIN']">
+          <div >
             <h5>بيانات المريض</h5>
 
             <div class="row mb-3">
@@ -530,21 +530,24 @@
                 </button>
               </div>
             </div>
-            <div class="col-lg col-sm">
-              <label class="form-label" for="field_isPrintedOut">Is
-                Printed Out ?</label>
-              <input
-                type="checkbox"
-                class="form-check"
-                name="printedOut"
-                id="field_isPrintedOut"
-                data-cy="isPrintedOut"
-                formControlName="printedOut"
-              />
-            </div>
           </div>
         </div>
         <br>
+        <div  *jhiHasAnyAuthority="['ROLE_RECEPTION','ROLE_ADMIN', 'ROLE_TYPING']">
+          <div class="col-lg col-sm">
+            <label class="form-label" for="field_isPrintedOut">Is
+              Printed Out ?</label>
+            <input
+              type="checkbox"
+              class="form-check"
+              name="printedOut"
+              id="field_isPrintedOut"
+              data-cy="isPrintedOut"
+              formControlName="printedOut"
+            />
+          </div>
+
+        </div>
 
         <div class="row" *jhiHasAnyAuthority="['ROLE_GROSSING_DOCTOR', 'ROLE_PATHOLOGIST_DOCTOR','ROLE_ADMIN']">
           <div class="col" >
