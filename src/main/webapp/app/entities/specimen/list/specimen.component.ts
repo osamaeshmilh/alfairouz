@@ -175,6 +175,40 @@ export class SpecimenComponent implements OnInit {
     window.open(`/api/public/file/download/${String(fileUrl)}#zoom=85&scrollbar=0&toolbar=0&navpanes=0`, '_blank');
   }
 
+  getPaymentDotColor(specimen: any): any {
+    if (!specimen.price || specimen.price === 0){
+      return '#6c757d'; // gray
+    }
+
+    const paid = specimen.paid || 0;
+    const total = specimen.price;
+
+    if (paid >= total){
+      return '#28a745'; // green - fully paid
+    }
+    if (paid > 0) {
+      return '#ffc107'; // yellow - partially paid
+    }
+    return '#dc3545'; // red - not paid
+  }
+
+  getPaymentTooltip(specimen: any): string {
+    if (!specimen.price || specimen.price === 0) {
+      return 'No payment required';
+    }
+
+    const paid = specimen.paid || 0;
+    const total = specimen.price;
+
+    if (paid >= total) {
+      return `Fully paid ${String(total)}`;
+    }
+    if (paid > 0) {
+      return `Partially paid: ${String(paid)}/${String(total)} LYD`;
+    }
+    return `Not paid ${String(total)}`;
+  }
+
   protected sort(): string[] {
     const result = [this.predicate + ',' + (this.ascending ? ASC : DESC)];
     if (this.predicate !== 'id') {
@@ -224,5 +258,4 @@ export class SpecimenComponent implements OnInit {
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 0;
   }
-
 }

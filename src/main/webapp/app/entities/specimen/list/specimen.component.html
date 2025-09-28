@@ -209,8 +209,12 @@
         <td *jhiHasAnyAuthority="['ROLE_TYPING', 'ROLE_REFERRING_DOCTOR', 'ROLE_REVISION', 'ROLE_REFERRING_CENTER']">
           {{ specimen.reportDate | formatMediumDate }}
         </td>
-        <td *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']"
-            jhiTranslate="{{ 'alfairouzApp.PaymentType.' + specimen.paymentType }}">{{ specimen.paymentType }}</td>
+        <td *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_RECEPTION','ROLE_GROSSING_DOCTOR','ROLE_PATHOLOGIST_DOCTOR']">
+  <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px;"
+        [style.background-color]="getPaymentDotColor(specimen)"
+        [matTooltip]="getPaymentTooltip(specimen)"></span>
+          <span jhiTranslate="{{ 'alfairouzApp.PaymentType.' + specimen.paymentType }}">{{ specimen.paymentType }}</span>
+        </td>
         <td>
           <div *ngIf="specimen.patient">
             <a>{{ specimen.patient?.nameAr }}</a>
