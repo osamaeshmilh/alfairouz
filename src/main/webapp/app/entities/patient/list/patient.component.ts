@@ -23,6 +23,7 @@ export class PatientComponent implements OnInit {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 0;
+  searchTerm = '';
 
   constructor(
     protected patientService: PatientService,
@@ -35,12 +36,18 @@ export class PatientComponent implements OnInit {
     this.isLoading = true;
     const pageToLoad: number = page ?? this.page ?? 0;
 
+    const queryParams: any = {
+      page: pageToLoad,
+      size: this.itemsPerPage,
+      sort: this.sort(),
+    };
+
+    if (this.searchTerm.trim()) {
+      queryParams['nameAr.contains'] = this.searchTerm;
+    }
+
     this.patientService
-      .query({
-        page: pageToLoad,
-        size: this.itemsPerPage,
-        sort: this.sort(),
-      })
+      .query(queryParams)
       .subscribe({
         next: (res: HttpResponse<IPatient[]>) => {
           this.isLoading = false;
@@ -51,6 +58,17 @@ export class PatientComponent implements OnInit {
           this.onError();
         },
       });
+  }
+
+  onSearch(): void {
+    this.page = 0;
+    this.loadPage();
+  }
+
+  clearSearch(): void {
+    this.searchTerm = '';
+    this.page = 0;
+    this.loadPage();
   }
 
   ngOnInit(): void {
@@ -64,7 +82,6 @@ export class PatientComponent implements OnInit {
   delete(patient: IPatient): void {
     const modalRef = this.modalService.open(PatientDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.patient = patient;
-    // unsubscribe not needed because closed completes on modal close
     modalRef.closed.subscribe(reason => {
       if (reason === 'deleted') {
         this.loadPage();

@@ -21,8 +21,28 @@
   </h2>
 
   <jhi-alert-error></jhi-alert-error>
-
   <jhi-alert></jhi-alert>
+
+  <!-- Search Section -->
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by name, email, or mobile..."
+          [(ngModel)]="searchTerm"
+          (keyup.enter)="onSearch()"
+        />
+        <button class="btn btn-outline-secondary" type="button" (click)="onSearch()">
+          <fa-icon icon="search"></fa-icon>
+        </button>
+        <button class="btn btn-outline-secondary" type="button" (click)="clearSearch()" *ngIf="searchTerm">
+          <fa-icon icon="times"></fa-icon>
+        </button>
+      </div>
+    </div>
+  </div>
 
   <div class="alert alert-warning" id="no-result" *ngIf="doctors?.length === 0">
     <span jhiTranslate="alfairouzApp.doctor.home.notFound">No doctors found</span>
@@ -46,73 +66,72 @@
           <span jhiTranslate="alfairouzApp.doctor.description">Description</span>
           <fa-icon icon="sort"></fa-icon>
         </th>
-          <th scope="col" jhiSortBy="mobileNo">
-            <span jhiTranslate="alfairouzApp.doctor.mobileNo">Mobile No</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="email"><span jhiTranslate="alfairouzApp.doctor.email">Email</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="onlineReport">
-            <span jhiTranslate="alfairouzApp.doctor.onlineReport">Online Report</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="emailReport">
-            <span jhiTranslate="alfairouzApp.doctor.emailReport">Email Report</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="percentage">
-            <span jhiTranslate="alfairouzApp.doctor.percentage">Percentage</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="doctorType">
-            <span jhiTranslate="alfairouzApp.doctor.doctorType">Doctor Type</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="internalUser.id">
-            <span jhiTranslate="alfairouzApp.doctor.internalUser">Internal User</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col"></th>
-        </tr>
+        <th scope="col" jhiSortBy="mobileNo">
+          <span jhiTranslate="alfairouzApp.doctor.mobileNo">Mobile No</span> <fa-icon icon="sort"></fa-icon>
+        </th>
+        <th scope="col" jhiSortBy="email"><span jhiTranslate="alfairouzApp.doctor.email">Email</span> <fa-icon icon="sort"></fa-icon></th>
+        <th scope="col" jhiSortBy="onlineReport">
+          <span jhiTranslate="alfairouzApp.doctor.onlineReport">Online Report</span> <fa-icon icon="sort"></fa-icon>
+        </th>
+        <th scope="col" jhiSortBy="emailReport">
+          <span jhiTranslate="alfairouzApp.doctor.emailReport">Email Report</span> <fa-icon icon="sort"></fa-icon>
+        </th>
+        <th scope="col" jhiSortBy="percentage">
+          <span jhiTranslate="alfairouzApp.doctor.percentage">Percentage</span> <fa-icon icon="sort"></fa-icon>
+        </th>
+        <th scope="col" jhiSortBy="doctorType">
+          <span jhiTranslate="alfairouzApp.doctor.doctorType">Doctor Type</span> <fa-icon icon="sort"></fa-icon>
+        </th>
+        <th scope="col" jhiSortBy="internalUser.id">
+          <span jhiTranslate="alfairouzApp.doctor.internalUser">Internal User</span> <fa-icon icon="sort"></fa-icon>
+        </th>
+        <th scope="col"></th>
+      </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let doctor of doctors; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/doctor', doctor.id, 'view']">{{ doctor.id }}</a>
-          </td>
-          <td>{{ doctor.name }}</td>
-          <td>{{ doctor.nameAr }}</td>
-          <td>{{ doctor.description }}</td>
-          <td>{{ doctor.mobileNo }}</td>
-          <td>{{ doctor.email }}</td>
-          <td>{{ doctor.onlineReport }}</td>
-          <td>{{ doctor.emailReport }}</td>
-          <td>{{ doctor.percentage }}</td>
-          <td jhiTranslate="{{ 'alfairouzApp.DoctorType.' + doctor.doctorType }}">{{ doctor.doctorType }}</td>
-          <td>
-            {{ doctor.internalUser?.id }}
-          </td>
-          <td class="text-end">
-            <div class="btn-group">
-              <button type="submit" [routerLink]="['/doctor', doctor.id, 'view']" class="btn btn-info btn-sm" *jhiHasAnyAuthority="'ROLE_ADMIN'"
-                      data-cy="entityDetailsButton">
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-              </button>
+      <tr *ngFor="let doctor of doctors; trackBy: trackId" data-cy="entityTable">
+        <td>
+          <a [routerLink]="['/doctor', doctor.id, 'view']">{{ doctor.id }}</a>
+        </td>
+        <td>{{ doctor.name }}</td>
+        <td>{{ doctor.nameAr }}</td>
+        <td>{{ doctor.description }}</td>
+        <td>{{ doctor.mobileNo }}</td>
+        <td>{{ doctor.email }}</td>
+        <td>{{ doctor.onlineReport }}</td>
+        <td>{{ doctor.emailReport }}</td>
+        <td>{{ doctor.percentage }}</td>
+        <td jhiTranslate="{{ 'alfairouzApp.DoctorType.' + doctor.doctorType }}">{{ doctor.doctorType }}</td>
+        <td>
+          {{ doctor.internalUser?.id }}
+        </td>
+        <td class="text-end">
+          <div class="btn-group">
+            <button type="submit" [routerLink]="['/doctor', doctor.id, 'view']" class="btn btn-info btn-sm" *jhiHasAnyAuthority="'ROLE_ADMIN'"
+                    data-cy="entityDetailsButton">
+              <fa-icon icon="eye"></fa-icon>
+              <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+            </button>
 
-              <button type="submit" (click)="getSpecimenXslx(doctor)" class="btn btn-primary btn-sm" *jhiHasAnyAuthority="'ROLE_ADMIN'"
-                      data-cy="entityEditButton">
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline">Report</span>
-              </button>
+            <button type="submit" (click)="getSpecimenXslx(doctor)" class="btn btn-primary btn-sm" *jhiHasAnyAuthority="'ROLE_ADMIN'"
+                    data-cy="entityEditButton">
+              <fa-icon icon="pencil-alt"></fa-icon>
+              <span class="d-none d-md-inline">Report</span>
+            </button>
 
-              <button type="submit" [routerLink]="['/doctor', doctor.id, 'edit']" class="btn btn-primary btn-sm" *jhiHasAnyAuthority="'ROLE_ADMIN'"
-                      data-cy="entityEditButton">
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-              </button>
+            <button type="submit" [routerLink]="['/doctor', doctor.id, 'edit']" class="btn btn-primary btn-sm" *jhiHasAnyAuthority="'ROLE_ADMIN'"
+                    data-cy="entityEditButton">
+              <fa-icon icon="pencil-alt"></fa-icon>
+              <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+            </button>
 
-
-              <button type="submit" (click)="delete(doctor)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton" *jhiHasAnyAuthority="'ROLE_ADMIN'">
-                <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-              </button>
-            </div>
-          </td>
-        </tr>
+            <button type="submit" (click)="delete(doctor)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton" *jhiHasAnyAuthority="'ROLE_ADMIN'">
+              <fa-icon icon="times"></fa-icon>
+              <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+            </button>
+          </div>
+        </td>
+      </tr>
       </tbody>
     </table>
     <div class="col white-b">

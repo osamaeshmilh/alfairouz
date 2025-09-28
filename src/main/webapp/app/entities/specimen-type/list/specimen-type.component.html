@@ -21,8 +21,28 @@
   </h2>
 
   <jhi-alert-error></jhi-alert-error>
-
   <jhi-alert></jhi-alert>
+
+  <!-- Search Section -->
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by name or category..."
+          [(ngModel)]="searchTerm"
+          (keyup.enter)="onSearch()"
+        />
+        <button class="btn btn-outline-secondary" type="button" (click)="onSearch()">
+          <fa-icon icon="search"></fa-icon>
+        </button>
+        <button class="btn btn-outline-secondary" type="button" (click)="clearSearch()" *ngIf="searchTerm">
+          <fa-icon icon="times"></fa-icon>
+        </button>
+      </div>
+    </div>
+  </div>
 
   <div class="alert alert-warning" id="no-result" *ngIf="specimenTypes?.length === 0">
     <span jhiTranslate="alfairouzApp.specimenType.home.notFound">No specimenTypes found</span>
@@ -45,49 +65,49 @@
           <fa-icon icon="sort"></fa-icon>
         </th>
         <th scope="col" jhiSortBy="price">
-            <span jhiTranslate="alfairouzApp.specimenType.price">Price</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col"></th>
-        </tr>
+          <span jhiTranslate="alfairouzApp.specimenType.price">Price</span> <fa-icon icon="sort"></fa-icon>
+        </th>
+        <th scope="col"></th>
+      </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let specimenType of specimenTypes; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/specimen-type', specimenType.id, 'view']">{{ specimenType.id }}</a>
-          </td>
-          <td>{{ specimenType.name }}</td>
-          <td>{{ specimenType.category }}</td>
-          <td>{{ specimenType.price }}</td>
-          <td class="text-end">
-            <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/specimen-type', specimenType.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-              </button>
+      <tr *ngFor="let specimenType of specimenTypes; trackBy: trackId" data-cy="entityTable">
+        <td>
+          <a [routerLink]="['/specimen-type', specimenType.id, 'view']">{{ specimenType.id }}</a>
+        </td>
+        <td>{{ specimenType.name }}</td>
+        <td>{{ specimenType.category }}</td>
+        <td>{{ specimenType.price }}</td>
+        <td class="text-end">
+          <div class="btn-group">
+            <button
+              type="submit"
+              [routerLink]="['/specimen-type', specimenType.id, 'view']"
+              class="btn btn-info btn-sm"
+              data-cy="entityDetailsButton"
+            >
+              <fa-icon icon="eye"></fa-icon>
+              <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+            </button>
 
-              <button
-                type="submit"
-                [routerLink]="['/specimen-type', specimenType.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-              </button>
+            <button
+              type="submit"
+              [routerLink]="['/specimen-type', specimenType.id, 'edit']"
+              class="btn btn-primary btn-sm"
+              data-cy="entityEditButton"
+            >
+              <fa-icon icon="pencil-alt"></fa-icon>
+              <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+            </button>
 
-              <button type="submit" (click)="delete(specimenType)" class="btn btn-danger btn-sm"
-                      data-cy="entityDeleteButton">
-                <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-              </button>
-            </div>
-          </td>
-        </tr>
+            <button type="submit" (click)="delete(specimenType)" class="btn btn-danger btn-sm"
+                    data-cy="entityDeleteButton">
+              <fa-icon icon="times"></fa-icon>
+              <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+            </button>
+          </div>
+        </td>
+      </tr>
       </tbody>
     </table>
     <div class="col white-b">
@@ -105,4 +125,3 @@
     <jhi-empty-content [isLoading]="isLoading"></jhi-empty-content>
   </ng-template>
 </div>
-

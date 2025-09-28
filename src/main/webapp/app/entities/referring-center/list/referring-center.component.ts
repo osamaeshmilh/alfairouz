@@ -23,6 +23,7 @@ export class ReferringCenterComponent implements OnInit {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 0;
+  searchTerm = '';
 
   constructor(
     protected referringCenterService: ReferringCenterService,
@@ -35,12 +36,18 @@ export class ReferringCenterComponent implements OnInit {
     this.isLoading = true;
     const pageToLoad: number = page ?? this.page ?? 0;
 
+    const queryParams: any = {
+      page: pageToLoad,
+      size: this.itemsPerPage,
+      sort: this.sort(),
+    };
+
+    if (this.searchTerm.trim()) {
+      queryParams['nameAr.contains'] = this.searchTerm;
+    }
+
     this.referringCenterService
-      .query({
-        page: pageToLoad,
-        size: this.itemsPerPage,
-        sort: this.sort(),
-      })
+      .query(queryParams)
       .subscribe({
         next: (res: HttpResponse<IReferringCenter[]>) => {
           this.isLoading = false;
@@ -51,6 +58,17 @@ export class ReferringCenterComponent implements OnInit {
           this.onError();
         },
       });
+  }
+
+  onSearch(): void {
+    this.page = 0;
+    this.loadPage();
+  }
+
+  clearSearch(): void {
+    this.searchTerm = '';
+    this.page = 0;
+    this.loadPage();
   }
 
   ngOnInit(): void {
@@ -64,7 +82,6 @@ export class ReferringCenterComponent implements OnInit {
   delete(referringCenter: IReferringCenter): void {
     const modalRef = this.modalService.open(ReferringCenterDeleteDialogComponent, {size: 'lg', backdrop: 'static'});
     modalRef.componentInstance.referringCenter = referringCenter;
-    // unsubscribe not needed because closed completes on modal close
     modalRef.closed.subscribe(reason => {
       if (reason === 'deleted') {
         this.loadPage();
