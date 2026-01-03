@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import {HttpResponse} from '@angular/common/http';
-import swal from 'sweetalert2';
 import {SpecimenService} from "../service/specimen.service";
 import {ISpecimen} from "../specimen.model";
 import {SpecimenStatus} from "../../enumerations/specimen-status.model";
@@ -48,17 +47,9 @@ export class SpecimenQueryComponent {
         this.isLoading = false;
       },
       () => {
-        swal
-          .fire({
-            icon: 'error',
-            title: 'خطأ !',
-            text: 'رقم تسجيل غير صحيح!',
-            confirmButtonText: 'حسنا',
-          })
-          .then(() => {
-            this.currentSearch = '';
-            this.isLoading = false;
-          });
+        alert('رقم تسجيل غير صحيح!');
+        this.currentSearch = '';
+        this.isLoading = false;
       }
     );
   }

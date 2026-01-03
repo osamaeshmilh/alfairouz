@@ -1,22 +1,22 @@
 <div class="entity-container">
   <div *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_TYPING','ROLE_REFERRING_DOCTOR','ROLE_REFERRING_CENTER']">
-    <div class="row white-bg">
-      <div class="mat-elevation-z1 p-3 round-card col-6">
-<!--        <p>التقارير حسب</p>-->
-        <canvas hidden [data]="pieChartData" [labels]="pieChartLabels" baseChart chartType="pie"></canvas>
-      </div>
+<!--    <div class="row white-bg">-->
+<!--      <div class="mat-elevation-z1 p-3 round-card col-6">-->
+<!--&lt;!&ndash;        <p>التقارير حسب</p>&ndash;&gt;-->
+<!--        <canvas hidden [data]="pieChartData" [labels]="pieChartLabels" baseChart chartType="pie"></canvas>-->
+<!--      </div>-->
 
-      <div class="mat-elevation-z1 p-3 round-card col-6">
-        <p class="text-center">العينات حسب الحالة</p>
-        <canvas
-          *ngIf="specimenStatusDoughnutChartData && specimenStatusDoughnutChartLabels"
-          [data]="specimenStatusDoughnutChartData"
-          [labels]="specimenStatusDoughnutChartLabels"
-          baseChart
-          chartType="doughnut"
-        ></canvas>
-      </div>
-    </div>
+<!--      <div class="mat-elevation-z1 p-3 round-card col-6">-->
+<!--        <p class="text-center">العينات حسب الحالة</p>-->
+<!--        <canvas-->
+<!--          *ngIf="specimenStatusDoughnutChartData && specimenStatusDoughnutChartLabels"-->
+<!--          [data]="specimenStatusDoughnutChartData"-->
+<!--          [labels]="specimenStatusDoughnutChartLabels"-->
+<!--          baseChart-->
+<!--          chartType="doughnut"-->
+<!--        ></canvas>-->
+<!--      </div>-->
+<!--    </div>-->
 
     <div *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_TYPING','ROLE_REFERRING_DOCTOR','ROLE_REFERRING_CENTER']"
          class="detail-row d-flex align-items-center mt-3">

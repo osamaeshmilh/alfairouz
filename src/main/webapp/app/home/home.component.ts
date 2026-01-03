@@ -9,7 +9,6 @@ import {SpecimenStatus} from "../entities/enumerations/specimen-status.model";
 import {SpecimenService} from "../entities/specimen/service/specimen.service";
 import {HttpResponse} from "@angular/common/http";
 import {ISpecimen} from "../entities/specimen/specimen.model";
-import swal from "sweetalert2";
 
 @Component({
   selector: 'jhi-home',
@@ -75,17 +74,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       },
       () => {
-        swal
-          .fire({
-            icon: 'error',
-            title: 'خطأ !',
-            text: 'رقم تسجيل غير صحيح!',
-            confirmButtonText: 'حسنا',
-          })
-          .then(() => {
-            this.currentSearch = '';
-            this.isLoading = false;
-          });
+        if (confirm('رقم تسجيل غير صحيح!')) {
+          this.currentSearch = '';
+          this.isLoading = false;
+        }
       }
     );
   }

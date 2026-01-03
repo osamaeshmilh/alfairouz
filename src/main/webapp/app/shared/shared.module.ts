@@ -12,13 +12,10 @@ import { FormatMediumDatePipe } from './date/format-medium-date.pipe';
 import { SortByDirective } from './sort/sort-by.directive';
 import { SortDirective } from './sort/sort.directive';
 import { ItemCountComponent } from './pagination/item-count.component';
-import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
 import {GetColorPipe, TranslateMePipe} from "./util/mapper.pip";
 
 @NgModule({
-  imports: [SharedLibsModule,
-    SweetAlert2Module.forRoot()
-  ],
+  imports: [SharedLibsModule],
   declarations: [
     FindLanguageFromKeyPipe,
     TranslateDirective,
