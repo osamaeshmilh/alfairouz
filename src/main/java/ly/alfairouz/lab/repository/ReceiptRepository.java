@@ -39,4 +39,6 @@ public interface ReceiptRepository extends JpaRepository<Receipt, Long>, JpaSpec
     Optional<Receipt> findOneWithToOneRelationships(@Param("id") Long id);
 
     List<Receipt> findBySpecimenId(Long specimenId);
+
+    List<Receipt> findByDateAtBetween(java.time.LocalDate startDate, java.time.LocalDate endDate);
 }

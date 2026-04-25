@@ -314,13 +314,8 @@ public class SpecimenResource {
     @GetMapping(value = "/public/specimen/xlsx/criteria/", produces = "application/vnd.ms-excel")
     public ResponseEntity<byte[]> getSpecimensAsXSLXByCriteria(SpecimenCriteria criteria) {
         log.debug("REST request to get xslx");
-
         LongFilter longFilter = new LongFilter();
-
         List<SpecimenDTO> specimenDTOList = null;
-
-        String[] columns = new String[0];
-
 
         if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REFERRING_CENTER)) {
             SpecimenCriteria.PaymentTypeFilter paymentTypeFilter = new SpecimenCriteria.PaymentTypeFilter();
@@ -329,55 +324,81 @@ public class SpecimenResource {
             longFilter.setEquals(referringCenterService.findOneByUser().getId());
             criteria.setReferringCenterId(longFilter);
             specimenDTOList = specimenQueryService.findByCriteria(criteria);
-
-            columns = new String[]{
-                "Id",
-                "Lab QR",
-                "Receiving Date",
-                "Report Date",
-                "Patient",
-                "Patient Ar",
-                "Specimen type / size",
-                "Price",
-                "Referring Doctor",
-                "Biopsy",
-                "Cytology",
-                "Organ",
-                "Specimen State",
-                "Results", "Payed With", "Payments"
-            };
-
         } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REFERRING_DOCTOR)) {
             longFilter.setEquals(doctorService.findOneByUser().getId());
             criteria.setReferringDoctorId(longFilter);
             specimenDTOList = specimenQueryService.findByCriteria(criteria);
+        } else {
+            specimenDTOList = specimenQueryService.findByCriteria(criteria);
+        }
 
+        return generateExcel(specimenDTOList);
+    }
+
+    @GetMapping(value = "/public/specimen/xlsx/by-payment-date/", produces = "application/vnd.ms-excel")
+    public ResponseEntity<byte[]> getSpecimensAsXSLXByPaymentDate(
+        @RequestParam(required = false) @org.springframework.format.annotation.DateTimeFormat(iso = org.springframework.format.annotation.DateTimeFormat.ISO.DATE) LocalDate fromDate,
+        @RequestParam(required = false) @org.springframework.format.annotation.DateTimeFormat(iso = org.springframework.format.annotation.DateTimeFormat.ISO.DATE) LocalDate toDate
+    ) {
+        log.debug("REST request to get xslx by payment date");
+
+        List<Receipt> receipts;
+        if (fromDate != null && toDate != null) {
+            receipts = receiptRepository.findByDateAtBetween(fromDate, toDate);
+        } else {
+            receipts = receiptRepository.findAll();
+        }
+
+        List<Long> specimenIds = receipts.stream()
+            .map(Receipt::getSpecimen)
+            .filter(Objects::nonNull)
+            .map(ly.alfairouz.lab.domain.Specimen::getId)
+            .distinct()
+            .collect(java.util.stream.Collectors.toList());
+
+        List<SpecimenDTO> specimenDTOList = new java.util.ArrayList<>();
+        for (Long id : specimenIds) {
+            specimenService.findOne(id).ifPresent(specimenDTOList::add);
+        }
+
+        if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REFERRING_CENTER)) {
+            Long centerId = referringCenterService.findOneByUser().getId();
+            specimenDTOList = specimenDTOList.stream()
+                .filter(s -> PaymentType.MONTHLY.equals(s.getPaymentType()) &&
+                             s.getReferringCenter() != null &&
+                             centerId.equals(s.getReferringCenter().getId()))
+                .collect(java.util.stream.Collectors.toList());
+        } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REFERRING_DOCTOR)) {
+            Long doctorId = doctorService.findOneByUser().getId();
+            specimenDTOList = specimenDTOList.stream()
+                .filter(s -> s.getReferringDoctor() != null &&
+                             doctorId.equals(s.getReferringDoctor().getId()))
+                .collect(java.util.stream.Collectors.toList());
+        }
+
+        return generateExcel(specimenDTOList);
+    }
+
+    private ResponseEntity<byte[]> generateExcel(List<SpecimenDTO> specimenDTOList) {
+        String[] columns = new String[0];
+
+        if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REFERRING_CENTER)) {
             columns = new String[]{
-                "Id",
-                "Lab QR",
-                "Receiving Date",
-                "Sampling Date",
-                "Report Date",
-                "Patient",
-                "Patient Ar",
-                "Referring center",
-                "Biopsy",
-                "Cytology",
-                "Organ",
-                "Specimen State",
+                "Id", "Lab QR", "Receiving Date", "Report Date", "Patient", "Patient Ar",
+                "Specimen type / size", "Price", "Referring Doctor", "Biopsy", "Cytology",
+                "Organ", "Specimen State", "Results", "Payed With", "Payments"
+            };
+        } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REFERRING_DOCTOR)) {
+            columns = new String[]{
+                "Id", "Lab QR", "Receiving Date", "Sampling Date", "Report Date", "Patient",
+                "Patient Ar", "Referring center", "Biopsy", "Cytology", "Organ", "Specimen State",
                 "Results", "Payed With", "Payments"
             };
         } else {
-            specimenDTOList = specimenQueryService.findByCriteria(criteria);
             columns = new String[]{
-                "Id",
-                "Lab Ref No",
-                "Sampling Date",
-                "Receiving Date",
-                "Payment type",
-                "Patient Ar", "Referring center", "Referring Doctor",
-                "Specimen State", "Specimen type / size",
-                "Price", "Paid", "Not Paid", "Payed With", "Payments"
+                "Id", "Lab Ref No", "Sampling Date", "Receiving Date", "Payment type",
+                "Patient Ar", "Referring center", "Referring Doctor", "Specimen State",
+                "Specimen type / size", "Price", "Paid", "Not Paid", "Payed With", "Payments"
             };
         }
 
@@ -392,22 +413,16 @@ public class SpecimenResource {
         CellStyle headerCellStyle = workbook.createCellStyle();
         headerCellStyle.setFont(headerFont);
 
-        // Create a Row
         Row headerRow = sheet.createRow(0);
-
         for (int i = 0; i < columns.length; i++) {
             Cell cell = headerRow.createCell(i);
             cell.setCellValue(columns[i]);
             cell.setCellStyle(headerCellStyle);
         }
 
-        // Create Other rows and cells with contacts data
         int rowNum = 1;
-
         for (SpecimenDTO specimenDTO : specimenDTOList) {
-
             String cellValue = "";
-
             if (specimenDTO.getContractType() == ContractType.SIZE && specimenDTO.getSize() != null) {
                 cellValue = String.valueOf(specimenDTO.getSize().getName());
             } else if (specimenDTO.getContractType() == ContractType.SPECIMEN && specimenDTO.getSpecimenType() != null) {
@@ -417,7 +432,7 @@ public class SpecimenResource {
             String paymentsInfo = "";
             List<Receipt> receipts = receiptRepository.findBySpecimenId(specimenDTO.getId());
             if (receipts != null && !receipts.isEmpty()) {
-                List<String> paymentDetails = new ArrayList<>();
+                List<String> paymentDetails = new java.util.ArrayList<>();
                 for (Receipt r : receipts) {
                     String method = r.getPaymentMethod() != null ? r.getPaymentMethod() : "Unknown";
                     String date = r.getDateAt() != null ? r.getDateAt().toString() : "";
@@ -430,7 +445,6 @@ public class SpecimenResource {
             Row row = sheet.createRow(rowNum++);
 
             if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REFERRING_CENTER)) {
-
                 row.createCell(0).setCellValue(specimenDTO.getId());
                 row.createCell(1).setCellValue(specimenDTO.getLabQr());
                 row.createCell(2).setCellValue(specimenDTO.getReceivingDate() != null ? specimenDTO.getReceivingDate().toString() : "");
@@ -448,7 +462,6 @@ public class SpecimenResource {
                 row.createCell(14).setCellValue(specimenDTO.getPayedWith() != null ? specimenDTO.getPayedWith().toString() : "");
                 row.createCell(15).setCellValue(paymentsInfo);
             } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REFERRING_DOCTOR)) {
-
                 row.createCell(0).setCellValue(specimenDTO.getId());
                 row.createCell(1).setCellValue(specimenDTO.getLabQr());
                 row.createCell(2).setCellValue(specimenDTO.getReceivingDate() != null ? specimenDTO.getReceivingDate().toString() : "");
@@ -465,12 +478,11 @@ public class SpecimenResource {
                 row.createCell(13).setCellValue(specimenDTO.getPayedWith() != null ? specimenDTO.getPayedWith().toString() : "");
                 row.createCell(14).setCellValue(paymentsInfo);
             } else {
-
                 row.createCell(0).setCellValue(specimenDTO.getId());
                 row.createCell(1).setCellValue(specimenDTO.getLabRefNo());
                 row.createCell(2).setCellValue(specimenDTO.getSamplingDate() != null ? specimenDTO.getSamplingDate().toString() : "");
                 row.createCell(3).setCellValue(specimenDTO.getReceivingDate() != null ? specimenDTO.getReceivingDate().toString() : "");
-                row.createCell(4).setCellValue(specimenDTO.getPaymentType().toString());
+                row.createCell(4).setCellValue(specimenDTO.getPaymentType() != null ? specimenDTO.getPaymentType().toString() : "");
                 row.createCell(5).setCellValue(specimenDTO.getPatient() != null ? specimenDTO.getPatient().getNameAr() : "");
                 row.createCell(6).setCellValue(specimenDTO.getReferringCenter() != null ? specimenDTO.getReferringCenter().getNameAr() : "");
                 row.createCell(7).setCellValue(specimenDTO.getReferringDoctor() != null ? specimenDTO.getReferringDoctor().getNameAr() : "");
@@ -484,13 +496,11 @@ public class SpecimenResource {
             }
         }
 
-        //Resize all columns to fit the content size
         for (int i = 0; i < columns.length; i++) {
             sheet.autoSizeColumn(i);
         }
 
         byte[] bytes = new byte[0];
-
         try {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             workbook.write(bos);
