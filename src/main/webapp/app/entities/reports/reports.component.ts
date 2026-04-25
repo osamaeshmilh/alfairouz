@@ -21,6 +21,7 @@ export class ReportsComponent implements OnInit {
   locale = 'en-US';
 
   referringCenters: IReferringCenter[] = [];
+  filteredReferringCenters: IReferringCenter[] = [];
   grossingDoctors: IDoctor[] = [];
   referringDoctors: IDoctor[] = [];
   pathologistDoctors: IDoctor[] = [];
@@ -69,10 +70,20 @@ export class ReportsComponent implements OnInit {
     this.referringCenterService.query({
       size: 1000,
       sort: ['nameAr', 'asc']
-    }).subscribe((res: HttpResponse<IReferringCenter[]>) => (this.referringCenters = res.body ?? []));
+    }).subscribe((res: HttpResponse<IReferringCenter[]>) => {
+      this.referringCenters = res.body ?? [];
+      this.filteredReferringCenters = [...this.referringCenters];
+    });
 
   }
 
+
+  searchCenter(event: any): void {
+    const value = event.target.value.toLowerCase();
+    this.filteredReferringCenters = this.referringCenters.filter(c => 
+      c.nameAr && c.nameAr.toLowerCase().includes(value)
+    );
+  }
 
   getReport(): void {
     const formattedFromDate = formatDate(this.from, this.format, this.locale);

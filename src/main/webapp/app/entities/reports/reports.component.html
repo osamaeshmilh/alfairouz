@@ -84,8 +84,11 @@
           <mat-form-field appearance="standard" class="col">
             <mat-label>Referring Center</mat-label>
             <mat-select [(ngModel)]="selectedId" id="field_referring_center">
+              <div class="px-3 py-2" style="position: sticky; top: 0; z-index: 2; background: white;">
+                <input type="text" placeholder="بحث..." (input)="searchCenter($event)" (keydown)="$event.stopPropagation()" class="form-control" autocomplete="off">
+              </div>
               <mat-option [value]="null"></mat-option>
-              <mat-option *ngFor="let referringCenterOption of referringCenters;"
+              <mat-option *ngFor="let referringCenterOption of filteredReferringCenters;"
                           [value]="referringCenterOption.id">{{ referringCenterOption.nameAr }}</mat-option>
             </mat-select>
           </mat-form-field>
