@@ -7,8 +7,10 @@ import java.time.LocalDate;
 import java.util.*;
 
 import liquibase.pro.packaged.P;
+import ly.alfairouz.lab.domain.Receipt;
 import ly.alfairouz.lab.domain.enumeration.ContractType;
 import ly.alfairouz.lab.domain.enumeration.PaymentType;
+import ly.alfairouz.lab.repository.ReceiptRepository;
 import ly.alfairouz.lab.repository.SpecimenRepository;
 import ly.alfairouz.lab.security.AuthoritiesConstants;
 import ly.alfairouz.lab.security.SecurityUtils;
@@ -62,6 +64,8 @@ public class SpecimenResource {
 
     private final DoctorService doctorService;
 
+    private final ReceiptRepository receiptRepository;
+
     @Autowired
     JasperReportsUtil jasperReportsUtil;
 
@@ -69,12 +73,14 @@ public class SpecimenResource {
         SpecimenService specimenService,
         SpecimenRepository specimenRepository,
         SpecimenQueryService specimenQueryService,
-        ReferringCenterService referringCenterService, DoctorService doctorService) {
+        ReferringCenterService referringCenterService, DoctorService doctorService,
+        ReceiptRepository receiptRepository) {
         this.specimenService = specimenService;
         this.specimenRepository = specimenRepository;
         this.specimenQueryService = specimenQueryService;
         this.referringCenterService = referringCenterService;
         this.doctorService = doctorService;
+        this.receiptRepository = receiptRepository;
     }
 
     /**
@@ -338,7 +344,7 @@ public class SpecimenResource {
                 "Cytology",
                 "Organ",
                 "Specimen State",
-                "Results", "Payed With"
+                "Results", "Payed With", "Payments"
             };
 
         } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REFERRING_DOCTOR)) {
@@ -359,7 +365,7 @@ public class SpecimenResource {
                 "Cytology",
                 "Organ",
                 "Specimen State",
-                "Results", "Payed With"
+                "Results", "Payed With", "Payments"
             };
         } else {
             specimenDTOList = specimenQueryService.findByCriteria(criteria);
@@ -371,7 +377,7 @@ public class SpecimenResource {
                 "Payment type",
                 "Patient Ar", "Referring center", "Referring Doctor",
                 "Specimen State", "Specimen type / size",
-                "Price", "Paid", "Not Paid", "Payed With"
+                "Price", "Paid", "Not Paid", "Payed With", "Payments"
             };
         }
 
@@ -408,6 +414,19 @@ public class SpecimenResource {
                 cellValue = specimenDTO.getSpecimenType().getName();
             }
 
+            String paymentsInfo = "";
+            List<Receipt> receipts = receiptRepository.findBySpecimenId(specimenDTO.getId());
+            if (receipts != null && !receipts.isEmpty()) {
+                List<String> paymentDetails = new ArrayList<>();
+                for (Receipt r : receipts) {
+                    String method = r.getPaymentMethod() != null ? r.getPaymentMethod() : "Unknown";
+                    String date = r.getDateAt() != null ? r.getDateAt().toString() : "";
+                    Float amount = r.getPaid() != null ? r.getPaid() : 0.0f;
+                    paymentDetails.add(amount + " (" + method + " on " + date + ")");
+                }
+                paymentsInfo = String.join(", ", paymentDetails);
+            }
+
             Row row = sheet.createRow(rowNum++);
 
             if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REFERRING_CENTER)) {
@@ -427,6 +446,7 @@ public class SpecimenResource {
                 row.createCell(12).setCellValue(specimenDTO.getSpecimenStatus().toString());
                 row.createCell(13).setCellValue(specimenDTO.getResults() != null ? specimenDTO.getResults().toString() : "");
                 row.createCell(14).setCellValue(specimenDTO.getPayedWith() != null ? specimenDTO.getPayedWith().toString() : "");
+                row.createCell(15).setCellValue(paymentsInfo);
             } else if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.REFERRING_DOCTOR)) {
 
                 row.createCell(0).setCellValue(specimenDTO.getId());
@@ -443,6 +463,7 @@ public class SpecimenResource {
                 row.createCell(11).setCellValue(specimenDTO.getSpecimenStatus().toString());
                 row.createCell(12).setCellValue(specimenDTO.getResults() != null ? specimenDTO.getResults().toString() : "");
                 row.createCell(13).setCellValue(specimenDTO.getPayedWith() != null ? specimenDTO.getPayedWith().toString() : "");
+                row.createCell(14).setCellValue(paymentsInfo);
             } else {
 
                 row.createCell(0).setCellValue(specimenDTO.getId());
@@ -459,6 +480,7 @@ public class SpecimenResource {
                 row.createCell(11).setCellValue(specimenDTO.getPaid() != null ? specimenDTO.getPaid() : 0);
                 row.createCell(12).setCellValue(specimenDTO.getNotPaid() != null ? specimenDTO.getNotPaid() : 0);
                 row.createCell(13).setCellValue(specimenDTO.getPayedWith() != null ? specimenDTO.getPayedWith().toString() : "");
+                row.createCell(14).setCellValue(paymentsInfo);
             }
         }
 
