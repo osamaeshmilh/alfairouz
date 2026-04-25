@@ -80,7 +80,7 @@ export class ReportsComponent implements OnInit {
 
   searchCenter(event: any): void {
     const value = event.target.value.toLowerCase();
-    this.filteredReferringCenters = this.referringCenters.filter(c => 
+    this.filteredReferringCenters = this.referringCenters.filter(c =>
       c.nameAr && c.nameAr.toLowerCase().includes(value)
     );
   }
@@ -102,12 +102,12 @@ export class ReportsComponent implements OnInit {
       const daysFromToday = (today.getTime() - fromDate.getTime()) / (1000 * 3600 * 24);
       const durationDays = (toDate.getTime() - fromDate.getTime()) / (1000 * 3600 * 24);
 
-      if (daysFromToday > 7 || durationDays > 7) {
-        alert('عذراً، يسمح لموظف الاستقبال استخراج تقارير بحد أقصى 7 أيام ولا تتجاوز 7 أيام للوراء.');
+      if (daysFromToday > 14 || durationDays > 14) {
+        alert('عذراً، يسمح لموظف الاستقبال استخراج تقارير بحد أقصى 14 أيام ولا تتجاوز 14 أيام للوراء.');
         return;
       }
     }
-    
+
     if (this.reportType === 'ALL_SPECIMEN') {
       this.reportsService.downloadFileWithToken(this.from, this.to);
       // window.open(`/api/public/specimen/xlsx/criteria/?receivingDate.greaterThanOrEqual=${formattedFromDate}&receivingDate.lessThanOrEqual=${formattedToDate}`, '_blank');
