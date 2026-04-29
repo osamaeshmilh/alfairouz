@@ -81,7 +81,7 @@ export class ReportsComponent implements OnInit {
   searchCenter(event: any): void {
     const value = event.target.value.toLowerCase();
     this.filteredReferringCenters = this.referringCenters.filter(c =>
-      c.nameAr && c.nameAr.toLowerCase().includes(value)
+      c.nameAr?.toLowerCase().includes(value)
     );
   }
 

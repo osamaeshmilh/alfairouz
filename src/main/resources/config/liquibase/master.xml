@@ -65,5 +65,7 @@
     <include file="config/liquibase/changelog/20230426000415_added_entity_constraints_ReferringCenterPrice.xml"
              relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+    <include file="config/liquibase/changelog/20260429000100_added_entity_ReferringCenterLedgerEntry.xml"
+             relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

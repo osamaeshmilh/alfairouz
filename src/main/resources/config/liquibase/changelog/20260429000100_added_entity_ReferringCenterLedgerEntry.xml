@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="20260429000100-1" author="codex">
+        <createTable tableName="referring_center_ledger_entry">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="entry_type" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="entry_date" type="date">
+                <constraints nullable="true"/>
+            </column>
+            <column name="amount" type="decimal(21,2)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="payment_method" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="payment_reference" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="notes" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="proof_file_url" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="proof_file_content_type" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="referring_center_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_by" type="varchar(50)" defaultValue="system">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="last_modified_date" type="timestamp">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="referring_center_id"
+                                 baseTableName="referring_center_ledger_entry"
+                                 constraintName="fk_rc_ledger_entry__referring_center_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="referring_center"/>
+
+        <createIndex indexName="idx_rc_ledger_entry__referring_center_id"
+                     tableName="referring_center_ledger_entry">
+            <column name="referring_center_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

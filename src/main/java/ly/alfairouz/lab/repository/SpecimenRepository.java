@@ -3,6 +3,7 @@ package ly.alfairouz.lab.repository;
 import java.util.List;
 import java.util.Optional;
 import ly.alfairouz.lab.domain.Specimen;
+import ly.alfairouz.lab.domain.enumeration.PaymentType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
@@ -56,5 +57,7 @@ public interface SpecimenRepository extends JpaRepository<Specimen, Long>, JpaSp
     long getMaxNumberByTypeAndYear(@Param("prefix") String prefix, @Param("year") String year);
 
     Optional<Specimen> findByLabRefNo(String labRefNo);
+
+    List<Specimen> findByReferringCenterIdAndPaymentTypeOrderByReceivingDateAscIdAsc(Long referringCenterId, PaymentType paymentType);
 
 }

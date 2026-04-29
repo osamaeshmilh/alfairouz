@@ -7,9 +7,11 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { createRequestOption } from 'app/core/request/request-util';
 import {IReferringCenter, getReferringCenterIdentifier} from '../referring-center.model';
 import {IReferringCenterPrice} from "../../referring-center-price/referring-center-price.model";
+import { IReferringCenterLedgerEntry, IReferringCenterLedgerSummary } from '../referring-center-ledger.model';
 
 export type EntityResponseType = HttpResponse<IReferringCenter>;
 export type EntityArrayResponseType = HttpResponse<IReferringCenter[]>;
+export type LedgerResponseType = HttpResponse<IReferringCenterLedgerSummary>;
 
 @Injectable({ providedIn: 'root' })
 export class ReferringCenterService {
@@ -57,6 +59,26 @@ export class ReferringCenterService {
 
   resetPrices(referringCenterId: number): Observable<EntityResponseType> {
     return this.http.get<IReferringCenterPrice>(`${this.resourceUrl}/reset-price/${referringCenterId}`, {observe: 'response'});
+  }
+
+  getLedger(referringCenterId: number): Observable<LedgerResponseType> {
+    return this.http.get<IReferringCenterLedgerSummary>(`${this.resourceUrl}/${referringCenterId}/ledger`, { observe: 'response' });
+  }
+
+  createOpeningBalance(referringCenterId: number, entry: IReferringCenterLedgerEntry): Observable<LedgerResponseType> {
+    return this.http.post<IReferringCenterLedgerSummary>(`${this.resourceUrl}/${referringCenterId}/ledger/opening-balance`, entry, {
+      observe: 'response',
+    });
+  }
+
+  createSettlementPayment(referringCenterId: number, entry: IReferringCenterLedgerEntry): Observable<LedgerResponseType> {
+    return this.http.post<IReferringCenterLedgerSummary>(`${this.resourceUrl}/${referringCenterId}/ledger/settlements`, entry, {
+      observe: 'response',
+    });
+  }
+
+  getProofDownloadUrl(fileName: string): string {
+    return this.applicationConfigService.getEndpointFor(`api/public/file/download/${encodeURIComponent(fileName)}`);
   }
 
   addReferringCenterToCollectionIfMissing(

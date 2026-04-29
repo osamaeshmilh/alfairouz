@@ -157,6 +157,141 @@
 
           </div>
         </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span>Ledger</span>
+          </ng-template>
+
+          <div class="m-4 mt-4" dir="rtl">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>
+                <h4 class="mb-0">المعاملات</h4>
+              </div>
+              <div class="d-flex gap-2">
+                <button mat-raised-button color="primary" type="button" (click)="openOpeningBalanceDialog()"
+                        [disabled]="isLedgerLoading">
+                  <mat-icon>account_balance_wallet</mat-icon>
+                  <span>رصيد افتتاحي</span>
+                </button>
+                <button mat-raised-button color="accent" type="button" (click)="openSettlementDialog()"
+                        [disabled]="isLedgerLoading || !hasDebit()">
+                  <mat-icon>account_balance</mat-icon>
+                  <span>تسوية الحساب</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-md-3 mb-3">
+                <mat-card>
+                  <mat-card-content class="d-flex align-items-center">
+                    <mat-icon color="primary" class="ms-3">account_balance_wallet</mat-icon>
+                    <div>
+                      <div class="mat-card-title mb-0">الرصيد الافتتاحي</div>
+                    </div>
+                    <span class="flex-grow-1"></span>
+                    <strong>{{ (ledgerSummary?.openingBalance ?? 0) | number:'1.2-2' }} {{ currency }}</strong>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+              <div class="col-md-3 mb-3">
+                <mat-card>
+                  <mat-card-content class="d-flex align-items-center">
+                    <mat-icon color="warn" class="ms-3">science</mat-icon>
+                    <div>
+                      <div class="mat-card-title mb-0">ديون العينات الشهرية</div>
+                    </div>
+                    <span class="flex-grow-1"></span>
+                    <strong>{{ (ledgerSummary?.monthlyDebits ?? 0) | number:'1.2-2' }} {{ currency }}</strong>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+              <div class="col-md-3 mb-3">
+                <mat-card>
+                  <mat-card-content class="d-flex align-items-center">
+                    <mat-icon class="text-success ms-3">payments</mat-icon>
+                    <div>
+                      <div class="mat-card-title mb-0">المدفوعات</div>
+                    </div>
+                    <span class="flex-grow-1"></span>
+                    <strong>{{ (ledgerSummary?.settlementPayments ?? 0) | number:'1.2-2' }} {{ currency }}</strong>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+              <div class="col-md-3 mb-3">
+                <mat-card>
+                  <mat-card-content class="d-flex align-items-center">
+                    <mat-icon [class.text-danger]="hasDebit()" class="ms-3">request_quote</mat-icon>
+                    <div>
+                      <div class="mat-card-title mb-0">المديونية الحالية</div>
+                    </div>
+                    <span class="flex-grow-1"></span>
+                    <strong [class.text-danger]="hasDebit()">{{ (ledgerSummary?.balance ?? 0) | number:'1.2-2' }} {{ currency }}</strong>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-center my-3" *ngIf="isLedgerLoading">
+              <fa-icon icon="sync" [spin]="true"></fa-icon>
+            </div>
+
+            <div class="table-responsive" *ngIf="ledgerEntries.length > 0; else emptyLedger">
+              <table class="table table-striped align-middle">
+                <thead>
+                <tr>
+                  <th scope="col">التاريخ</th>
+                  <th scope="col">النوع</th>
+                  <th scope="col">التفاصيل</th>
+                  <th scope="col" class="text-end">مدين</th>
+                  <th scope="col" class="text-end">دائن</th>
+                  <th scope="col" class="text-end">الرصيد</th>
+                  <th scope="col">إثبات الدفع</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let entry of ledgerEntries; trackBy: trackLedgerEntry">
+                  <td>{{ entry.entryDate || '-' }}</td>
+                  <td>
+                    <span class="badge" [ngClass]="ledgerTypeClass(entry.entryType)">
+                      {{ ledgerTypeLabel(entry.entryType) }}
+                    </span>
+                  </td>
+                  <td>
+                    <div *ngIf="entry.entryType === 'MONTHLY_SPECIMEN_DEBIT'; else manualLedgerEntry">
+                      <a *ngIf="entry.specimenId; else labRefText" [routerLink]="['/specimen', entry.specimenId, 'view']">
+                        {{ entry.labRefNo || entry.description }}
+                      </a>
+                      <ng-template #labRefText>{{ entry.labRefNo || entry.description }}</ng-template>
+                    </div>
+                    <ng-template #manualLedgerEntry>
+                      <span>{{ entry.description }}</span>
+                      <span *ngIf="entry.paymentMethod"> - {{ entry.paymentMethod }}</span>
+                      <span *ngIf="entry.paymentReference"> - {{ entry.paymentReference }}</span>
+                    </ng-template>
+                    <div class="text-muted small" *ngIf="entry.notes">{{ entry.notes }}</div>
+                  </td>
+                  <td class="text-end">{{ (entry.debit ?? 0) | number:'1.2-2' }}</td>
+                  <td class="text-end">{{ (entry.credit ?? 0) | number:'1.2-2' }}</td>
+                  <td class="text-end fw-bold">{{ (entry.runningBalance ?? 0) | number:'1.2-2' }}</td>
+                  <td>
+                    <a *ngIf="entry.proofFileUrl" [href]="getProofUrl(entry.proofFileUrl)" target="_blank"
+                       rel="noopener">
+                      عرض الملف
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <ng-template #emptyLedger>
+              <div class="alert alert-light text-center" *ngIf="!isLedgerLoading">
+                لا توجد معاملات بعد
+              </div>
+            </ng-template>
+          </div>
+        </mat-tab>
       </mat-tab-group>
 
       <hr/>

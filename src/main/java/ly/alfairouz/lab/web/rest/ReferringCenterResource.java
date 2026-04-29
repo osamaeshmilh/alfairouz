@@ -6,11 +6,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import ly.alfairouz.lab.repository.ReferringCenterRepository;
+import ly.alfairouz.lab.service.ReferringCenterLedgerService;
 import ly.alfairouz.lab.security.AuthoritiesConstants;
 import ly.alfairouz.lab.service.ReferringCenterQueryService;
 import ly.alfairouz.lab.service.ReferringCenterService;
 import ly.alfairouz.lab.service.criteria.ReferringCenterCriteria;
 import ly.alfairouz.lab.service.dto.ReferringCenterDTO;
+import ly.alfairouz.lab.service.dto.ReferringCenterLedgerEntryDTO;
+import ly.alfairouz.lab.service.dto.ReferringCenterLedgerSummaryDTO;
 import ly.alfairouz.lab.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,14 +50,18 @@ public class ReferringCenterResource {
 
     private final ReferringCenterQueryService referringCenterQueryService;
 
+    private final ReferringCenterLedgerService referringCenterLedgerService;
+
     public ReferringCenterResource(
         ReferringCenterService referringCenterService,
         ReferringCenterRepository referringCenterRepository,
-        ReferringCenterQueryService referringCenterQueryService
+        ReferringCenterQueryService referringCenterQueryService,
+        ReferringCenterLedgerService referringCenterLedgerService
     ) {
         this.referringCenterService = referringCenterService;
         this.referringCenterRepository = referringCenterRepository;
         this.referringCenterQueryService = referringCenterQueryService;
+        this.referringCenterLedgerService = referringCenterLedgerService;
     }
 
     /**
@@ -200,6 +207,41 @@ public class ReferringCenterResource {
         log.debug("REST request to get ReferringCenter : {}", id);
         Optional<ReferringCenterDTO> referringCenterDTO = referringCenterService.findOne(id);
         return ResponseUtil.wrapOrNotFound(referringCenterDTO);
+    }
+
+    /**
+     * {@code GET /referring-centers/:id/ledger} : get the referring-center ledger.
+     *
+     * The ledger combines manual opening/settlement rows with MONTHLY specimen debits.
+     */
+    @GetMapping("/referring-centers/{id}/ledger")
+    public ResponseEntity<ReferringCenterLedgerSummaryDTO> getReferringCenterLedger(@PathVariable Long id) {
+        log.debug("REST request to get ReferringCenter ledger : {}", id);
+        return ResponseEntity.ok().body(referringCenterLedgerService.getLedger(id));
+    }
+
+    /**
+     * {@code POST /referring-centers/:id/ledger/opening-balance} : add an opening debit balance.
+     */
+    @PostMapping("/referring-centers/{id}/ledger/opening-balance")
+    public ResponseEntity<ReferringCenterLedgerSummaryDTO> createOpeningBalance(
+        @PathVariable Long id,
+        @RequestBody ReferringCenterLedgerEntryDTO referringCenterLedgerEntryDTO
+    ) {
+        log.debug("REST request to create ReferringCenter opening balance : {}, {}", id, referringCenterLedgerEntryDTO);
+        return ResponseEntity.ok().body(referringCenterLedgerService.createOpeningBalance(id, referringCenterLedgerEntryDTO));
+    }
+
+    /**
+     * {@code POST /referring-centers/:id/ledger/settlements} : add a settlement payment.
+     */
+    @PostMapping("/referring-centers/{id}/ledger/settlements")
+    public ResponseEntity<ReferringCenterLedgerSummaryDTO> createSettlementPayment(
+        @PathVariable Long id,
+        @RequestBody ReferringCenterLedgerEntryDTO referringCenterLedgerEntryDTO
+    ) {
+        log.debug("REST request to create ReferringCenter settlement payment : {}, {}", id, referringCenterLedgerEntryDTO);
+        return ResponseEntity.ok().body(referringCenterLedgerService.createSettlementPayment(id, referringCenterLedgerEntryDTO));
     }
 
     /**
