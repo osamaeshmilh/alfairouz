@@ -16,6 +16,9 @@ export interface IReferringCenterLedgerEntry {
   proofFile?: string | null;
   proofFileContentType?: string | null;
   proofFileUrl?: string | null;
+  reversed?: boolean | null;
+  reversedDate?: string | null;
+  reversalReason?: string | null;
   referringCenterId?: number | null;
   specimenId?: number | null;
   labRefNo?: string | null;

@@ -2,6 +2,7 @@ package ly.alfairouz.lab.service.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDate;
 import ly.alfairouz.lab.domain.enumeration.ReferringCenterLedgerEntryType;
 
@@ -39,6 +40,12 @@ public class ReferringCenterLedgerEntryDTO extends AbstractAuditingDTO implement
     private String proofFileContentType;
 
     private String proofFileUrl;
+
+    private Boolean reversed;
+
+    private Instant reversedDate;
+
+    private String reversalReason;
 
     private Long referringCenterId;
 
@@ -164,6 +171,30 @@ public class ReferringCenterLedgerEntryDTO extends AbstractAuditingDTO implement
 
     public void setProofFileUrl(String proofFileUrl) {
         this.proofFileUrl = proofFileUrl;
+    }
+
+    public Boolean getReversed() {
+        return reversed;
+    }
+
+    public void setReversed(Boolean reversed) {
+        this.reversed = reversed;
+    }
+
+    public Instant getReversedDate() {
+        return reversedDate;
+    }
+
+    public void setReversedDate(Instant reversedDate) {
+        this.reversedDate = reversedDate;
+    }
+
+    public String getReversalReason() {
+        return reversalReason;
+    }
+
+    public void setReversalReason(String reversalReason) {
+        this.reversalReason = reversalReason;
     }
 
     public Long getReferringCenterId() {

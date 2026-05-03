@@ -77,6 +77,18 @@ export class ReferringCenterService {
     });
   }
 
+  reverseLedgerEntry(
+    referringCenterId: number,
+    ledgerEntryId: number,
+    entry: Pick<IReferringCenterLedgerEntry, 'reversalReason' | 'notes'>
+  ): Observable<LedgerResponseType> {
+    return this.http.post<IReferringCenterLedgerSummary>(
+      `${this.resourceUrl}/${referringCenterId}/ledger/${ledgerEntryId}/reverse`,
+      entry,
+      { observe: 'response' }
+    );
+  }
+
   getProofDownloadUrl(fileName: string): string {
     return this.applicationConfigService.getEndpointFor(`api/public/file/download/${encodeURIComponent(fileName)}`);
   }

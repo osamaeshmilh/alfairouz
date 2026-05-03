@@ -2,6 +2,7 @@ package ly.alfairouz.lab.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -59,11 +60,17 @@ public class ReferringCenterLedgerService {
         List<ReferringCenterLedgerEntry> manualEntries = referringCenterLedgerEntryRepository.findByReferringCenterIdOrderByEntryDateAscIdAsc(
             referringCenterId
         );
+        ReferringCenterLedgerEntry activeOpening = findActiveOpeningEntry(manualEntries);
         for (ReferringCenterLedgerEntry entry : manualEntries) {
-            ReferringCenterLedgerEntryDTO dto = toManualDto(entry);
-            if (entry.getEntryType() == ReferringCenterLedgerEntryType.OPENING_BALANCE) {
+            if (!shouldShowManualEntry(entry, activeOpening)) {
+                continue;
+            }
+
+            boolean effective = isEffectiveManualEntry(entry, activeOpening);
+            ReferringCenterLedgerEntryDTO dto = toManualDto(entry, effective);
+            if (effective && entry.getEntryType() == ReferringCenterLedgerEntryType.OPENING_BALANCE) {
                 openingBalance = openingBalance.add(nullToZero(dto.getDebit()));
-            } else if (entry.getEntryType() == ReferringCenterLedgerEntryType.SETTLEMENT_PAYMENT) {
+            } else if (effective && entry.getEntryType() == ReferringCenterLedgerEntryType.SETTLEMENT_PAYMENT) {
                 settlementPayments = settlementPayments.add(nullToZero(dto.getCredit()));
             }
             entries.add(dto);
@@ -74,6 +81,9 @@ public class ReferringCenterLedgerService {
             PaymentType.MONTHLY
         );
         for (Specimen specimen : specimens) {
+            if (!shouldIncludeSpecimen(specimen, activeOpening)) {
+                continue;
+            }
             ReferringCenterLedgerEntryDTO dto = toSpecimenDebitDto(specimen, referringCenterId);
             monthlyDebits = monthlyDebits.add(nullToZero(dto.getDebit()));
             entries.add(dto);
@@ -155,6 +165,28 @@ public class ReferringCenterLedgerService {
         return getLedger(referringCenterId);
     }
 
+    public ReferringCenterLedgerSummaryDTO reverseLedgerEntry(
+        Long referringCenterId,
+        Long ledgerEntryId,
+        ReferringCenterLedgerEntryDTO dto
+    ) {
+        requireReferringCenter(referringCenterId);
+        ReferringCenterLedgerEntry entry = referringCenterLedgerEntryRepository
+            .findByIdAndReferringCenterId(ledgerEntryId, referringCenterId)
+            .orElseThrow(() -> new BadRequestAlertException("Ledger entry not found", ENTITY_NAME, "ledgerentrynotfound"));
+
+        if (isReversed(entry)) {
+            throw new BadRequestAlertException("Ledger entry is already reversed", ENTITY_NAME, "ledgerentryalreadyreversed");
+        }
+
+        entry.setReversed(true);
+        entry.setReversedDate(Instant.now());
+        entry.setReversalReason(dto.getReversalReason() != null ? dto.getReversalReason() : dto.getNotes());
+        referringCenterLedgerEntryRepository.save(entry);
+
+        return getLedger(referringCenterId);
+    }
+
     private ReferringCenter requireReferringCenter(Long referringCenterId) {
         return referringCenterRepository
             .findById(referringCenterId)
@@ -169,7 +201,7 @@ public class ReferringCenterLedgerService {
         return money(amount);
     }
 
-    private ReferringCenterLedgerEntryDTO toManualDto(ReferringCenterLedgerEntry entry) {
+    private ReferringCenterLedgerEntryDTO toManualDto(ReferringCenterLedgerEntry entry, boolean effective) {
         ReferringCenterLedgerEntryDTO dto = new ReferringCenterLedgerEntryDTO();
         BigDecimal amount = money(nullToZero(entry.getAmount()));
 
@@ -184,13 +216,19 @@ public class ReferringCenterLedgerService {
         dto.setNotes(entry.getNotes());
         dto.setProofFileContentType(entry.getProofFileContentType());
         dto.setProofFileUrl(entry.getProofFileUrl());
+        dto.setReversed(isReversed(entry));
+        dto.setReversedDate(entry.getReversedDate());
+        dto.setReversalReason(entry.getReversalReason());
         dto.setReferringCenterId(entry.getReferringCenter() != null ? entry.getReferringCenter().getId() : null);
         dto.setCreatedBy(entry.getCreatedBy());
         dto.setCreatedDate(entry.getCreatedDate());
         dto.setLastModifiedBy(entry.getLastModifiedBy());
         dto.setLastModifiedDate(entry.getLastModifiedDate());
 
-        if (entry.getEntryType() == ReferringCenterLedgerEntryType.SETTLEMENT_PAYMENT) {
+        if (!effective) {
+            dto.setDebit(BigDecimal.ZERO);
+            dto.setCredit(BigDecimal.ZERO);
+        } else if (entry.getEntryType() == ReferringCenterLedgerEntryType.SETTLEMENT_PAYMENT) {
             dto.setDebit(BigDecimal.ZERO);
             dto.setCredit(amount);
         } else {
@@ -201,13 +239,56 @@ public class ReferringCenterLedgerService {
         return dto;
     }
 
+    private ReferringCenterLedgerEntry findActiveOpeningEntry(List<ReferringCenterLedgerEntry> manualEntries) {
+        return manualEntries
+            .stream()
+            .filter(entry -> entry.getEntryType() == ReferringCenterLedgerEntryType.OPENING_BALANCE)
+            .filter(entry -> !isReversed(entry))
+            .max(
+                Comparator
+                    .comparing((ReferringCenterLedgerEntry entry) -> openingDate(entry.getEntryDate()))
+                    .thenComparing(entry -> entry.getId() != null ? entry.getId() : 0L)
+            )
+            .orElse(null);
+    }
+
+    private boolean shouldShowManualEntry(ReferringCenterLedgerEntry entry, ReferringCenterLedgerEntry activeOpening) {
+        if (activeOpening == null) {
+            return true;
+        }
+        if (sameEntry(entry, activeOpening)) {
+            return true;
+        }
+        if (entry.getEntryType() == ReferringCenterLedgerEntryType.OPENING_BALANCE) {
+            return isReversed(entry) && !isBeforeStart(entry.getEntryDate(), activeOpening.getEntryDate());
+        }
+        return !isBeforeStart(entry.getEntryDate(), activeOpening.getEntryDate());
+    }
+
+    private boolean isEffectiveManualEntry(ReferringCenterLedgerEntry entry, ReferringCenterLedgerEntry activeOpening) {
+        if (isReversed(entry)) {
+            return false;
+        }
+        if (entry.getEntryType() == ReferringCenterLedgerEntryType.OPENING_BALANCE) {
+            return activeOpening != null && sameEntry(entry, activeOpening);
+        }
+        return true;
+    }
+
+    private boolean shouldIncludeSpecimen(Specimen specimen, ReferringCenterLedgerEntry activeOpening) {
+        if (activeOpening == null) {
+            return true;
+        }
+        return !isBeforeStart(specimenLedgerDate(specimen), activeOpening.getEntryDate());
+    }
+
     private ReferringCenterLedgerEntryDTO toSpecimenDebitDto(Specimen specimen, Long referringCenterId) {
         ReferringCenterLedgerEntryDTO dto = new ReferringCenterLedgerEntryDTO();
         BigDecimal amount = money(specimen.getPrice() != null ? BigDecimal.valueOf(specimen.getPrice()) : BigDecimal.ZERO);
 
         dto.setSource(SPECIMEN_SOURCE);
         dto.setEntryType(ReferringCenterLedgerEntryType.MONTHLY_SPECIMEN_DEBIT);
-        dto.setEntryDate(specimen.getReceivingDate() != null ? specimen.getReceivingDate() : specimen.getSamplingDate());
+        dto.setEntryDate(specimenLedgerDate(specimen));
         dto.setAmount(amount);
         dto.setDebit(amount);
         dto.setCredit(BigDecimal.ZERO);
@@ -226,6 +307,14 @@ public class ReferringCenterLedgerService {
             return "Settlement payment";
         }
         return "Monthly specimen debit";
+    }
+
+    private LocalDate specimenLedgerDate(Specimen specimen) {
+        return specimen.getReceivingDate() != null ? specimen.getReceivingDate() : specimen.getSamplingDate();
+    }
+
+    private LocalDate openingDate(LocalDate date) {
+        return date != null ? date : LocalDate.MIN;
     }
 
     private LocalDate ledgerDate(LocalDate date) {
@@ -247,6 +336,21 @@ public class ReferringCenterLedgerService {
             return entry.getId();
         }
         return entry.getSpecimenId() != null ? entry.getSpecimenId() : 0L;
+    }
+
+    private boolean isBeforeStart(LocalDate entryDate, LocalDate startDate) {
+        if (startDate == null) {
+            return false;
+        }
+        return entryDate == null || entryDate.isBefore(startDate);
+    }
+
+    private boolean sameEntry(ReferringCenterLedgerEntry first, ReferringCenterLedgerEntry second) {
+        return first.getId() != null && first.getId().equals(second.getId());
+    }
+
+    private boolean isReversed(ReferringCenterLedgerEntry entry) {
+        return Boolean.TRUE.equals(entry.getReversed());
     }
 
     private BigDecimal nullToZero(BigDecimal value) {

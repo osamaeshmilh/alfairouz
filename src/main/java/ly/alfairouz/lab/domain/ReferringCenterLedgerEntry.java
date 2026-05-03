@@ -2,6 +2,7 @@ package ly.alfairouz.lab.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDate;
 import javax.persistence.*;
 import ly.alfairouz.lab.domain.enumeration.ReferringCenterLedgerEntryType;
@@ -46,6 +47,15 @@ public class ReferringCenterLedgerEntry extends AbstractAuditingEntity {
 
     @Column(name = "proof_file_content_type")
     private String proofFileContentType;
+
+    @Column(name = "reversed")
+    private Boolean reversed;
+
+    @Column(name = "reversed_date")
+    private Instant reversedDate;
+
+    @Column(name = "reversal_reason")
+    private String reversalReason;
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "internalUser" }, allowSetters = true)
@@ -168,6 +178,45 @@ public class ReferringCenterLedgerEntry extends AbstractAuditingEntity {
         this.proofFileContentType = proofFileContentType;
     }
 
+    public Boolean getReversed() {
+        return this.reversed;
+    }
+
+    public ReferringCenterLedgerEntry reversed(Boolean reversed) {
+        this.setReversed(reversed);
+        return this;
+    }
+
+    public void setReversed(Boolean reversed) {
+        this.reversed = reversed;
+    }
+
+    public Instant getReversedDate() {
+        return this.reversedDate;
+    }
+
+    public ReferringCenterLedgerEntry reversedDate(Instant reversedDate) {
+        this.setReversedDate(reversedDate);
+        return this;
+    }
+
+    public void setReversedDate(Instant reversedDate) {
+        this.reversedDate = reversedDate;
+    }
+
+    public String getReversalReason() {
+        return this.reversalReason;
+    }
+
+    public ReferringCenterLedgerEntry reversalReason(String reversalReason) {
+        this.setReversalReason(reversalReason);
+        return this;
+    }
+
+    public void setReversalReason(String reversalReason) {
+        this.reversalReason = reversalReason;
+    }
+
     public ReferringCenter getReferringCenter() {
         return this.referringCenter;
     }
@@ -208,6 +257,7 @@ public class ReferringCenterLedgerEntry extends AbstractAuditingEntity {
             ", paymentMethod='" + getPaymentMethod() + "'" +
             ", paymentReference='" + getPaymentReference() + "'" +
             ", proofFileUrl='" + getProofFileUrl() + "'" +
+            ", reversed='" + getReversed() + "'" +
             "}";
     }
 }

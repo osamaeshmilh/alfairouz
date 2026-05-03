@@ -182,19 +182,7 @@
             </div>
 
             <div class="row mb-4">
-              <div class="col-md-3 mb-3">
-                <mat-card>
-                  <mat-card-content class="d-flex align-items-center">
-                    <mat-icon color="primary" class="ms-3">account_balance_wallet</mat-icon>
-                    <div>
-                      <div class="mat-card-title mb-0">الرصيد الافتتاحي</div>
-                    </div>
-                    <span class="flex-grow-1"></span>
-                    <strong>{{ (ledgerSummary?.openingBalance ?? 0) | number:'1.2-2' }} {{ currency }}</strong>
-                  </mat-card-content>
-                </mat-card>
-              </div>
-              <div class="col-md-3 mb-3">
+              <div class="col-md-4 mb-3">
                 <mat-card>
                   <mat-card-content class="d-flex align-items-center">
                     <mat-icon color="warn" class="ms-3">science</mat-icon>
@@ -206,7 +194,7 @@
                   </mat-card-content>
                 </mat-card>
               </div>
-              <div class="col-md-3 mb-3">
+              <div class="col-md-4 mb-3">
                 <mat-card>
                   <mat-card-content class="d-flex align-items-center">
                     <mat-icon class="text-success ms-3">payments</mat-icon>
@@ -218,7 +206,7 @@
                   </mat-card-content>
                 </mat-card>
               </div>
-              <div class="col-md-3 mb-3">
+              <div class="col-md-4 mb-3">
                 <mat-card>
                   <mat-card-content class="d-flex align-items-center">
                     <mat-icon [class.text-danger]="hasDebit()" class="ms-3">request_quote</mat-icon>
@@ -247,6 +235,7 @@
                   <th scope="col" class="text-end">دائن</th>
                   <th scope="col" class="text-end">الرصيد</th>
                   <th scope="col">إثبات الدفع</th>
+                  <th scope="col">الإجراء</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -256,6 +245,7 @@
                     <span class="badge" [ngClass]="ledgerTypeClass(entry.entryType)">
                       {{ ledgerTypeLabel(entry.entryType) }}
                     </span>
+                    <span class="badge bg-danger ms-1" *ngIf="entry.reversed">معكوس</span>
                   </td>
                   <td>
                     <div *ngIf="entry.entryType === 'MONTHLY_SPECIMEN_DEBIT'; else manualLedgerEntry">
@@ -270,6 +260,7 @@
                       <span *ngIf="entry.paymentReference"> - {{ entry.paymentReference }}</span>
                     </ng-template>
                     <div class="text-muted small" *ngIf="entry.notes">{{ entry.notes }}</div>
+                    <div class="text-danger small" *ngIf="entry.reversalReason">سبب العكس: {{ entry.reversalReason }}</div>
                   </td>
                   <td class="text-end">{{ (entry.debit ?? 0) | number:'1.2-2' }}</td>
                   <td class="text-end">{{ (entry.credit ?? 0) | number:'1.2-2' }}</td>
@@ -279,6 +270,12 @@
                        rel="noopener">
                       عرض الملف
                     </a>
+                  </td>
+                  <td>
+                    <button mat-button color="warn" type="button" *ngIf="canReverseLedgerEntry(entry)"
+                            (click)="reverseLedgerEntry(entry)" [disabled]="isLedgerLoading">
+                      عكس
+                    </button>
                   </td>
                 </tr>
                 </tbody>

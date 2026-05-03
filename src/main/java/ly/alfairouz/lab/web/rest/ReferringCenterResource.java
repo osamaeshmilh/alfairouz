@@ -245,6 +245,19 @@ public class ReferringCenterResource {
     }
 
     /**
+     * {@code POST /referring-centers/:id/ledger/:entryId/reverse} : reverse a manual ledger entry.
+     */
+    @PostMapping("/referring-centers/{id}/ledger/{entryId}/reverse")
+    public ResponseEntity<ReferringCenterLedgerSummaryDTO> reverseLedgerEntry(
+        @PathVariable Long id,
+        @PathVariable Long entryId,
+        @RequestBody ReferringCenterLedgerEntryDTO referringCenterLedgerEntryDTO
+    ) {
+        log.debug("REST request to reverse ReferringCenter ledger entry : {}, {}", id, entryId);
+        return ResponseEntity.ok().body(referringCenterLedgerService.reverseLedgerEntry(id, entryId, referringCenterLedgerEntryDTO));
+    }
+
+    /**
      * {@code DELETE  /referring-centers/:id} : delete the "id" referringCenter.
      *
      * @param id the id of the referringCenterDTO to delete.

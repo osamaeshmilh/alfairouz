@@ -147,6 +147,34 @@ export class ReferringCenterDetailComponent implements OnInit {
     }
   }
 
+  canReverseLedgerEntry(entry: IReferringCenterLedgerEntry): boolean {
+    return entry.source === 'MANUAL' && !!entry.id && !entry.reversed;
+  }
+
+  reverseLedgerEntry(entry: IReferringCenterLedgerEntry): void {
+    if (!this.referringCenter?.id || !entry.id || !this.canReverseLedgerEntry(entry)) {
+      return;
+    }
+
+    const reversalReason = window.prompt('سبب عكس الحركة', '');
+    if (reversalReason === null) {
+      return;
+    }
+
+    this.isLedgerLoading = true;
+    this.referringCenterService
+      .reverseLedgerEntry(this.referringCenter.id, entry.id, { reversalReason })
+      .subscribe({
+        next: (res: HttpResponse<IReferringCenterLedgerSummary>) => {
+          this.applyLedgerSummary(res.body);
+          this.isLedgerLoading = false;
+        },
+        error: () => {
+          this.isLedgerLoading = false;
+        },
+      });
+  }
+
   getProofUrl(fileName: string | null | undefined): string {
     return fileName ? this.referringCenterService.getProofDownloadUrl(fileName) : '';
   }
