@@ -59,6 +59,10 @@ export class BlockWithdrawComponent implements OnInit {
     this.handleNavigation();
   }
 
+  openFileFromUrl(fileUrl: any): void {
+    window.open(`/api/public/file/download/${String(fileUrl)}#zoom=85&scrollbar=0&toolbar=0&navpanes=0`, '_blank');
+  }
+
   trackId(_index: number, item: IBlockWithdraw): number {
     return item.id!;
   }

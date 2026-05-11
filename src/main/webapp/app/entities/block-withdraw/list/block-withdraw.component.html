@@ -84,7 +84,13 @@
             >
             <span *ngIf="blockWithdraw.pdfFile">{{ blockWithdraw.pdfFileContentType }}, {{ byteSize(blockWithdraw.pdfFile) }}</span>
           </td>
-          <td>{{ blockWithdraw.pdfFileUrl }}</td>
+          <td>
+            <button (click)="openFileFromUrl(blockWithdraw.pdfFileUrl)"
+                    mat-menu-item>
+              <mat-icon>insert_drive_file</mat-icon>
+              <span class="d-none d-md-inline">عرض الملف</span>
+            </button>
+          </td>
           <td>
             <div *ngIf="blockWithdraw.specimen">
               <a [routerLink]="['/specimen', blockWithdraw.specimen?.id, 'view']">{{ blockWithdraw.specimen?.labRefNo }}</a>
