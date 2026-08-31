@@ -6,6 +6,7 @@ export interface IUser {
   email?: string;
   activated?: boolean;
   langKey?: string;
+  newPassword?: string;
   authorities?: string[];
   createdBy?: string;
   createdDate?: Date;
@@ -26,6 +27,7 @@ export class User implements IUser {
     public createdBy?: string,
     public createdDate?: Date,
     public lastModifiedBy?: string,
-    public lastModifiedDate?: Date
+    public lastModifiedDate?: Date,
+    public newPassword?: string
   ) {}
 }

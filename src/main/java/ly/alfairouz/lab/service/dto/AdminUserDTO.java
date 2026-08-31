@@ -48,6 +48,7 @@ public class AdminUserDTO {
 
     private Instant lastModifiedDate;
 
+    @Size(min = 4, max = 100)
     private String newPassword;
 
     private Set<String> authorities;

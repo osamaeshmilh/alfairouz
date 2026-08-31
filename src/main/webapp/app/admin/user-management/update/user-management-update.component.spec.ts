@@ -44,14 +44,14 @@ describe('User Management Update Component', () => {
       [],
       fakeAsync(() => {
         // GIVEN
-        jest.spyOn(service, 'authorities').mockReturnValue(of(['USER']));
+        jest.spyOn(service, 'authorities').mockReturnValue(of([Authority.USER, Authority.RECEPTION]));
 
         // WHEN
         comp.ngOnInit();
 
         // THEN
         expect(service.authorities).toHaveBeenCalled();
-        expect(comp.authorities).toEqual(['USER']);
+        expect(comp.authorities).toEqual([Authority.RECEPTION]);
       })
     ));
   });
@@ -82,12 +82,15 @@ describe('User Management Update Component', () => {
         const entity = new User();
         jest.spyOn(service, 'create').mockReturnValue(of(entity));
         comp.user = entity;
+        comp.editForm.patchValue({ newPassword: 'initial-password', authorities: [Authority.RECEPTION] });
         // WHEN
         comp.save();
         tick(); // simulate async
 
         // THEN
         expect(service.create).toHaveBeenCalledWith(entity);
+        expect(entity.newPassword).toEqual('initial-password');
+        expect(entity.authorities).toEqual([Authority.RECEPTION]);
         expect(comp.isSaving).toEqual(false);
       })
     ));

@@ -10,7 +10,7 @@ import ly.alfairouz.lab.config.Constants;
 import ly.alfairouz.lab.domain.User;
 import ly.alfairouz.lab.repository.UserRepository;
 import ly.alfairouz.lab.security.AuthoritiesConstants;
-import ly.alfairouz.lab.service.MailService;
+import ly.alfairouz.lab.service.InvalidPasswordException;
 import ly.alfairouz.lab.service.UserService;
 import ly.alfairouz.lab.service.dto.AdminUserDTO;
 import ly.alfairouz.lab.web.rest.errors.BadRequestAlertException;
@@ -85,20 +85,16 @@ public class UserResource {
 
     private final UserRepository userRepository;
 
-    private final MailService mailService;
-
-    public UserResource(UserService userService, UserRepository userRepository, MailService mailService) {
+    public UserResource(UserService userService, UserRepository userRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
-        this.mailService = mailService;
     }
 
     /**
      * {@code POST  /admin/users}  : Creates a new user.
      * <p>
-     * Creates a new user if the login and email are not already used, and sends an
-     * mail with an activation link.
-     * The user needs to be activated on creation.
+     * Creates an active user if the login and email are not already used. The administrator
+     * supplies the user's initial password.
      *
      * @param userDTO the user to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new user, or with status {@code 400 (Bad Request)} if the login or email is already in use.
@@ -110,16 +106,17 @@ public class UserResource {
     public ResponseEntity<User> createUser(@Valid @RequestBody AdminUserDTO userDTO) throws URISyntaxException {
         log.debug("REST request to save User : {}", userDTO);
 
+        // Lowercase the user login before comparing with database.
         if (userDTO.getId() != null) {
             throw new BadRequestAlertException("A new user cannot already have an ID", "userManagement", "idexists");
-            // Lowercase the user login before comparing with database
+        } else if (userDTO.getNewPassword() == null) {
+            throw new InvalidPasswordException();
         } else if (userRepository.findOneByLogin(userDTO.getLogin().toLowerCase()).isPresent()) {
             throw new LoginAlreadyUsedException();
         } else if (userRepository.findOneByEmailIgnoreCase(userDTO.getEmail()).isPresent()) {
             throw new EmailAlreadyUsedException();
         } else {
             User newUser = userService.createUser(userDTO);
-            mailService.sendCreationEmail(newUser);
             return ResponseEntity
                 .created(new URI("/api/admin/users/" + newUser.getLogin()))
                 .headers(HeaderUtil.createAlert(applicationName, "userManagement.created", newUser.getLogin()))

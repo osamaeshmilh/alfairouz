@@ -129,11 +129,38 @@
           </select>
         </div>
 
+        <div class="mb-3" *ngIf="isNewUser">
+          <label class="form-label" jhiTranslate="userManagement.password">Password</label>
+          <input type="password" class="form-control" name="newPassword" formControlName="newPassword" autocomplete="new-password" />
+
+          <div *ngIf="editForm.get('newPassword')!.invalid && (editForm.get('newPassword')!.dirty || editForm.get('newPassword')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('newPassword')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('newPassword')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 4 }"
+            >
+              This field is required to be at least 4 characters.
+            </small>
+          </div>
+        </div>
+
         <div class="mb-3">
           <label jhiTranslate="userManagement.profiles">Profiles</label>
           <select class="form-control" multiple name="authority" formControlName="authorities">
             <option *ngFor="let authority of authorities" [value]="authority">{{ authority }}</option>
           </select>
+          <small class="form-text text-muted" jhiTranslate="userManagement.roleUserAutomaticallyAssigned">
+            ROLE_USER is assigned automatically.
+          </small>
         </div>
       </div>
 

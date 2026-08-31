@@ -146,21 +146,22 @@ public class UserService {
         } else {
             user.setLangKey(userDTO.getLangKey());
         }
-        String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
-        user.setPassword(encryptedPassword);
-        user.setResetKey(RandomUtil.generateResetKey());
-        user.setResetDate(Instant.now());
+        user.setPassword(passwordEncoder.encode(userDTO.getNewPassword()));
         user.setActivated(true);
+        Set<Authority> authorities = new HashSet<>();
+        authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
         if (userDTO.getAuthorities() != null) {
-            Set<Authority> authorities = userDTO
-                .getAuthorities()
-                .stream()
-                .map(authorityRepository::findById)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toSet());
-            user.setAuthorities(authorities);
+            authorities.addAll(
+                userDTO
+                    .getAuthorities()
+                    .stream()
+                    .map(authorityRepository::findById)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .collect(Collectors.toSet())
+            );
         }
+        user.setAuthorities(authorities);
         userRepository.save(user);
         log.debug("Created Information for User: {}", user);
         return user;
@@ -196,13 +197,16 @@ public class UserService {
                 user.setLangKey(userDTO.getLangKey());
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
-                userDTO
-                    .getAuthorities()
-                    .stream()
-                    .map(authorityRepository::findById)
-                    .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .forEach(managedAuthorities::add);
+                authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(managedAuthorities::add);
+                if (userDTO.getAuthorities() != null) {
+                    userDTO
+                        .getAuthorities()
+                        .stream()
+                        .map(authorityRepository::findById)
+                        .filter(Optional::isPresent)
+                        .map(Optional::get)
+                        .forEach(managedAuthorities::add);
+                }
                 log.debug("Changed Information for User: {}", user);
                 return user;
             })
@@ -278,7 +282,6 @@ public class UserService {
     public Optional<AdminUserDTO> getUserWithAuthoritiesById(Long id) {
         return userRepository.findOneWithAuthoritiesById(id).map(AdminUserDTO::new);
     }
-
 
     @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthorities() {

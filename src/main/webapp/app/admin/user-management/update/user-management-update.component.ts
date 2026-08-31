@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { LANGUAGES } from 'app/config/language.constants';
+import { Authority } from 'app/config/authority.constants';
 import { User } from '../user-management.model';
 import { UserManagementService } from '../service/user-management.service';
 
@@ -32,6 +33,7 @@ export class UserManagementUpdateComponent implements OnInit {
     email: ['', [Validators.minLength(5), Validators.maxLength(254), Validators.email]],
     activated: [],
     langKey: [],
+    newPassword: ['', [Validators.minLength(4), Validators.maxLength(100)]],
     authorities: [],
   });
 
@@ -43,11 +45,20 @@ export class UserManagementUpdateComponent implements OnInit {
         this.user = user;
         if (this.user.id === undefined) {
           this.user.activated = true;
+          const newPassword = this.editForm.get('newPassword')!;
+          newPassword.setValidators([Validators.required, Validators.minLength(4), Validators.maxLength(100)]);
+          newPassword.updateValueAndValidity();
         }
         this.updateForm(user);
       }
     });
-    this.userService.authorities().subscribe(authorities => (this.authorities = authorities));
+    this.userService.authorities().subscribe(authorities => {
+      this.authorities = authorities.filter(authority => authority !== Authority.USER);
+    });
+  }
+
+  get isNewUser(): boolean {
+    return this.user.id === undefined;
   }
 
   previousState(): void {
@@ -79,7 +90,7 @@ export class UserManagementUpdateComponent implements OnInit {
       email: user.email,
       activated: user.activated,
       langKey: user.langKey,
-      authorities: user.authorities,
+      authorities: user.authorities?.filter(authority => authority !== Authority.USER),
     });
   }
 
@@ -90,6 +101,7 @@ export class UserManagementUpdateComponent implements OnInit {
     user.email = this.editForm.get(['email'])!.value;
     user.activated = this.editForm.get(['activated'])!.value;
     user.langKey = this.editForm.get(['langKey'])!.value;
+    user.newPassword = this.isNewUser ? this.editForm.get(['newPassword'])!.value : undefined;
     user.authorities = this.editForm.get(['authorities'])!.value;
   }
 
